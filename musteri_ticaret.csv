@@ -1,0 +1,91 @@
+Ad,Boy,Kilo,Yaş,Aylık_Ortalama_Harcama,Eğitim_Durumu,Ödeme_Yöntemi
+Ahmet,175,70,28,2010,Ortaokul,Nakit
+Ayşe,160,55,32,1800,Lisans,Kredi Kartı
+Mehmet,180,80,35,2500,Yüksek Lisans,Kredi Kartı
+Fatma,165,60,27,1900,İlkokul,Nakit
+Ali,170,75,30,2200,Lise,Kredi Kartı
+Zeynep,155,50,25,1700,Lise,Nakit
+Hüseyin,185,85,40,2700,Doktora,Kredi Kartı
+Elif,162,58,29,2000,Ortaokul,Kredi Kartı
+Osman,176,78,33,2300,Lisans,Nakit
+Aysel,158,53,26,1600,Lise,Nakit
+Zekiye,168,63,31,2100,Lisans,Nakit
+Mustafa,178,77,29,2400,Yüksek Lisans,Kredi Kartı
+Sevgi,163,52,28,1900,Lise,Nakit
+Onur,175,72,34,2200,Lisans,Kredi Kartı
+Gizem,155,48,26,1600,Ortaokul,Nakit
+Burak,182,85,30,2500,Doktora,Kredi Kartı
+İrem,160,50,25,1800,İlkokul,Nakit
+Emir,177,79,33,2300,Lise,Kredi Kartı
+Cansu,167,68,32,2000,Yüksek Lisans,Nakit
+Mert,169,74,27,2100,Ortaokul,Kredi Kartı
+Deniz,172,65,29,2000,İlkokul,Nakit
+Eren,185,82,33,2400,Yüksek Lisans,Kredi Kartı
+Melike,160,55,28,1800,Lise,Nakit
+Kerem,176,73,31,2100,Lisans,Kredi Kartı
+Selin,158,50,26,1600,Ortaokul,Nakit
+Ozan,180,88,35,2600,Doktora,Kredi Kartı
+Ceren,165,60,27,1900,Ortaokul,Nakit
+Umut,178,75,30,2200,Lisans,Kredi Kartı
+Aylin,168,67,32,2000,Lise,Nakit
+Berk,173,78,29,2300,İlkokul,Kredi Kartı
+Yusuf,170,70,28,2100,Lisans,Nakit
+Gamze,163,55,31,1900,İlkokul,Kredi Kartı
+Serkan,177,75,34,2200,Yüksek Lisans,Nakit
+Cemre,160,52,27,1800,Lise,Nakit
+Fırat,182,80,30,2400,Ortaokul,Kredi Kartı
+Nazlı,155,48,26,1600,Doktora,Nakit
+Kaan,175,68,32,2000,Lisans,Kredi Kartı
+Buse,168,60,29,1900,Ortaokul,Nakit
+Arda,178,78,33,2300,Lise,Kredi Kartı
+Ece,165,62,28,2000,Yüksek Lisans,Nakit
+Aslı,165,60,28,2000,İlkokul,Nakit
+Tolga,178,75,32,2200,Lisans,Kredi Kartı
+Selin,160,52,27,1800,Yüksek Lisans,Nakit
+Cihan,175,70,30,2100,Lise,Nakit
+Zara,163,55,26,1600,Ortaokul,Kredi Kartı
+Baran,182,85,33,2400,İlkokul,Nakit
+Nisan,155,48,25,1700,Doktora,Kredi Kartı
+Ege,175,68,31,2000,Yüksek Lisans,Nakit
+Büşra,168,62,29,1900,Lise,Nakit
+Arif,177,78,34,2300,Lisans,Kredi Kartı
+Ayhan,175,70,28,2000,Ortaokul,Kredi Kartı
+Cemre,160,55,32,1800,İlkokul,Nakit
+Kaan,180,80,35,2500,Yüksek Lisans,Nakit
+Elif,165,60,27,1900,Lise,Kredi Kartı
+Can,170,75,30,2200,Lisans,Nakit
+Zehra,155,50,25,1700,Doktora,Kredi Kartı
+Batuhan,185,85,40,2700,Ortaokul,Nakit
+İrem,162,58,29,2000,Lise,Kredi Kartı
+Efe,176,78,33,2300,İlkokul,Nakit
+Gizem,158,53,26,1600,Yüksek Lisans,Nakit
+Berk,173,68,28,2100,Yüksek Lisans,Kredi Kartı
+İrem,180,75,32,2200,Lise,Nakit
+Cem,167,62,27,1900,İlkokul,Nakit
+Zeynep,162,55,26,1600,Doktora,Kredi Kartı
+Deniz,175,70,31,2000,Ortaokul,Nakit
+Gizem,160,50,25,1700,Lisans,Kredi Kartı
+Ahmet,178,78,33,2300,Yüksek Lisans,Nakit
+Elif,165,60,29,2000,Lise,Kredi Kartı
+Can,172,73,34,2400,Ortaokul,Nakit
+Merve,168,65,30,2200,İlkokul,Kredi Kartı
+Selin,163,58,29,2000,Yüksek Lisans,Kredi Kartı
+Ozan,178,75,32,2200,Ortaokul,Nakit
+Büşra,160,55,27,1900,Doktora,Kredi Kartı
+Emir,175,72,30,2100,Lise,Nakit
+Aslı,162,50,26,1600,İlkokul,Kredi Kartı
+Burak,182,80,35,2500,Lisans,Nakit
+Zehra,155,48,25,1700,Ortaokul,Kredi Kartı
+Kerem,180,78,33,2300,İlkokul,Nakit
+Melis,167,62,28,2000,Lisans,Nakit
+Berkay,175,75,29,2000,Yüksek Lisans,Kredi Kartı
+Ege,178,73,28,2100,Doktora,Nakit
+Cansu,160,55,31,1900,Ortaokul,Kredi Kartı
+Mustafa,175,70,34,2200,İlkokul,Nakit
+Aylin,165,60,27,1800,Lisans,Kredi Kartı
+Yusuf,172,68,30,2000,Lise,Nakit
+Nazlı,155,50,26,1600,Yüksek Lisans,Kredi Kartı
+Arda,182,85,35,2400,İlkokul,Nakit
+Deniz,160,52,29,1900,Ortaokul,Nakit
+Berra,168,65,32,2200,Lisans,Kredi Kartı
+Ahmet,177,78,33,2300,Yüksek Lisans,Nakit
