@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Çiçeği Tahmin Yazılımı Açıklaması</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        code {
+            color: #c7254e;
+            background-color: #f9f2f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Iris Çiçeği Tahmin Yazılımı Açıklaması</h1>
+
+<p>Bu yazılım, bir yapay zeka modelini kullanarak, İris çiçek türlerini (örneğin <strong>Iris-setosa</strong>, <strong>Iris-versicolor</strong>, <strong>Iris-virginica</strong>) sınıflandırmaktadır. Kullanıcıdan alınan özelliklere göre bir tahmin yapılır ve sonuç kullanıcıya döndürülür.</p>
+
+<h2>Genel İşleyiş</h2>
+<ol>
+    <li>Kullanıcı bir web formu doldurur:</li>
+    <ul>
+        <li>Çanak yaprağının uzunluğu (Sepal Length)</li>
+        <li>Çanak yaprağının genişliği (Sepal Width)</li>
+        <li>Taç yaprağının uzunluğu (Petal Length)</li>
+        <li>Taç yaprağının genişliği (Petal Width)</li>
+    </ul>
+    <li>Kullanıcı formu gönderir.</li>
+    <li>Yapay zeka modeli, bu verileri işleyerek tahmin yapar.</li>
+    <li>Sonuç kullanıcıya döndürülür.</li>
+</ol>
+
+<h2>Kodun Parçaları</h2>
+
+<h3>1. Sınıf: <code>IrisPredictorController</code></h3>
+<p>Bu sınıf, yazılımın ana beyni olarak işlev görür. Şunları yapar:</p>
+<ul>
+    <li><strong>Modeli yükler:</strong> Yapay zeka modelini belleğe alır.</li>
+    <li><strong>Veriyi işler:</strong> Formdan gelen bilgiyi bir "örneğe" çevirir.</li>
+    <li><strong>Tahmin yapar:</strong> Modeli kullanarak hangi çiçek türü olduğunu tahmin eder.</li>
+    <li><strong>Sonucu döndürür:</strong> Kullanıcıya tahmin sonucunu iletir.</li>
+</ul>
+
+<h3>2. Modeli Yükleyen Kod</h3>
+<pre>
+<code>
+public IrisPredictorController() {
+    try (ObjectInputStream ois = new ObjectInputStream(getClass().getResourceAsStream("/MLP_iris_model.model"))) {
+        model = (Classifier) ois.readObject();
+        System.out.println("Model başarıyla yüklendi.");
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.err.println("Model yüklenirken bir hata oluştu.");
+    }
+}
+</code>
+    </pre>
+
+<h3>3. Tahmin Yapan Kod</h3>
+<pre>
+<code>
+@PostMapping("/predict")
+public String predict(@RequestParam("sepalLength") double sepalLength,
+                      @RequestParam("sepalWidth") double sepalWidth,
+                      @RequestParam("petalLength") double petalLength,
+                      @RequestParam("petalWidth") double petalWidth) {
+    try {
+        Instances dataset = new Instances("IrisDataset", getAttributes(), 0);
+        dataset.setClassIndex(dataset.numAttributes() - 1);
+
+        Instance instance = new DenseInstance(dataset.numAttributes());
+        instance.setDataset(dataset);
+
+        instance.setValue(0, sepalLength);
+        instance.setValue(1, sepalWidth);
+        instance.setValue(2, petalLength);
+        instance.setValue(3, petalWidth);
+
+        double result = model.classifyInstance(instance);
+        return dataset.classAttribute().value((int) result);
+    } catch (Exception e) {
+        return "Tahmin sırasında hata oluştu: " + e.getMessage();
+    }
+}
+</code>
+    </pre>
+
+<h2>HTML Formu</h2>
+<p>Kullanıcıdan veri almak için aşağıdaki form kullanılır:</p>
+<pre>
+<code>
+<form action="/api/irisweb/predict" method="POST">
+    <label for="sepalLength">Sepal Length:</label>
+    <input type="number" step="0.01" name="sepalLength" id="sepalLength" required><br><br>
+
+    <label for="sepalWidth">Sepal Width:</label>
+    <input type="number" step="0.01" name="sepalWidth" id="sepalWidth" required><br><br>
+
+    <label for="petalLength">Petal Length:</label>
+    <input type="number" step="0.01" name="petalLength" id="petalLength" required><br><br>
+
+    <label for="petalWidth">Petal Width:</label>
+    <input type="number" step="0.01" name="petalWidth" id="petalWidth" required><br><br>
+
+    <button type="submit">Tahmin Yap</button>
+</form>
+</code>
+    </pre>
+
+<h2>Sonuç</h2>
+<p>Bu web uygulaması, kullanıcıdan alınan verilerle bir yapay zeka modelini çalıştırır ve çiçek türünü doğru bir şekilde tahmin eder. Basit bir web uygulamasıyla, makine öğrenimi modelleri gerçek dünyada kullanılabilir hale getirilmiştir.</p>
+</body>
+</html>
