@@ -1,0 +1,116 @@
+# Iris Tahmin Uygulaması (Iris Predictor)
+
+## Proje Tanıtımı
+
+Bu uygulama, Iris veri setini kullanarak bir çiçek türünü tahmin etmek için bir makine öğrenimi modeli kullanır. Uygulama, WEKA kullanılarak eğitilmiş bir MLP (Multi-Layer Perceptron) modeline dayanmaktadır. Kullanıcılar, web arayüzü aracılığıyla çiçeğin sepal ve petal uzunluk/genişlik değerlerini girerek tahmin sonuçlarını görüntüleyebilirler.
+
+## Kullanılan Teknolojiler
+
+- **Java Spring Boot**: Backend geliştirme için kullanılmıştır.
+- **WEKA**: Makine öğrenimi modeli eğitimi için kullanılmıştır.
+- **Thymeleaf**: Web arayüzü geliştirme için kullanılmıştır.
+- **Maven**: Proje bağımlılıklarını yönetmek için kullanılmıştır.
+
+## Kurulum Talimatları
+
+1. **Depoyu Klonlayın:**
+
+   ```bash
+   git clone https://github.com/kullaniciadi/iris-predictor.git
+   cd iris-predictor
+   ```
+
+2. **Bağımlılıkları Yükleyin:**
+   Maven kullanarak bağımlılıkları yükleyin:
+
+   ```bash
+   mvn clean install
+   ```
+
+3. **Uygulamayı Çalıştırın:**
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+4. **Web Arayüzüne Erişin:**
+   Tarayıcınızda `http://localhost:8080` adresine gidin.
+
+## Nasıl Kullanılır?
+
+1. Web arayüzüne erişin.
+2. Sepal ve petal uzunluk/genişlik değerlerini girin.
+3. **Tahmin Et** butonuna tıklayın.
+4. Tahmin edilen çiçek türü, formun altında görüntülenecektir.
+
+## Katkıda Bulunma
+
+Bu projeye katkıda bulunmak istiyorsanız, lütfen bir "pull request" gönderin veya "issue" oluşturun. Tüm katkılar memnuniyetle karşılanır.
+
+## Lisans
+
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
+
+## Referans Kullanımı
+
+Bu yazılım, makine öğrenimi modelini hem teknik hem de kullanıcı dostu bir arayüzle sunmayı amaçlamaktadır. Eğitim veya uygulama projelerinde referans olarak kullanabilir ve ilgili çalışmalarda projeye atıfta bulunabilirsiniz. 
+
+---
+
+# Iris Predictor Application
+
+## Project Overview
+
+This application uses the Iris dataset to predict the flower species based on user-provided input. The prediction is powered by a machine learning model trained with WEKA using a Multi-Layer Perceptron (MLP). Users can interact through a web interface to input sepal and petal length/width values and receive predictions.
+
+## Technologies Used
+
+- **Java Spring Boot**: For backend development.
+- **WEKA**: For training the machine learning model.
+- **Thymeleaf**: For web interface development.
+- **Maven**: For dependency management.
+
+## Installation Instructions
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/username/iris-predictor.git
+   cd iris-predictor
+   ```
+
+2. **Install Dependencies:**
+   Use Maven to install the dependencies:
+
+   ```bash
+   mvn clean install
+   ```
+
+3. **Run the Application:**
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+4. **Access the Web Interface:**
+   Open your browser and go to `http://localhost:8080`.
+
+## How to Use?
+
+1. Access the web interface.
+2. Enter sepal and petal length/width values.
+3. Click on the **Predict** button.
+4. The predicted flower species will be displayed below the form.
+
+## Contributing
+
+If you wish to contribute to this project, please submit a pull request or create an issue. All contributions are welcome.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Citation
+
+This software aims to provide a machine learning model with both technical robustness and user-friendly interfaces. You can use it as a reference in educational or practical projects and cite it in your related work.
+
