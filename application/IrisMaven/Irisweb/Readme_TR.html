@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Iris Tahmin Uygulaması</title>
+</head>
+<body>
+
+<h1>Iris Tahmin Uygulaması (Iris Predictor)</h1>
+
+<h2>Proje Tanıtımı</h2>
+
+<p>Bu uygulama, Iris veri setini kullanarak bir çiçek türünü tahmin etmek için bir makine öğrenimi modeli kullanır. Uygulama, WEKA kullanılarak eğitilmiş bir MLP (Multi-Layer Perceptron) modeline dayanmaktadır. Kullanıcılar, web arayüzü aracılığıyla çiçeğin sepal ve petal uzunluk/genişlik değerlerini girerek tahmin sonuçlarını görüntüleyebilirler.</p>
+
+<h2>Kullanılan Teknolojiler</h2>
+
+<ul>
+    <li>Java Spring Boot: Backend geliştirme için kullanılmıştır.</li>
+    <li>WEKA: Makine öğrenimi modeli eğitimi için kullanılmıştır.</li>
+    <li>Thymeleaf: Web arayüzü geliştirme için kullanılmıştır.</li>
+    <li>Maven: Proje bağımlılıklarını yönetmek için kullanılmıştır.</li>
+</ul>
+
+<h2>Kurulum Talimatları</h2>
+
+<h3>Depoyu Klonlayın:</h3>
+<pre><code>git clone https://github.com/kullaniciadi/iris-predictor.git
+cd iris-predictor
+</code></pre>
+
+<h3>Bağımlılıkları Yükleyin:</h3>
+<p>Maven kullanarak bağımlılıkları yükleyin:</p>
+<pre><code>mvn clean install
+</code></pre>
+
+<h3>Uygulamayı Çalıştırın:</h3>
+<pre><code>mvn spring-boot:run
+</code></pre>
+
+<h3>Web Arayüzüne Erişin:</h3>
+<p>Tarayıcınızda <a href="http://localhost:8080">http://localhost:8080</a> adresine gidin.</p>
+
+
+<h2>Nasıl Kullanılır?</h2>
+
+<ol>
+    <li>Web arayüzüne erişin.</li>
+    <li>Sepal ve petal uzunluk/genişlik değerlerini girin.</li>
+    <li>Tahmin Et butonuna tıklayın.</li>
+    <li>Tahmin edilen çiçek türü, formun altında görüntülenecektir.</li>
+</ol>
+
+<h2>Katkıda Bulunma</h2>
+
+<p>Bu projeye katkıda bulunmak istiyorsanız, lütfen bir "pull request" gönderin veya "issue" oluşturun. Tüm katkılar memnuniyetle karşılanır.</p>
+
+<h2>Lisans</h2>
+
+<p>Bu proje MIT Lisansı ile lisanslanmıştır.</p>
+
+<h2>Referans Kullanımı</h2>
+
+<p>Bu yazılım, makine öğrenimi modelini hem teknik hem de kullanıcı dostu bir arayüzle sunmayı amaçlamaktadır. Eğitim veya uygulama projelerinde referans olarak kullanabilir ve ilgili çalışmalarda projeye atıfta bulunabilirsiniz.</p>
+
+</body>
+</html>
