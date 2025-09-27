@@ -43,3 +43,4 @@ graph LR
 * **Temel Bilimler:** İstatistik, Matematik
 * **Mühendislik Dalları:** Bilg. Müh., Elek. Müh.
 * **Uygulamalar ve Teknikler:** Finans, Neural Network, Google Translate, Genetik Algoritmalar, High Performance Computing.
+
