@@ -42,8 +42,26 @@ graph LR
 * **Veri Madenciliği (Mining)**
 * **Temel Bilimler:** İstatistik, Matematik
 * **Mühendislik Dalları:** Bilg. Müh., Elek. Müh.
-* **Uygulamalar ve Teknikler:** Finans, Neural Network, Google Translate, Genetik Algoritmalar, High Performance Computing.
+```mermaid
+flowchart LR
+    Girdi["Girdi"] --> MakineÖğrenimi
 
+    Model["Model"] --> Çıktı["Çıktı"]
+
+    subgraph MakineÖğrenimi["Artificial Intelligence"]
+        direction TB
+        ML["Machine Learning"]
+        NN["Artificial Neural Networks"]
+        GA["Deep Learning"]
+        
+        ML --> NN --> GA
+    end 
+
+    Ekstra["İstatistik Matematik\nBilg., Müh., Elek., Müh.\nFinans\nHigh Performance Computing"]
+
+    MakineÖğrenimi --- Ekstra
+    MakineÖğrenimi --> Model
+```
 #
 ### 4. Ensemble Learning
 
