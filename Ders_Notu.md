@@ -63,11 +63,243 @@ flowchart LR
     MakineÖğrenimi --> Model
 ```
 #
+
+
+### 5. Makine Öğrenmesinin Avantajları ve Dezavantajları
+
+Makine öğrenmesi teknolojilerinin günlük hayatımıza getirdiği kolaylıklar kadar, dikkat edilmesi gereken sınırlamaları da vardır. Bu bölümde her iki yönünü de inceleyeceğiz.
+
+#### Avantajları:
+
+1. **Uzman Desteği**
+    - Uzman sayısının yetersiz olduğu alanlarda karar desteği sağlar
+    - Yeni verilerle sürekli kendini güncelleyerek uzman görüşlerini öğrenir
+
+2. **Uyum ve Yenilik**
+    - Daha önce karşılaşılmamış durumlar için yeni kurallar geliştirebilir
+    - Veri setindeki gizli örüntüleri ve ilişkileri keşfedebilir
+
+3. **Verimlilik**
+    - 7/24 kesintisiz çalışabilir
+    - Klasik programlama ile çözülemeyen problemlere veri-odaklı çözümler üretebilir
+
+#### Dezavantajları:
+
+1. **Veri Gereksinimleri**
+    - Modelin doğru çalışması için sürekli güncel veri gerekir
+    - Büyük veri setleri bile bazen doğru öğrenme için yeterli olmayabilir
+
+2. **Tahmin Doğruluğu**
+    - Sonuçlar kesin değil, olasılıksal tahminlerdir
+    - Problem yapısı değiştiğinde modelin yeniden eğitilmesi gerekir
+
+3. **Teknik Sınırlamalar**
+    - Karmaşık algoritmalar yüksek işlemci gücü ve bellek gerektirir
+    - Gerçek zamanlı veri akışlarında performans sorunları yaşanabilir
+    - Yüksek başarımlı hesaplama sistemlerine ihtiyaç duyulabilir
+
+```mermaid
+graph TD
+     A[Makine Öğrenmesi] --> B[Avantajlar]
+     A --> C[Dezavantajlar]
+     
+     B --> D[Uzman Desteği]
+     B --> E[Uyum ve Yenilik]
+     B --> F[Verimlilik]
+     
+     C --> G[Veri İhtiyacı]
+     C --> H[Tahmin Belirsizliği]
+     C --> I[Sistem Gereksinimleri]
+```
+
+### Makine Öğrenmesi Projelerinde Adım Adım İlerleme
+
+Makine öğrenmesi, bilgisayarların veriden anlam çıkarmasını ve bu anlamı kullanarak kararlar almasını sağlayan güçlü bir alandır. Ancak bu süreci başarıyla yönetmek, belirli adımları titizlikle takip etmeyi gerektirir. Tıpkı bir bilimsel araştırma gibi, makine öğrenmesi projeleri de bir dizi aşamadan oluşur ve her aşama bir sonrakini etkiler. Unutulmamalıdır ki, bazı yöntemler eksik veya gürültülü veriyle başa çıkabilirken, çoğu algoritma için temiz ve düzenli veri hayati öneme sahiptir. En uygun modeli bulmak için genellikle birden fazla algoritma ve yaklaşım denemek gerekir.
+
+#### 1. Problemi Anlamak ve Tanımlamak
+
+Her şey, çözmek istediğimiz problemi net bir şekilde anlamakla başlar. Bu aşamada, karşılaştığımız sorunun makine öğrenmesi teknikleriyle çözülüp çözülemeyeceğini belirleriz. Örneğin, bir fırının sıcaklığını belirli bir seviyede tutmak daha çok kontrol sistemlerinin işiyken, bir marketteki müşterilerin yaş dağılımını bulmak istatistiksel bir analizdir. Makine öğrenmesi, özellikle şu tür durumlar için idealdir:
+
+*   **Kuralların Belirsiz Olduğu Durumlar:** Çözüm için açık ve net bir algoritma yazmanın zor olduğu, karmaşık ilişkilerin bulunduğu problemler.
+*   **Dinamik ve Büyük Veri Setleri:** Sürekli değişen ve çok sayıda girdiye sahip sistemlerde çıktıları tahmin etme ihtiyacı.
+*   **Gizli Örüntüleri Keşfetme:** Büyük ve karmaşık veri yığınlarından ilk bakışta fark edilmeyen, işe yarar ve anlamlı bilgileri ortaya çıkarma.
+
+Bu adımda, problemin kapsamını, hedeflerini ve başarı kriterlerini belirlemek, projenin geri kalanına yön verir.
+
+#### 2. Veri Toplama ve Yönetimi
+
+Problemi tanımladıktan sonra, modelimizi eğitmek için gerekli verileri toplamaya başlarız. Bu süreç, genellikle alanında uzman kişilerle iş birliği içinde yürütülür. Burada önemli olan, sadece veri toplamak değil, aynı zamanda bu verilerin nasıl yönetileceğini de planlamaktır:
+
+*   **Hangi Veriler?** Problemi çözmek için hangi özelliklerin (değişkenlerin) önemli olduğunu belirlemek.
+*   **Nereden ve Nasıl?** Veri kaynaklarını (veritabanları, sensörler, web vb.) ve toplama yöntemlerini seçmek.
+*   **Depolama ve Teknoloji:** Toplanan verilerin nerede (bulut, yerel sunucu) ve hangi teknolojiyle (SQL, NoSQL veritabanları, veri gölleri) depolanacağını kararlaştırmak.
+*   **Veri Türü ve Boyutu:** Verilerin nitel mi nicel mi olduğunu, ne kadar hacimli olacağını ve bu hacme uygun depolama stratejilerini belirlemek.
+
+Veri toplama aşaması, modelin kalitesini doğrudan etkileyecek temel bir adımdır.
+
+#### 3. Veri Temizleme ve Hazırlık
+
+Gerçek dünya verileri nadiren mükemmeldir. Çoğu zaman eksik değerler, hatalı girişler, aykırı gözlemler veya tutarsız formatlar içerirler. Bu aşama, ham veriyi makine öğrenmesi algoritmalarının anlayabileceği ve doğru sonuçlar üretebileceği bir formata dönüştürmeyi amaçlar:
+
+*   **Eksik Veriyle Başa Çıkma:** Boşlukları doldurma (imputation) veya ilgili kayıtları çıkarma gibi stratejiler.
+*   **Gürültü ve Aykırılıkları Giderme:** Modelin yanlış öğrenmesine neden olabilecek hatalı veya sıra dışı değerleri tespit edip düzeltme.
+*   **Veri Türü Dönüşümleri:** Algoritmaların gereksinimlerine göre veri tiplerini (örneğin, metin verisini sayısal temsile) dönüştürme.
+*   **Özellik Mühendisliği:** Mevcut verilerden yeni ve daha anlamlı özellikler türeterek modelin öğrenme kapasitesini artırma.
+
+Bu adımın ne kadar titizlikle yapıldığı, modelin nihai performansını büyük ölçüde belirler.
+
+#### 4. Model Eğitimi ve Seçimi
+
+Verilerimiz hazır olduğunda, makine öğrenmesi algoritmalarını kullanarak modellerimizi oluşturmaya başlarız. Bu aşamada, farklı algoritmalar (örneğin, karar ağaçları, destek vektör makineleri, sinir ağları) eğitim verisi üzerinde denenir ve her birinin performansı kaydedilir.
+
+*   **Algoritma Çeşitliliği:** Makine öğrenmesi dünyası, her biri farklı problem türleri ve veri yapıları için optimize edilmiş zengin bir algoritma yelpazesi sunar. En iyi modeli bulmak için bu algoritmalar arasında denemeler yapmak önemlidir.
+*   **Veri Tipi Uyumu:** Bazı algoritmalar yalnızca sayısal verilerle çalışırken, bazıları kategorik verileri de doğrudan işleyebilir. Bu nedenle, seçilen algoritmanın veri tipimizle uyumlu olduğundan emin olmak gerekir.
+*   **Performans Metrikleri:** Bir algoritmanın ne kadar iyi çalıştığını değerlendirmek için tek bir ölçüt yoktur. Doğruluk (accuracy), kesinlik (precision), geri çağırma (recall), F1 skoru gibi birçok farklı metrik, modelin farklı yönlerini değerlendirmemizi sağlar. Buradaki temel hedef, kabul edilebilir bir hata oranıyla en yüksek doğruluğu sunan algoritmayı ve onun parametrelerini bulmaktır.
+
+#### 5. Sonuçları Değerlendirme ve İyileştirme
+
+Model eğitimi tamamlandıktan sonra, elde edilen sonuçları dikkatlice değerlendirmemiz gerekir. Bu aşamada, daha önce belirlenen performans metrikleri kullanılarak modelin ne kadar başarılı olduğu analiz edilir.
+
+*   **Kapsamlı Değerlendirme:** Modelin sadece genel doğruluğuna değil, aynı zamanda belirli hata türlerine (örneğin, yanlış pozitifler veya yanlış negatifler) ne kadar yatkın olduğuna da bakılır.
+*   **İteratif Süreç:** Eğer modelin performansı, tanımlanan problem için yeterli düzeyde değilse, bu bir başarısızlık değil, bir öğrenme fırsatıdır. Bu durumda, önceki adımlara geri dönülerek (veri toplama, temizleme, özellik mühendisliği veya farklı algoritmalar deneme) iyileştirmeler yapılır. Bu döngü, tatmin edici sonuçlar elde edilene kadar devam eder.
+*   **İstatistiksel Doğrulama:** Elde edilen sonuçların istatistiksel olarak anlamlı olup olmadığını değerlendirmek, modelin genellenebilirliği hakkında önemli bilgiler sunar.
+
+#### Model Nedir?
+
+Makine öğrenmesinde bir "model", girdiye göre çıktıyı öngörebilen otomatik veya yarı otomatik bir sistemdir. Bu, gerçek dünyadaki bir sürecin matematiksel bir temsili olabileceği gibi, veriden öğrenilmiş karmaşık bir kural seti de olabilir. Önemli bir nokta, modellerin ürettiği sonuçların **kesin olmaması**, aksine **olasılıksal tahminler** olduğudur. Bir model, genellikle programlama dilleri aracılığıyla inşa edilen sistemlere entegre edilerek, ham girdiyi işleyip anlamlı çıktılara dönüştüren yapay zeka tekniklerini kullanan bir "beyin" görevi görür.
+
+#### Öğrenme Kavramı
+
+Bilgisayarlar için "öğrenme", bir konu, durum veya olay hakkında yeterli bilgiye sahip olma sürecidir. Bu, insanlardaki gibi tecrübe kazanma ve uygun davranışları geliştirme yoluyla gerçekleşir. Bilgisayarlar, kendilerine sunulan büyük miktardaki veriyi analiz ederek, bu verilerdeki örüntüleri ve ilişkileri keşfederler. Yeterli veri ve doğru algoritmalarla "eğitildiklerinde", tıpkı bir insanın yeni bir beceri kazanması gibi, belirli görevleri yerine getirme yeteneği kazanırlar. Bu sayede, daha önce görmedikleri verilere karşı bile anlamlı tahminler yapabilir veya kararlar alabilirler.
+
+
+### Öğrenme Türleri
+
+Makine öğrenmesinin temel taşlarından biri, bilgisayarların veriden nasıl öğrendiğini anlamaktır. Bu öğrenme süreçlerini genellikle iki ana kategoriye ayırırız: Denetimli ve Denetimsiz Öğrenme. Her birinin kendine özgü bir yaklaşımı ve kullanım alanı vardır.
+
+#### Denetimli Öğrenme (Supervised Learning)
+
+Şöyle düşünün gençler, küçük bir çocuğa hayvanları öğretirken, ona bir kedi resmi gösterip "bu bir kedi" deriz, bir köpek resmi gösterip "bu bir köpek" deriz. Yani, her resim için doğru cevabı, yani "etiketi" ona veririz. Çocuk yeterince örnek gördüğünde, daha önce hiç görmediği bir hayvan resmini bile doğru tahmin etmeye başlar.
+
+İşte denetimli öğrenme de tam olarak bu prensiple çalışır. Elimizde, girdilerin (örneğin bir hayvanın özellikleri) ve bunlara karşılık gelen doğru çıktıların (örneğin "kedi" veya "köpek" etiketi) bulunduğu bir veri seti vardır. Bu verilere **etiketlenmiş veri** adını veririz. Amacımız, bu etiketlenmiş veriyi kullanarak, bilgisayarın yeni, daha önce görmediği girdiler için doğru çıktıyı tahmin edebilecek bir **model** oluşturmasını sağlamaktır. Bu model, geçmişteki deneyimlerden (veri) öğrenerek gelecekteki durumlar hakkında tahminler yapar.
+
+Bu öğrenme türü, makine öğrenmesinde en sık karşılaştığımız yaklaşımdır. Temelinde, belirli bir hedef değişkeni (çıktı) tahmin etme veya sınıflandırma amacı yatar. Model, girdiler ile çıktılar arasındaki karmaşık ilişkileri öğrenir ve bu ilişkileri yeni verilere genellemeye çalışır.
+
+**Uygulamalar:**
+Denetimli öğrenme, özellikle şu tür problemlerin çözümünde kullanılır:
+*   **Sınıflandırma Problemleri (Classification):** Bir verinin hangi kategoriye ait olduğunu tahmin etmek.
+*   **Regresyon Problemleri (Regression):** Sürekli bir sayısal değeri tahmin etmek.
+
+**Örnekler:**
+*   Bir e-postanın "Spam" mı yoksa "Normal" mi olduğunu belirlemek.
+*   Bir müşterinin kredi başvurusunun "Onaylandı" ya da "Reddedildi" olarak sonuçlanacağını tahmin etmek.
+*   Bir hastada "Şeker hastalığı var" ya da "Yok" teşhisi koymak.
+*   Bir evin özelliklerine (metrekare, oda sayısı, konum vb.) bakarak satış fiyatını öngörmek.
+#### Denetimsiz Öğrenme (Unsupervised Learning)
+
+Şimdi de şöyle bir senaryo düşünelim: Size bir kutu dolusu farklı renkte ve şekilde oyuncak veriliyor ve "Bunları benzerliklerine göre gruplandır" deniyor. Ama size hangi oyuncağın ne olduğunu veya kaç grup olması gerektiğini söyleyen kimse yok. Siz de oyuncakların renklerine, boyutlarına, şekillerine bakarak kendinizce gruplar oluşturuyorsunuz.
+
+Denetimsiz öğrenme de bu mantıkla çalışır. Elimizde **etiketlenmemiş veriler** bulunur; yani, girdilere karşılık gelen doğru çıktıları önceden bilmeyiz ve sınıflar önceden belirli değildir. Buradaki temel amaç, verinin kendi içindeki gizli yapıları, örüntüleri veya ilişkileri keşfetmektir. Denetimsiz öğrenme algoritmaları (örneğin kümeleme ve birliktelik kuralları gibi yöntemler) bu etiketlenmemiş verilerde var olan örüntüyü ortaya çıkarır. Bu süreçte veri analisti, algoritmalar üzerinde beklentileri doğrultusunda ayarlamalar yaparak en anlamlı sonuçları elde etmeye çalışır. Özellikle kümeleme analizi, verinin anlaşılırlığını artırır ve kümeler arası uzaklıklar, farklılıklar veya benzerlikler gibi önemli bilgilerin tespit edilmesini sağlar. Model, herhangi bir dış rehberlik olmaksızın, verinin doğal düzenini anlamaya çalışır.
+
+**Yöntemler ve Uygulamalar:**
+*   **Kümeleme (Clustering):** Bu alandaki en yaygın yöntemlerden biri kümelemedir. Kümeleme, veri noktalarını birbirine benzer özelliklere sahip gruplara ayırır. Örneğin, bir e-ticaret sitesi, müşterilerinin satın alma alışkanlıklarına bakarak onları farklı segmentlere ayırabilir. Böylece her segmente özel pazarlama stratejileri geliştirebilir. Burada kaç müşteri grubu olduğunu veya hangi müşterinin hangi gruba ait olduğunu önceden bilmeyiz, model bunu veriden öğrenir.
+*   **Birliktelik Kuralları (Association Rules):** Bir diğer önemli denetimsiz öğrenme yöntemi ise birliktelik kurallarıdır. Bu yöntem, veriler arasındaki eş zamanlı oluşumları veya ilişkileri ortaya çıkarır. En bilinen örneği **sepet analizi**dir: "Eğer bir müşteri ekmek alıyorsa, büyük ihtimalle tereyağı da alır" gibi kurallar keşfedilir. Bu sayede marketler ürün yerleşimlerini veya kampanyalarını optimize edebilir.
+*   **Boyut Azaltma (Dimensionality Reduction):** Ayrıca, verinin daha anlaşılır hale getirilmesi veya görselleştirilmesi için boyut azaltma gibi teknikler de denetimsiz öğrenme kapsamına girer. Bu, çok sayıda özelliği olan veriyi, bilgi kaybını en aza indirerek daha az sayıda özellikle temsil etmeyi amaçlar.
+
+**Örnekler:**
+*   Bir şirketin müşteri tabanında kaç farklı "müşteri tipi" olduğunu bulmak ve bu tiplere göre pazarlama stratejileri geliştirmek.
+*   Sosyal medya gönderilerindeki konuları otomatik olarak gruplandırmak.
+*   Bir süpermarkette hangi ürünlerin sıklıkla birlikte satın alındığını keşfetmek (sepet analizi).
+*   Büyük bir veri setindeki anormallikleri veya sıra dışı durumları tespit etmek.
+
+
+### Lineer Regresyon (Doğrusal Regresyon)
+
+Şimdi de makine öğrenmesinin en temel ve en sık kullanılan modellerinden biri olan Lineer Regresyon'a (Doğrusal Regresyon) bir göz atalım gençler. Adından da anlaşılacağı gibi, bu model, değişkenler arasında doğrusal bir ilişki olduğunu varsayar ve bu ilişkiyi matematiksel olarak ifade etmeye çalışır.
+
+Hayatımızda birçok şeyin birbiriyle ilişkili olduğunu gözlemleriz. Örneğin, bir evin büyüklüğü arttıkça fiyatının da artması beklenir, ya da bir öğrencinin ders çalışma süresi uzadıkça sınav notunun yükselme ihtimali artar. Lineer regresyon, işte bu tür 'neden-sonuç' ilişkilerini, bir doğru denklemiyle ifade etmeyi hedefler.
+
+En basit haliyle, bir girdi (bağımsız değişken) ve bir çıktı (bağımlı değişken) arasındaki ilişkiyi şöyle bir denklemle gösterebiliriz:
+
+$$y = \theta_0 + \theta_1 x$$
+
+Burada:
+*   `y`, tahmin etmeye çalıştığımız sonuçtur (örneğin, evin fiyatı veya sınav notu).
+*   `x`, sonucu etkilediğini düşündüğümüz girdidir (örneğin, evin metrekaresi veya ders çalışma süresi).
+*   `θ₀` (teta sıfır), doğrunun y eksenini kestiği noktadır, yani `x` sıfır olduğunda `y`'nin alacağı değerdir. Buna 'sabit terim' veya 'kesişim' diyebiliriz.
+*   `θ₁` (teta bir), `x`'teki bir birimlik değişimin `y`'de ne kadarlık bir değişime yol açtığını gösteren 'eğim' veya 'katsayı'dır. Bu katsayı, `x` ile `y` arasındaki ilişkinin gücünü ve yönünü belirler.
+
+Makine öğrenmesinde bu `y = \theta_0 + \theta_1 x` denklemini bir 'hipotez' olarak adlandırırız. Yani, `x` ile `y` arasında böyle bir doğrusal ilişki olabileceğini varsayarız. Modelin 'öğrenme süreci' ise, elimizdeki mevcut verileri (geçmiş ev fiyatları ve metrekareleri gibi) kullanarak, bu hipoteze en uygun `θ₀` ve `θ₁` değerlerini bulmaktan ibarettir. Amacımız, bu parametreleri öyle bir şekilde belirlemektir ki, modelimiz mevcut verilere en iyi şekilde uysun ve gelecekteki yeni `x` değerleri için `y`'yi mümkün olan en doğru şekilde tahmin edebilsin.
+
+Peki ya bir sonucu etkileyen tek bir faktör değil de birden fazla faktör varsa? Örneğin, evin fiyatını sadece metrekaresi değil, aynı zamanda oda sayısı, bulunduğu semt, yaşı gibi birçok özellik etkileyebilir. İşte bu durumda modelimizi genişleterek 'Çoklu Lineer Regresyon'a geçeriz:
+
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n$$
+
+Burada `x₁`, `x₂`, ..., `xₙ` farklı girdi özelliklerini (metrekaresi, oda sayısı vb.) temsil ederken, `θ₁`, `θ₂`, ..., `θₙ` de her bir özelliğin `y` üzerindeki etkisini gösteren katsayılardır. Bu denklem hala 'lineer'dir, çünkü `y`'nin tahmini, her bir özelliğin katsayılarla çarpılıp toplanmasıyla elde edilir. Yani, parametreler (`θ` değerleri) açısından ilişki doğrusaldır.
+
+Lineer regresyonun en önemli özelliklerinden biri, makine öğrenmesi algoritmaları arasında en basit ve anlaşılır olanlardan biri olmasıdır. Bu basitliği sayesinde, sonuçları yorumlamak ve hangi faktörlerin çıktıyı ne kadar etkilediğini anlamak genellikle kolaydır. Ayrıca, hesaplama maliyeti düşüktür ve birçok gerçek dünya probleminde şaşırtıcı derecede iyi sonuçlar verebilir. Ancak unutmamak gerekir ki, bu modelin iyi çalışabilmesi için girdi ve çıktı arasında gerçekten doğrusal bir ilişki olması varsayılır. Eğer ilişki doğrusal değilse, daha karmaşık modellere ihtiyaç duyulabilir.
+
+Bu doğrusal modeller, yani bir sonuç (y) ve neden (x) değişkenlerini tanımlayan denklemler gibi yapılar, neden-sonuç ilişkilerini anlamak için oldukça güçlü araçlardır. Aralarında doğrusal bir ilişki bulunan durumları analiz etmek ve yorumlamak genellikle daha kolaydır.
+
+#### Lineer Modelin Avantajları:
+
+*   **Gelişmiş Teori ve Anlaşılırlık:** Lineer modellerin matematiksel teorisi çok iyi geliştirilmiştir. Özellikleri ve kapsamları net bir şekilde bilinir, bu da onları güvenilir kılar.
+*   **Kolay Tahmin ve Geliştirme:** Model parametrelerinin (yani `θ` değerlerinin) tahmini ve probleme göre modelin geliştirilmesi genellikle kolaydır.
+*   **Geniş Uygulama Alanı:** Çok geniş ve çeşitli ilişkileri ifade edebilirler. Basit yapılarına rağmen, birçok farklı alandaki problemleri çözmek için kullanılabilirler.
+*   **Karmaşık Veri Setleriyle Başarı:** Spesifik ve karmaşık veri setlerinin tahmin problemlerinde bile şaşırtıcı derecede iyi sonuçlar verebilirler.
+*   **Hesaplama Verimliliği:** Yüz binlerce parametre ve faktör içeren lineer modellerin bilgisayarla kurulması ve eğitilmesi genellikle kolay ve hızlıdır.
+*   **Esneklik:** Doğrusal olmayan ilişkiler bile, uygun geçici değişkenler (örneğin, `x²` veya `log(x)`) tanımlanarak standart bir doğrusal forma dönüştürülebilir. Yani, `f(x₁) = xₙ₊₁` gibi dönüşümlerle doğrusal olmayan özellikler de modele dahil edilebilir.
+*   **Genişletilmiş Veri Kümelerinde İlişki Tespiti:** Eğer veri kümesinde doğrusal olmayan parametreler varsa, bunlar temel değişkenlerden hesaplanıp veri kümesine yeni özellikler olarak eklenebilir ve bu genişletilmiş veri kümesinde doğrusal model kullanılabilir.
+
+Lineer modellerin nasıl ifade edildiğine ve görselleştirildiğine de kısaca değinelim.
+
+#### Lineer Modelin Gösterimi:
+
+*   **Standart Gösterim:** Daha önce de gördüğümüz gibi, bir lineer modelin standart gösterimi genellikle şu şekildedir:
+    $$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
+    Burada `y` tahmin edilen sonuçken, `x`'ler ise girdi öznitelikleridir.
+*   **Değişim Seviyesi:** Bir lineer modelde, her bir `xᵢ` özniteliğindeki `Δxᵢ` kadar bir değişimin, `y` üzerindeki etkisi `Δxᵢθᵢ` olarak ifade edilebilir. Toplam değişim ise bu bireysel etkilerin toplamı (`Δx₁θ₁ + Δx₂θ₂ + ...`) şeklinde düşünülebilir. Bu, her bir özelliğin sonuca ne kadar katkıda bulunduğunu anlamamızı sağlar.
+*   **Grafiksel Gösterim (Regresyon):** Regresyon problemlerinde lineer model, genellikle bir doğru veya daha yüksek boyutlarda bir düzlem (hiper-düzlem) olarak görselleştirilir. Bu doğru, girdi değişkenleri değiştikçe çıktı değişkeninin de doğrusal olarak nasıl değiştiğini gösterir.
+*   **Grafiksel Gösterim (Sınıflandırma):** Lineer modeller sadece sayısal değer tahmin etmekle kalmaz, aynı zamanda sınıflandırma problemlerinde de kullanılabilir. Bu durumda, lineer model bir "sınıf ayıracı" veya "sınır çizgisi" (daha yüksek boyutlarda bir hiper-düzlem) oluşturarak farklı sınıfları (örneğin, Sınıf A ve Sınıf B) birbirinden ayırır.
+
+Şimdi de bir lineer modelin temel yapı taşlarından olan 'öznitelikler' kavramına daha yakından bakalım.
+
+#### Öznitelikler (Features)
+
+Bir makine öğrenmesi modelinde, tahmin etmeye çalıştığımız `y` sonucunu etkilediğini düşündüğümüz her bir girdi değişkenine **öznitelik (feature)** denir. Bunlara bazen **nitelik (attribute)**, **değişken (variable)**, **boyut (dimension)** veya modelin içindeki **parametreler (parameters)** de diyebiliriz.
+
+Yukarıdaki standart lineer model denklemimizde:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
+Burada `y` tahmin edilen sonuçken, `x₁`, `x₂`, ..., `xₘ` ifadeleri modelin kullandığı farklı özniteliklerdir.
+
+Bu özniteliklerin bir araya gelerek oluşturduğu topluluğa **öznitelik serisi** veya **öznitelik vektörü** denir. Bir öznitelik vektörünün oluşturulmasında, öncelikle alanında uzman kişilerin görüşleri ve bilgileri kullanılır. Bu uzmanlar, tahmin edilmeye çalışılan durumu en iyi şekilde karakterize eden özellikleri belirlememize yardımcı olurlar.
+
+**Örnek:** Yarınki hava durumunun tahmini probleminde:
+*   `y` = Yarınki hava durumu tahmini (örneğin, sıcaklık, yağış durumu)
+*   `x₁` = Bugünkü sıcaklık
+*   `x₂` = Bugünkü nem
+*   `x₃` = Bugünkü basınç
+*   `x₄` = Bugünkü rüzgar hızı
+*   `x₅` = Bugünkü rüzgarın yönü
+
+**Öznitelik Seçiminin Önemi:**
+Öznitelik seçimi, bir makine öğrenmesi modelinin başarımı için son derece önemlidir. Seçilen bazı öznitelikler, tahmin edilmek istenilen durumu gerçekten iyi temsil ederken, bazıları hiçbir etkisi olmayabilir veya hatta modelin performansını bozucu etki yapabilir. Bu nedenle, doğru ve ilgili öznitelikleri seçmek kritik bir adımdır.
+
+**Temel Öznitelikler:**
+Sonucu veya durumu karakterize eden orijinal özellikler, **temel öznitelik kümesini** oluştururlar. Bu temel özniteliklerin seçiminde yine uzman desteği almak çok değerlidir. Uzman, aynı zamanda problemi en doğru şekilde tanımlayan kişidir.
+
+Öznitelikler farklı türlerde olabilir:
+*   **Kategorik:** Belirli kategorilere ait değerler (örneğin, "küçük", "büyük", "çok büyük" gibi boyutlar veya "kırmızı", "mavi" gibi renkler).
+*   **İkili (Binary):** Sadece iki olası değeri olan öznitelikler (örneğin, 1 veya 0, "Doğru" veya "Yanlış", "Evet" veya "Hayır").
+*   **Sayısal:** Ölçülebilir, sürekli veya ayrık sayısal değerler (örneğin, hava sıcaklığı, boy, kilo, yaş).
+
+Unutmayın gençler, bu öznitelikler tahmin etmeye çalıştığımız sonuçla veya durumlarla doğrudan alakalı olmalı ve mümkünse tekrarlanabilir, güvenilir bir şekilde ölçülebilir olmalıdırlar.
+
 ### 4. Ensemble Learning
 
 Birden fazla makine öğrenmesi modelinin bir araya getirilerek daha güçlü ve doğru tahminler yapmasını sağlayan bir tekniktir. Farklı modellerin avantajlarını birleştirerek, tek bir modelin yapamayacağı karmaşık görevleri başarabilir.
 #### Ensemble Learning Yöntemleri
-Gençler, topluluk öğrenmesi (ensemble learning) yöntemleri, "birlikten kuvvet doğar" atasözünün makine öğrenmesindeki karşılığıdır. Tek bir modelin yetersiz kalabileceği durumlarda, birden fazla modelin gücünü birleştirerek çok daha isabetli ve güvenilir sonuçlar elde etmeyi amaçlarız. Şimdi bu yaklaşımların en popüler olan üç tanesini inceleyelim.
+Topluluk öğrenmesi (ensemble learning) yöntemleri, "birlikten kuvvet doğar" atasözünün makine öğrenmesindeki karşılığıdır. Tek bir modelin yetersiz kalabileceği durumlarda, birden fazla modelin gücünü birleştirerek çok daha isabetli ve güvenilir sonuçlar elde etmeyi amaçlarız. Şimdi bu yaklaşımların en popüler olan üç tanesini inceleyelim.
 
 *   **Bagging (Bootstrap Aggregating):** Bu yöntemi, zor bir sınav sorusunu tek bir öğrenciye çözdürmek yerine, sınıfı rastgele gruplara ayırıp her gruba aynı soruyu sormaya benzetebiliriz. Her grup kendi içinde tartışır ve bir cevap bulur. Sonunda, tüm grupların verdiği cevaplar toplanır ve en çok tekrar edilen cevap, nihai doğru yanıt olarak kabul edilir. Bu yaklaşım, tek bir kişinin yapabileceği bireysel hataları ortadan kaldırarak daha sağlam bir sonuca ulaşır. En bilinen örneği *Random Forest* (Rastgele Orman) algoritmasıdır.
 
@@ -194,5 +426,41 @@ flowchart TD
     classDef boost fill:#ffb0a8,stroke:#333,stroke-width:1px;
     classDef stack fill:#b4f0b4,stroke:#333,stroke-width:1px;
 ```
+
+### Weka ve Python'da Topluluk Öğrenmesi Algoritmaları
+
+Makine öğrenmesi algoritmalarını uygulamak için farklı araçlar ve programlama dilleri kullanabiliriz. Bu bölümde, topluluk öğrenmesi yöntemlerini hem görsel bir arayüz sunan Weka'da hem de esnek bir programlama dili olan Python'da nasıl uygulayabileceğimize değinelim.
+
+#### Weka'da Topluluk Öğrenmesi
+
+Weka, makine öğrenmesi algoritmalarını görsel bir arayüz üzerinden kolayca uygulayabileceğiniz, özellikle başlangıç seviyesindeki kullanıcılar ve hızlı denemeler yapmak isteyenler için oldukça kullanışlı bir yazılımdır. Topluluk öğrenmesi yöntemlerini Weka'da uygulamak da oldukça basittir.
+
+Weka'da "Classify" (Sınıflandır) sekmesine gittiğinizde, "Choose" (Seç) butonuna tıklayarak farklı algoritmaları görebilirsiniz. Topluluk öğrenmesi algoritmaları genellikle "meta" başlığı altında yer alır. Burada, daha önce bahsettiğimiz yöntemlerin Weka'daki karşılıklarını bulabilirsiniz:
+
+*   **Bagging:** Weka'da doğrudan `Bagging` adıyla bulabileceğiniz bu algoritma, seçtiğiniz temel bir öğreniciyi (örneğin bir karar ağacı olan J48'i) veri setinin farklı bootstrap örnekleri üzerinde eğitir ve sonuçları birleştirir. Kaç tane temel öğrenici kullanacağınızı (`numIterations`) ve hangi temel öğreniciyi (`classifier`) kullanacağınızı ayarlayabilirsiniz.
+*   **AdaBoostM1:** Boosting yönteminin bir uygulaması olan `AdaBoostM1`, yine bir temel öğreniciyi (genellikle zayıf bir öğrenici, örneğin `DecisionStump` gibi basit bir karar ağacı) ardışık olarak eğitir. Her adımda, önceki modelin yanlış sınıflandırdığı örneklere daha fazla odaklanarak hataları düzeltmeye çalışır.
+*   **Stacking:** Weka'da `Stacking` algoritması, birden fazla temel öğrenicinin (base learners) tahminlerini alarak, bu tahminleri yeni bir veri seti gibi kullanır ve bu yeni veri seti üzerinde bir "meta-öğrenici" (meta-learner) eğitir. Böylece farklı modellerin güçlü yönlerini birleştirerek daha iyi bir nihai tahmin elde etmeyi hedefler.
+
+Weka'nın görsel arayüzü sayesinde, bu algoritmaların nasıl çalıştığını ve farklı parametrelerin sonuçları nasıl etkilediğini deneyerek kolayca gözlemleyebilirsiniz.
+
+#### Python'da Topluluk Öğrenmesi
+
+Python, makine öğrenmesi uygulamaları için en popüler dillerden biridir ve özellikle `scikit-learn` kütüphanesi sayesinde topluluk öğrenmesi algoritmalarını kodla uygulamak oldukça güçlü ve esnektir.
+
+`scikit-learn` kütüphanesinde, daha önce ele aldığımız topluluk öğrenmesi yöntemlerinin çoğu hazır olarak bulunur:
+
+*   **Bagging:**
+    *   `BaggingClassifier` (sınıflandırma için) ve `BaggingRegressor` (regresyon için) sınıflarını kullanarak kendi Bagging modellerinizi oluşturabilirsiniz. Bu sınıflar, `base_estimator` (temel öğrenici) ve `n_estimators` (kaç tane temel model kullanılacağı) gibi parametrelerle özelleştirilebilir. Örneğin, birçok karar ağacını bir araya getirerek bir Bagging modeli kurabilirsiniz.
+    *   **Random Forest (Rastgele Orman):** Bagging'in özel ve çok başarılı bir türüdür. `RandomForestClassifier` ve `RandomForestRegressor` sınıfları, temel öğrenici olarak karar ağaçlarını kullanır ve her ağacı eğitirken hem veri örneklemesi yapar hem de özelliklerin rastgele bir alt kümesini seçer. Bu "rastgelelik", modellerin birbirinden daha bağımsız olmasını sağlayarak performansı artırır.
+
+*   **Boosting:**
+    *   `AdaBoostClassifier` ve `AdaBoostRegressor`: Weka'daki `AdaBoostM1`'e benzer şekilde çalışır. Genellikle `DecisionTreeClassifier(max_depth=1)` gibi zayıf bir temel öğrenici ile kullanılır.
+    *   `GradientBoostingClassifier` ve `GradientBoostingRegressor`: Bu algoritmalar, bir önceki modelin hatalarını (rezidüellerini) düzeltmek için yeni modelleri ardışık olarak eğitir. Daha karmaşık ve genellikle daha yüksek performanslı bir Boosting yöntemidir.
+    *   **XGBoost, LightGBM, CatBoost:** Bunlar, `scikit-learn`'in dışında, ancak Python ekosisteminde yaygın olarak kullanılan ve Gradient Boosting'in optimize edilmiş, yüksek performanslı uygulamalarıdır. Özellikle büyük veri setleri ve karmaşık problemler için tercih edilirler.
+
+*   **Stacking:**
+    *   `StackingClassifier` ve `StackingRegressor`: Bu sınıflar, farklı temel modellerin (örneğin, bir Lojistik Regresyon, bir Destek Vektör Makinesi ve bir Rastgele Orman) tahminlerini birleştirerek, bu tahminler üzerinde eğitilen bir "final_estimator" (meta-model) ile nihai sonucu üretir. Bu sayede farklı algoritmaların güçlü yönlerini bir araya getirme esnekliği sunar.
+
+Python'da kod yazarak, bu algoritmaların her bir adımını daha detaylı kontrol edebilir, farklı parametre kombinasyonlarını deneyebilir ve modellerinizi kendi özel ihtiyaçlarınıza göre uyarlayabilirsiniz. Bu, özellikle daha derinlemesine analizler ve özelleştirilmiş çözümler geliştirmek istediğinizde büyük avantaj sağlar.
 
 
