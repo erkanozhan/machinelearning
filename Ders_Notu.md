@@ -243,26 +243,71 @@ Bu doğrusal modeller, yani bir sonuç (y) ve neden (x) değişkenlerini tanıml
 
 #### Lineer Modelin Avantajları:
 
-*   **Gelişmiş Teori ve Anlaşılırlık:** Lineer modellerin matematiksel teorisi çok iyi geliştirilmiştir. Özellikleri ve kapsamları net bir şekilde bilinir, bu da onları güvenilir kılar.
+*   **Gelişmiş Teori ve Anlaşılırlık:** Lineer modellerin matematiksel teorisi oldukça iyi geliştirilmiştir. Özellikleri ve kapsamları net bir şekilde bilindiği için, bu modeller güvenilir bir temel sunar.
 *   **Kolay Tahmin ve Geliştirme:** Model parametrelerinin (yani `θ` değerlerinin) tahmini ve probleme göre modelin geliştirilmesi genellikle kolaydır.
-*   **Geniş Uygulama Alanı:** Çok geniş ve çeşitli ilişkileri ifade edebilirler. Basit yapılarına rağmen, birçok farklı alandaki problemleri çözmek için kullanılabilirler.
+*   **Geniş Uygulama Alanı:** Basit yapılarına rağmen, çok geniş ve çeşitli ilişkileri ifade edebilirler. Birçok farklı alandaki problemleri çözmek için kullanılabilirler.
 *   **Karmaşık Veri Setleriyle Başarı:** Spesifik ve karmaşık veri setlerinin tahmin problemlerinde bile şaşırtıcı derecede iyi sonuçlar verebilirler.
 *   **Hesaplama Verimliliği:** Yüz binlerce parametre ve faktör içeren lineer modellerin bilgisayarla kurulması ve eğitilmesi genellikle kolay ve hızlıdır.
-*   **Esneklik:** Doğrusal olmayan ilişkiler bile, uygun geçici değişkenler (örneğin, `x²` veya `log(x)`) tanımlanarak standart bir doğrusal forma dönüştürülebilir. Yani, `f(x₁) = xₙ₊₁` gibi dönüşümlerle doğrusal olmayan özellikler de modele dahil edilebilir.
-*   **Genişletilmiş Veri Kümelerinde İlişki Tespiti:** Eğer veri kümesinde doğrusal olmayan parametreler varsa, bunlar temel değişkenlerden hesaplanıp veri kümesine yeni özellikler olarak eklenebilir ve bu genişletilmiş veri kümesinde doğrusal model kullanılabilir.
+*   **Esneklik:** Lineer modeller, doğrusal olmayan ilişkileri modelleme konusunda da şaşırtıcı bir esneklik sunar. Doğrudan doğrusal olmayan bir ilişkiyi ifade etmek yerine, mevcut değişkenler üzerinden yeni "geçici değişkenler" veya "dönüştürülmüş öznitelikler" tanımlayarak bu ilişkileri doğrusal bir forma dönüştürebiliriz. Örneğin, bir `x₁` değişkeninin karesi olan `x₁²`'yi yeni bir `X₂` özniteliği olarak düşünebiliriz. Ya da `log(x₁)` gibi bir dönüşüm uygulayarak bunu `X₃` olarak modele dahil edebiliriz. Bu durumda, orijinalde `y = θ₀ + θ₁x₁ + θ₂x₁²` gibi görünen bir denklemi, `X₂ = x₁²` tanımlamasıyla `y = θ₀ + θ₁x₁ + θ₂X₂` şeklinde parametreleri açısından doğrusal bir yapıya kavuşturmuş oluruz. Yani, `f(x₁) = X_{n+1}` veya `f(x₂) = X_{n+2}` gibi fonksiyonlarla orijinal öznitelikleri dönüştürerek, modelin parametreleri (`θ` değerleri) açısından doğrusal kalmasını sağlarız. Eğer veri kümesinde doğrusal olmayan ilişkiler barındıran parametreler varsa, bunlar temel değişkenlerden hesaplanıp veri kümesine yeni özellikler olarak eklenebilir ve bu genişletilmiş veri kümesinde doğrusal model kullanılabilir. Bu yaklaşım, lineer modellerin çok daha geniş bir problem yelpazesine uygulanabilmesine olanak tanır.
+
 
 Lineer modellerin nasıl ifade edildiğine ve görselleştirildiğine de kısaca değinelim.
 
 #### Lineer Modelin Gösterimi:
 
-*   **Standart Gösterim:** Daha önce de gördüğümüz gibi, bir lineer modelin standart gösterimi genellikle şu şekildedir:
-    $$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
-    Burada `y` tahmin edilen sonuçken, `x`'ler ise girdi öznitelikleridir.
-*   **Değişim Seviyesi:** Bir lineer modelde, her bir `xᵢ` özniteliğindeki `Δxᵢ` kadar bir değişimin, `y` üzerindeki etkisi `Δxᵢθᵢ` olarak ifade edilebilir. Toplam değişim ise bu bireysel etkilerin toplamı (`Δx₁θ₁ + Δx₂θ₂ + ...`) şeklinde düşünülebilir. Bu, her bir özelliğin sonuca ne kadar katkıda bulunduğunu anlamamızı sağlar.
-*   **Grafiksel Gösterim (Regresyon):** Regresyon problemlerinde lineer model, genellikle bir doğru veya daha yüksek boyutlarda bir düzlem (hiper-düzlem) olarak görselleştirilir. Bu doğru, girdi değişkenleri değiştikçe çıktı değişkeninin de doğrusal olarak nasıl değiştiğini gösterir.
-*   **Grafiksel Gösterim (Sınıflandırma):** Lineer modeller sadece sayısal değer tahmin etmekle kalmaz, aynı zamanda sınıflandırma problemlerinde de kullanılabilir. Bu durumda, lineer model bir "sınıf ayıracı" veya "sınır çizgisi" (daha yüksek boyutlarda bir hiper-düzlem) oluşturarak farklı sınıfları (örneğin, Sınıf A ve Sınıf B) birbirinden ayırır.
+Önce matematiksel modelimizi daha anlaşılır kılalım. Temel lineer model denklemi:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
 
-Şimdi de bir lineer modelin temel yapı taşlarından olan 'öznitelikler' kavramına daha yakından bakalım.
+Bu denklemin tek değişkenli en basit hali şöyle görünür:
+$$y = \theta_0 + \theta_1 x$$
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black"/>
+    <line x1="50" y1="150" x2="350" y2="100" stroke="blue" stroke-width="2"/>
+    <text x="360" y="250">x</text>
+    <text x="40" y="40">y</text>
+    <text x="360" y="100">y = θ₀ + θ₁x</text>
+    <text x="70" y="180">θ₀ (y-kesişimi)</text>
+    <text x="200" y="140">θ₁ (eğim)</text>
+</svg>
+
+Burada:
+- `θ₀` doğrunun y eksenini kestiği noktayı belirler
+- `θ₁` doğrunun eğimini gösterir
+- Her x değeri için tek bir y değeri vardır
+
+İki değişkenli model için durum biraz farklıdır:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2$$
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,250 350,250 350,50" fill="lightblue" opacity="0.3"/>
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black"/>
+    <line x1="350" y1="250" x2="350" y2="50" stroke="black"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black"/>
+    <text x="360" y="250">x₁</text>
+    <text x="360" y="40">x₂</text>
+    <text x="40" y="40">y</text>
+    <text x="200" y="150">y = θ₀ + θ₁x₁ + θ₂x₂</text>
+</svg>
+
+Sınıflandırma problemlerinde, lineer model bir ayırıcı çizgi oluşturur:
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="250" x2="350" y2="50" stroke="red" stroke-width="2"/>
+    <circle cx="100" cy="100" r="5" fill="blue"/>
+    <circle cx="120" cy="120" r="5" fill="blue"/>
+    <circle cx="90" cy="80" r="5" fill="blue"/>
+    <circle cx="250" cy="200" r="5" fill="green"/>
+    <circle cx="270" cy="220" r="5" fill="green"/>
+    <circle cx="290" cy="240" r="5" fill="green"/>
+    <text x="100" y="70">Sınıf A</text>
+    <text x="250" y="250">Sınıf B</text>
+    <text x="150" y="150">Ayırıcı Çizgi</text>
+</svg>
+
+Bu gösterimlerdeki öznitelikler (x'ler), sonucu (y) etkileyen ölçülebilir özellikleri temsil eder. Her özniteliğin etkisi, kendi θ katsayısı ile belirlenir.
+
 
 #### Öznitelikler (Features)
 
