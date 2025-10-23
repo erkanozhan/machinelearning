@@ -294,16 +294,26 @@ $$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2$$
 Sınıflandırma problemlerinde, lineer model bir ayırıcı çizgi oluşturur:
 
 <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- X ve Y eksenleri -->
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black" stroke-width="2"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black" stroke-width="2"/>
+    <!-- Ayırıcı çizgi -->
     <line x1="50" y1="250" x2="350" y2="50" stroke="red" stroke-width="2"/>
+    <!-- Sınıf A noktaları -->
     <circle cx="100" cy="100" r="5" fill="blue"/>
     <circle cx="120" cy="120" r="5" fill="blue"/>
     <circle cx="90" cy="80" r="5" fill="blue"/>
+    <!-- Sınıf B noktaları -->
     <circle cx="250" cy="200" r="5" fill="green"/>
     <circle cx="270" cy="220" r="5" fill="green"/>
     <circle cx="290" cy="240" r="5" fill="green"/>
-    <text x="100" y="70">Sınıf A</text>
-    <text x="250" y="250">Sınıf B</text>
-    <text x="150" y="150">Ayırıcı Çizgi</text>
+    <!-- Etiketler -->
+    <text x="100" y="70" font-size="14">Sınıf A</text>
+    <text x="250" y="250" font-size="14">Sınıf B</text>
+    <text x="150" y="150" font-size="14" fill="red">Ayırıcı Çizgi</text>
+    <!-- Eksen etiketleri -->
+    <text x="360" y="255" font-size="14">x</text>
+    <text x="35" y="60" font-size="14">y</text>
 </svg>
 
 Bu gösterimlerdeki öznitelikler (x'ler), sonucu (y) etkileyen ölçülebilir özellikleri temsil eder. Her özniteliğin etkisi, kendi θ katsayısı ile belirlenir.
