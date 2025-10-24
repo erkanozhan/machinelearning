@@ -364,11 +364,18 @@ Kısacası, bir makine öğrenmesi modelinin ne kadar 'akıllı' olacağı, ona 
 
 #### Özniteliklerin Ölçeklendirilmesi (Feature Scaling)
 
-Şimdi gençler, makine öğrenmesi modellerimizin adil ve doğru kararlar verebilmesi için çok kritik bir konuya geldik: Öznitelik Ölçeklendirme. Bu, farklı birimlerde veya çok farklı aralıklarda olan sayısal verilerimizi ortak bir dile, yani ortak bir ölçeğe getirme işlemidir.
+Şimdi gençler, makine öğrenmesi modellerimizin adil ve doğru kararlar verebilmesi için çok kritik bir konuya geldik: **Öznitelik Ölçeklendirme (Feature Scaling)**. Bu, farklı birimlerde veya çok farklı aralıklarda olan sayısal verilerimizi ortak bir dile, yani ortak bir ölçeğe getirme işlemidir.
 
-Neden bu kadar önemli olduğunu basit bir örnekle anlatalım. Bir ev fiyatı tahmin modeli kurduğumuzu düşünün. Elimizde iki temel öznitelik olsun: evin metrekaresi (örneğin, 50 ile 250 arasında değişiyor) ve oda sayısı (örneğin, 1 ile 6 arasında değişiyor). Sayısal olarak metrekare değerleri, oda sayısı değerlerinden çok daha büyüktür. Eğer bu verileri olduğu gibi modelimize verirsek, modelimiz sanki metrekare çok daha önemli bir özellikmiş gibi davranabilir. Çünkü algoritma, büyük sayısal değerlerin daha fazla etkiye sahip olduğu yanılgısına kapılabilir. Bu, modelimizin oda sayısı gibi potansiyel olarak çok önemli bir özniteliğin etkisini göz ardı etmesine neden olur. İşte bu adaletsizliği ortadan kaldırmak ve her özniteliğe kendini ifade etme şansı tanımak için ölçeklendirme yaparız.
+Neden bu kadar önemli olduğunu basit bir örnekle anlatalım. Bir ev fiyatı tahmin modeli kurduğumuzu düşünün. Elimizde iki temel öznitelik olsun: evin metrekaresi ve oda sayısı. Bu iki özelliğin değer aralıklarına bir bakalım:
 
-Bu işlemi genellikle iki popüler yöntemle gerçekleştiririz: Normalizasyon ve Standardizasyon.
+| Özellik | Örnek Değer | Değer Aralığı |
+| :--- | :---: | :---: |
+| Metrekare (m²) | 150 | ~50 - 250 |
+| Oda Sayısı | 3 | ~1 - 6 |
+
+Tabloda da gördüğünüz gibi, metrekare değerleri sayısal olarak oda sayısı değerlerinden çok daha büyüktür. Eğer bu verileri olduğu gibi, örneğin mesafe tabanlı bir algoritmaya (K-En Yakın Komşu gibi) veya gradyan inişi kullanan bir modele (Lineer Regresyon gibi) verirsek, algoritma iki ev arasındaki 'farkı' hesaplarken metrekaredeki 10 birimlik bir değişimi, oda sayısındaki 1 birimlik bir değişimden çok daha önemli sayacaktır. Model, büyük sayısal değerlerin daha fazla etkiye sahip olduğu yanılgısına kapılabilir. Bu, modelimizin oda sayısı gibi potansiyel olarak çok önemli bir özniteliğin etkisini göz ardı etmesine neden olur.
+
+İşte bu adaletsizliği ortadan kaldırmak ve her özniteliğe kendini ifade etme şansı tanımak için ölçeklendirme yaparız. Amacımız, tüm öznitelikleri benzer bir sayısal aralığa getirerek modelin her birinden adil bir şekilde öğrenmesini sağlamaktır. Bu işlemi gerçekleştirmek için kullanılan birkaç popüler yöntem vardır:
 
 ##### 1. Min-Max Normalizasyonu (Normalization)
 
@@ -427,6 +434,97 @@ Buradaki `n`, `max(|Val|) / 10^n < 1` koşulunu sağlayan en küçük tam sayıd
 
 Bu yöntem oldukça basittir ancak verinin dağılımı hakkında herhangi bir bilgi kullanmadığı için genellikle diğer iki yöntem kadar etkili değildir.
 
+### Uygulama: Weka ve Python ile Öznitelik Ölçeklendirme
+
+Şimdi bu ölçeklendirme yöntemlerinin Weka ve Python gibi araçlarda nasıl uygulandığına bakalım.
+
+#### Weka'da Ölçeklendirme Örneği
+
+Weka, veri ön işleme adımlarını görsel bir arayüzle kolayca yapmanıza olanak tanır. Ölçeklendirme işlemleri için "Filter" (Filtre) adı verilen araçları kullanırız. Adım adım bir örnek yapalım.
+
+**1. Veri Setini Hazırlama ve Yükleme**
+
+Öncelikle, `notlar.arff` adında basit bir metin dosyası oluşturalım ve içine aşağıdaki veriyi yapıştıralım. Bu dosya, öğrencilerin vize ve final notlarını içeriyor.
+
+```arff
+@relation ogrenci_notlari
+
+@attribute vize numeric
+@attribute final numeric
+@attribute durum {gecti, kaldi}
+
+@data
+60,75,gecti
+45,50,kaldi
+80,90,gecti
+95,92,gecti
+30,40,kaldi
+```
+
+Şimdi Weka'yı açıp "Explorer" arayüzüne girelim. "Preprocess" sekmesindeyken "Open file..." butonuna tıklayarak bu `notlar.arff` dosyasını yükleyelim. Veri yüklendiğinde, `vize` ve `final` özniteliklerinin istatistiklerini (min, max, mean, stddev) sağ taraftaki panelde görebilirsiniz.
+
+**2. Min-Max Normalizasyonu (Normalize Filtresi)**
+
+Amacımız, `vize` ve `final` notlarını 0 ile 1 arasına sıkıştırmak.
+
+*   **Filtre Seçimi:** "Filter" bölümündeki "Choose" butonuna tıklayın.
+*   Açılan menüden `weka` -> `filters` -> `unsupervised` -> `attribute` yolunu izleyin ve `Normalize` filtresini seçin.
+*   **Uygulama:** "Apply" butonuna basın.
+
+**Sonuç:** Filtreyi uyguladıktan sonra, arayüzün sağındaki öznitelik listesinden `vize` veya `final` özniteliğini seçin. "Selected attribute" panelinde artık **Min: 0** ve **Max: 1** yazdığını göreceksiniz. Veri tablosundaki değerler de bu yeni aralığa göre güncellenmiştir.
+
+**3. Z-Skoru Standardizasyonu (Standardize Filtresi)**
+
+Şimdi aynı veriye standardizasyon uygulayalım. Önceki işlemi geri almak için "Undo" butonuna basın.
+
+*   **Filtre Seçimi:** Tekrar "Choose" butonuna tıklayın ve bu kez aynı yoldan `Standardize` filtresini seçin.
+*   **Uygulama:** "Apply" butonuna basın.
+
+**Sonuç:** Bu işlemden sonra `vize` özniteliğini tekrar seçtiğinizde, "Selected attribute" panelinde **Mean (Ortalama)** değerinin 0'a çok yakın (veya tam 0) ve **StdDev (Standart Sapma)** değerinin 1 olduğunu göreceksiniz. Veri tablosundaki değerler artık pozitif ve negatif ondalıklı sayılara dönüşmüştür; bu sayılar her bir notun ortalamadan kaç standart sapma uzakta olduğunu gösterir.
+
+Bu basit adımlarla, Weka'nın görsel arayüzünü kullanarak verilerinizi modelinize sunmadan önce kolayca ölçeklendirebilirsiniz.
+
+#### Python'da Ölçeklendirme Örneği
+
+Python'da makine öğrenmesi denildiğinde akla ilk gelen kütüphane olan `scikit-learn`, bu ölçeklendirme işlemleri için oldukça pratik ve güçlü araçlar sunar. En sık kullanılan iki yöntem için bir örnek yapalım.
+
+```python
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+
+# Örnek olarak öğrencilerin notlarını içeren bir veri seti oluşturalım
+# Bu, tek bir öznitelik (notlar) içeren bir veri setidir.
+notlar = np.array([[60], [70], [80], [100]])
+
+print("Orijinal Veri:")
+print(notlar)
+print("-" * 30)
+
+# 1. Min-Max Normalizasyonu (0-1 arasına ölçekleme)
+# MinMaxScaler nesnesini oluşturuyoruz
+min_max_scaler = MinMaxScaler()
+
+# Scaler'ı veriye 'eğitiyor' (min ve max değerlerini öğreniyor) ve veriyi dönüştürüyoruz
+min_max_notlar = min_max_scaler.fit_transform(notlar)
+
+print("Min-Max Normalizasyonu Sonucu (0-1 Arası):")
+print(min_max_notlar)
+print("-" * 30)
+
+# 2. Z-Skoru Standardizasyonu (Ortalama=0, Standart Sapma=1)
+# StandardScaler nesnesini oluşturuyoruz
+standard_scaler = StandardScaler()
+
+# Scaler'ı veriye 'eğitiyor' (ortalama ve standart sapmayı öğreniyor) ve veriyi dönüştürüyoruz
+standard_notlar = standard_scaler.fit_transform(notlar)
+
+print("Z-Skoru Standardizasyonu Sonucu:")
+print(standard_notlar)
+print("-" * 30)
+```
+
+Bu kod bloğunda, aynı veri setine iki farklı ölçeklendirme tekniğini uyguladığımızda sonuçların nasıl değiştiğini net bir şekilde görebiliriz. `scikit-learn` kütüphanesi, bu dönüşümleri sadece birkaç satır kod ile gerçekleştirmemizi sağlar. Bu, modellerimizi eğitime hazırlarken bize büyük bir esneklik ve hız kazandırır.
+
 
 ### Örnek: Kredi Riski Tahmin Modeli Oluşturma
 
@@ -470,6 +568,982 @@ Peki, modelimiz bize ne söyleyecek? Amacımız, tüm bu girdileri analiz edip s
 *   **Sayısal Öznitelikler:** Bazen sayısal verileri de olduğu gibi kullanmak yerine dönüştürmek daha iyi sonuç verir. Örneğin, "Aylık Gelir" özniteliğini doğrudan kullanmak yerine, onu gelir gruplarına ayırabiliriz: "0-10000 TL" (Düşük), "10001-20000 TL" (Orta), "20001+ TL" (Yüksek). Bu işleme **gruplama (binning)** denir. Bu yeni kategorik özniteliği de yine One-Hot Encoding ile modelin anlayacağı `[1, 0, 0]` gibi sayısal bir formata çevirebiliriz. Bu, modelin belirli gelir aralıklarındaki risk değişimlerini daha kolay yakalamasını sağlayabilir.
 
 Tüm bu dönüşümler tamamlandığında, artık veri setimiz tamamen sayılardan oluşur ve makine öğrenmesi algoritmasını eğitmek için hazırdır. Model, bu sayısallaştırılmış verilerdeki desenleri öğrenerek, gelecekteki yeni müşteriler için isabetli risk tahminleri yapmaya çalışacaktır.
+
+
+
+
+### Model Değerlendirme: Modelimiz Gerçekten Öğrendi mi?
+
+Şimdi gençler, bir makine öğrenmesi modeli eğittiğimizi düşünelim. Modelimiz, ona verdiğimiz verileri kullanarak bir şeyler öğrendi. Peki, bu öğrenmenin kalitesini nasıl ölçeriz? Modelimizin sadece elindeki verileri ezberlemediğinden, yani yeni ve daha önce hiç görmediği durumlarda da doğru kararlar verebileceğinden nasıl emin olabiliriz?
+
+Bu durumu, bir sınava hazırlanan öğrenciye benzetebiliriz. Eğer bir öğrenci, çalışma kitabındaki soruları cevaplarıyla birlikte ezberlerse, aynı sorular sorulduğunda %100 başarılı olur. Ancak bu, konuyu gerçekten öğrendiği anlamına gelmez. Sınavda, kitaptakilerden biraz farklı ama aynı konuyu ölçen yeni sorular geldiğinde muhtemelen başarısız olacaktır. İşte bizim modelimiz de bu öğrenci gibidir. Eğer onu eğittiğimiz verilerle test edersek, bize harika sonuçlar verebilir ama bu bir yanılsamadır. Buna **ezberleme (overfitting)** diyoruz.
+
+Modelin gerçek performansını, yani genelleme yeteneğini ölçmek için elimizdeki veri setini akıllıca bölmemiz gerekir. Bir kısmını modele dersini anlatmak için (eğitim verisi), daha önce hiç görmediği bir kısmını da onu imtihan etmek için (test verisi) kullanırız. Bu bölme işlemini yapmak için kullanılan çeşitli stratejiler vardır.
+
+#### 1. Holdout (Dışarıda Tutma Yöntemi)
+
+Bu, en temel ve en basit yaklaşımdır. Elimizdeki veri setini bir defaya mahsus olmak üzere iki parçaya ayırırız: genellikle daha büyük olan parça **eğitim seti**, daha küçük olan parça ise **test seti** olarak kullanılır. Yaygın olarak kullanılan oranlar 80/20, 70/30 veya 66/34 şeklindedir. Model, eğitim seti üzerinde öğrenme işlemini gerçekleştirir. Öğrenme bittikten sonra, modelin daha önce hiç görmediği test seti üzerindeki performansı ölçülür. Bu performans, modelin gerçek dünya verileri karşısındaki başarısı hakkında bize bir fikir verir.
+
+```mermaid
+graph TD
+    subgraph "Toplam Veri Seti"
+        A[Veri 1]
+        B[Veri 2]
+        C[Veri 3]
+        D[Veri 4]
+        E[Veri 5]
+    end
+
+    subgraph "Eğitim Seti (%80)"
+        direction LR
+        A1[Veri 1]
+        B1[Veri 2]
+        C1[Veri 3]
+        D1[Veri 4]
+    end
+
+    subgraph "Test Seti (%20)"
+        E1[Veri 5]
+    end
+
+    A --> A1
+    B --> B1
+    C --> C1
+    D --> D1
+    E --> E1
+
+    A1 & B1 & C1 & D1 --> F[Model Eğitimi]
+    F --> G{Eğitilmiş Model}
+    G -- Test Et --> H((Performans Ölçümü))
+    E1 -- Daha Önce Görülmemiş Veri --> H
+```
+
+Bu yöntemin en büyük dezavantajı, bölme işleminin tamamen şansa bağlı olmasıdır. Eğer şans eseri, veri setindeki tüm "kolay" örnekler test setine, "zor" örnekler ise eğitim setine denk gelirse, modelimizin performansı olduğundan daha kötü görünebilir. Tersi durumda ise modelimiz haksız bir şekilde başarılı sayılabilir. Özellikle küçük veri setlerinde bu risk daha da artar, çünkü her bir veri noktası daha değerlidir ve modelin öğrenme sürecinden dışlanması performansı olumsuz etkileyebilir.
+
+#### 2. Üçlü Ayırma (Three-way Split)
+
+Holdout yöntemini bir adım ileri taşıyalım. Bazen modelimizi eğitirken en iyi ayarları bulmak için denemeler yapmamız gerekir. Örneğin bir karar ağacının ne kadar derine inmesi gerektiğini veya bir sinir ağında kaç katman kullanacağımızı belirlemek gibi. Bu ayarlara **hiperparametre** diyoruz.
+
+Eğer bu ayarları yaparken test setini kullanırsak, aslında test setindeki bilgi modele sızmış olur ve test setimiz artık modelin performansını tarafsız bir şekilde ölçemez. Bu durumu engellemek için veriyi üçe ayırırız:
+
+1.  **Eğitim Seti (Training Set):** Modelin temel öğrenme işlemini yaptığı, en büyük veri parçasıdır.
+2.  **Doğrulama Seti (Validation Set):** Modelin hiperparametrelerini ayarlamak (tuning) ve farklı model adayları arasından en iyisini seçmek için kullanılır. Model bu veri üzerinde eğitilmez, sadece performansı bu setle kontrol edilir.
+3.  **Test Seti (Test Set):** Bu set, tüm süreç boyunca bir kasada kilitli tutulur. En iyi model ve en iyi hiperparametreler belirlendikten sonra, son ve nihai performans ölçümü için sadece bir kez kullanılır. Bu, modelin gerçek dünya performansına dair en tarafsız tahmini verir.
+
+#### 3. Çapraz Doğrulama (Cross-Validation / K-Fold)
+
+Holdout yöntemindeki "şanssız bölünme" riskini ortadan kaldırmak için geliştirilmiş çok daha güvenilir bir yöntemdir. Fikir oldukça basittir: Veri setini tek bir defa bölmek yerine, birden çok defa farklı şekillerde bölüp test edelim ve sonuçların ortalamasını alalım.
+
+En yaygın kullanılan çapraz doğrulama tekniği **K-Katlı (K-Fold)**'dır. Süreç şöyle işler:
+
+1.  Veri seti, `K` adet eşit büyüklükte parçaya (katmana) ayrılır. Genellikle `K` için 5 veya 10 değeri tercih edilir.
+2.  Bir döngü başlatılır ve bu döngü `K` defa tekrar eder.
+3.  Her bir döngüde, katmanlardan bir tanesi **test seti** olarak seçilir, geri kalan `K-1` katman ise birleştirilerek **eğitim seti** olarak kullanılır.
+4.  Model, bu eğitim seti üzerinde eğitilir ve ayrılan test katmanı üzerinde performansı ölçülür.
+5.  Döngü tamamlandığında, elimizde `K` adet farklı performans skoru olur. Bu skorların ortalaması alınarak modelin genel performansı hakkında çok daha istikrarlı ve güvenilir bir tahmin elde edilir.
+
+```mermaid
+graph TD
+    A["K-Katlı Çapraz Doğrulama (K=5)"]
+    subgraph "Döngü 1"
+        direction LR
+        B1["Katman 1 (Test)"]:::test --- C1["Katman 2 (Eğitim)"]:::train --- D1["Katman 3 (Eğitim)"]:::train --- E1["Katman 4 (Eğitim)"]:::train --- F1["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 2"
+        direction LR
+        B2["Katman 1 (Eğitim)"]:::train --- C2["Katman 2 (Test)"]:::test --- D2["Katman 3 (Eğitim)"]:::train --- E2["Katman 4 (Eğitim)"]:::train --- F2["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 3"
+        direction LR
+        B3["Katman 1 (Eğitim)"]:::train --- C3["Katman 2 (Eğitim)"]:::train --- D3["Katman 3 (Test)"]:::test --- E3["Katman 4 (Eğitim)"]:::train --- F3["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 4"
+        direction LR
+        B4["Katman 1 (Eğitim)"]:::train --- C4["Katman 2 (Eğitim)"]:::train --- D4["Katman 3 (Eğitim)"]:::train --- E4["Katman 4 (Test)"]:::test --- F4["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 5"
+        direction LR
+        B5["Katman 1 (Eğitim)"]:::train --- C5["Katman 2 (Eğitim)"]:::train --- D5["Katman 3 (Eğitim)"]:::train --- E5["Katman 4 (Eğitim)"]:::train --- F5["Katman 5 (Test)"]:::test
+    end
+    
+    F1 --> G["Skor 1"]
+    F2 --> H["Skor 2"]
+    F3 --> I["Skor 3"]
+    F4 --> J["Skor 4"]
+    F5 --> K["Skor 5"]
+    
+    G & H & I & J & K --> L["Final Performans = Ortalama(Skorlar)"]
+
+    classDef test fill:#ffb0a8,stroke:#333,stroke-width:1px;
+    classDef train fill:#a8c4ff,stroke:#333,stroke-width:1px;
+```
+
+Bu yöntemin getirdiği en önemli avantajlardan biri, elimizdeki verinin tamamını hem eğitim hem de test amacıyla kullanabilmemizdir. Bu, özellikle veri miktarının kısıtlı olduğu durumlarda hayati önem taşır.
+
+#### K Değerinin Seçimi: Bias ve Varyans Dengesi
+
+Çapraz doğrulama yaparken seçeceğimiz `K` değeri, modelimizin performansını ne kadar isabetli ölçtüğümüzü belirleyen kritik bir ayardır. Bu durumu, bir projenin kalitesini değerlendirmek için kurulan bir uzmanlar komitesine benzetebiliriz. `K` değeri, bu komitede kaç uzman olacağını ve her uzmanın projeyi nasıl inceleyeceğini belirler. Burada iki temel kavram devreye girer: **yanlılık (bias)** ve **varyans (variance)**.
+
+*   **Yanlılık (Bias):** Değerlendirmemiz, modelin gerçek potansiyelinden ne kadar sapıyor? Eğer komitemiz sürekli olarak projenin kalitesini olduğundan düşük tahmin ediyorsa, bu yanlı bir değerlendirmedir.
+*   **Varyans (Variance):** Değerlendirmemiz ne kadar tutarlı? Eğer komiteyi farklı uzmanlarla tekrar kursaydık, sonuç ne kadar değişirdi? Eğer sonuçlar çok fazla değişiyorsa, değerlendirmemizin varyansı yüksektir.
+
+Şimdi `K` değerinin bu dengeyi nasıl etkilediğine bakalım:
+
+##### Durum 1: `K` Değerinin Büyük Olması (Örn: K=10 veya daha fazla)
+
+Büyük bir `K` değeri seçmek, kalabalık bir uzmanlar komitesi kurmaya benzer. Örneğin, 1000 verimiz varsa ve K=10 seçersek, model her seferinde 900 veriyle eğitilir.
+
+*   **Avantajı: Düşük Yanlılık (Low Bias)**
+    *  Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmindir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
+
+*   **Dezavantajı: Yüksek Varyans (High Variance)**
+    *  Her döngüde kullanılan eğitim setleri birbirine çok benzerdir (sadece %10'luk bir kısmı farklıdır). Bu yüzden eğitilen modeller de birbirinin neredeyse aynısı olur. Eğer veri setimizde tesadüfen yanıltıcı bir desen varsa, tüm modeller bu deseni öğrenir ve aynı hataya düşer. Bu durum, elde ettiğimiz ortalama performans skorunun **hassas ve değişken** olmasına neden olur. Yani, veri setimiz birazcık farklı olsaydı, elde edeceğimiz sonuç bambaşka olabilirdi. Değerlendirmemiz, elimizdeki o spesifik veri setine aşırı bağımlı hale gelir. Ayrıca, çok sayıda döngü gerektiği için hesaplama maliyeti de artar.
+
+##### Durum 2: `K` Değerinin Küçük Olması (Örn: K=2 veya K=3)
+
+Küçük bir `K` değeri seçmek, az sayıda uzmandan oluşan küçük bir komite kurmak gibidir. Örneğin, 1000 verimiz varsa ve K=2 seçersek, model her seferinde sadece 500 veriyle eğitilir.
+
+*   **Avantajı: Düşük Varyans (Low Variance)**
+    *  Her döngüde kullanılan eğitim setleri birbirinden oldukça farklıdır (birbirleriyle hiç ortak verileri yoktur). Bu sayede eğitilen modellerin bakış açıları daha çeşitli olur. Bir modelin yaptığı hatayı diğeri yapmayabilir. Sonuç olarak, bu farklı modellerden gelen performans skorlarının ortalaması, daha **tutarlı ve güvenilir** bir sonuç verir. Veri setimiz biraz farklı olsaydı bile, ortalama sonuç muhtemelen çok fazla değişmezdi.
+
+*   **Dezavantajı: Yüksek Yanlılık (High Bias)**
+    *  Anlamı:** Model, her seferinde eldeki verinin sadece küçük bir kısmıyla (örneğimizde %50'siyle) eğitilir. Daha az veriyle eğitilen bir model, genellikle daha fazla veriyle eğitilen bir modelden daha kötü performans gösterir. Bu nedenle, elde ettiğimiz performans skoru, modelin gerçek potansiyelini yansıtmayan, **kötümser ve yanlılığı yüksek** bir tahmin olur. Komitedeki uzmanlar projenin sadece yarısını gördükleri için, projenin gerçek kalitesini tam olarak anlayamaz ve genellikle olduğundan daha düşük bir puan verirler.
+
+**Sonuç: Tatlı Noktayı Bulmak**
+
+Genel kabul görmüş pratik, `K` için **5** veya **10** gibi değerler kullanmaktır. Bu değerler, yanlılık ve varyans arasında makul bir denge kurar. Hem modelin yeterli veriyle eğitilmesini sağlayarak yanlılığı düşürür, hem de döngü sayısını makul tutarak hesaplama maliyetini kontrol altında tutar ve yeterince çeşitli modellerle varyansı azaltır. Bu sayede modelimizin gerçek dünya performansı hakkında hem isabetli hem de güvenilir bir fikir edinmiş oluruz.
+
+#### 4. Tabakalı Örnekleme (Stratified Sampling)
+
+Özellikle sınıflandırma problemlerinde, hedef sınıfların veri setindeki dağılımı dengesiz olabilir. Örneğin, bir hastalığı teşhis etmeye çalıştığımız bir veri setinde, 1000 hastanın 950'si sağlıklı, sadece 50'si hasta olabilir. Eğer burada standart bir K-Fold uygularsak, şans eseri test için ayırdığımız katmanın içinde hiç hasta örneği olmayabilir. Bu durumda modelimiz, o katman için %100 başarılı gibi görünse de aslında hasta teşhisi koyma yeteneğini hiç ölçememiş oluruz.
+
+**Tabakalı K-Katlı Çapraz Doğrulama (Stratified K-Fold)** bu sorunu çözer. Veriyi katmanlara ayırırken, her bir katmanın içindeki sınıf oranlarının, orijinal veri setindeki oranlarla aynı olmasını garanti eder. Yani, her bir katmanda %95 sağlıklı, %5 hasta örneği bulunur. Bu sayede, her bir test ve eğitim adımında modelin tüm sınıfları adil bir şekilde görmesi sağlanır ve çok daha güvenilir bir performans ölçümü yapılır.
+#### Diğer Yöntemler
+
+##### Birini Dışarıda Bırak (Leave-One-Out CV)
+
+Gençler, K-Katlı Çapraz Doğrulama'nın çok özel bir durumunu düşünelim. Elimizde çok küçük bir veri seti olduğunu varsayalım, diyelim ki sadece 20 veri noktası var. Bu kadar az veriyle, modelimizi eğitmek için mümkün olan her bir veri noktasını kullanmak isteriz. İşte bu noktada "Birini Dışarıda Bırak" yöntemi devreye girer.
+
+Bu yaklaşımda, veri setindeki her bir örneği sırayla test verisi olarak ayırırız. Yani, 20 örneğimiz varsa, önce ilk örneği test için kenara koyar, kalan 19 örnekle modelimizi eğitiriz. Sonra bu tek örnek üzerinde test yaparız. Ardından ikinci örneği test için ayırır, geri kalan 19 örnekle modeli tekrar eğitiriz. Bu işlemi, veri setindeki her bir örnek test verisi olana kadar, yani tam 20 defa tekrar ederiz.
+
+Bu yöntem, K-Katlı Çapraz Doğrulama'nın `K` değerinin veri setindeki toplam örnek sayısına (`N`) eşit olduğu bir halidir. Her döngüde model, mevcut verinin neredeyse tamamıyla eğitildiği için, modelin performansı hakkındaki tahminimiz oldukça isabetli olur; yani **yanlılığı (bias) düşüktür**. Ancak, her adımda eğitilen modeller birbirine çok benzediği için (sadece bir örnekleri farklıdır), elde edilen performans tahmininin **varyansı yüksek** olabilir. En büyük dezavantajı ise, veri setindeki örnek sayısı kadar model eğitilmesi gerektiğinden, hesaplama maliyetinin çok yüksek olmasıdır. Bu nedenle sadece çok küçük veri setleri için pratik bir seçenektir.
+
+##### Bootstrap Örnekleme: Veri Setimizden Klonlar Yaratmak
+
+Şimdi de topluluk öğrenmesi gibi daha gelişmiş yöntemlerin temelini oluşturan çok zekice bir yaklaşıma bakalım: **Bootstrap**.
+
+Bir an için elinizde 10 farklı renkte bilye olan bir torba olduğunu hayal edin. Amacınız, bu torbadan yine 10 bilyelik yeni bir koleksiyon oluşturmak. Ama özel bir kuralınız var:
+
+1.  Torbadan bir bilye çekiyorsunuz (diyelim ki kırmızı geldi).
+2.  Yeni koleksiyonunuz için "kırmızı" notunu alıyorsunuz.
+3.  **İşte sihirli adım:** Kırmızı bilyeyi torbaya **geri koyuyorsunuz**.
+4.  Bu işlemi, listenizde 10 bilye olana kadar tekrarlıyorsunuz.
+
+İşlem bittiğinde elinizdeki yeni koleksiyon nasıl görünür? Belki şöyle bir şey: `[kırmızı, mavi, yeşil, mavi, sarı, kırmızı, mor, turuncu, mavi, pembe]`.
+
+Bu yeni koleksiyonda iki önemli şey fark edeceksiniz:
+*   Bazı bilyeler (örneğin mavi ve kırmızı) birden fazla kez seçildi. Yani **kopyaları** var.
+*   Bazı bilyeler ise (belki de kahverengi) şans eseri **hiç seçilmedi**.
+
+İşte bu "çek ve yerine geri koy" mantığıyla rastgele örneklem oluşturma işlemine **Bootstrap Örnekleme** diyoruz.
+
+**Peki, Bunun Makine Öğrenmesiyle Ne İlgisi Var?**
+
+Şimdi bilyeleri, veri setimizdeki satırlar (örneğin, müşteri bilgileri) olarak düşünün. 100 müşterilik bir veri setimiz varsa, bootstrap yöntemiyle yine 100 müşterilik yeni bir **eğitim seti** oluştururuz. Bu yeni set, orijinal veriden bazı müşterileri birden fazla kez içerirken, bazılarını hiç içermeyecektir.
+
+**"Bedava" Test Seti: Torba Dışı (Out-of-Bag / OOB) Örnekler**
+
+Bu yöntemin en parlak kısmı, hiç seçilmeyen verilerle ne yaptığımızdır. Bu "dışarıda kalan" örneklere **"torba dışı" (Out-of-Bag ya da OOB)** örnekler denir.
+
+Bu OOB örnekleri neden bu kadar değerli? Çünkü bootstrap ile oluşturduğumuz yeni set üzerinde bir model eğittiğimizde, o model OOB örneklerini **daha önce hiç görmemiş olur**. Bu durum, OOB setini, modelimizin performansını ölçmek için mükemmel ve tarafsız bir **test seti** haline getirir!
+
+**63/37 Kuralı**
+
+İstatistiksel olarak kanıtlanmıştır ki, bootstrap örneklemesi yapıldığında, orijinal verinin ortalama olarak yaklaşık **%63.2**'si yeni eğitim setine (en az bir kez) seçilir. Geriye kalan yaklaşık **%36.8**'lik kısım ise OOB setini, yani bizim "bedava" test setimizi oluşturur.
+
+**Bu Neden Bu Kadar Güçlü?**
+
+Bu teknik, **Random Forest** gibi güçlü algoritmaların arkasındaki motordur. Değerli verilerimizi eğitim ve test diye ikiye ayırıp veri kaybetmek yerine, bootstrap sayesinde verinin tamamını kullanabiliriz. Her bir model, farklı bir bootstrap setiyle eğitilir ve kendi OOB seti üzerinde test edilir. Bu, modelin genelleme performansını ölçmek için bize hem çok güvenilir hem de hesaplama açısından verimli bir yol sunar. Kısacası, ayrı bir test seti ayırmaya veya çapraz doğrulama yapmaya gerek kalmadan modelimizin ne kadar iyi olduğunu anlarız.
+
+
+
+# Model Performans Değerlendirme Ölçütleri
+
+## Giriş
+
+Bir makine öğrenmesi modeli geliştirdiğimizde, temel sorumuz şudur: "Bu model ne kadar iyi çalışıyor?" Bu sorunun cevabını nesnel olarak verebilmek için performans ölçütlerine başvururuz. Bu ölçütler, modelimizin tahmin yeteneğini, hatalarını ve genel gücünü sayısal olarak ifade etmemizi sağlayan birer karne notu gibidir.
+
+## Karışıklık Matrisi (Confusion Matrix)
+
+Sınıflandırma problemlerinde, model performansını analiz etmeye genellikle **Karışıklık Matrisi (Confusion Matrix)** ile başlarız. Bu tablo, modelin tahminlerinin gerçek değerlerle karşılaştırmasını basit ve anlaşılır bir formatta sunar.
+
+```
+                      Tahmin Edilen
+                 Pozitif (P)    Negatif (N)
+              ┌──────────────┬──────────────┐
+Gerçek    (P) │     TP       │      FN      │
+              ├──────────────┼──────────────┤
+          (N) │     FP       │      TN      │
+              └──────────────┴──────────────┘
+```
+
+### Temel Tanımlar
+
+*   **Gerçek Pozitif (True Positive - TP):** Modelin, pozitif bir durumu doğru bir şekilde pozitif olarak tahmin etmesi. (Örn: Hasta bir kişiye 'hasta' tanısı konulması.)
+*   **Gerçek Negatif (True Negative - TN):** Modelin, negatif bir durumu doğru bir şekilde negatif olarak tahmin etmesi. (Örn: Sağlıklı bir kişiye 'sağlıklı' tanısı konulması.)
+*   **Sahte Pozitif (False Positive - FP):** Modelin, negatif bir durumu hatalı bir şekilde pozitif olarak tahmin etmesi. Buna **Tip I Hata** da denir. (Örn: Sağlıklı bir kişiye 'hasta' tanısı konulması.)
+*   **Sahte Negatif (False Negative - FN):** Modelin, pozitif bir durumu hatalı bir şekilde negatif olarak tahmin etmesi. Buna **Tip II Hata** da denir. (Örn: Hasta bir kişiye 'sağlıklı' tanısı konulması.)
+
+### Örnek
+
+1000 kişilik bir veri setinde modelimizin performansını değerlendirelim:
+*   Gerçekte Pozitif (Hasta): 500 kişi
+*   Gerçekte Negatif (Sağlıklı): 500 kişi
+
+Modelimizin tahminleri sonucunda oluşan karışıklık matrisi:
+
+```
+              Tahmin
+           P        N      Toplam
+      ┌─────────┬─────────┬────────┐
+  P   │   350   │   150   │   500  │
+Gerçek├─────────┼─────────┼────────┤
+  N   │   250   │   250   │   500  │
+      └─────────┴─────────┴────────┘
+Toplam   600       400      1000
+```
+Bu matris, aşağıda inceleyeceğimiz birçok performans ölçütünün temelini oluşturur.
+
+## Sınıflandırma Performans Ölçütleri
+
+Karışıklık matrisinden türetilen ve modelimizin yeteneklerini farklı açılardan değerlendirmemizi sağlayan temel metrikleri inceleyelim.
+
+**1. Doğruluk (Accuracy)**
+
+En temel ve anlaşılması en kolay ölçüttür. Basitçe, "Tüm tahminlerin yüzde kaçı doğru?" sorusunu yanıtlar.
+```
+Accuracy = (TP + TN) / (Toplam Veri Sayısı)
+```
+**Örneğimizde:** `(350 + 250) / 1000 = 0,60` (%60)
+
+**Not:** Gençler, doğruluk metriği, özellikle sınıfların dengesiz dağıldığı (örneğin, 990 sağlıklı kişiye karşılık 10 hasta) veri setlerinde yanıltıcı olabilir. Düşünün ki bir model, herkese "sağlıklı" diyor. Bu model %99 doğruluk oranına sahip olabilir ama asıl aradığımız hasta kişileri bulma konusunda tamamen başarısızdır. İşte bu yüzden daha incelikli metriklere ihtiyaç duyarız.
+
+**2. Kesinlik (Precision)**
+
+Bu metrik, modelin pozitif tahminlerinin kalitesine odaklanır: "'Pozitif' olarak etiketlediklerimizin ne kadarı gerçekten pozitifti?"
+```
+Precision = TP / (TP + FP)
+```
+**Örneğimizde:** `350 / (350 + 250) = 350 / 600 ≈ 0,58`
+
+**Yorumlama:** Yüksek kesinlik, modelin bir örneğe "pozitif" dediğinde buna büyük ölçüde güvenebileceğimiz anlamına gelir. Sahte pozitiflerin (FP) maliyetinin yüksek olduğu durumlarda kritik bir metriktir. Örneğin, bir e-postanın yanlışlıkla spam olarak işaretlenmesi, önemli bir iletişimin kaçırılmasına neden olabilir. Bu senaryoda yüksek kesinlik hedefleriz.
+
+**3. Duyarlılık (Recall / Sensitivity)**
+
+Duyarlılık, pozitif sınıfı ne kadar iyi "yakalayabildiğimizi" ölçer: "Gerçekte pozitif olan vakaların yüzde kaçını tespit edebildik?"
+```
+Recall = TP / (TP + FN)
+```
+**Örneğimizde:** `350 / (350 + 150) = 350 / 500 = 0,70`
+
+**Yorumlama:** Yüksek duyarlılık, modelin pozitif vakaları atlamadığını gösterir. Sahte negatiflerin (FN) maliyetinin yüksek olduğu durumlarda hayati önem taşır. Örneğin, ciddi bir hastalığın teşhis edilememesi, bir hastanın tedavi şansını kaybetmesine yol açabilir. Bu durumda duyarlılığı maksimize etmeye çalışırız.
+
+**4. F1-Skoru (F1-Score)**
+
+Genellikle kesinlik ve duyarlılık arasında bir denge kurmamız gerekir. Biri artarken diğeri azalma eğilimindedir. F1-Skoru, bu iki metriğin harmonik ortalamasını alarak bu dengeyi tek bir sayıda özetler. Her iki metriğin de önemli olduğu durumlarda kullanılır.
+```
+F1-Score = (2 × Precision × Recall) / (Precision + Recall)
+```
+**Örneğimizde:** `(2 × 0,58 × 0,70) / (0,58 + 0,70) ≈ 0,63`
+
+**Yorumlama:** F1-Skoru, modelin hem sahte pozitiflerden kaçınma (Precision) hem de gerçek pozitifleri yakalama (Recall) yeteneklerini dengeli bir şekilde ölçer. Özellikle dengesiz veri setlerinde doğruluk (accuracy) metriğine göre çok daha güvenilir bir performans göstergesidir.
+
+**5. Kappa Katsayısı (Cohen's Kappa)**
+
+Doğruluk (Accuracy) metriği, özellikle sınıfların dengesiz dağıldığı durumlarda yanıltıcı olabileceğini konuşmuştuk. İşte bu noktada Kappa katsayısı devreye girer ve bize daha incelikli bir bakış açısı sunar. Kappa, modelimizin performansını, tamamen rastgele tahmin yapan bir modelin performansıyla karşılaştırır. Yani, "Modelimizin başarısı, şans faktörünün ne kadar ötesinde?" sorusuna cevap arar.
+
+Modelin doğruluğunun, sadece sınıf dağılımlarına bakarak rastgele tahmin yapıldığında elde edilecek doğruluktan ne kadar daha iyi olduğunu gösterir. Bu katsayı genellikle -1 ile +1 arasında bir değer alır ve bu değerin yorumlanması için genel kabul görmüş bir ölçek bulunur.
+
+| Kappa Değeri      | Yorumlama (Uyum Düzeyi) |
+| ----------------- | ----------------------- |
+| < 0               | Uyum Yok                |
+| 0.00 – 0.20       | Çok Zayıf               |
+| 0.21 – 0.40       | Zayıf                   |
+| 0.41 – 0.60       | Orta                    |
+| 0.61 – 0.80       | İyi                     |
+| 0.81 – 1.00       | Çok İyi / Mükemmel      |
+
+Peki bu değer nasıl hesaplanır? Gençler, formülün arkasındaki mantık oldukça sezgiseldir:
+
+`Kappa = (Po - Pe) / (1 - Pe)`
+
+*   **`Po` (Observed Agreement):** Bu, modelimizin gözlemlenen doğruluğudur. Yani bildiğimiz standart **Accuracy** metriğidir.
+*   **`Pe` (Expected Agreement):** Bu ise "şans eseri beklenen uyum"dur. Modelin ve gerçek etiketlerin, tamamen tesadüfen aynı fikirde olma olasılığını ifade eder. Her sınıfın gerçek ve tahmin edilen oranları dikkate alınarak hesaplanır.
+
+Şimdi bu hesaplamayı, yukarıdaki örneğimiz üzerinden adım adım yapalım.
+
+**Örneğimizdeki Karışıklık Matrisi:**
+```
+              Tahmin
+           P        N      Toplam
+      ┌─────────┬─────────┬────────┐
+  P   │   350   │   150   │   500  │
+Gerçek├─────────┼─────────┼────────┤
+  N   │   250   │   250   │   500  │
+      └─────────┴─────────┴────────┘
+Toplam   600       400      1000
+```
+
+**1. Adım: Gözlemlenen Doğruluğu (`Po`) Hesaplama**
+
+Bu, bildiğimiz standart doğruluk (accuracy) değeridir.
+`Po = (Doğru Tahminler) / (Toplam Veri) = (350 + 250) / 1000 = 0.60`
+
+**2. Adım: Şans Eseri Beklenen Uyumu (`Pe`) Hesaplama**
+
+İşte burası işin kilit noktası. Modelimiz ve gerçek etiketler, birbirlerinden tamamen habersiz, sadece genel dağılımlara bakarak etiketleme yapsalardı, ne sıklıkla tesadüfen aynı fikirde olurlardı? Bunu hesaplayalım.
+
+*   **Pozitif sınıf için şans eseri uyum:**
+    *   Gerçek etiketlerin "Pozitif" olma oranı: `500 / 1000 = 0.5`
+    *   Modelin "Pozitif" tahmin etme oranı: `600 / 1000 = 0.6`
+    *   İkisinin de şans eseri "Pozitif" demesi olasılığı: `0.5 * 0.6 = 0.30`
+
+*   **Negatif sınıf için şans eseri uyum:**
+    *   Gerçek etiketlerin "Negatif" olma oranı: `500 / 1000 = 0.5`
+    *   Modelin "Negatif" tahmin etme oranı: `400 / 1000 = 0.4`
+    *   İkisinin de şans eseri "Negatif" demesi olasılığı: `0.5 * 0.4 = 0.20`
+
+*   **Toplam şans eseri uyum (`Pe`):**
+    *   `Pe = (Pozitif için şans uyumu) + (Negatif için şans uyumu)`
+    *   `Pe = 0.30 + 0.20 = 0.50`
+
+Bu sonuç bize şunu söyler: Hiçbir şey bilmeyen, sadece genel oranlara göre rastgele etiketleme yapan bir sistem bile %50 oranında doğru tahminde bulunabilirdi.
+
+**3. Adım: Kappa Katsayısını Hesaplama**
+
+Artık `Po` ve `Pe` değerlerini bildiğimize göre, formülde yerine koyabiliriz.
+`Kappa = (Po - Pe) / (1 - Pe)`
+`Kappa = (0.60 - 0.50) / (1 - 0.50) = 0.10 / 0.50 = 0.20`
+
+**Yorumlama:** Gençler, bulduğumuz Kappa değeri 0.20. Yukarıdaki tabloya baktığımızda bu değerin "Çok Zayıf" bir uyum düzeyine işaret ettiğini görüyoruz. Yani, modelimizin %60'lık doğruluğu ilk bakışta fena görünmese de, bu başarının önemli bir kısmının şans eseri olduğu ortaya çıkıyor. Modelimizin performansı, rastgele tahminden sadece %20 daha iyidir. İşte Kappa, bize bu derinlemesine analizi yapma imkânı tanır.
+
+Formül, modelimizin gerçek doğruluğundan (`Po`) şans eseri elde edilecek doğruluğu (`Pe`) çıkarır ve bu farkı, şansın üzerinde elde edilebilecek maksimum başarıya (`1 - Pe`) oranlar. Bu sayede Kappa, modelin sadece doğru tahmin yapma oranını değil, aynı zamanda bu doğruluğun ne kadarının tesadüfi olmadığını da hesaba katar. Bu özelliği, onu özellikle tıp veya finans gibi alanlarda dengesiz veri setleri üzerinde çalışırken doğruluk metriğine göre çok daha güvenilir bir alternatif yapar.
+
+**6. Ağırlıklı Ortalama (Weighted Average)**
+
+Şimdi, birden fazla sınıfımız olduğunda (örneğimizdeki gibi ikili sınıflandırmanın ötesinde) metrikleri nasıl genelleyeceğimizi düşünelim. Örneğin, üç sınıfımız var: A, B ve C. Her sınıf için ayrı ayrı Precision, Recall ve F1-Skoru hesaplayabiliriz. Peki modelin genel performansı nedir?
+
+Burada devreye ortalama alma yöntemleri giriyor. En yaygın olanlardan biri **ağırlıklı ortalamadır**.
+
+Bu yaklaşım, her sınıfın metrik skorunu hesaplarken o sınıfın veri setindeki "ağırlığını" yani örnek sayısını (destek/support) dikkate alır. Sınıflar dengesizse bu çok önemlidir. Örneğin, 1000 örneklik bir veri setinde 800 tane A sınıfı, 150 tane B sınıfı ve 50 tane C sınıfı varsa, A sınıfının performansı genel skoru daha fazla etkilemelidir.
+
+**Hesaplanışı:**
+Her sınıf için metrik (örneğin F1-Skoru) hesaplanır.
+`Ağırlıklı F1 = (F1_A * 800 + F1_B * 150 + F1_C * 50) / (800 + 150 + 50)`
+
+Bu yöntem, her bir örneğin eşit derecede önemli olduğunu varsayar ve modelin genel performansını, veri setinin yapısını yansıtacak şekilde adil bir biçimde özetler. Scikit-learn gibi kütüphanelerin sınıflandırma raporlarında bu değeri "weighted avg" olarak görürsünüz.
+
+## ROC Eğrisinin Kökeni ve Oluşturulması
+
+ROC eğrisinin mantığını anlamak için kökenine inmek faydalı olacaktır. Bu kavram, II. Dünya Savaşı sırasında radar operatörlerinin sinyalleri yorumlama performansını ölçmek için geliştirilmiştir. Operatörün görevi, radar ekranındaki sinyallerin bir düşman uçağı mı (pozitif durum) yoksa zararsız bir kuş sürüsü veya atmosferik bir gürültü mü (negatif durum) olduğuna karar vermektir.
+
+Operatörün karar verme "hassasiyeti" kritik bir rol oynar.
+*   **Çok hassas olursa:** En zayıf sinyali bile düşman olarak işaretler. Bu durumda hiçbir düşmanı kaçırmaz (yüksek **Gerçek Pozitif Oranı**), ancak çok sayıda yanlış alarm verir (yüksek **Sahte Pozitif Oranı**).
+*   **Az hassas olursa:** Sadece çok güçlü ve net sinyalleri düşman olarak işaretler. Bu durumda yanlış alarm sayısı çok az olur (düşük **Sahte Pozitif Oranı**), ancak bazı gerçek düşmanları gözden kaçırabilir (düşük **Gerçek Pozitif Oranı**).
+
+ROC eğrisi, operatörün (veya makine öğrenmesi modelimizin) bu hassasiyet seviyesinin tüm olası değerleri için doğru tespitler ile yanlış alarmlar arasındaki dengeyi görselleştiren bir grafiktir.
+
+Şimdi gençler, bu eğrinin nasıl ortaya çıktığını somut bir örnekle anlayalım.
+
+Hayali bir güvenlik sistemimiz olduğunu düşünün. Bu sistem, bir kişinin fotoğrafına bakarak "şüpheli" olup olmadığına karar veriyor ve 0 ile 1 arasında bir "şüphelilik skoru" üretiyor. Skor 1'e ne kadar yakınsa, sistem o kişiyi o kadar şüpheli buluyor.
+
+Bizim görevimiz, bir **karar eşiği (threshold)** belirlemek. Örneğin, "skoru 0.70'in üzerinde olan herkesi şüpheli kabul et" diyebiliriz.
+
+*   **Çok Katı Bir Kural (Yüksek Eşik, örn: 0.95):** Bu durumda sadece sistemin çok emin olduğu kişileri "şüpheli" olarak işaretleriz. Sonuç? Neredeyse hiç masum insanı yanlışlıkla etiketlemeyiz (**düşük Sahte Pozitif Oranı**), ama belki de gerçekten şüpheli olan ama skoru 0.94'te kalmış birini gözden kaçırabiliriz (**düşük Gerçek Pozitif Oranı**).
+*   **Gevşek Bir Kural (Düşük Eşik, örn: 0.20):** Bu durumda en ufak bir şüphede bile kişiyi "şüpheli" sayarız. Sonuç? Neredeyse tüm gerçek şüphelileri yakalarız (**yüksek Gerçek Pozitif Oranı**), ama bu süreçte bir sürü masum insanı da boş yere rahatsız etmiş oluruz (**yüksek Sahte Pozitif Oranı**).
+
+Gördüğünüz gibi, burada bir ödünleşim (trade-off) var. ROC eğrisi, bu karar eşiğini en katıdan en gevşeye kadar tüm olası seviyeler için denediğimizde, "doğru tespit oranımız" ile "yanlış alarm oranımız" arasındaki bu ödünleşimi görselleştiren bir haritadır.
+
+### ROC Eğrisi Nasıl Çizilir ve Yorumlanır?
+
+Peki bu haritayı teknik olarak nasıl çizeriz? Gençler, süreç oldukça mantıklıdır. Modelimizin test verileri için ürettiği olasılık skorlarını alırız ve eşik değerini 1'den 0'a doğru sistematik olarak kaydırırız. Her bir eşik değeri için iki temel oranı hesaplarız:
+
+1.  **Gerçek Pozitif Oranı (True Positive Rate - TPR):** Bu, bizim **Duyarlılık (Recall)** dediğimiz metriğin ta kendisidir. Gerçekte pozitif olan vakaların ne kadarını doğru bir şekilde yakalayabildiğimizi ölçer. Formülü: `TPR = TP / (TP + FN)`
+2.  **Sahte Pozitif Oranı (False Positive Rate - FPR):** Bu ise "yanlış alarm oranımızdır". Gerçekte negatif olan vakaların ne kadarını hatalı bir şekilde pozitif olarak etiketlediğimizi gösterir. Formülü: `FPR = FP / (FP + TN)`
+
+Grafiği oluşturma adımları şöyledir:
+*   **Başlangıç:** Eşiği 1.0'a ayarlarız. Modelimiz çok "çekingendir" ve hiçbir şeye pozitif demez. Bu yüzden hem TPR hem de FPR sıfırdır. Bu, grafiğimizin sol alt köşesindeki **(0, 0)** noktasıdır.
+*   **Ara Adımlar:** Eşiği yavaş yavaş düşürürüz. Eşik düştükçe model daha "cesur" hale gelir ve daha fazla örneğe pozitif demeye başlar. Bu süreçte hem TPR hem de FPR artar. Her eşik değeri için yeni bir (FPR, TPR) çifti hesaplar ve grafiğe bir nokta koyarız.
+*   **Bitiş:** Eşiği 0.0'a getirdiğimizde, modelimiz her şeye pozitif der. Bu durumda hem tüm pozitifleri (TPR=1) hem de tüm negatifleri (FPR=1) "yakalamış" oluruz. Bu da grafiğimizin sağ üst köşesindeki **(1, 1)** noktasıdır.
+
+Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
+
+![Örnek ROC Eğrileri](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/ROC_curves.svg/440px-ROC_curves.svg.png)
+
+*   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
+*   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
+*   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
+*   **Model Performansı:** Bir modelin eğrisi bu sol üst köşeye ne kadar yakınsa, performansı o kadar iyidir. Grafikteki yeşil eğri, mavi eğriden daha iyi bir performansa sahiptir.
+
+### ROC Eğrisinin Adım Adım Oluşturulması
+
+Aşağıdaki interaktif animasyon, bir modelin ürettiği olasılık skorlarından ROC eğrisinin nasıl adım adım oluşturulduğunu göstermektedir. "Animasyonu Başlat" düğmesine tıklayarak veya slider'ı manuel olarak hareket ettirerek, karar eşiğinin (threshold) nasıl değiştirildiğini, her adımda Karışıklık Matrisi değerlerinin (TP, FP, FN, TN) ve bunlara bağlı olarak TPR ve FPR oranlarının nasıl hesaplandığını ve bu oranların grafiğe bir nokta olarak nasıl yansıtıldığını gözlemleyebilirsiniz. Animasyon sırasında, tablodaki her bir veri noktasının tahmin durumuna göre (Gerçek Pozitif, Sahte Pozitif, Gerçek Negatif, Sahte Negatif) renklenmesi, modelin performansını daha net anlamanıza yardımcı olacaktır.
+
+<div id="roc-animation-container" style="font-family: sans-serif; border: 1px solid #ccc; padding: 15px; border-radius: 5px; max-width: 800px; margin: 20px auto;">
+    <h4 style="text-align: center; margin-top: 0;">ROC Eğrisi Oluşturma Animasyonu</h4>
+    <p style="text-align: center; font-size: 14px;">Modelin ürettiği olasılık skorlarına göre bir karar eşiğinin (threshold) kaydırılmasının, Gerçek Pozitif Oranı (TPR) ve Sahte Pozitif Oranı (FPR) değerlerini nasıl değiştirdiğini ve ROC eğrisini nasıl oluşturduğunu adım adım izleyin.</p>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+        <button id="start-roc-animation" style="padding: 8px 16px; font-size: 14px; cursor: pointer;">Animasyonu Başlat</button>
+        <label for="threshold-slider" style="font-size: 14px;">Eşik Değeri:</label>
+        <input type="range" id="threshold-slider" min="0" max="101" value="101" style="width: 180px;">
+        <span id="roc-threshold-display" style="font-weight: bold; color: red; min-width: 40px; text-align: left;">1.00+</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+        <!-- Sol Taraf: Tablo ve Metrikler -->
+        <div style="flex: 1; min-width: 300px;">
+            <strong>Örnek Veri (Skora Göre Sıralı)</strong>
+            <table id="roc-data-table" style="width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; table-layout: fixed;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Gerçek Sınıf</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Model Skoru</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Tahmin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #ffc107;">
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.95</td>
+                        <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                    </tr>
+                    <tr style="background-color: #ffc107;">
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.85</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #e2e3e5;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.78</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #ffc107;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.66</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #ffc107;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.59</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #e2e3e5;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.55</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #e2e3e5;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.47</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #ffc107;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.42</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #e2e3e5;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.35</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #ffc107;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Pozitif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.21</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                            <tr style="background-color: #e2e3e5;">
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">0.11</td>
+                                                <td class="prediction" style="border: 1px solid #ddd; padding: 8px; text-align: center;">Negatif</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <strong>Metrikler ve Karışıklık Matrisi</strong>
+                                    <div id="roc-metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; font-size: 14px;">
+                                        <div style="padding: 5px; border: 1px solid #ccc; border-radius: 3px;">TPR: <span id="tpr-value">0.00</span></div>
+                                        <div style="padding: 5px; border: 1px solid #ccc; border-radius: 3px;">FPR: <span id="fpr-value">0.00</span></div>
+                                        <div style="background-color: #d4edda; padding: 8px; border-radius: 3px;">TP: <span id="tp-value">0</span></div>
+                                        <div style="background-color: #f8d7da; padding: 8px; border-radius: 3px;">FP: <span id="fp-value">0</span></div>
+                                        <div style="background-color: #fff3cd; padding: 8px; border-radius: 3px;">FN: <span id="fn-value">6</span></div>
+                                        <div style="background-color: #d1ecf1; padding: 8px; border-radius: 3px;">TN: <span id="tn-value">5</span></div>
+                                    </div>
+                                </div>
+                                <!-- Sağ Taraf: ROC Grafiği -->
+                                <div style="flex: 1; min-width: 300px; text-align: center;">
+                                    <strong>ROC Eğrisi</strong>
+                                    <svg id="roc-chart" width="320" height="320" style="border: 1px solid #ccc;"></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const data = [
+                                { actual: 1, score: 0.95 }, { actual: 1, score: 0.85 },
+                                { actual: 0, score: 0.78 }, { actual: 1, score: 0.66 },
+                                { actual: 1, score: 0.59 }, { actual: 0, score: 0.55 },
+                                { actual: 0, score: 0.47 }, { actual: 1, score: 0.42 },
+                                { actual: 0, score: 0.35 }, { actual: 1, score: 0.21 },
+                                { actual: 0, score: 0.11 }
+                            ];
+
+                            const totalPositives = data.filter(d => d.actual === 1).length;
+                            const totalNegatives = data.filter(d => d.actual === 0).length;
+
+                            const slider = document.getElementById('threshold-slider');
+                            const thresholdDisplay = document.getElementById('roc-threshold-display');
+                            const startButton = document.getElementById('start-roc-animation');
+                            const tableBody = document.querySelector('#roc-data-table tbody');
+                            const chart = document.getElementById('roc-chart');
+
+                            const tprValue = document.getElementById('tpr-value');
+                            const fprValue = document.getElementById('fpr-value');
+                            const tpValue = document.getElementById('tp-value');
+                            const fpValue = document.getElementById('fp-value');
+                            const fnValue = document.getElementById('fn-value');
+                            const tnValue = document.getElementById('tn-value');
+
+                            const chartSize = 320;
+                            const padding = 40;
+
+                            function update(threshold) {
+                                let tp = 0, fp = 0, fn = 0, tn = 0;
+                                
+                                tableBody.innerHTML = ''; // Clear and repopulate table
+                                data.forEach(item => {
+                                    const predicted = item.score >= threshold ? 1 : 0;
+                                    let status = '';
+                                    let bgColor = '';
+
+                                    if (item.actual === 1 && predicted === 1) { tp++; status = 'TP'; bgColor = '#d4edda'; } // Green
+                                    else if (item.actual === 0 && predicted === 1) { fp++; status = 'FP'; bgColor = '#f8d7da'; } // Red
+                                    else if (item.actual === 1 && predicted === 0) { fn++; status = 'FN'; bgColor = '#fff3cd'; } // Yellow
+                                    else if (item.actual === 0 && predicted === 0) { tn++; status = 'TN'; bgColor = '#d1ecf1'; } // Blue
+
+                                    const row = document.createElement('tr');
+                                    row.style.backgroundColor = bgColor;
+                                    row.innerHTML = `
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${item.actual === 1 ? 'Pozitif' : 'Negatif'}</td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${item.score.toFixed(2)}</td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><b>${predicted === 1 ? 'Pozitif' : 'Negatif'}</b> (${status})</td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                });
+
+                                const tpr = totalPositives > 0 ? tp / totalPositives : 0;
+                                const fpr = totalNegatives > 0 ? fp / totalNegatives : 0;
+
+                                tprValue.textContent = tpr.toFixed(2);
+                                fprValue.textContent = fpr.toFixed(2);
+                                tpValue.textContent = tp;
+                                fpValue.textContent = fp;
+                                fnValue.textContent = fn;
+                                tnValue.textContent = tn;
+                                
+                                return { tpr, fpr };
+                            }
+
+                            function drawRocCurve(currentPoint) {
+                                chart.innerHTML = ''; // Clear chart
+
+                                // Draw axes
+                                chart.innerHTML += `<line x1="${padding}" y1="${chartSize - padding}" x2="${chartSize - padding}" y2="${chartSize - padding}" stroke="black"/>`;
+                                chart.innerHTML += `<line x1="${padding}" y1="${chartSize - padding}" x2="${padding}" y2="${padding}" stroke="black"/>`;
+                                chart.innerHTML += `<text x="${chartSize/2 - 20}" y="${chartSize - 10}" font-size="12">FPR</text>`;
+                                chart.innerHTML += `<text x="5" y="${chartSize/2}" transform="rotate(-90, 15, ${chartSize/2})" font-size="12">TPR</text>`;
+                                
+                                // Draw ticks
+                                for(let i = 0; i <= 5; i++) {
+                                    const val = i * 0.2;
+                                    const x = padding + val * (chartSize - 2 * padding);
+                                    const y = chartSize - padding - val * (chartSize - 2 * padding);
+                                    chart.innerHTML += `<text x="${x-10}" y="${chartSize - padding + 15}" font-size="10">${val.toFixed(1)}</text>`;
+                                    chart.innerHTML += `<text x="${padding - 25}" y="${y+3}" font-size="10">${val.toFixed(1)}</text>`;
+                                }
+
+                                // Draw diagonal line
+                                chart.innerHTML += `<line x1="${padding}" y1="${chartSize - padding}" x2="${chartSize - padding}" y2="${padding}" stroke="grey" stroke-dasharray="4"/>`;
+
+                                // Generate and draw ROC path
+                                let points = " ";
+                                const thresholds = [1.01, ...data.map(d => d.score), 0];
+                                thresholds.sort((a, b) => b - a).forEach(t => {
+                                    const { tpr, fpr } = calculateMetricsForThreshold(t);
+                                    const x = padding + fpr * (chartSize - 2 * padding);
+                                    const y = chartSize - padding - tpr * (chartSize - 2 * padding);
+                                    points += `${x},${y} `;
+                                });
+                                chart.innerHTML += `<polyline points="${points.trim()}" fill="none" stroke="blue" stroke-width="2"/>`;
+
+                                // Draw current point
+                                const cx = padding + currentPoint.fpr * (chartSize - 2 * padding);
+                                const cy = chartSize - padding - currentPoint.tpr * (chartSize - 2 * padding);
+                                chart.innerHTML += `<circle cx="${cx}" cy="${cy}" r="5" fill="red" />`;
+                            }
+                            
+                            function calculateMetricsForThreshold(threshold) {
+                                let tp = 0, fp = 0;
+                                data.forEach(item => {
+                                    const predicted = item.score >= threshold ? 1 : 0;
+                                    if (item.actual === 1 && predicted === 1) tp++;
+                                    if (item.actual === 0 && predicted === 1) fp++;
+                                });
+                                const tpr = totalPositives > 0 ? tp / totalPositives : 0;
+                                const fpr = totalNegatives > 0 ? fp / totalNegatives : 0;
+                                return {tpr, fpr};
+                            }
+
+                            function handleSliderChange() {
+                                const sliderValue = parseInt(slider.value);
+                                let threshold;
+                                if (sliderValue > 100) {
+                                    threshold = 1.01; // A value higher than any score
+                                    thresholdDisplay.textContent = "1.00+";
+                                } else {
+                                    threshold = sliderValue / 100.0;
+                                    thresholdDisplay.textContent = threshold.toFixed(2);
+                                }
+                                const currentPoint = update(threshold);
+                                drawRocCurve(currentPoint);
+                            }
+
+                            slider.addEventListener('input', handleSliderChange);
+
+                            let animationInterval = null;
+                            startButton.addEventListener('click', () => {
+                                if (animationInterval) {
+                                    clearInterval(animationInterval);
+                                    animationInterval = null;
+                                    startButton.textContent = "Animasyonu Başlat";
+                                    return;
+                                }
+                                slider.value = 101;
+                                handleSliderChange();
+                                startButton.textContent = "Durdur";
+                                animationInterval = setInterval(() => {
+                                    slider.value = parseInt(slider.value) - 1;
+                                    handleSliderChange();
+                                    if (slider.value <= 0) {
+                                        clearInterval(animationInterval);
+                                        animationInterval = null;
+                                        startButton.textContent = "Animasyonu Başlat";
+                                    }
+                                }, 100);
+                            });
+
+                            // Initial state
+                            handleSliderChange();
+                        });
+                        </script>
+
+### Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)
+
+Peki bu eğri bize ne anlatır? İdeal bir model, TPR'si 1 iken FPR'sinin 0 olduğu bir modeldir. Yani eğrinin grafiğin **sol üst köşesine** ne kadar yakınsa, modelin ayırt etme gücü o kadar iyidir.
+
+Bu genel performansı tek bir sayı ile özetlemek için **Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)** değerini hesaplarız.
+*   **AUC = 1:** Mükemmel bir sınıflandırıcı. Pozitif ve negatif sınıfları hatasız bir şekilde ayırabiliyor.
+*   **AUC = 0.5:** Rastgele tahmin yapan bir model. Yazı tura atmaktan farksızdır ve grafikte (0,0)'dan (1,1)'e uzanan köşegen çizgiyle temsil edilir.
+*   **AUC < 0.5:** Rastgele tahminden daha kötü bir model.
+
+AUC, modelin farklı eşik değerleri genelindeki ayırt etme gücünü gösteren, özellikle dengesiz veri setlerinde doğruluğa göre çok daha güvenilir ve yaygın olarak kullanılan bir metriktir.
+
+
+---
+
+## Sayısal Tahmin (Regresyon) Modelleri İçin Performans Ölçütleri
+
+Sınıflandırma problemlerinde modelimizin başarısını "doğru" ya da "yanlış" gibi net etiketlerle ölçebiliyorduk. Ancak bir evin fiyatını, bir arabanın yakıt tüketimini veya yarınki hava sıcaklığını tahmin etmeye çalıştığımız regresyon problemlerinde durum farklıdır. Burada sorumuz "Doğru bildi mi?" değil, "Gerçek değere ne kadar yaklaştı?" olur. İşte bu "yakınlığı" veya tam tersi olan "hatayı" ölçmek için kullandığımız temel metrikleri inceleyeceğiz.
+
+### 1. Ortalama Mutlak Hata (Mean Absolute Error - MAE)
+
+En basit ve anlaşılması en kolay hata metriğidir. Her bir tahminin gerçek değerden ne kadar saptığını ölçer, bu sapmaların yönünü (yani tahminin yüksek mi yoksa düşük mü kaldığını) önemsemez ve tüm bu mutlak sapmaların ortalamasını alır.
+
+`MAE = (1/n) * Σ|Gerçek Değer - Tahmin Edilen Değer|`
+
+**Yorumlama:** MAE'nin sonucu, tahmin ettiğimiz değerle aynı birimdedir. Örneğin, ev fiyatlarını tahmin ediyorsak ve MAE değerimiz 25.000 TL ise bu şu anlama gelir: "Modelimizin tahminleri, gerçek ev fiyatlarından ortalama olarak 25.000 TL sapmaktadır." Bu metrik, hatanın büyüklüğünü doğrudan ve sezgisel bir şekilde ifade eder.
+
+### 2. Ortalama Karesel Hata (Mean Squared Error - MSE)
+
+MSE de hataların ortalamasını alır, ancak bunu yapmadan önce her bir hatanın karesini alır. Bu küçük matematiksel işlemin çok önemli iki sonucu vardır:
+
+1.  **Negatif değerlerden kurtulur:** Hatanın karesi alındığı için tahminin gerçek değerden düşük veya yüksek olmasının bir önemi kalmaz, tüm hatalar pozitif olur.
+2.  **Büyük hataları daha sert cezalandırır:** Bu, MSE'nin en belirgin karakteristiğidir. Örneğin, 2 birimlik bir hata `2² = 4` olarak hesaba katılırken, 10 birimlik bir hata `10² = 100` olarak katılır. Yani hata 5 kat artarken, MSE'ye olan etkisi 25 kat artar.
+
+`MSE = (1/n) * Σ(Gerçek Değer - Tahmin Edilen Değer)²`
+
+**Yorumlama:** MSE, özellikle büyük hataların çok maliyetli olduğu durumlarda (örneğin, bir mühendislik uygulamasında kritik bir parçanın dayanıklılığını tahmin etmek gibi) tercih edilir. Modelin büyük hatalar yapmasını engellemeye odaklanır. Ancak bir dezavantajı vardır: Sonucun birimi, orijinal verinin biriminin karesi olur (örneğin, TL²). Bu durum, metriğin doğrudan yorumlanmasını zorlaştırır.
+
+### 3. Kök Ortalama Karesel Hata (Root Mean Squared Error - RMSE)
+
+Gençler, RMSE, MSE'nin "birim karesi" sorununu çözmek için vardır. Basitçe, MSE değerinin karekökünün alınmasıyla hesaplanır.
+
+`RMSE = √MSE`
+
+Bu sayede, sonuç tekrar orijinal veriyle aynı birime döner (örneğin, TL²'den tekrar TL'ye). Bu da onu MAE gibi kolayca yorumlanabilir hale getirir.
+
+**Peki MAE varken neden RMSE kullanalım?** RMSE, kare alma işleminden dolayı büyük hatalara (aykırı değerlere) karşı MAE'den daha duyarlıdır. Eğer veri setinizde birkaç tane çok büyük hata varsa, RMSE değeriniz MAE değerinizden belirgin şekilde daha yüksek çıkacaktır. Bu durum, modelinizin ara sıra çok büyük hatalar yapma eğiliminde olduğuna dair size bir sinyal verir.
+
+| Metrik | Odak Noktası                               | Yorumlama Kolaylığı | Aykırı Değerlere Duyarlılığı |
+| :----- | :----------------------------------------- | :------------------ | :--------------------------- |
+| **MAE**  | Ortalama hatanın büyüklüğü                 | Çok Kolay           | Düşük                        |
+| **RMSE** | Büyük hataları cezalandırır, ortalama hata | Kolay               | Yüksek                       |
+
+### Örnek Üzerinden Hesaplama
+
+Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneği üzerinden görelim. Modelimizin 5 ev için yaptığı tahminler ve gerçek fiyatlar aşağıdaki gibi olsun (fiyatlar bin TL cinsindendir):
+
+| Gerçek Fiyat (y) | Tahmin (ŷ) | Hata (y - ŷ) | Mutlak Hata | Karesel Hata |
+| :--------------- | :--------- | :----------- | :---------- | :----------- |
+| 250              | 260        | -10          | 10          | 100          |
+| 300              | 290        | 10           | 10          | 100          |
+| 200              | 215        | -15          | 15          | 225          |
+| 500              | 480        | 20           | 20          | 400          |
+| 420              | 450        | -30          | 30          | 900          |
+| **Toplam**       |            |              | **85**      | **1725**     |
+
+Şimdi bu tabloyu kullanarak metriklerimizi hesaplayalım:
+
+1.  **MAE Hesabı:**
+    *   `MAE = Toplam Mutlak Hata / Veri Sayısı`
+    *   `MAE = 85 / 5 = 17`
+    *   **Yorum:** Modelimiz, ev fiyatlarını ortalama **17 bin TL** hata ile tahmin etmektedir.
+
+2.  **MSE Hesabı:**
+    *   `MSE = Toplam Karesel Hata / Veri Sayısı`
+    *   `MSE = 1725 / 5 = 345`
+    *   **Yorum:** Bu değerin birimi (bin TL)² olduğu için doğrudan yorumlamak zordur.
+
+3.  **RMSE Hesabı:**
+    *   `RMSE = √MSE`
+    *   `RMSE = √345 ≈ 18.57`
+    *   **Yorum:** Modelimizin tahminleri ortalama **18.57 bin TL** sapmaktadır. Dikkat ederseniz, son satırdaki -30 bin TL'lik büyük hata, karesi alındığı için RMSE'yi MAE'den daha fazla yukarı çekmiştir. Bu, RMSE'nin büyük hatalara olan duyarlılığını gösterir.
+
+### 4. R-Kare (R-Squared / Belirlilik Katsayısı)
+
+Şimdiye kadar hep hatayı, yani modelimizin ne kadar yanıldığını ölçtük. R-Kare ise madalyonun diğer yüzüne bakar ve bize modelimizin ne kadar "başarılı" olduğunu anlatır.
+
+Şöyle düşünelim: Bir grup evin fiyatları neden birbirinden farklıdır? Çünkü metrekaresi, oda sayısı, konumu gibi özellikleri farklıdır. İşte R-Kare, bu fiyat farklılıklarının, yani verideki "değişkenliğin", yüzde kaçının bizim modelimizdeki bu özellikler tarafından açıklandığını söyler.
+
+`R² = 1 - (SS_res / SS_tot)`
+
+Bu formülü yorumlayalım: `SS_res`, modelimizin açıklayamadığı hata miktarını, `SS_tot` ise verideki toplam değişkenliği temsil eder. Dolayısıyla `(SS_res / SS_tot)` oranı, modelimizin toplam değişkenliğin ne kadarlık bir kısmını **açıklayamadığını** gösterir. Bu oranı 1'den çıkardığımızda ise geriye modelimizin toplam değişkenliğin yüzde kaçını **açıklayabildiği** kalır.
+
+*   **R² = 1:** Mükemmel bir uyum. Modelimiz verideki değişkenliğin tamamını açıklayabiliyor, yani hiç hata yapmıyor (`SS_res` sıfırdır).
+*   **R² = 0:** Modelimizin hiçbir açıklayıcı gücü yok. Modelimizin performansı, sadece tüm evlerin ortalama fiyatını tahmin etmekten daha iyi değil.
+
+#### Örnek Üzerinden Hesaplama
+
+Yukarıdaki ev fiyatı örneğimizi tekrar kullanalım:
+
+| Gerçek Fiyat (y) | Tahmin (ŷ) |
+| :--------------- | :--------- |
+| 250              | 260        |
+| 300              | 290        |
+| 200              | 215        |
+| 500              | 480        |
+| 420              | 450        |
+
+1.  **Ortalama Fiyatı Bulalım:**
+    *   `Ortalama (ȳ) = (250 + 300 + 200 + 500 + 420) / 5 = 334`
+
+2.  **`SS_tot`'u Hesaplayalım (Toplam Değişkenlik):**
+    *   `SS_tot = (250-334)² + (300-334)² + (200-334)² + (500-334)² + (420-334)²`
+    *   `SS_tot = (-84)² + (-34)² + (-134)² + (166)² + (86)²`
+    *   `SS_tot = 7056 + 1156 + 17956 + 27556 + 7396 = 61120`
+
+3.  **`SS_res`'i Belirleyelim (Modelin Hatası):**
+    *   Bu değeri bir önceki "Karesel Hata" tablosundan zaten biliyoruz: **1725**.
+
+4.  **R-Kare'yi Hesaplayalım:**
+    *   `R² = 1 - (1725 / 61120)`
+    *   `R² ≈ 1 - 0.0282`
+    *   `R² ≈ 0.9718`
+
+**Yorum:** R-Kare değerimiz yaklaşık 0.97. Bu şu anlama gelir: "Piyasadaki ev fiyatları arasındaki değişkenliğin %97'si, bizim modelimiz tarafından açıklanabilmektedir." Bu, modelimizin oldukça başarılı olduğunu gösterir.
+
+#### Düzeltilmiş R-Kare (Adjusted R-Squared)
+
+Gençler, R-Kare'nin dikkat etmemiz gereken önemli bir özelliği vardır. Modele yeni bir özellik eklediğinizde, bu özellik anlamsız bile olsa (örneğin, ev sahibinin ayakkabı numarası), R-Kare değeri neredeyse her zaman artar veya en kötü ihtimalle aynı kalır. Bu durum, bizi gereksiz yere karmaşık modeller kurmaya itebilir.
+
+İşte bu sorunu aşmak için **Düzeltilmiş R-Kare (Adjusted R-Squared)** kullanılır. Bu metrik, modele eklenen her bir özelliğin getirdiği faydayı ve eklediği karmaşıklığı hesaba katar. Eğer eklenen yeni özellik modelin açıklayıcılığına anlamlı bir katkı sağlamıyorsa, Düzeltilmiş R-Kare değeri artmaz, hatta düşebilir. Bu sayede, model karmaşıklığını da dikkate alarak daha adil bir performans değerlendirmesi yapmış oluruz.
+
+Adjusted R² = 1 - [(1 - R²) × (n - 1) / (n - k - 1)]
+
+### Weka ile Regresyon Değerlendirmesi
+
+Tıpkı sınıflandırma metriklerinde olduğu gibi, regresyon metriklerini de Weka gibi görsel araçlarla kolayca hesaplayabiliriz. Az önce öğrendiğimiz MAE, RMSE ve R-Kare gibi değerlerin Weka arayüzünde nasıl karşımıza çıktığını görelim.
+
+Bunun için Weka ile birlikte gelen `auto-price.arff` veri setini kullanacağız. Bu veri seti, arabaların beygir gücü, motor hacmi gibi özelliklerini kullanarak fiyatlarını (`price` niteliği) tahmin etmeyi amaçlar.
+
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile Weka'nın kurulu olduğu dizindeki `data` klasöründen `auto-price.arff` dosyasını açın.
+2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonu ile `functions` altından `LinearRegression` algoritmasını seçin. Hedef değişkenimiz sayısal olduğu için Weka, otomatik olarak bir regresyon analizi yapacaktır.
+3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) seçiliyken "Start" butonuna basın.
+4.  **Sonuçları Yorumlama:** "Classifier output" panelinde, regresyon modelimizin performansını özetleyen bir bölüm göreceksiniz:
+
+```
+=== Run information ===
+...
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+...
+
+=== Evaluation on training data ===
+
+=== Summary ===
+
+Correlation coefficient                  0.908
+Mean absolute error                2093.3451
+Root mean squared error            2935.4103
+Relative absolute error              33.911  %
+Root relative squared error          39.8851 %
+Total Number of Instances            159
+```
+
+*   **`Mean absolute error` (MAE):** Modelimizin araba fiyatı tahminleri, gerçek fiyattan ortalama olarak yaklaşık **2093 birim** sapmaktadır.
+*   **`Correlation coefficient`:** Bu, R değeridir ve 0.908 olarak bulunmuştur. Modelimizin tahminleri ile gerçek değerler arasında çok güçlü pozitif bir ilişki olduğunu gösterir. **R-Kare (R-Squared)** değerini bulmak için bu katsayının karesini almamız yeterlidir: `(0.908)² ≈ 0.824`. Bu sonuca göre, araba fiyatlarındaki değişkenliğin yaklaşık **%82.4'ü** modelimizdeki özellikler tarafından açıklanabilmektedir.
+
+Gördüğünüz gibi, Weka bu temel regresyon metriklerini bizim için otomatik olarak hesaplayarak modelimizin performansı hakkında hızlı ve anlaşılır bir özet sunar.
+*   **`Root mean squared error` (RMSE):** Büyük hataları daha fazla dikkate alan bu metrik ise yaklaşık **2935 birimdir**. RMSE'nin MAE'den daha yüksek olması, modelin bazı örneklerde daha büyük hatalar yaptığının bir göstergesidir.
+Bu çıktıyı yorumlayalım:
+
+## Uygulamalar
+
+Bu metrikleri hesaplamak için hem görsel arayüzlü araçlar hem de programlama kütüphaneleri yaygın olarak kullanılır.
+
+### Weka ile Değerlendirme
+
+**Weka**, kod yazmadan makine öğrenmesi modelleri oluşturup değerlendirmenizi sağlayan popüler bir görsel araçtır.
+
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `iris.arff` gibi hazır bir veri setini yükleyin.
+2.  **Sınıflandırıcı Seçimi:** "Classify" sekmesinde, "Choose" butonu ile `trees` altından `J48` (bir karar ağacı algoritması) seçin.
+3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) kullanarak "Start" butonuna basın.
+4.  **Sonuçları Yorumlama:** "Classifier output" panelinde şu sonuçları göreceksiniz:
+    *   **`Correctly Classified Instances`**: **Doğruluk (Accuracy)**.
+    *   **`Detailed Accuracy By Class`** tablosu: Her sınıf için `TP Rate` (**Recall**), `Precision`, `F-Measure` (**F1-Skoru**) ve `ROC Area` (**AUC**) değerlerini içerir.
+    *   **`Confusion Matrix`**: Panelin en altında, öğrendiğimiz **Karışıklık Matrisi**'ni bulabilirsiniz.
+
+Örnek bir Weka Karışıklık Matrisi çıktısı:
+```
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 50  0  0 |  a = Iris-setosa
+  0 47  3 |  b = Iris-versicolor
+  0  1 49 |  c = Iris-virginica
+```
+Bu matris, `Iris-versicolor` sınıfından 3 örneğin hatalı bir şekilde `Iris-virginica` olarak sınıflandırıldığını açıkça gösterir.
+
+### Python (Scikit-learn) ile Değerlendirme
+
+Python'da makine öğrenmesi için en yaygın kütüphane olan **Scikit-learn**, tüm bu metrikleri hesaplamak için hazır fonksiyonlar sunar. Aşağıdaki örnek, bir modelin performansını nasıl değerlendireceğinizi gösterir. Bu kodu doğrudan bir Google Colab not defterinde çalıştırabilirsiniz.
+Python'da makine öğrenmesi için en yaygın kütüphane olan **Scikit-learn**, bu metrikleri hesaplamak için bize son derece pratik fonksiyonlar sunar. Şimdi, öğrendiğimiz teorik bilgileri bir örnek üzerinde nasıl uygulayacağımızı görelim.
+
+Aşağıdaki kod, sentetik bir veri seti oluşturur, bu veri üzerinde basit bir Lojistik Regresyon modeli eğitir ve ardından performansını, az önce öğrendiğimiz metrikler ve görsellerle kapsamlı bir şekilde analiz eder. Bu kodu doğrudan bir Google Colab not defterinde çalıştırarak sonuçları kendiniz de gözlemleyebilirsiniz.
+
+```python
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report, roc_curve, auc
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Veri Seti Oluşturma
+# Sınıfları dengesiz bir veri seti oluşturalım.
+# Örneklerin %90'ı 0. sınıfa, %10'u ise 1. sınıfa ait olacak.
+X, y = make_classification(
+    n_samples=1000,
+    n_features=2,
+    n_informative=2,
+    n_redundant=0,
+    weights=[0.9, 0.1],
+    flip_y=0,
+    random_state=42
+)
+
+# 2. Veriyi Eğitim ve Test Olarak Ayırma
+# stratify=y parametresi, eğitim ve test setlerindeki sınıf oranlarının
+# orijinal veri setindekiyle aynı kalmasını sağlar. Bu, dengesiz veri setlerinde önemlidir.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+# 3. Model Eğitimi
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 4. Tahmin Yapma
+# predict() -> Nihai sınıf etiketini (0 veya 1) tahmin eder.
+y_pred = model.predict(X_test)
+# predict_proba() -> Her sınıf için olasılıkları verir. ROC eğrisi için gereklidir.
+# [:, 1] ile sadece pozitif sınıfın (sınıf 1) olasılıklarını alıyoruz.
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+
+# 5. Performans Metriklerini Raporlama
+print("--- Sınıflandırma Raporu ---")
+# classification_report, temel metrikleri düzenli bir formatta sunar.
+print(classification_report(y_test, y_pred, target_names=['Negatif Sınıf (0)', 'Pozitif Sınıf (1)']))
+print("-" * 30)
+
+# 6. Karışıklık Matrisini Görselleştirme
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(6, 4))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Tahmin Negatif', 'Tahmin Pozitif'],
+            yticklabels=['Gerçek Negatif', 'Gerçek Pozitif'])
+plt.title('Karışıklık Matrisi')
+plt.show()
+
+# 7. ROC Eğrisini Çizme
+# roc_curve fonksiyonu, farklı eşik değerleri için FPR ve TPR'yi hesaplar.
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
+# auc fonksiyonu, bu eğrinin altında kalan alanı hesaplar.
+roc_auc = auc(fpr, tpr)
+
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC Eğrisi (AUC = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', label='Rastgele Tahmin')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('Sahte Pozitif Oranı (FPR)')
+plt.ylabel('Gerçek Pozitif Oranı (TPR)')
+plt.title('Alıcı İşletim Karakteristiği (ROC) Eğrisi')
+plt.legend(loc="lower right")
+plt.show()
+```
+
+
+Gençler, bu kod parçasının ne yaptığını daha iyi anlayalım:
+
+1.  **Veri Seti Oluşturma:** Gerçek dünya problemlerini daha iyi yansıtması için `make_classification` ile yapay bir veri seti oluşturduk. `weights=[0.9, 0.1]` parametresiyle, sınıflardan birinin diğerinden çok daha fazla örneğe sahip olduğu **dengesiz (imbalanced)** bir durum yarattık. Bu, `Accuracy` metriğinin neden tek başına yeterli olmayabileceğini göstermek için önemlidir.
+2.  **Veriyi Ayırma:** Modelimizi eğitmek ve test etmek için veriyi ikiye ayırdık. `stratify=y` parametresi, bu dengesiz sınıf dağılımının hem eğitim hem de test setlerinde korunmasını garanti eder. Böylece modelimizi adil bir şekilde değerlendirebiliriz.
+3.  **Model Eğitimi:** Basit ama güçlü bir sınıflandırma algoritması olan `LogisticRegression` modelini eğitim verileriyle (`X_train`, `y_train`) eğittik.
+4.  **Tahmin Yapma:** Eğitilen modelimizi daha önce hiç görmediği test verileri (`X_test`) üzerinde çalıştırdık. Burada iki tür tahmin yaptık: `predict()` ile modelin kesin kararını (0 veya 1) ve `predict_proba()` ile modelin bir örneğin pozitif sınıfa ait olma olasılığını aldık. Bu olasılık değeri, ROC eğrisini çizmek için kritik öneme sahiptir.
+5.  **Sınıflandırma Raporu:** `classification_report` fonksiyonu, her sınıf için Kesinlik (Precision), Duyarlılık (Recall) ve F1-Skoru değerlerini tek bir tabloda özetleyerek bize hızlı bir genel bakış sunar.
+6.  **Karışıklık Matrisi:** Teoride gördüğümüz karışıklık matrisini `seaborn` kütüphanesiyle görselleştirdik. Bu ısı haritası, modelin ne tür hatalar yaptığını (FP veya FN) bir bakışta anlamamızı sağlar.
+7.  **ROC Eğrisi ve AUC:** Modelin pozitif sınıf için ürettiği olasılıkları (`y_pred_proba`) kullanarak, farklı karar eşikleri için Sahte Pozitif Oranı (FPR) ve Gerçek Pozitif Oranı (TPR) değerlerini hesapladık. Bu noktaları birleştirerek ROC eğrisini çizdik. Eğrinin altında kalan alan (AUC), modelin genel ayırt etme gücünün sayısal bir ölçüsüdür. AUC değeri 1'e ne kadar yakınsa, model o kadar iyidir.
+
+## Son Sözler
+
+Gençler, unutmayın ki tek bir "en iyi" performans ölçütü yoktur; probleme ve hedefe "en uygun" ölçüt vardır. Bir modelin başarısını değerlendirirken, problemin bağlamını göz önünde bulundurarak birden fazla metriği birlikte analiz etmek esastır.
+
+*   Bir hastalığın teşhisinde, hiçbir vakayı atlamamak öncelikli olduğu için **Duyarlılık (Recall)** kritik olabilir.
+*   Bir spam filtresinde, önemli bir e-postayı yanlışlıkla engellememek için **Kesinlik (Precision)** daha önemli olabilir.
+*   Sınıfların dengesiz olduğu durumlarda **Doğruluk (Accuracy)** yerine **F1-Skoru** veya **AUC** gibi metriklere odaklanmak daha sağlıklı sonuçlar verir.
+
+Bu metrikler, geliştirdiğiniz modelleri anlama ve iyileştirme sürecinizde size yol gösterecek temel araçlardır.
+
 
 
 ### 4. Ensemble Learning
