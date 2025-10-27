@@ -1051,16 +1051,16 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
     <text class="text-label" x="150" y="450" fill="#C00000">True Negative</text>
     <!-- True Positive (Sağ, Mavi altında, Eşik sağında) -->
     <text class="text-label" x="450" y="450" fill="#00509E">True Positive</text>
-<!-- Hata Etiketleri -->
+    <!-- Hata Etiketleri -->
     <g transform="translate(300, 420)">
             <text class="text-small" x="-70" y="0" fill="#C00000">False Negative</text>
             <text class="text-small" x="70" y="0" fill="#00509E">False Positive</text>
             <text class="text-small" x="0" y="20" fill="#555">Eşiğe Göre Hatalar</text>
     </g>
-<!-- ========================================= -->
+    <!-- ========================================= -->
     <!-- SAĞ GRAFİKLER (İYİ/KÖTÜ MODEL) -->
     <!-- ========================================= -->
-<!-- İYİ MODEL -->
+    <!-- İYİ MODEL -->
     <g transform="translate(700, 50)">
         <line class="axis" x1="0" y1="150" x2="250" y2="150" />
         <text class="text-title" x="125" y="190">İyi Model</text>
@@ -1068,7 +1068,7 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
         <path d="M 0,150 C 50,150 30,50 80,50 C 130,50 110,150 160,150" fill="none" stroke="#333" stroke-width="2"/>
         <path d="M 100,150 C 150,150 130,50 180,50 C 230,50 210,150 260,150" fill="none" stroke="#333" stroke-width="2"/>
     </g>
-<!-- KÖTÜ MODEL -->
+    <!-- KÖTÜ MODEL -->
     <g transform="translate(700, 280)">
         <line class="axis" x1="0" y1="150" x2="250" y2="150" />
         <text class="text-title" x="125" y="190">Kötü Model</text>
