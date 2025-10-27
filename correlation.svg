@@ -1,30 +1,100 @@
-graph LR
-    subgraph Korelasyon Tipleri (R Katsayısı)
-        P(+1)>(0_P)>>(0)>(0_N)>>N(-1)
-        
-        P(+1)[R = +1: Mükemmel Pozitif]
-        0_P[0 < R < 1: Güçlenen Pozitif]
-        0[R = 0: Doğrusal İlişki Yok]
-        0_N[-1 < R < 0: Güçlenen Negatif]
-        N(-1)[R = -1: Mükemmel Negatif]
-    end
-    subgraph Örnekler
-        style EX fill:#f9f, stroke:#333
-        EX[Değişkenler Arasındaki İlişki]
-        
-        EX --> A[Sıcaklık Artar, Dondurma Satışı Artar]
-        A --> B(Pozitif İlişki);
+<svg width="950" height="380" viewBox="0 0 950 380" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Stiller -->
+    <style>
+      .axis { stroke: black; stroke-width: 2; marker-end: url(#arrow); }
+      .text-label { font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+      .data-point { fill: #00509E; r: 3.5; }
+      .trend-line-pos { stroke: #008000; stroke-width: 2; stroke-dasharray: 5 2; }
+      .trend-line-neg { stroke: #C00000; stroke-width: 2; stroke-dasharray: 5 2; }
+      .chart-title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; text-anchor: middle; fill: #333; }
+    </style>
+    <!-- Ok ucu tanımı -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+    </marker>
+  </defs>
+  <!-- Grafiğin çizim alanı (280x280) ve boşluklar (padding) -->
+  <g transform="translate(50, 50)">
+    <!-- ========================================= -->
+    <!-- 1. GÜÇLÜ POZİTİF KORELASYON (R ≈ 1) -->
+    <!-- ========================================= -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="280" height="280" fill="#F8F9F9" stroke="#EAECEE" stroke-width="1"/>
+            <!-- Eksenler -->
+      <line x1="0" y1="280" x2="280" y2="280" class="axis" marker-end="url(#arrow)"/>
+      <line x1="0" y1="280" x2="0" y2="0" class="axis" marker-end="url(#arrow)"/>
+      
+      <text class="chart-title" x="140" y="-15">Pozitif Korelasyon (R ≈ 1)</text>
+      <!-- X Ekseni Etiketi (Ortalanmış) -->
+      <text class="text-label" x="140" y="305">X Ekseni: Sıcaklık</text>
+      <text class="text-label" transform="rotate(-90)" x="-140" y="-20">Y Ekseni: Dondurma Satışı</text>
+      <!-- Veri Noktaları (Trend çizgisi etrafında dağılmış) -->
+      <!-- Trend çizgisi: (30, 270) -> (250, 50) -->
+      <circle cx="55" cy="255" class="data-point" /> 
+      <circle cx="75" cy="235" class="data-point" /> 
+      <circle cx="115" cy="180" class="data-point" /> 
+      <circle cx="135" cy="175" class="data-point" /> 
+      <circle cx="175" cy="115" class="data-point" /> 
+      <circle cx="205" cy="95" class="data-point" />
+      <circle cx="225" cy="65" class="data-point" />
+      <circle cx="100" cy="200" class="data-point" />
+            <!-- Trend Çizgisi -->
+      <line x1="30" y1="270" x2="250" y2="50" class="trend-line-pos" />
+    </g>
+    <!-- ========================================= -->
+    <!-- 2. GÜÇLÜ NEGATİF KORELASYON (R ≈ -1) -->
+    <!-- ========================================= -->
+    <g transform="translate(320, 0)">
+      <rect x="0" y="0" width="280" height="280" fill="#F8F9F9" stroke="#EAECEE" stroke-width="1"/>
+            <!-- Eksenler -->
+      <line x1="0" y1="280" x2="280" y2="280" class="axis" marker-end="url(#arrow)"/>
+      <line x1="0" y1="280" x2="0" y2="0" class="axis" marker-end="url(#arrow)"/>
 
-        EX --> C[Eğitim Seviyesi Artar, İşsizlik Azalır]
-        C --> D(Negatif İlişki);
-        
-        EX --> E[Ayakkabı Numarası, IQ Seviyesi]
-        E --> F(Sıfır Korelasyon);
-    end
-    style P(+1) fill:#ccf, stroke:#333
-    style N(-1) fill:#fcc, stroke:#333
-    style 0 fill:#ddd, stroke:#999
-
-    B --> 0_P
-    D --> 0_N
-    F --> 0
+      <text class="chart-title" x="140" y="-15">Negatif Korelasyon (R ≈ -1)</text>
+      <!-- X Ekseni Etiketi (Ortalanmış) -->
+      <text class="text-label" x="140" y="305">X Ekseni: Eğitim Seviyesi</text>
+      <text class="text-label" transform="rotate(-90)" x="-140" y="-20">Y Ekseni: İşsizlik Oranı</text>
+      
+      <!-- Veri Noktaları (Negatif Eğim) -->
+      <!-- Trend çizgisi: (30, 50) -> (250, 270) -->
+      <circle cx="55" cy="65" class="data-point" />
+      <circle cx="75" cy="95" class="data-point" />
+      <circle cx="115" cy="135" class="data-point" />
+      <circle cx="135" cy="175" class="data-point" />
+      <circle cx="175" cy="205" class="data-point" />
+      <circle cx="205" cy="235" class="data-point" />
+      <circle cx="225" cy="265" class="data-point" />
+      <circle cx="100" cy="110" class="data-point" />
+            <!-- Trend Çizgisi -->
+      <line x1="30" y1="50" x2="250" y2="270" class="trend-line-neg" />
+    </g>
+    <!-- ========================================= -->
+    <!-- 3. SIFIR KORELASYON (R ≈ 0) -->
+    <!-- ========================================= -->
+    <g transform="translate(640, 0)">
+      <rect x="0" y="0" width="280" height="280" fill="#F8F9F9" stroke="#EAECEE" stroke-width="1"/>
+            <!-- Eksenler -->
+      <line x1="0" y1="280" x2="280" y2="280" class="axis" marker-end="url(#arrow)"/>
+      <line x1="0" y1="280" x2="0" y2="0" class="axis" marker-end="url(#arrow)"/>
+            <text class="chart-title" x="140" y="-15">Sıfır Korelasyon (R ≈ 0)</text>
+      <!-- X Ekseni Etiketi (Ortalanmış) -->
+      <text class="text-label" x="140" y="305">X Ekseni: Ayakkabı Numarası</text>
+      <text class="text-label" transform="rotate(-90)" x="-140" y="-20">Y Ekseni: IQ Seviyesi</text>
+      <!-- Veri Noktaları (Dağınık) -->
+      <circle cx="120" cy="80" class="data-point" />
+      <circle cx="200" cy="60" class="data-point" />
+      <circle cx="50" cy="150" class="data-point" />
+      <circle cx="250" cy="140" class="data-point" />
+      <circle cx="100" cy="220" class="data-point" />
+      <circle cx="180" cy="250" class="data-point" />
+      <circle cx="70" cy="270" class="data-point" />
+      <circle cx="230" cy="200" class="data-point" />
+      <circle cx="150" cy="150" class="data-point" />
+      <circle cx="80" cy="90" class="data-point" />
+      <circle cx="190" cy="100" class="data-point" />
+      <circle cx="210" cy="180" class="data-point" />
+    </g>
+  </g>
+</svg>

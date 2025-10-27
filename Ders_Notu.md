@@ -1134,9 +1134,7 @@ Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneğ
 
  <img src="./correlation.svg" alt="İki Sınıflı Problemler için Korelasyon Tipleri" width="100%" height="100%">
 
-<img src="./correlation.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
-
-    **R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
+**R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
 
     #### Örnek Üzerinden Hesaplama ve Yorumlama
 
