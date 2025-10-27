@@ -988,20 +988,7 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
 
 # ROC Eğrisi Animasyonu
 
-<a href="roc_animation.html" target="_blank" style="background-color: #007bff; /* Mavi */
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 0;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;">
-    Interaktif ROC eğrisi animasyonunu görüntülemek için ne yapacağınızı biliyor sunuz :) 
-</a>
+[Interaktif ROC eğrisi animasyonunu görüntülemek için ne yapacağınızı biliyor sunuz :)](./roc_animation.html)
 
 ### Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)
 
