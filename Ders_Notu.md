@@ -987,33 +987,11 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
    
 
 # ROC Eğrisi Animasyonu
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-<style>
-.button-like {
-  display:inline-block;
-  padding:10px 18px;
-  background:#0d6efd;
-  color:white;
-  border-radius:6px;
-  text-decoration:none;
-  cursor:pointer;
-  font-family:Arial, sans-serif;
-}
-.button-like:hover { background:#0b5ed7; }
-#rocFrame { width:100%; height:600px; border:1px solid #ccc; display:none; margin-top:10px; }
-</style>
-
-<a class="button-like" onclick="
-  const f=document.getElementById('rocFrame');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-">
-ROC Eğrisi Animasyonunu Aç / Kapat
-</a>
-
-<iframe id="rocFrame" src="roc_animation.html"></iframe>
-
-
-
+<a href="https://erkanozhan.github.io/machinelearning/roc_animation.html" target="_blank" style="color:#336699;font-size:22px;font-family: 'grenze', serif;">ROC Eğrisi Animasyonu için Tıklayın</a>
 
 ### Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)
 
