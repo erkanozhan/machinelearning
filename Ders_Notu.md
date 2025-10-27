@@ -978,18 +978,8 @@ Grafiği oluşturma adımları şöyledir:
 
 Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
 
-![Örnek ROC Eğrileri](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/ROC_curves.svg/440px-ROC_curves.svg.png)
 
-
- <img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
-
-*   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
-*   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
-*   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
-*   **Model Performansı:** Bir modelin eğrisi bu sol üst köşeye ne kadar yakınsa, performansı o kadar iyidir. Grafikteki yeşil eğri, mavi eğriden daha iyi bir performansa sahiptir.
-
-
-# ROC Eğrisi Animasyonu
+## ROC Eğrisi Animasyonu
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -1006,6 +996,16 @@ Bu genel performansı tek bir sayı ile özetlemek için **Eğrinin Altında Kal
 *   **AUC < 0.5:** Rastgele tahminden daha kötü bir model.
 
 AUC, modelin farklı eşik değerleri genelindeki ayırt etme gücünü gösteren, özellikle dengesiz veri setlerinde doğruluğa göre çok daha güvenilir ve yaygın olarak kullanılan bir metriktir.
+
+
+ <img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
+
+*   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
+*   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
+*   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
+*   **Model Performansı:** Bir modelin eğrisi bu sol üst köşeye ne kadar yakınsa, performansı o kadar iyidir. Grafikteki yeşil eğri, mavi eğriden daha iyi bir performansa sahiptir.
+
+
 
 
 ---
