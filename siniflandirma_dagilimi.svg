@@ -1,0 +1,97 @@
+<svg width="1000" height="500" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Stiller -->
+        <style>
+            .axis { stroke: black; stroke-width: 2; marker-end: url(#arrow); }
+            .threshold-line { stroke: black; stroke-width: 2; }
+            .curve-red { fill: none; stroke: #C00000; stroke-width: 3; }
+            .curve-blue { fill: none; stroke: #00509E; stroke-width: 3; }
+            .text-label { font-family: Arial, sans-serif; font-size: 16px; text-anchor: middle; }
+            .text-small { font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; }
+            .text-title { font-family: Arial, sans-serif; font-size: 20px; text-anchor: middle; fill: #555; }
+        </style>
+        <!-- Ok ucu tanımı -->
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+        </marker>
+        <!-- Kırpma Alanları (Eşiğin sağı ve solu - Eşik X=300) -->
+        <clipPath id="clip-left-of-threshold">
+            <rect x="0" y="0" width="300" height="500"/>
+        </clipPath>
+        <clipPath id="clip-right-of-threshold">
+            <rect x="300" y="0" width="700" height="500"/>
+        </clipPath>
+    </defs>
+    <!-- ========================================= -->
+    <!-- SOL GRAFİK (DETAYLI ANALİZ) -->
+    <!-- ========================================= -->
+    <!-- Eksenler -->
+    <line class="axis" x1="50" y1="400" x2="600" y2="400" /> <!-- X Ekseni -->
+    <line class="axis" x1="50" y1="400" x2="50" y2="50" />  <!-- Y Ekseni -->
+    <text class="text-label" x="50" y="425" font-weight="bold">"0"</text>
+    <text class="text-label" x="580" y="425" font-weight="bold">"1"</text>
+    <!-- Eşik Çizgisi (X=300) -->
+    <line class="threshold-line" x1="300" y1="80" x2="300" y2="400" />
+    <text class="text-label" x="300" y="70" font-size="22px" fill="#008000">Eşik</text>
+    <!-- EĞRİLERİN KAPALI ALANLARI (Dolgu ve Hata Alanları için kullanılır) -->
+    <!-- Kırmızı Eğri Kapalı Alanı (Gerçek Negatif Dağılım) -->
+    <path id="path-red-closed" d="M 50,400 C 150,400 100,150 200,150 C 300,150 250,400 450,400 L 50,400 Z" fill="#D00000" fill-opacity="0.1"/>
+    <!-- Mavi Eğri Kapalı Alanı (Gerçek Pozitif Dağılım) -->
+    <path id="path-blue-closed" d="M 150,400 C 350,400 300,200 400,200 C 500,200 450,400 600,400 L 150,400 Z" fill="#00509E" fill-opacity="0.1"/>
+    <!-- HATA ALANLARI (Kırpma uygulanmış dolgular) -->
+    <!-- False Negative (Gerçek Pozitif, Tahmin Negatif): Mavi alanın eşikten önceki kısmı (Kırmızı dolgu) -->
+    <use href="#path-blue-closed" fill="#C00000" fill-opacity="0.8" clip-path="url(#clip-left-of-threshold)"/>
+    <!-- False Positive (Gerçek Negatif, Tahmin Pozitif): Kırmızı alanın eşikten sonraki kısmı (Mavi dolgu) -->
+    <use href="#path-red-closed" fill="#00509E" fill-opacity="0.8" clip-path="url(#clip-right-of-threshold)"/>
+    <!-- EĞRİ ÇİZGİLERİ (Üstte görünsün diye tekrar çizilir) -->
+    <path class="curve-red" d="M 50,400 C 150,400 100,150 200,150 C 300,150 250,400 450,400" />
+    <path class="curve-blue" d="M 150,400 C 350,400 300,200 400,200 C 500,200 450,400 600,400" />
+    <!-- ETİKETLER VE OKLAR -->
+    <!-- Üst Kısım Yönlendirmeleri -->
+    <text class="text-small" x="175" y="100" fill="#D00000">&lt;--- Negatif Tahminler ---</text>
+    <text class="text-small" x="425" y="100" fill="#00509E">--- Pozitif Tahminler ---&gt;</text>
+    <!-- Dağılım Adları ve Okları -->
+    <text class="text-small" x="10" y="250" text-anchor="end" fill="#D00000">
+        <tspan x="0" dy="0">Negative</tspan>
+        <tspan x="0" dy="15">Örneklerin</tspan>
+        <tspan x="0" dy="15">Dağılımı</tspan>
+    </text>
+    <line x1="10" y1="260" x2="100" y2="240" stroke="#D00000" stroke-width="2" marker-end="url(#arrow)"/>
+    <text class="text-small" x="650" y="300" text-anchor="start" fill="#00509E">
+        <tspan x="610" dy="0">Positive</tspan>
+        <tspan x="610" dy="15">Örneklerin</tspan>
+        <tspan x="610" dy="15">Dağılımı</tspan>
+    </text>
+    <line x1="605" y1="310" x2="550" y2="300" stroke="#00509E" stroke-width="2" marker-end="url(#arrow)"/>
+    <!-- Sınıflandırma Sonuçları Etiketleri -->
+    <!-- True Negative (Sol, Kırmızı altında, Eşik solunda) -->
+    <text class="text-label" x="150" y="450" fill="#C00000">True Negative</text>
+    <!-- True Positive (Sağ, Mavi altında, Eşik sağında) -->
+    <text class="text-label" x="450" y="450" fill="#00509E">True Positive</text>
+    <!-- Hata Etiketleri -->
+    <g transform="translate(300, 420)">
+            <text class="text-small" x="-70" y="0" fill="#C00000">False Negative</text>
+            <text class="text-small" x="70" y="0" fill="#00509E">False Positive</text>
+            <text class="text-small" x="0" y="20" fill="#555">Eşiğe Göre Hatalar</text>
+    </g>
+    <!-- ========================================= -->
+    <!-- SAĞ GRAFİKLER (İYİ/KÖTÜ MODEL) -->
+    <!-- ========================================= -->
+    <!-- İYİ MODEL -->
+    <g transform="translate(700, 50)">
+        <line class="axis" x1="0" y1="150" x2="250" y2="150" />
+        <text class="text-title" x="125" y="190">İyi Model</text>
+        <!-- Daha ayrık eğriler -->
+        <path d="M 0,150 C 50,150 30,50 80,50 C 130,50 110,150 160,150" fill="none" stroke="#333" stroke-width="2"/>
+        <path d="M 100,150 C 150,150 130,50 180,50 C 230,50 210,150 260,150" fill="none" stroke="#333" stroke-width="2"/>
+    </g>
+    <!-- KÖTÜ MODEL -->
+    <g transform="translate(700, 280)">
+        <line class="axis" x1="0" y1="150" x2="250" y2="150" />
+        <text class="text-title" x="125" y="190">Kötü Model</text>
+        <!-- Daha iç içe geçmiş eğriler -->
+        <path d="M 0,150 C 80,150 60,20 140,20 C 220,20 200,150 280,150" fill="none" stroke="#333" stroke-width="2"/>
+        <path d="M 20,150 C 100,150 120,60 160,60 C 200,60 220,150 280,150" fill="none" stroke="#333" stroke-width="2"/>
+    </g>
+</svg>
