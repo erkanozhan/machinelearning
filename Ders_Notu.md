@@ -998,7 +998,7 @@ Bu genel performansı tek bir sayı ile özetlemek için **Eğrinin Altında Kal
 AUC, modelin farklı eşik değerleri genelindeki ayırt etme gücünü gösteren, özellikle dengesiz veri setlerinde doğruluğa göre çok daha güvenilir ve yaygın olarak kullanılan bir metriktir.
 
 
- <img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
+<img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
 
 *   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
 *   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
@@ -1078,48 +1078,74 @@ Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneğ
     *   `RMSE = √345 ≈ 18.57`
     *   **Yorum:** Modelimizin tahminleri ortalama **18.57 bin TL** sapmaktadır. Dikkat ederseniz, son satırdaki -30 bin TL'lik büyük hata, karesi alındığı için RMSE'yi MAE'den daha fazla yukarı çekmiştir. Bu, RMSE'nin büyük hatalara olan duyarlılığını gösterir.
 
-### 4. R-Kare (R-Squared / Belirlilik Katsayısı)
+    ### 4. R-Kare (R-Squared / Belirlilik Katsayısı)
 
-Şimdiye kadar hep hatayı, yani modelimizin ne kadar yanıldığını ölçtük. R-Kare ise madalyonun diğer yüzüne bakar ve bize modelimizin ne kadar "başarılı" olduğunu anlatır.
+    Şimdiye kadar hep hatayı, yani modelimizin ne kadar yanıldığını ölçtük. R-Kare ise madalyonun diğer yüzüne bakar ve bize modelimizin ne kadar "başarılı" olduğunu anlatır.
 
-Şöyle düşünelim: Bir grup evin fiyatları neden birbirinden farklıdır? Çünkü metrekaresi, oda sayısı, konumu gibi özellikleri farklıdır. İşte R-Kare, bu fiyat farklılıklarının, yani verideki "değişkenliğin", yüzde kaçının bizim modelimizdeki bu özellikler tarafından açıklandığını söyler.
+    Şöyle düşünelim: Bir grup evin fiyatları neden birbirinden farklıdır? Çünkü metrekaresi, oda sayısı, konumu gibi özellikleri farklıdır. İşte R-Kare, bu fiyat farklılıklarının, yani verideki "değişkenliğin", yüzde kaçının bizim modelimizdeki bu özellikler tarafından açıklandığını söyler.
 
-`R² = 1 - (SS_res / SS_tot)`
+    `R² = 1 - (SS_res / SS_tot)`
 
-Bu formülü yorumlayalım: `SS_res`, modelimizin açıklayamadığı hata miktarını, `SS_tot` ise verideki toplam değişkenliği temsil eder. Dolayısıyla `(SS_res / SS_tot)` oranı, modelimizin toplam değişkenliğin ne kadarlık bir kısmını **açıklayamadığını** gösterir. Bu oranı 1'den çıkardığımızda ise geriye modelimizin toplam değişkenliğin yüzde kaçını **açıklayabildiği** kalır.
+    Bu formülü yorumlayalım: `SS_res`, modelimizin açıklayamadığı hata miktarını, `SS_tot` ise verideki toplam değişkenliği temsil eder. Dolayısıyla `(SS_res / SS_tot)` oranı, modelimizin toplam değişkenliğin ne kadarlık bir kısmını **açıklayamadığını** gösterir. Bu oranı 1'den çıkardığımızda ise geriye modelimizin toplam değişkenliğin yüzde kaçını **açıklayabildiği** kalır.
 
-*   **R² = 1:** Mükemmel bir uyum. Modelimiz verideki değişkenliğin tamamını açıklayabiliyor, yani hiç hata yapmıyor (`SS_res` sıfırdır).
-*   **R² = 0:** Modelimizin hiçbir açıklayıcı gücü yok. Modelimizin performansı, sadece tüm evlerin ortalama fiyatını tahmin etmekten daha iyi değil.
+    *   **R² = 1:** Mükemmel bir uyum. Modelimiz verideki değişkenliğin tamamını açıklayabiliyor, yani hiç hata yapmıyor (`SS_res` sıfırdır).
+    *   **R² = 0:** Modelimizin hiçbir açıklayıcı gücü yok. Modelimizin performansı, sadece tüm evlerin ortalama fiyatını tahmin etmekten daha iyi değil.
 
-#### Örnek Üzerinden Hesaplama
+    #### Örnek Üzerinden Hesaplama
 
-Yukarıdaki ev fiyatı örneğimizi tekrar kullanalım:
+    Yukarıdaki ev fiyatı örneğimizi tekrar kullanalım:
 
-| Gerçek Fiyat (y) | Tahmin (ŷ) |
-| :--------------- | :--------- |
-| 250              | 260        |
-| 300              | 290        |
-| 200              | 215        |
-| 500              | 480        |
-| 420              | 450        |
+    | Gerçek Fiyat (y) | Tahmin (ŷ) |
+    | :--------------- | :--------- |
+    | 250              | 260        |
+    | 300              | 290        |
+    | 200              | 215        |
+    | 500              | 480        |
+    | 420              | 450        |
 
-1.  **Ortalama Fiyatı Bulalım:**
-    *   `Ortalama (ȳ) = (250 + 300 + 200 + 500 + 420) / 5 = 334`
+    1.  **Ortalama Fiyatı Bulalım:**
+        *   `Ortalama (ȳ) = (250 + 300 + 200 + 500 + 420) / 5 = 334`
 
-2.  **`SS_tot`'u Hesaplayalım (Toplam Değişkenlik):**
-    *   `SS_tot = (250-334)² + (300-334)² + (200-334)² + (500-334)² + (420-334)²`
-    *   `SS_tot = (-84)² + (-34)² + (-134)² + (166)² + (86)²`
-    *   `SS_tot = 7056 + 1156 + 17956 + 27556 + 7396 = 61120`
+    2.  **`SS_tot`'u Hesaplayalım (Toplam Değişkenlik):**
+        *   `SS_tot = (250-334)² + (300-334)² + (200-334)² + (500-334)² + (420-334)²`
+        *   `SS_tot = (-84)² + (-34)² + (-134)² + (166)² + (86)²`
+        *   `SS_tot = 7056 + 1156 + 17956 + 27556 + 7396 = 61120`
 
-3.  **`SS_res`'i Belirleyelim (Modelin Hatası):**
-    *   Bu değeri bir önceki "Karesel Hata" tablosundan zaten biliyoruz: **1725**.
+    3.  **`SS_res`'i Belirleyelim (Modelin Hatası):**
+        *   Bu değeri bir önceki "Karesel Hata" tablosundan zaten biliyoruz: **1725**.
 
-4.  **R-Kare'yi Hesaplayalım:**
-    *   `R² = 1 - (1725 / 61120)`
-    *   `R² ≈ 1 - 0.0282`
-    *   `R² ≈ 0.9718`
+    4.  **R-Kare'yi Hesaplayalım:**
+        *   `R² = 1 - (1725 / 61120)`
+        *   `R² ≈ 1 - 0.0282`
+        *   `R² ≈ 0.9718`
 
-**Yorum:** R-Kare değerimiz yaklaşık 0.97. Bu şu anlama gelir: "Piyasadaki ev fiyatları arasındaki değişkenliğin %97'si, bizim modelimiz tarafından açıklanabilmektedir." Bu, modelimizin oldukça başarılı olduğunu gösterir.
+    **Yorum:** R-Kare değerimiz yaklaşık 0.97. Bu şu anlama gelir: "Piyasadaki ev fiyatları arasındaki değişkenliğin %97'si, bizim modelimiz tarafından açıklanabilmektedir." Bu, modelimizin oldukça başarılı olduğunu gösterir.
+
+    ### Korelasyon Katsayısı (Correlation Coefficient - r)
+
+    Gençler, R-Kare'den bahsetmişken, onunla yakından ilişkili olan ve değişkenler arasındaki doğrusal ilişkinin yönünü ve gücünü gösteren bir başka önemli ölçüt olan **Korelasyon Katsayısı (Correlation Coefficient)**'na da değinelim. Genellikle `r` ile gösterilen bu katsayı, iki sayısal değişkenin birlikte nasıl hareket ettiğini özetler.
+
+    *   **Değer Aralığı:** Korelasyon katsayısı her zaman -1 ile +1 arasında bir değer alır.
+        *   **`R = +1`:** İki değişken arasında mükemmel pozitif doğrusal ilişki vardır. Bir değişken arttığında diğeri de aynı oranda artar.
+        *   **`R = -1`:** İki değişken arasında mükemmel negatif doğrusal ilişki vardır. Bir değişken arttığında diğeri aynı oranda azalır.
+        *   **`R = 0`:** İki değişken arasında doğrusal bir ilişki yoktur. Ancak bu, hiçbir ilişkinin olmadığı anlamına gelmez; sadece doğrusal bir ilişki olmadığını gösterir.
+        *   **`0 < R < 1`:** Pozitif doğrusal ilişki vardır. Değer 1'e yaklaştıkça ilişki güçlenir.
+        *   **`-1 < R < 0`:** Negatif doğrusal ilişki vardır. Değer -1'e yaklaştıkça ilişki güçlenir.
+
+ <img src="./correlation.svg" alt="İki Sınıflı Problemler için Korelasyon Tipleri" width="100%" height="100%">
+
+<img src="./correlation.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
+
+    **R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
+
+    #### Örnek Üzerinden Hesaplama ve Yorumlama
+
+    Yukarıdaki ev fiyatı örneğimizde, modelimizin tahminleri ile gerçek fiyatlar arasındaki korelasyon katsayısını hesaplayabiliriz.
+
+    Modelimizin R-Kare değeri yaklaşık `0.9718` idi.
+    Bu durumda, korelasyon katsayısı `R = √R² = √0.9718 ≈ 0.9858` olacaktır.
+
+    **Yorum:** Korelasyon katsayısı `R ≈ 0.9858` değeri, modelimizin tahminleri ile gerçek ev fiyatları arasında çok güçlü ve pozitif bir doğrusal ilişki olduğunu gösterir. Yani, modelimiz yüksek bir fiyat tahmin ettiğinde, gerçek fiyatın da yüksek olma eğiliminde olduğunu; düşük bir fiyat tahmin ettiğinde ise gerçek fiyatın da düşük olma eğiliminde olduğunu anlarız. Bu, modelimizin tahminlerinin gerçek değerleri oldukça iyi takip ettiğini teyit eder.
 
 #### Düzeltilmiş R-Kare (Adjusted R-Squared)
 
@@ -1128,6 +1154,8 @@ Gençler, R-Kare'nin dikkat etmemiz gereken önemli bir özelliği vardır. Mode
 İşte bu sorunu aşmak için **Düzeltilmiş R-Kare (Adjusted R-Squared)** kullanılır. Bu metrik, modele eklenen her bir özelliğin getirdiği faydayı ve eklediği karmaşıklığı hesaba katar. Eğer eklenen yeni özellik modelin açıklayıcılığına anlamlı bir katkı sağlamıyorsa, Düzeltilmiş R-Kare değeri artmaz, hatta düşebilir. Bu sayede, model karmaşıklığını da dikkate alarak daha adil bir performans değerlendirmesi yapmış oluruz.
 
 Adjusted R² = 1 - [(1 - R²) × (n - 1) / (n - k - 1)]
+
+
 
 ### Weka ile Regresyon Değerlendirmesi
 

@@ -1,0 +1,30 @@
+graph LR
+    subgraph Korelasyon Tipleri (R Katsayısı)
+        P(+1)>(0_P)>>(0)>(0_N)>>N(-1)
+        
+        P(+1)[R = +1: Mükemmel Pozitif]
+        0_P[0 < R < 1: Güçlenen Pozitif]
+        0[R = 0: Doğrusal İlişki Yok]
+        0_N[-1 < R < 0: Güçlenen Negatif]
+        N(-1)[R = -1: Mükemmel Negatif]
+    end
+    subgraph Örnekler
+        style EX fill:#f9f, stroke:#333
+        EX[Değişkenler Arasındaki İlişki]
+        
+        EX --> A[Sıcaklık Artar, Dondurma Satışı Artar]
+        A --> B(Pozitif İlişki);
+
+        EX --> C[Eğitim Seviyesi Artar, İşsizlik Azalır]
+        C --> D(Negatif İlişki);
+        
+        EX --> E[Ayakkabı Numarası, IQ Seviyesi]
+        E --> F(Sıfır Korelasyon);
+    end
+    style P(+1) fill:#ccf, stroke:#333
+    style N(-1) fill:#fcc, stroke:#333
+    style 0 fill:#ddd, stroke:#999
+
+    B --> 0_P
+    D --> 0_N
+    F --> 0
