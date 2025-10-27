@@ -52,10 +52,10 @@
     <text class="text-small" x="175" y="100" fill="#D00000">&lt;--- Negatif Tahminler ---</text>
     <text class="text-small" x="425" y="100" fill="#00509E">--- Pozitif Tahminler ---&gt;</text>
     <!-- Dağılım Adları ve Okları -->
-    <text class="text-small" x="10" y="250" text-anchor="end" fill="#D00000">
-        <tspan x="0" dy="0">Negative</tspan>
-        <tspan x="0" dy="15">Örneklerin</tspan>
-        <tspan x="0" dy="15">Dağılımı</tspan>
+    <text class="text-small" x="60" y="250" text-anchor="end" fill="#D00000">
+        <tspan x="60" dy="15">Negative</tspan>
+        <tspan x="60" dy="30">Örneklerin</tspan>
+        <tspan x="60" dy="30">Dağılımı</tspan>
     </text>
     <line x1="10" y1="260" x2="100" y2="240" stroke="#D00000" stroke-width="2" marker-end="url(#arrow)"/>
     <text class="text-small" x="650" y="300" text-anchor="start" fill="#00509E">
