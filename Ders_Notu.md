@@ -1078,10 +1078,6 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
     </g>
 </svg>
 
-
-
-
-
 *   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
 *   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
 *   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
