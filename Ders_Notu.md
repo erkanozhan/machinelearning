@@ -988,7 +988,7 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
 
 # ROC Eğrisi Animasyonu
 
-<a href="roc_animation.html" style="background-color: #007bff; /* Mavi */
+<a href="roc_animation.html" target="_blank" style="background-color: #007bff; /* Mavi */
     border: none;
     color: white;
     padding: 12px 24px;
