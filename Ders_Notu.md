@@ -980,10 +980,8 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
 
 ![Örnek ROC Eğrileri](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/ROC_curves.svg/440px-ROC_curves.svg.png)
 
-![Sınıflandırma Dağılımları](/deneme.svg)
 
-
-<img src="./deneme.svg" width="300">
+ <img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
 
 *   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
 *   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
