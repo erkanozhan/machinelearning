@@ -984,7 +984,24 @@ Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
 *   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
 *   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
 *   **Model Performansı:** Bir modelin eğrisi bu sol üst köşeye ne kadar yakınsa, performansı o kadar iyidir. Grafikteki yeşil eğri, mavi eğriden daha iyi bir performansa sahiptir.
-<iframe src="roc_animation.html" width="100%" height="600px" style="border:none;"></iframe>
+   
+
+# ROC Eğrisi Animasyonu
+
+<a href="roc_animation.html" style="background-color: #007bff; /* Mavi */
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;">
+    Interaktif ROC eğrisi animasyonunu görüntülemek için ne yapacağınızı biliyor sunuz :) 
+</a>
 
 ### Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)
 
