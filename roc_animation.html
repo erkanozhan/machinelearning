@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ROC Eğrisi Oluşumu | ROC Curve Animation</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #eab308;
+      --info: #0891b2;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); padding: 15px; line-height: 1.6; }
+    
+    .header { text-align: center; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--info)); color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header h1 { font-size: 24px; margin-bottom: 5px; }
+    .header p { opacity: 0.95; font-size: 13px; }
+    
+    .container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .left-panel { display: flex; flex-direction: column; gap: 15px; }
+    .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+    .card-header { font-size: 16px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    
+    .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    .control-item { display: flex; flex-direction: column; gap: 8px; }
+    .control-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    .slider-container { background: var(--bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
+    .slider { width: 100%; height: 36px; -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+    .slider::-webkit-slider-track { width: 100%; height: 6px; background: var(--border); border-radius: 3px; }
+    .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    
+    .value-display { font-size: 20px; font-weight: bold; text-align: center; color: var(--primary); background: var(--bg); padding: 8px; border-radius: 6px; border: 2px solid var(--primary); }
+    .button-container { display: flex; gap: 10px; margin-top: 15px; }
+    .btn { flex: 1; padding: 12px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-play { background: var(--success); color: white; }
+    .btn-pause { background: var(--warning); color: var(--text); }
+    .btn-reset { background: var(--danger); color: white; }
+    
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: sticky; top: 0; z-index: 10; }
+    th, td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--border); }
+    th { font-weight: 600; color: white; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tp-row { background: #dcfce7; } .fp-row { background: #fee2e2; }
+    .fn-row { background: #fef3c7; } .tn-row { background: #dbeafe; }
+    .prediction-positive { color: var(--success); font-weight: 600; }
+    .prediction-negative { color: var(--danger); font-weight: 600; }
+    
+    .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+    .metric-box { padding: 10px; background: var(--bg); border-radius: 6px; text-align: center; border: 1px solid var(--border); }
+    .metric-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .metric-value { font-size: 20px; font-weight: bold; color: var(--primary); margin-top: 2px; }
+    
+    .plot-container { position: relative; width: 100%; height: 420px; background: white; border-radius: 8px; padding: 15px; }
+    svg { width: 100%; height: 100%; }
+    .roc-point { fill: var(--primary); stroke: white; stroke-width: 2; cursor: pointer; transition: r 0.2s; }
+    .roc-point:hover { r: 8; fill: var(--info); }
+    .current-point { fill: var(--danger); r: 6; }
+    .roc-path { fill: none; stroke: var(--primary); stroke-width: 2.5; opacity: 0.8; }
+    .diagonal { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 5, 5; opacity: 0.4; }
+    
+    .auc-display { position: absolute; top: 10px; right: 10px; padding: 8px 12px; background: var(--success); color: white; border-radius: 6px; font-weight: bold; font-size: 14px; }
+    
+    .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg); border-radius: 8px; margin-top: 10px; }
+    .status-item { display: flex; align-items: center; gap: 5px; }
+    .status-indicator { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+    .status-indicator.active { background: var(--success); animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    
+    .formula-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border-radius: 8px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 12px; }
+    .table-container { max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+    
+    .tooltip { position: absolute; opacity: 0; background: rgba(30, 41, 59, 0.9); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; pointer-events: none; transition: opacity 0.2s ease-in-out; white-space: nowrap; z-index: 100; transform: translate(15px, 15px); }
+    .tooltip strong { color: #93c5fd; }
+
+    @media (max-width: 1024px) { .container { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>ROC Eğrisi Otomatik Animasyon</h1>
+    <p>İkili Sınıflandırma Performans Analizi - Eğitim Aracı</p>
+  </div>
+
+  <div class="container">
+    <div class="left-panel">
+      <div class="card">
+        <div class="card-header">Animasyon Kontrolleri</div>
+        <div class="control-grid">
+          <div class="control-item">
+            <label class="control-label">Başlangıç Eşik Değeri</label>
+            <div class="slider-container"><input type="range" id="startThreshold" class="slider" min="0" max="1" step="0.01" value="0.50"></div>
+            <div class="value-display">Eşik = <span id="startValue">0.50</span></div>
+          </div>
+          <div class="control-item">
+            <label class="control-label">Animasyon Hızı</label>
+            <div class="slider-container"><input type="range" id="speedSlider" class="slider" min="100" max="1500" step="100" value="700"></div>
+            <div class="value-display" id="speedDisplay">Orta</div>
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-play" id="playBtn">BAŞLAT</button>
+          <button class="btn btn-pause" id="pauseBtn">DURAKLAT</button>
+          <button class="btn btn-reset" id="resetBtn">SIFIRLA</button>
+        </div>
+        <div class="status-bar">
+          <div class="status-item">
+            <div class="status-indicator" id="statusIndicator"></div><span id="statusText">Hazır</span>
+          </div>
+          <div class="status-item"><span>Mevcut Eşik: <strong id="currentThreshold">0.50</strong></span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Performans Metrikleri</div>
+        <div class="metrics-grid">
+          <div class="metric-box"><div class="metric-label">TPR (Duyarlılık)</div><div class="metric-value" id="tprValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">FPR</div><div class="metric-value" id="fprValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">Precision</div><div class="metric-value" id="precisionValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">Specificity</div><div class="metric-value" id="specificityValue">0.00</div></div>
+        </div>
+        <div class="metrics-grid" style="margin-top: 10px;">
+          <div class="metric-box" style="background: #dcfce7;"><div class="metric-label">Gerçek Pozitif</div><div class="metric-value" id="tpCount">0</div></div>
+          <div class="metric-box" style="background: #fee2e2;"><div class="metric-label">Sahte Pozitif</div><div class="metric-value" id="fpCount">0</div></div>
+          <div class="metric-box" style="background: #fef3c7;"><div class="metric-label">Sahte Negatif</div><div class="metric-value" id="fnCount">0</div></div>
+          <div class="metric-box" style="background: #dbeafe;"><div class="metric-label">Gerçek Negatif</div><div class="metric-value" id="tnCount">0</div></div>
+        </div>
+        <div class="formula-box">
+          <div style="margin-bottom: 5px;"><strong>Formüller:</strong></div>
+          <div>TPR = TP / (TP + FN)</div>
+          <div>FPR = FP / (FP + TN)</div>
+          <div>Precision = TP / (TP + FP)</div>
+          <div>Specificity = TN / (TN + FP)</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Veri Tablosu</div>
+        <div class="table-container">
+          <table id="dataTable">
+            <thead>
+              <tr><th>#</th><th>Gerçek Sınıf</th><th>Model Skoru</th><th>Tahmin</th><th>Sonuç</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">ROC Eğrisi (Receiver Operating Characteristic)</div>
+      <div class="plot-container">
+        <div class="auc-display">AUC: <span id="aucValue">0.000</span></div>
+        <svg id="rocPlot" viewBox="0 0 400 400"></svg>
+        <div id="tooltip" class="tooltip"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dataset = [
+      {id: 1, actual: 1, score: 0.98}, {id: 2, actual: 1, score: 0.95}, {id: 3, actual: 0, score: 0.92},
+      {id: 4, actual: 1, score: 0.89}, {id: 5, actual: 1, score: 0.86}, {id: 6, actual: 0, score: 0.83},
+      {id: 7, actual: 1, score: 0.79}, {id: 8, actual: 0, score: 0.76}, {id: 9, actual: 1, score: 0.73},
+      {id: 10, actual: 1, score: 0.71}, {id: 11, actual: 0, score: 0.67}, {id: 12, actual: 1, score: 0.64},
+      {id: 13, actual: 0, score: 0.61}, {id: 14, actual: 1, score: 0.57}, {id: 15, actual: 0, score: 0.54},
+      {id: 16, actual: 1, score: 0.51}, {id: 17, actual: 0, score: 0.48}, {id: 18, actual: 1, score: 0.44},
+      {id: 19, actual: 0, score: 0.41}, {id: 20, actual: 0, score: 0.37}, {id: 21, actual: 1, score: 0.33},
+      {id: 22, actual: 0, score: 0.28}, {id: 23, actual: 0, score: 0.22}, {id: 24, actual: 1, score: 0.15},
+      {id: 25, actual: 0, score: 0.08}
+    ];
+
+    const sortedData = [...dataset].sort((a, b) => b.score - a.score);
+    let currentThreshold = 0.50, startThreshold = 0.50, animationSpeed = 700;
+    let rocPoints = [], isPlaying = false, animationTimer = null, thresholdList = [], currentIndex = 0;
+
+    const elements = {
+      startThreshold: document.getElementById('startThreshold'), startValue: document.getElementById('startValue'),
+      speedSlider: document.getElementById('speedSlider'), speedDisplay: document.getElementById('speedDisplay'),
+      currentThreshold: document.getElementById('currentThreshold'), statusIndicator: document.getElementById('statusIndicator'),
+      statusText: document.getElementById('statusText'), playBtn: document.getElementById('playBtn'),
+      pauseBtn: document.getElementById('pauseBtn'), resetBtn: document.getElementById('resetBtn'),
+      dataTable: document.getElementById('dataTable').querySelector('tbody'), rocPlot: document.getElementById('rocPlot'),
+      tpCount: document.getElementById('tpCount'), fpCount: document.getElementById('fpCount'),
+      fnCount: document.getElementById('fnCount'), tnCount: document.getElementById('tnCount'),
+      tprValue: document.getElementById('tprValue'), fprValue: document.getElementById('fprValue'),
+      precisionValue: document.getElementById('precisionValue'), specificityValue: document.getElementById('specificityValue'),
+      aucValue: document.getElementById('aucValue'), tooltip: document.getElementById('tooltip')
+    };
+
+    function initializePlot() {
+      const svg = elements.rocPlot, ns = 'http://www.w3.org/2000/svg';
+      svg.innerHTML = '';
+      const padding = 40, width = 400, height = 400;
+      
+      const bg = document.createElementNS(ns, 'rect');
+      bg.setAttribute('x', padding); bg.setAttribute('y', padding); bg.setAttribute('width', width - 2 * padding);
+      bg.setAttribute('height', height - 2 * padding); bg.setAttribute('fill', '#fafafa');
+      svg.appendChild(bg);
+      
+      for (let i = 0; i <= 10; i++) {
+        const x = padding + (i * (width - 2 * padding) / 10), y = padding + (i * (height - 2 * padding) / 10);
+        const vLine = document.createElementNS(ns, 'line');
+        vLine.setAttribute('x1', x); vLine.setAttribute('y1', padding); vLine.setAttribute('x2', x); vLine.setAttribute('y2', height - padding);
+        vLine.setAttribute('stroke', '#e0e0e0'); vLine.setAttribute('stroke-width', i % 5 === 0 ? 1 : 0.5); svg.appendChild(vLine);
+        const hLine = document.createElementNS(ns, 'line');
+        hLine.setAttribute('x1', padding); hLine.setAttribute('y1', y); hLine.setAttribute('x2', width - padding); hLine.setAttribute('y2', y);
+        hLine.setAttribute('stroke', '#e0e0e0'); hLine.setAttribute('stroke-width', i % 5 === 0 ? 1 : 0.5); svg.appendChild(hLine);
+        if (i % 2 === 0) {
+          const xLabel = document.createElementNS(ns, 'text');
+          xLabel.setAttribute('x', x); xLabel.setAttribute('y', height - padding + 20); xLabel.setAttribute('text-anchor', 'middle');
+          xLabel.setAttribute('font-size', '11'); xLabel.setAttribute('fill', '#666'); xLabel.textContent = (i / 10).toFixed(1);
+          svg.appendChild(xLabel);
+          const yLabel = document.createElementNS(ns, 'text');
+          yLabel.setAttribute('x', padding - 10); yLabel.setAttribute('y', height - padding - (i * (height - 2 * padding) / 10) + 4);
+          yLabel.setAttribute('text-anchor', 'end'); yLabel.setAttribute('font-size', '11'); yLabel.setAttribute('fill', '#666');
+          yLabel.textContent = (i / 10).toFixed(1); svg.appendChild(yLabel);
+        }
+      }
+      
+      const xAxis = document.createElementNS(ns, 'text');
+      xAxis.setAttribute('x', width / 2); xAxis.setAttribute('y', height - 5); xAxis.setAttribute('text-anchor', 'middle');
+      xAxis.setAttribute('font-size', '13'); xAxis.setAttribute('font-weight', '600'); xAxis.setAttribute('fill', '#333');
+      xAxis.textContent = 'False Positive Rate (1 - Specificity)'; svg.appendChild(xAxis);
+      
+      const yAxis = document.createElementNS(ns, 'text');
+      yAxis.setAttribute('x', 10); yAxis.setAttribute('y', height / 2); yAxis.setAttribute('text-anchor', 'middle');
+      yAxis.setAttribute('font-size', '13'); yAxis.setAttribute('font-weight', '600'); yAxis.setAttribute('fill', '#333');
+      yAxis.setAttribute('transform', `rotate(-90 10 ${height / 2})`); yAxis.textContent = 'True Positive Rate (Sensitivity)';
+      svg.appendChild(yAxis);
+      
+      const diagonal = document.createElementNS(ns, 'line');
+      diagonal.setAttribute('x1', padding); diagonal.setAttribute('y1', height - padding);
+      diagonal.setAttribute('x2', width - padding); diagonal.setAttribute('y2', padding);
+      diagonal.setAttribute('class', 'diagonal'); svg.appendChild(diagonal);
+      
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('id', 'rocPath'); path.setAttribute('class', 'roc-path'); path.setAttribute('d', ''); svg.appendChild(path);
+      const pointsGroup = document.createElementNS(ns, 'g');
+      pointsGroup.setAttribute('id', 'rocPoints'); svg.appendChild(pointsGroup);
+    }
+
+    function generateThresholdList(startThreshold) {
+      const uniqueScores = [...new Set(sortedData.map(d => d.score))].sort((a, b) => b - a);
+      let thresholds = [1.01, ...uniqueScores, -0.01];
+      let startIndex = thresholds.findIndex(t => t <= startThreshold);
+      return [...thresholds.slice(startIndex), ...thresholds.slice(0, startIndex)];
+    }
+
+    function calculateMetrics(threshold) {
+      let TP = 0, FP = 0, FN = 0, TN = 0;
+      dataset.forEach(item => {
+        const predicted = item.score >= threshold ? 1 : 0;
+        if (item.actual === 1 && predicted === 1) TP++; else if (item.actual === 0 && predicted === 1) FP++;
+        else if (item.actual === 1 && predicted === 0) FN++; else TN++;
+      });
+      const totalPositive = dataset.filter(d => d.actual === 1).length, totalNegative = dataset.filter(d => d.actual === 0).length;
+      const TPR = totalPositive > 0 ? TP / totalPositive : 0, FPR = totalNegative > 0 ? FP / totalNegative : 0;
+      const TNR = totalNegative > 0 ? TN / totalNegative : 0, precision = (TP + FP) > 0 ? TP / (TP + FP) : 0;
+      return { TP, FP, FN, TN, TPR, FPR, TNR, precision };
+    }
+
+    function updateTable(threshold) {
+      const tbody = elements.dataTable;
+      tbody.innerHTML = '';
+      sortedData.forEach(item => {
+        const predicted = item.score >= threshold ? 1 : 0;
+        let status, className;
+        if (item.actual === 1 && predicted === 1) { status = 'TP'; className = 'tp-row'; }
+        else if (item.actual === 0 && predicted === 1) { status = 'FP'; className = 'fp-row'; }
+        else if (item.actual === 1 && predicted === 0) { status = 'FN'; className = 'fn-row'; }
+        else { status = 'TN'; className = 'tn-row'; }
+        const row = document.createElement('tr');
+        row.className = className;
+        row.innerHTML = `
+          <td style="text-align: center; font-weight: 600;">${item.id}</td>
+          <td style="text-align: center;">${item.actual === 1 ? 'Pozitif' : 'Negatif'}</td>
+          <td style="text-align: center; font-weight: 600;">${(item.score * 100).toFixed(0)}%</td>
+          <td style="text-align: center;" class="${predicted === 1 ? 'prediction-positive' : 'prediction-negative'}">${predicted === 1 ? 'Pozitif' : 'Negatif'}</td>
+          <td style="text-align: center;"><strong>${status}</strong></td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateUI(threshold) {
+      currentThreshold = threshold;
+      const metrics = calculateMetrics(threshold);
+      elements.currentThreshold.textContent = threshold.toFixed(2);
+      elements.tpCount.textContent = metrics.TP; elements.fpCount.textContent = metrics.FP;
+      elements.fnCount.textContent = metrics.FN; elements.tnCount.textContent = metrics.TN;
+      elements.tprValue.textContent = metrics.TPR.toFixed(2); elements.fprValue.textContent = metrics.FPR.toFixed(2);
+      elements.specificityValue.textContent = metrics.TNR.toFixed(2); elements.precisionValue.textContent = metrics.precision.toFixed(2);
+      updateTable(threshold);
+    }
+
+    function addROCPoint(fpr, tpr, isCurrent = false, metricsData = {}) {
+      const ns = 'http://www.w3.org/2000/svg', svg = elements.rocPlot, pointsGroup = svg.querySelector('#rocPoints');
+      const padding = 40, width = 400, height = 400;
+      const x = padding + fpr * (width - 2 * padding), y = height - padding - tpr * (height - 2 * padding);
+      
+      const prevCurrent = pointsGroup.querySelector('.current-point');
+      if (prevCurrent) { prevCurrent.classList.remove('current-point'); prevCurrent.setAttribute('r', 3); }
+      
+      const circle = document.createElementNS(ns, 'circle');
+      circle.setAttribute('cx', x); circle.setAttribute('cy', y); circle.setAttribute('r', 3);
+      circle.setAttribute('class', 'roc-point');
+
+      if(metricsData.threshold !== undefined) {
+        circle.setAttribute('data-threshold', metricsData.threshold.toFixed(2));
+        circle.setAttribute('data-tp', metricsData.TP); circle.setAttribute('data-fp', metricsData.FP);
+        circle.setAttribute('data-tpr', tpr.toFixed(2)); circle.setAttribute('data-fpr', fpr.toFixed(2));
+      }
+      pointsGroup.appendChild(circle);
+      
+      if (isCurrent) { circle.classList.add('current-point'); circle.setAttribute('r', 6); }
+      
+      rocPoints.push({ x, y, fpr, tpr });
+      updateROCPath();
+      updateAUC();
+    }
+
+    function updateROCPath() {
+      const path = elements.rocPlot.querySelector('#rocPath');
+      if (rocPoints.length < 1) return;
+      const sortedPoints = [...rocPoints].sort((a, b) => a.fpr === b.fpr ? a.tpr - b.tpr : a.fpr - b.fpr);
+      let d = `M ${sortedPoints[0].x} ${sortedPoints[0].y}`;
+      for (let i = 1; i < sortedPoints.length; i++) { d += ` L ${sortedPoints[i].x} ${sortedPoints[i].y}`; }
+      path.setAttribute('d', d);
+    }
+
+    function updateAUC() {
+      if (rocPoints.length < 2) { elements.aucValue.textContent = '0.000'; return; }
+      const sortedPoints = [...new Map(rocPoints.map(p => [`${p.fpr.toFixed(3)},${p.tpr.toFixed(3)}`, p])).values()]
+                           .sort((a, b) => a.fpr - b.fpr);
+      const aucPoints = [{ fpr: 0, tpr: 0 }, ...sortedPoints];
+      if (aucPoints[aucPoints.length - 1].fpr < 1 || aucPoints[aucPoints.length-1].tpr < 1) aucPoints.push({fpr:1, tpr:1});
+      
+      let auc = 0;
+      for (let i = 1; i < aucPoints.length; i++) {
+        auc += (aucPoints[i].fpr - aucPoints[i-1].fpr) * (aucPoints[i].tpr + aucPoints[i-1].tpr) / 2;
+      }
+      elements.aucValue.textContent = auc.toFixed(3);
+    }
+
+    function clearROC() {
+      rocPoints = [];
+      const pointsGroup = elements.rocPlot.querySelector('#rocPoints');
+      pointsGroup.innerHTML = '';
+      const path = elements.rocPlot.querySelector('#rocPath');
+      path.setAttribute('d', '');
+      elements.aucValue.textContent = '0.000';
+    }
+
+    function animationStep() {
+      if (currentIndex >= thresholdList.length) { stopAnimation(); return; }
+      const threshold = thresholdList[currentIndex];
+      updateUI(threshold);
+      const metrics = calculateMetrics(threshold);
+      addROCPoint(metrics.FPR, metrics.TPR, true, { ...metrics, threshold: threshold });
+      currentIndex++;
+    }
+
+    function startAnimation() {
+      if (isPlaying) return;
+      isPlaying = true; elements.statusIndicator.classList.add('active');
+      elements.statusText.textContent = 'Çalışıyor'; elements.playBtn.disabled = true; elements.pauseBtn.disabled = false;
+      startThreshold = parseFloat(elements.startThreshold.value);
+      thresholdList = generateThresholdList(startThreshold);
+      currentIndex = 0;
+      clearROC();
+      animationTimer = setInterval(animationStep, animationSpeed);
+    }
+
+    function stopAnimation() {
+      isPlaying = false; elements.statusIndicator.classList.remove('active');
+      elements.statusText.textContent = 'Tamamlandı'; elements.playBtn.disabled = false;
+      elements.pauseBtn.disabled = true;
+      if (animationTimer) { clearInterval(animationTimer); animationTimer = null; }
+    }
+
+    function pauseAnimation() {
+      if (!isPlaying) return;
+      isPlaying = false; elements.statusIndicator.classList.remove('active');
+      elements.statusText.textContent = 'Duraklatıldı'; elements.playBtn.disabled = false;
+      elements.pauseBtn.disabled = true;
+      if (animationTimer) { clearInterval(animationTimer); animationTimer = null; }
+    }
+
+    function resumeAnimation() {
+      if (isPlaying || currentIndex >= thresholdList.length) return;
+      isPlaying = true; elements.statusIndicator.classList.add('active');
+      elements.statusText.textContent = 'Çalışıyor'; elements.playBtn.disabled = true;
+      elements.pauseBtn.disabled = false;
+      animationTimer = setInterval(animationStep, animationSpeed);
+    }
+
+    function resetAnimation() {
+      stopAnimation(); currentIndex = 0; clearROC();
+      startThreshold = parseFloat(elements.startThreshold.value);
+      updateUI(startThreshold);
+      elements.statusText.textContent = 'Hazır'; elements.playBtn.disabled = false;
+      elements.pauseBtn.disabled = true;
+      const metrics = calculateMetrics(startThreshold);
+      addROCPoint(metrics.FPR, metrics.TPR, true, { ...metrics, threshold: startThreshold });
+    }
+
+    elements.startThreshold.addEventListener('input', (e) => {
+      const value = parseFloat(e.target.value);
+      elements.startValue.textContent = value.toFixed(2);
+      if (!isPlaying) { 
+        startThreshold = value; // Sıfırlamadan önce değeri güncelle
+        resetAnimation(); 
+      }
+    });
+
+    elements.speedSlider.addEventListener('input', (e) => {
+      animationSpeed = parseInt(e.target.value);
+      const speeds = { 100: 'Çok Hızlı', 400: 'Hızlı', 700: 'Orta', 1000: 'Yavaş', 1500: 'Çok Yavaş' };
+      const closest = Object.keys(speeds).reduce((p, c) => Math.abs(c - animationSpeed) < Math.abs(p - animationSpeed) ? c : p);
+      elements.speedDisplay.textContent = speeds[closest] || 'Orta';
+      if (isPlaying) { clearInterval(animationTimer); animationTimer = setInterval(animationStep, animationSpeed); }
+    });
+
+    elements.playBtn.addEventListener('click', () => {
+      if (!isPlaying && currentIndex > 0 && currentIndex < thresholdList.length) { resumeAnimation(); } else { startAnimation(); }
+    });
+    elements.pauseBtn.addEventListener('click', pauseAnimation);
+    elements.resetBtn.addEventListener('click', resetAnimation);
+
+    elements.rocPlot.addEventListener('mouseover', (e) => {
+      if (e.target.tagName === 'circle' && e.target.dataset.threshold) {
+        const data = e.target.dataset;
+        elements.tooltip.innerHTML = `
+          <strong>Eşik Değeri:</strong> ${data.threshold}<br>
+          <strong>Gerçek Pozitif (TP):</strong> ${data.tp}<br>
+          <strong>Sahte Pozitif (FP):</strong> ${data.fp}<br>
+          <strong>Oranlar (TPR, FPR):</strong> (${data.tpr}, ${data.fpr})
+        `;
+        elements.tooltip.style.opacity = 1;
+      }
+    });
+    elements.rocPlot.addEventListener('mouseout', (e) => {
+      if (e.target.tagName === 'circle') { elements.tooltip.style.opacity = 0; }
+    });
+    elements.rocPlot.addEventListener('mousemove', (e) => {
+      const rect = elements.rocPlot.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      elements.tooltip.style.left = `${x}px`;
+      elements.tooltip.style.top = `${y}px`;
+    });
+
+    initializePlot();
+    resetAnimation();
+  </script>
+</body>
+</html>```
