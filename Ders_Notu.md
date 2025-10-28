@@ -1136,14 +1136,14 @@ Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneğ
 
 **R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
 
-    #### Örnek Üzerinden Hesaplama ve Yorumlama
+#### Örnek  Hesaplama
 
-    Yukarıdaki ev fiyatı örneğimizde, modelimizin tahminleri ile gerçek fiyatlar arasındaki korelasyon katsayısını hesaplayabiliriz.
+Yukarıdaki ev fiyatı örneğimizde, modelimizin tahminleri ile gerçek fiyatlar arasındaki korelasyon katsayısını hesaplayabiliriz.
 
-    Modelimizin R-Kare değeri yaklaşık `0.9718` idi.
+Modelimizin R-Kare değeri yaklaşık `0.9718` idi.
     Bu durumda, korelasyon katsayısı `R = √R² = √0.9718 ≈ 0.9858` olacaktır.
 
-    **Yorum:** Korelasyon katsayısı `R ≈ 0.9858` değeri, modelimizin tahminleri ile gerçek ev fiyatları arasında çok güçlü ve pozitif bir doğrusal ilişki olduğunu gösterir. Yani, modelimiz yüksek bir fiyat tahmin ettiğinde, gerçek fiyatın da yüksek olma eğiliminde olduğunu; düşük bir fiyat tahmin ettiğinde ise gerçek fiyatın da düşük olma eğiliminde olduğunu anlarız. Bu, modelimizin tahminlerinin gerçek değerleri oldukça iyi takip ettiğini teyit eder.
+Korelasyon katsayısı `R ≈ 0.9858` değeri, modelimizin tahminleri ile gerçek ev fiyatları arasında çok güçlü ve pozitif bir doğrusal ilişki olduğunu gösterir. Yani, modelimiz yüksek bir fiyat tahmin ettiğinde, gerçek fiyatın da yüksek olma eğiliminde olduğunu; düşük bir fiyat tahmin ettiğinde ise gerçek fiyatın da düşük olma eğiliminde olduğunu anlarız. Bu, modelimizin tahminlerinin gerçek değerleri oldukça iyi takip ettiğini teyit eder.
 
 #### Düzeltilmiş R-Kare (Adjusted R-Squared)
 
@@ -1151,11 +1151,15 @@ Gençler, R-Kare'nin dikkat etmemiz gereken önemli bir özelliği vardır. Mode
 
 İşte bu sorunu aşmak için **Düzeltilmiş R-Kare (Adjusted R-Squared)** kullanılır. Bu metrik, modele eklenen her bir özelliğin getirdiği faydayı ve eklediği karmaşıklığı hesaba katar. Eğer eklenen yeni özellik modelin açıklayıcılığına anlamlı bir katkı sağlamıyorsa, Düzeltilmiş R-Kare değeri artmaz, hatta düşebilir. Bu sayede, model karmaşıklığını da dikkate alarak daha adil bir performans değerlendirmesi yapmış oluruz.
 
-Adjusted R² = 1 - [(1 - R²) × (n - 1) / (n - k - 1)]
+Düzeltilmiş R-Kare'nin matematiksel notasyonu şöyledir:
+$$ R_{\text{adj}}^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1} $$
 
 
 
-### Weka ile Regresyon Değerlendirmesi
+
+---
+### Weka ile Regresyon
+---
 
 Tıpkı sınıflandırma metriklerinde olduğu gibi, regresyon metriklerini de Weka gibi görsel araçlarla kolayca hesaplayabiliriz. Az önce öğrendiğimiz MAE, RMSE ve R-Kare gibi değerlerin Weka arayüzünde nasıl karşımıza çıktığını görelim.
 
@@ -1320,7 +1324,73 @@ Gençler, unutmayın ki tek bir "en iyi" performans ölçütü yoktur; probleme 
 
 Bu metrikler, geliştirdiğiniz modelleri anlama ve iyileştirme sürecinizde size yol gösterecek temel araçlardır.
 
+### Makine Öğrenmesi Algoritmaları ve Yazılımları: WEKA
 
+Makine öğrenmesi alanında, algoritmaları uygulamak ve veri analizleri yapmak için çeşitli yazılımlar mevcuttur. Bu yazılımlardan biri olan **WEKA (Waikato Environment for Knowledge Analysis)**, Yeni Zelanda'daki Waikato Üniversitesi tarafından geliştirilmiş, Java tabanlı, açık kaynak kodlu ve kapsamlı bir araçtır. İçerisinde sınıflandırma, kümeleme, birliktelik kuralı madenciliği gibi birçok makine öğrenmesi algoritmasını barındırır.
+
+#### WEKA'yı Başlatma ve Temel Yapılandırma
+
+WEKA'yı başlatırken, "Weka (with Console)" seçeneğini tercih etmek genellikle iyi bir uygulamadır. Konsol penceresi, programın arka planda yaptığı işlemleri ve olası uyarıları takip etmenizi sağlar. Özellikle karmaşık analizlerde veya büyük veri setleriyle çalışırken, programın kararsız hale gelip gelmediğini bu konsol üzerinden gözlemleyebilirsiniz.
+
+Büyük veri setleriyle çalışırken karşılaşılabilecek yaygın bir sorun, bellek yetersizliğidir. WEKA, varsayılan olarak belirli bir bellek miktarı ile çalışır. Eğer "bellek taşması (out of memory)" hatası alırsanız, bu miktarı artırmanız gerekebilir. Bu ayarlamayı, WEKA'nın kurulu olduğu dizindeki `Runweka.bat` ve `Runweka.ini` gibi yapılandırma dosyaları üzerinden yapabilirsiniz.
+
+WEKA'nın kendi yerel dosya uzantısı `.arff`'dir. Bu format, veri setinin yapısını (öznitelik türleri, sınıf bilgisi) ve verileri bir arada tutar.
+
+#### Veri Yükleme ve Yönetimi
+
+WEKA'nın ana arayüzü olan "Explorer" ekranı, veri setleriyle etkileşim kurduğunuz başlangıç noktasıdır. Burada, veri setinizi bir dosyadan, bir URL'den, bir veritabanından veya rastgele oluşturarak yükleyebilirsiniz. WEKA, özellikle `.arff` uzantılı dosyaları doğrudan kullanır.
+
+Eğer verileriniz `.csv` veya `.json` gibi farklı formatlardaysa ya da bir veritabanından çekilmişse, WEKA Explorer'da bu verileri yükledikten sonra "Save" butonu aracılığıyla kolayca `.arff` formatına dönüştürüp kaydedebilirsiniz.
+
+Bir `.arff` dosyasının içeriği incelendiğinde, temel olarak üç ana bölümden oluştuğu görülür:
+*   `@relation`: Veri setinin adını belirtir.
+*   `@attribute`: Her bir özniteliğin (sütun adı) adını ve türünü (örneğin, `numeric` için sayısal, `nominal` için kategorik) tanımlar. Denetimli öğrenme (supervised learning) problemlerinde, tahmin etmeye çalıştığımız hedef öznitelik (sınıf) genellikle son `@attribute` olarak belirtilir ve olası sınıf değerleri küme parantezleri içinde `{sınıf1, sınıf2, ...}` şeklinde yazılır.
+*   `@data`: Bu bölümden sonra, her satır bir veri örneğini temsil eder ve öznitelik değerleri virgülle ayrılarak sıralanır.
+
+Veritabanlarından doğrudan veri aktarımı için, ilgili JDBC (Java Database Connectivity) sürücülerinin WEKA'ya yüklenmesi gerekebilir.
+
+#### WEKA Arayüz Bölümleri ve İşlevleri
+
+Eğitim verisi WEKA'ya aktarıldıktan sonra, Explorer arayüzündeki farklı sekmeler aracılığıyla çeşitli analizler yapabilirsiniz:
+*   **Preprocess:** Veri setiniz üzerinde ön işleme adımları (eksik değer doldurma, öznitelik seçimi, veri dönüşümleri gibi) gerçekleştirmek için kullanılır. Buradaki "Filter" araçları, veriyi analiz için uygun hale getirmede önemli rol oynar.
+*   **Classify:** Sınıflandırma ve regresyon problemlerini çözmek, yani bir model eğitmek ve test etmek için kullanılır.
+*   **Cluster:** Kümeleme analizleri yapmak için tasarlanmıştır.
+*   **Associate:** Birliktelik kuralı madenciliği (örneğin, sepet analizi) gerçekleştirmek için kullanılır.
+*   **Visualize:** Veri setinizin dağılımını ve analiz sonuçlarını görselleştirmek için kullanılır.
+
+#### Sınıflandırma (Classify) Bölümü Detayları
+
+"Classify" bölümü, WEKA'da makine öğrenmesi modelleri oluşturmanın ve değerlendirmenin merkezidir. Burada, modelinizi eğitmek ve test etmek için veri setinizin nasıl kullanılacağını belirlersiniz.
+
+Model oluşturma sürecinde, "Test options" kısmında farklı stratejiler seçebilirsiniz:
+*   **Cross-validation (Çapraz Doğrulama):** Veri setini belirli sayıda katmana bölerek her katmanı sırayla test seti olarak kullanır ve daha güvenilir bir performans tahmini sağlar.
+*   **Percentage split (Yüzdeye Göre Bölme):** Veri setini belirli bir yüzde oranında eğitim ve test setlerine ayırır.
+*   **Supplied test set (Harici Test Seti):** Modelinizi, daha önce hiç görmediği ayrı bir test veri seti üzerinde değerlendirmek için kullanılır.
+
+"Choose" butonu aracılığıyla WEKA'nın zengin algoritma kütüphanesinden istediğiniz öğrenme algoritmasını seçebilirsiniz. Algoritma ve test seçenekleri belirlendikten sonra "Start" butonuna basarak model oluşturma ve değerlendirme sürecini başlatırsınız.
+
+Modelin performansı ve hata göstergeleri, "Classifier output" ekranında detaylı bir rapor halinde sunulur. Bu rapor, modelinizin ne kadar başarılı olduğunu anlamak için doğruluk (accuracy), kesinlik (precision), duyarlılık (recall), F1-skoru ve ROC eğrisi altındaki alan (AUC) gibi metrikleri içerir. Eğer ilk denemelerde istenilen başarı elde edilemezse, bu bir başarısızlık değil, bir öğrenme fırsatıdır. Bu durumda, aşağıdaki yaklaşımları gözden geçirmek faydalı olacaktır:
+*   **Veri Miktarı ve Kalitesi:** Eğitim verisi miktarını artırmak veya azaltmak, ya da veri setindeki gürültüyü (hatalı veya tutarsız verileri) temizlemek.
+*   **Öznitelik Mühendisliği:** Modelin performansını artırmak için mevcut öznitelikleri dönüştürmek, yeni öznitelikler türetmek veya alakasız öznitelikleri çıkarmak.
+*   **Algoritma Seçimi ve Ayarları:** Farklı öğrenme tekniklerini (örneğin, topluluk öğrenmesi yöntemleri) denemek veya seçilen algoritmanın hiperparametrelerini ayarlamak.
+*   **Eğitim ve Test Verisi Oranları:** Veri setinin eğitim ve test için ayrılma oranlarını değiştirmek.
+
+En iyi performansa sahip algoritma belirlendikten sonra, "Result list" bölümünden algoritma adına sağ tıklayarak "Save model" komutu ile eğitilmiş modeli kaydedebilirsiniz. Bu, modeli daha sonra başka uygulamalarda kullanmanıza olanak tanır.
+
+#### WEKA ve R Bağlantısı
+
+WEKA'nın güçlü veri işleme ve modelleme yeteneklerini, R'ın zengin istatistiksel analiz ve görselleştirme kütüphaneleriyle birleştirmek, analizlerinizi daha da derinleştirebilir. Bu bağlantıyı kurmak için aşağıdaki adımları izleyebilirsiniz:
+
+1.  **R ve WEKA Kurulumu:** Bilgisayarınızda hem R programlama dilinin hem de WEKA yazılımının kurulu olduğundan emin olun.
+2.  **`rJava` Paketini Yükleme:** R konsolunu açın ve `install.packages("rJava")` komutunu çalıştırarak R'ın Java ile iletişim kurmasını sağlayan bu paketi yükleyin.
+3.  **Ortam Değişkenlerini Ayarlama:** Bilgisayarınızın "Ortam Değişkenleri" (Environment Variables) ayarlarına erişin. Burada, R'ın doğru şekilde tanınması için bazı değişkenleri tanımlamanız veya düzenlemeniz gerekir:
+    *   `R.HOME`: R'ın kurulu olduğu ana dizini (sürüm numarası dahil) belirtin. Örneğin: `C:\Program Files\R\R-4.x.x`
+    *   `R_LIBS_USER`: R paketlerinin yüklendiği kullanıcı kütüphanesi dizinini belirtin. Örneğin: `C:\Users\KullanıcıAdı\Documents\R\win-library\4.x`
+    *   `PATH`: Sistem PATH değişkenine, R'ın yürütülebilir dosyasının (`R.exe`) bulunduğu dizini ekleyin. Bu, WEKA'nın R komutlarını doğrudan çağırabilmesi için önemlidir.
+4.  **WEKA R Plugin Kurulumu:** WEKA GUI Chooser ekranından "Tools" (Araçlar) menüsüne gidin ve "Package Manager" (Paket Yöneticisi) seçeneğini tıklayın. Açılan pencerede "R Plugin"i bulun ve yükleyin.
+5.  **WEKA'yı Yeniden Başlatma:** Plugin kurulumundan sonra WEKA'yı kapatıp tekrar açın. Artık WEKA GUI Chooser ekranında "R Console" adında yeni bir seçenek görmelisiniz. Bu, WEKA içinden R komutlarını çalıştırmanıza ve iki platform arasında veri alışverişi yapmanıza olanak tanır.
+
+Bu entegrasyon sayesinde, WEKA'nın kullanıcı dostu arayüzünü kullanarak hızlı modellemeler yapabilir, ardından R'ın gelişmiş istatistiksel analiz ve görselleştirme yetenekleriyle sonuçlarınızı daha detaylı inceleyebilirsiniz.
 
 ### 4. Ensemble Learning
 
