@@ -998,7 +998,7 @@ Bu genel performansı tek bir sayı ile özetlemek için **Eğrinin Altında Kal
 AUC, modelin farklı eşik değerleri genelindeki ayırt etme gücünü gösteren, özellikle dengesiz veri setlerinde doğruluğa göre çok daha güvenilir ve yaygın olarak kullanılan bir metriktir.
 
 
-<img src="./siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
+<img src="./images/siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
 
 *   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
 *   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
@@ -1132,7 +1132,7 @@ Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneğ
         *   **`0 < R < 1`:** Pozitif doğrusal ilişki vardır. Değer 1'e yaklaştıkça ilişki güçlenir.
         *   **`-1 < R < 0`:** Negatif doğrusal ilişki vardır. Değer -1'e yaklaştıkça ilişki güçlenir.
 
- <img src="./correlation.svg" alt="İki Sınıflı Problemler için Korelasyon Tipleri" width="100%" height="100%">
+ <img src="./images/correlation.svg" alt="İki Sınıflı Problemler için Korelasyon Tipleri" width="100%" height="100%">
 
 **R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
 
@@ -1531,7 +1531,6 @@ graph TD
 
     Meta --> Final
 ```
-
 
 ### Topluluk Öğrenmesine Genel Bir Bakış
 
