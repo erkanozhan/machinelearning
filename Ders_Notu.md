@@ -1398,131 +1398,155 @@ Birden fazla makine öğrenmesi modelinin bir araya getirilerek daha güçlü ve
 #### Ensemble Learning Yöntemleri
 Topluluk öğrenmesi (ensemble learning) yöntemleri, "birlikten kuvvet doğar" atasözünün makine öğrenmesindeki karşılığıdır. Tek bir modelin yetersiz kalabileceği durumlarda, birden fazla modelin gücünü birleştirerek çok daha isabetli ve güvenilir sonuçlar elde etmeyi amaçlarız. Şimdi bu yaklaşımların en popüler olan üç tanesini inceleyelim.
 
-*   **Bagging (Bootstrap Aggregating):** Bu yöntemi, zor bir sınav sorusunu tek bir öğrenciye çözdürmek yerine, sınıfı rastgele gruplara ayırıp her gruba aynı soruyu sormaya benzetebiliriz. Her grup kendi içinde tartışır ve bir cevap bulur. Sonunda, tüm grupların verdiği cevaplar toplanır ve en çok tekrar edilen cevap, nihai doğru yanıt olarak kabul edilir. Bu yaklaşım, tek bir kişinin yapabileceği bireysel hataları ortadan kaldırarak daha sağlam bir sonuca ulaşır. En bilinen örneği *Random Forest* (Rastgele Orman) algoritmasıdır.
+*   **Bagging (Bootstrap Aggregating):** Gençler, bu yöntemi anlamak için basit bir düşünce deneyi yapalım. Bir kavanozun içinde kaç adet bilye olduğunu tahmin etmemiz gerektiğini varsayalım. Tek bir kişinin tahminine güvenirsek, bu tahminin oldukça hatalı olma riski vardır. Bunun yerine, 10 farklı kişiden tahmin istesek ve bu tahminlerin ortalamasını alsak ne olur? Muhtemelen, bireysel tahminlerin hataları birbirini dengeleyeceği için, ortaya çıkan ortalama sonuç çok daha isabetli ve güvenilir olacaktır.
 
-    Teknik açıdan Bagging, özellikle modelin **varyansını düşürmeyi** ve böylece aşırı öğrenmeyi (overfitting) engellemeyi amaçlayan paralel bir topluluk yöntemidir. Süreç, orijinal veri setinden "bootstrap" adı verilen, yerine koyarak örnekleme (sampling with replacement) yöntemiyle çok sayıda alt veri seti oluşturulmasıyla başlar. Genellikle aynı tipte olan (homojen) temel öğreniciler, bu alt kümelerin her biri üzerinde birbirinden bağımsız olarak eğitilir. Sınıflandırma problemlerinde nihai tahmin **çoğunluk oylaması (majority voting)** ile, regresyon problemlerinde ise tahminlerin **ortalaması** alınarak belirlenir.
-
-*   **Boosting (Güçlendirme):** Bu yaklaşım, zor bir ödevi bir grup öğrencinin sırayla çözmesine benzer. İlk öğrenci tüm ödevi yapmaya çalışır. İkinci öğrenci, ilk öğrencinin yanlış yaptığı sorulara odaklanarak o hataları düzeltir. Üçüncü öğrenci ise önceki iki öğrencinin hala çözemediği kısımları ele alır ve bu süreç böyle devam eder. Her yeni model, bir öncekinin hatalarından ders çıkarır. Sonunda, tüm modellerin bu sıralı ve odaklanmış çabası, tek başına elde edilebilecek olandan çok daha başarılı bir sonuç ortaya çıkarır.
-
-    Boosting, zayıf öğrenicileri (weak learners) bir araya getirerek güçlü bir öğrenici oluşturmayı hedefleyen sıralı (sequential) bir tekniktir. Temel amacı modelin **yanlılığını (bias) azaltmaktır**. Modeller ardışık olarak eğitilir; her yeni model, bir önceki modelin yanlış sınıflandırdığı veya yüksek hata yaptığı örneklere daha fazla **ağırlık vererek** bu hataları düzeltmeye odaklanır. Bu sayede modeller birbirine bağımlı hale gelir. Nihai tahmin, tüm modellerin ağırlıklı bir toplamıyla oluşturulur. *AdaBoost*, *Gradient Boosting Machines (GBM)* ve *XGBoost* bu yöntemin popüler uygulamalarıdır.
-
-*   **Stacking (Yığınlama):** Farklı alanlarda uzmanlaşmış bir danışmanlar kurulu düşünün. Bir proje için bir mimar, bir mühendis ve bir tasarımcı kendi bakış açılarıyla birer öneride bulunur. Bu önerileri tek tek değerlendirmek yerine, tüm bu uzman görüşlerini alıp en iyi nihai kararı vermekle görevli bir proje yöneticisi işe alınır. İşte Stacking de böyledir: Farklı modellerin tahminlerini bir girdi olarak kullanır ve bu girdileri birleştirerek en isabetli tahmini yapan bir "yönetici" model çalıştırır.
-
-    Stacking, genellikle farklı mimarilere sahip (heterojen) modellerin tahminlerini birleştirerek daha yüksek performans elde etmeyi amaçlayan bir yöntemdir. İki seviyeli bir yapıdan oluşur: Seviye-0'da "temel modeller" (base models) ve Seviye-1'de bir "meta-model" bulunur. Temel modellerin tahminleri, meta-model için yeni bir **özellik seti (feature set)** olarak kullanılır. Veri sızıntısını (data leakage) önlemek için temel modellerin tahminleri genellikle çapraz doğrulama (cross-validation) ile "out-of-fold" olarak üretilir. Meta-model, bu tahminleri girdi olarak alıp nihai sonucu üreten modeldir.
+    İşte Bagging, tam olarak bu mantık üzerine kuruludur. Adı, **Bootstrap Aggregating** ifadesinin kısaltmasından gelir ve bu iki kelime, yöntemin nasıl çalıştığını özetler. Temel amacı, tek bir modelin verideki küçük değişimlere aşırı tepki vererek ezber yapma eğilimini, yani **varyansını düşürmektir**. Süreç, orijinal veri setinden, yerine koyarak örnekleme (sampling with replacement) yöntemiyle çok sayıda yeni alt veri seti oluşturulmasıyla başlar. Bu, her yeni sette bazı veri noktalarının birden fazla kez yer alabileceği, bazılarının ise hiç yer almayabileceği anlamına gelir. Ardından, genellikle aynı tipte olan (homojen) temel modeller, bu alt kümelerin her biri üzerinde birbirinden bağımsız olarak, paralel bir şekilde eğitilir. Son aşamada ise bu modellerin tahminleri birleştirilir. Sınıflandırma problemlerinde nihai karar **çoğunluk oylaması (majority voting)** ile, regresyon problemlerinde ise tahminlerin **ortalaması** alınarak verilir. Bu yaklaşımın en bilinen ve başarılı uygulamalarından biri *Random Forest* (Rastgele Orman) algoritmasıdır.
 
 ```mermaid
-flowchart TD
+graph TD
+    A["Orijinal Veri Seti<br/>[D1, D2, D3, D4, D5]"]
 
-    %% Üst Başlık (Ensemble Learning)
-    A["Ensemble Learning (Topluluk Öğrenmesi)
-    ---
-    ▸ Birden fazla makine öğrenimi modelinin çıktısını birleştirir.
-    ▸ Amaç: kararlılığı/başarıyı artırmak.
-    "]:::main
-
-    %% Ana Dallar
-    A --> B["Bagging (Bootstrap Aggregating)
-    ---
-    ▸ Amaç: Varyansı azaltmak (overfitting'i engellemek)
-    ▸ Her model farklı 'bootstrap' (örnekli) veriyle eğitilir." ]:::bag
-    A --> C["Boosting
-    ---
-    ▸ Amaç: Bias'ı azaltmak (zayıf modelleri ardışık güçlendirme)
-    ▸ Her model, önceki modelin hatalarına odaklanır." ]:::boost
-    A --> D["Stacking (Stacked Generalization)
-    ---
-    ▸ Farklı model tiplerinin çıktısı meta modelle birleştirilir.
-    ▸ Model çeşitliliğinden faydalanır." ]:::stack
-
-    %% Bagging detayları
-    subgraph B_subgraph["Bagging Süreci
-    ---
-    ▸ Sık kullanılan: Random Forest.
-    ▸ Zayıf öğreniciler genellikle aynı tip (ör. Karar Ağaçları).
-    "]
-        B1["Model 1
-        ---
-        ▸ Farklı bootstrap (tekrarlı seçimli) örneklem." ]
-        B2["Model 2
-        ---
-        ▸ Farklı bootstrap örneklem." ]
-        B3["Model 3
-        ---
-        ▸ Farklı bootstrap örneklem." ]
-        B --> B1 & B2 & B3
-        B1 -- "Bir örnek: Karar ağacı, 'data1' örneklemiyle eğitildi" --> E
-        B2 -- "Karar ağacı, 'data2' ile" --> E
-        B3 -- "Karar ağacı, 'data3' ile" --> E
-        E["Final Tahmin
-        ---
-        ▸ Tahminler çoğunluk oylaması (sınıflandırma) veya ortalama (regresyon) alınarak birleştirilir.
-        "]    
+    subgraph "Bootstrap Örnekleme (Yerine Koyarak Seçim)"
+        direction LR
+        B1["Örneklem 1<br/>[D1, D3, D3, D5, D1]"]
+        B2["Örneklem 2<br/>[D2, D4, D1, D5, D2]"]
+        B3["..."]
+        BN["Örneklem N<br/>[D4, D1, D5, D5, D3]"]
     end
 
-    %% Boosting detayları
-    subgraph C_subgraph["Boosting Süreci
-    ---
-    ▸ Sık kullanılan: AdaBoost, Gradient Boosting, XGBoost.
-    ▸ Her yeni model, önceki modellerin yanlış sınıflandırdığı örneklere ağırlık verir.
-    "]
-        C1["Zayıf Model 1 (ör. Karar Ağacı Stump)
-        ---
-        ▸ İlk model: Tüm örnekler eşit ağırlıkta.
-        "] 
-        C2["Zayıf Model 2
-        ---
-        ▸ Yanlış tahmin edilen örneklerin ağırlığı artırılır.
-        "] 
-        C3["Zayıf Model 3
-        ---
-        ▸ Öncekilerde zorlanan örnekleri düzeltmeye çalışır.
-        "] 
-        C --> C1
-        C1 -- "Örnek: İlk karar ağacı doğruluk: %60" --> C2
-        C2 -- "Hataya düşenlere odaklı yeni model" --> C3
-        C3 -- "Yine yanlış kalanları hedefler" --> F
-        F["Final Tahmin
-        ---
-        ▸ Tüm modellerin ağırlıklı oyunun toplamı ile nihai karar verilir.
-        ▸ Genellikle tek tip zayıf model (ör. kısa ağaç) seçilir.
-        ▸ Güçlü doğruluk, aşırı uyuma yatkın.
-        "]
+    A --> B1
+    A --> B2
+    A --> B3
+    A --> BN
+
+    subgraph "Paralel Model Eğitimi (Bağımsız)"
+        direction LR
+        M1["Model 1<br/>(Örn: Karar Ağacı)"]
+        M2["Model 2<br/>(Örn: Karar Ağacı)"]
+        M3["..."]
+        MN["Model N<br/>(Örn: Karar Ağacı)"]
     end
 
-    %% Stacking detayları
-    subgraph D_subgraph["Stacking Süreci
-    ---
-    ▸ Temel (base) modeller farklı tipte/mimaride olabilir (ör. karar ağacı, SVM, lojistik regresyon vb.)
-    ▸ Üst düzey meta model son kararı verir.
-    "]
-        D1["Base Model 1 (ör. XGBoost)
-        ---"] 
-        D2["Base Model 2 (ör. SVM)
-        ---"] 
-        D3["Base Model 3 (ör. Random Forest)
-        ---"] 
-        D --> D1 & D2 & D3
-        D1 -- "Out-of-fold hata/skor üretilir" --> G
-        D2 -- "Out-of-fold hata/skor üretilir" --> G
-        D3 -- "Out-of-fold hata/skor üretilir" --> G
-        G["Meta Model (ör. Logistic Regression)
-        ---
-        ▸ Temel modellerin çıktılarını, nihai tahmin için giriş olarak kullanır.
-        ▸ Genellikle aşırı öğrenmeyi azaltır.
-        "] 
-        G --> H["Final Tahmin
-        ---
-        ▸ Meta modelin verdiği karar nihai sonucu belirler.
-        ▸ Eğitim/test ayrımı dikkatli olmalıdır!
-        "]
+    B1 --> M1
+    B2 --> M2
+    B3 --> M3
+    BN --> MN
+
+    subgraph "Tahminleri Birleştirme (Aggregation)"
+        direction LR
+        P1["Tahmin 1"]
+        P2["Tahmin 2"]
+        P3["..."]
+        PN["Tahmin N"]
     end
 
-    %% Stil tanımları
-    classDef main fill:#fff6a8,stroke:#222,stroke-width:2px,font-weight:bold;
-    classDef bag fill:#a8c4ff,stroke:#333,stroke-width:1px;
-    classDef boost fill:#ffb0a8,stroke:#333,stroke-width:1px;
-    classDef stack fill:#b4f0b4,stroke:#333,stroke-width:1px;
+    M1 --> P1
+    M2 --> P2
+    M3 --> P3
+    MN --> PN
+
+    Final["Nihai Tahmin<br/>(Çoğunluk Oyu veya Ortalama)"]
+
+    P1 --> Final
+    P2 --> Final
+    P3 --> Final
+    PN --> Final
 ```
+
+*   **Boosting (Güçlendirme):** Gençler, Boosting yaklaşımını, zor bir problemi sırayla çözen bir uzmanlar ekibine benzetebiliriz. İlk uzman, probleme genel bir çözüm sunar. İkinci uzman gelir, ilk uzmanın gözden kaçırdığı veya hata yaptığı noktalara odaklanır ve o kısımları düzeltmeye çalışır. Üçüncü uzman ise, ilk ikisinin hala çözemediği zorlu kısımları ele alır. Bu süreç, her yeni uzmanın bir öncekinin zayıflıklarını gidermesiyle devam eder. Sonunda, bu uzmanların sıralı ve odaklanmış çabası, tek bir uzmanın tek başına elde edebileceğinden çok daha rafine ve doğru bir sonuç ortaya çıkarır.
+
+    Bu benzetmenin teknik karşılığı şudur: Boosting, zayıf öğrenicileri (weak learners) bir araya getirerek güçlü bir öğrenici oluşturmayı hedefleyen sıralı (sequential) bir tekniktir. Temel amacı, modelin sistematik hatalarını, yani **yanlılığını (bias) azaltmaktır**. Modeller ardışık olarak eğitilir. Her yeni model, bir önceki modelin yanlış sınıflandırdığı veya yüksek hata yaptığı örneklere daha fazla **ağırlık vererek** bu hataları düzeltmeye odaklanır. Bu sayede modeller birbirine bağımlı hale gelir ve her biri, bir öncekinin eksiklerini tamamlayan bir uzman gibi davranır. Nihai tahmin, tüm modellerin performanslarına göre ağırlıklandırılmış bir oylama veya toplamıyla oluşturulur. *AdaBoost*, *Gradient Boosting Machines (GBM)* ve *XGBoost* bu yöntemin en bilinen ve güçlü uygulamalarıdır.
+
+```mermaid
+graph TD
+    A["Orijinal Veri Seti<br/>(Tüm örneklere eşit ağırlık)"] --> M1["Zayıf Model 1"]
+    
+    M1 -- "Tahminler ve Hatalar" --> W1["Veriyi Yeniden Ağırlıklandır<br/>(Yanlış tahmin edilenlere daha yüksek ağırlık ver)"]
+    
+    W1 --> M2["Zayıf Model 2<br/>(Hatalı örneklere odaklanır)"]
+    
+    M2 -- "Tahminler ve Hatalar" --> W2["..."]
+    
+    W2 --> MN["Zayıf Model N"]
+    
+    subgraph "Nihai Tahmin"
+        direction LR
+        P1["Model 1 Tahmini"]
+        P2["Model 2 Tahmini"]
+        PN["Model N Tahmini"]
+    end
+    
+    M1 --> P1
+    M2 --> P2
+    MN --> PN
+    
+    Final["Ağırlıklı Oylama/Toplam"]
+    
+    P1 --> Final
+    P2 --> Final
+    PN --> Final
+```
+
+*   **Stacking (Yığınlama):** Gençler, Stacking yöntemini, farklı alanlarda uzmanlaşmış bir danışmanlar kuruluna benzetebiliriz. Bir inşaat projesi düşünün. Mimar, statik mühendisi ve şehir plancısı, projeye kendi uzmanlık alanlarından bakarak birer rapor sunar. Bu raporları ayrı ayrı değerlendirmek yerine, tecrübeli bir proje yöneticisi bu üç farklı uzman görüşünü de birer girdi olarak alır ve bu girdileri harmanlayarak en isabetli nihai kararı verir. Proje yöneticisi, hangi uzmanın hangi konuda daha güvenilir olduğunu zamanla öğrenir ve kararlarını buna göre ağırlıklandırır.
+
+    İşte Stacking, bu proje yöneticisi gibi çalışır. Genellikle birbirinden farklı mimarilere sahip (heterojen) modellerin tahminlerini birleştirerek daha yüksek bir başarım elde etmeyi hedefler. Yapısal olarak iki seviyeden oluşur: Seviye-0'da "temel modeller" (base models) ve Seviye-1'de bir "meta-model" bulunur. Süreç şöyledir: Temel modeller (örneğin bir Destek Vektör Makinesi, bir Rastgele Orman ve bir Lojistik Regresyon modeli) orijinal veri seti üzerinde eğitilir. Ardından bu modellerin yaptığı tahminler, meta-model için yeni bir **özellik seti (feature set)** olarak kullanılır. Veri sızıntısını (data leakage) önlemek için, temel modellerin tahminleri genellikle çapraz doğrulama (cross-validation) tekniğiyle "out-of-fold" olarak, yani modelin eğitim sırasında görmediği veri parçaları üzerinden üretilir. Son olarak, bu yeni özellik setini girdi olarak alan meta-model eğitilir ve nihai sonucu üretir. Meta-modelin görevi, temel modellerin tahminlerini en optimal şekilde nasıl birleştireceğini öğrenmektir.
+
+```mermaid
+graph TD
+    A["Orijinal Veri Seti"]
+
+    subgraph "Seviye 0: Temel Modeller (Farklı Tipler)"
+        direction LR
+        M1["Temel Model A<br/>(Örn: SVM)"]
+        M2["Temel Model B<br/>(Örn: Random Forest)"]
+        M3["Temel Model C<br/>(Örn: Lojistik Regresyon)"]
+    end
+
+    A --> M1
+    A --> M2
+    A --> M3
+
+    subgraph "Yeni Özellik Seti Oluşturma"
+        direction LR
+        P1["Tahminler A"]
+        P2["Tahminler B"]
+        P3["Tahminler C"]
+    end
+
+    M1 --> P1
+    M2 --> P2
+    M3 --> P3
+
+    YeniVeri["Yeni Özellik Seti<br/>[Tahmin A, Tahmin B, Tahmin C]"]
+
+    P1 & P2 & P3 --> YeniVeri
+
+    subgraph "Seviye 1: Meta Model"
+        Meta["Meta-Model<br/>(Örn: XGBoost)"]
+    end
+
+    YeniVeri --> Meta
+
+    Final["Nihai Tahmin"]
+
+    Meta --> Final
+```
+
+
+### Topluluk Öğrenmesine Genel Bir Bakış
+
+Gençler, makine öğrenmesinde bazen en iyi sonucu tek bir dahi modelden değil, birçok modelin kolektif bilgeliğinden alırız. Topluluk öğrenmesi (ensemble learning), tam olarak bu fikre dayanır: Tek bir uzmanın görüşüne güvenmek yerine, bir uzmanlar komitesi oluşturup onların ortak kararına başvurmak. Bu yaklaşım, genellikle tek bir modelin tek başına ulaşabileceğinden daha isabetli, kararlı ve güvenilir sonuçlar üretir.
+
+Temelde, farklı modellerin yaptığı hataların da farklı olacağı varsayımından yola çıkarız. Bir modelin gözden kaçırdığı bir detayı, bir diğeri yakalayabilir. Bu yöntemleri üç ana strateji altında toplayabiliriz:
+
+1.  **Bagging (Paralel Takım Çalışması):** Bu yaklaşımda, aynı veri setinin biraz değiştirilmiş farklı versiyonları üzerinde, birbirinden bağımsız olarak birden çok model eğitiriz. Tıpkı bir anket çalışmasında aynı soruları farklı gruplara sormak gibi. Her model kendi "görüşünü" (tahminini) oluşturur ve en sonunda bu görüşleri bir araya getiririz. Sınıflandırma probleminde en çok oyu alan sınıf, regresyonda ise tahminlerin ortalaması nihai karar olur. Bu yöntemin temel amacı, bir modelin verideki küçük değişimlere aşırı tepki verip ezber yapmasını (overfitting) engellemek, yani **varyansı düşürmektir**. En popüler örneği *Random Forest*'tır.
+
+2.  **Boosting (Sıralı Uzmanlık):** Bu stratejide modellerimiz bir ekip gibi sıralı çalışır. İlk model, problemi çözmek için genel bir deneme yapar. İkinci model, ilk modelin özellikle zorlandığı veya hata yaptığı örneklere odaklanarak bu hataları düzeltmeye çalışır. Her yeni gelen model, bir öncekinin zayıflıklarını gidermek üzere eğitilir. Bu, zayıf modellerden oluşan bir zincirin, sonunda çok güçlü bir karar mekanizmasına dönüşmesini sağlar. Boosting'in temel hedefi, modelin sistematik hatalarını azaltmak, yani **yanlılığı (bias) düşürmektir**. *AdaBoost* ve *Gradient Boosting* bu yaklaşımın en bilinenleridir.
+
+3.  **Stacking (Hiyerarşik Karar Verme):** Bu en gelişmiş yöntemlerden biridir. Farklı türdeki uzman modellerin (örneğin bir sinir ağı, bir karar ağacı ve bir destek vektör makinesi) tahminlerini alırız. Ancak bu tahminleri doğrudan oylamak yerine, onları yeni bir veri seti olarak kabul eder ve bu veri seti üzerinde ikinci seviye bir "meta-model" eğitiriz. Bu meta-modelin görevi, hangi temel modelin ne zaman daha güvenilir olduğunu öğrenmek ve bu bilgiyi kullanarak en isabetli nihai kararı vermektir. Bu sayede, farklı algoritmaların kendilerine özgü güçlü yönlerini akıllıca birleştirmiş oluruz.
+
+Özetle, topluluk yöntemleri, "birlikten kuvvet doğar" ilkesini makine öğrenmesine uygulayarak modellerimizin genelleme yeteneğini artırır ve daha sağlam tahminler yapmamızı sağlar.
+
 
 ### Weka ve Python'da Topluluk Öğrenmesi Algoritmaları
 
