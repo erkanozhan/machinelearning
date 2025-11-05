@@ -1392,75 +1392,94 @@ WEKA'nın güçlü veri işleme ve modelleme yeteneklerini, R'ın zengin istatis
 Bu entegrasyon sayesinde, WEKA'nın kullanıcı dostu arayüzünü kullanarak hızlı modellemeler yapabilir, ardından R'ın gelişmiş istatistiksel analiz ve görselleştirme yetenekleriyle sonuçlarınızı daha detaylı inceleyebilirsiniz.
 
 
-# WEKA'DA MODEL OLUŞTURMA
+### Uygulama: Iris Veri Seti Üzerinde Adım Adım Model Oluşturma ve Test Etme (WEKA ile)
 
+Şimdiye kadar öğrendiğimiz teorik bilgileri somut bir örnek üzerinde uygulayalım. Makine öğrenmesi dünyasının en bilinen ve sıkça kullanılan veri setlerinden biri olan **Iris veri seti** üzerinde, WEKA yazılımını kullanarak bir sınıflandırma modeli oluşturacak ve bu modeli test edeceğiz. Bu süreç, bir makine öğrenmesi projesinin temel adımlarını anlamanıza yardımcı olacaktır.
 
-Kullanılacak olan makine öğrenmesi yazılımı ne olursa olsun öncelikle veriler bir elektronik tablolama programı veri tabanı vb. ile yapılandırılmış hale getirilerek kaydedilmelidir. Bunun yanında veriler üzerinde indirgeme, temizleme, aykırılık kontrolü, normalizasyon vb. işlemler yapılarak veri seti analiz edilebilecek son hale getirilmelidir. Veri bu forma dönüştürüldükten sonra sırasıyla aşağıdaki tanımlar kullanılır.
+Iris veri seti, üç farklı iris çiçeği türüne (Iris-setosa, Iris-versicolor, Iris-virginica) ait 150 örneği içerir. Her bir örnek için dört sayısal öznitelik (çanak yaprağı uzunluğu ve genişliği, taç yaprağı uzunluğu ve genişliği) ve çiçeğin türünü belirten bir sınıf etiketi bulunur. Bu veri seti, WEKA'nın kurulu olduğu dizindeki `data` klasöründe `iris.arff` adıyla mevcuttur.
 
-### 1) WEKA yazılımı açılarak Explorer girilir burada:
-- **Open File →** Dosyadan (.csv, .txt, .xls)
-- **Open URL →** Bir web adresinden veri almak için
-- **Generate →** Alıştırma yapmak için sentetik veri oluşturur
-- Seçeneklerinden uygun olan bölüme girilir. Veriler WEKA'ya alınır.
+#### 1. Iris Veri Setini WEKA'ya Yükleme
 
-### 2) Bu veriler üzerinde sınıflandırıcı model oluşacaksa "Classify" sekmesine geçilir.
+1.  **WEKA'yı Başlatın:** Bilgisayarınızda WEKA'yı açın ve "WEKA GUI Chooser" ekranından "Explorer" seçeneğine tıklayın.
+2.  **Veri Setini Yükleyin:** "Preprocess" (Ön İşleme) sekmesindeyken, "Open file..." (Dosya Aç) butonuna tıklayın. WEKA'nın kurulu olduğu dizindeki `data` klasörüne gidin ve `iris.arff` dosyasını seçerek yükleyin.
+3.  **Veriyi İnceleyin:** Veri seti yüklendiğinde, sağ taraftaki "Attributes" (Öznitelikler) panelinde `sepallength`, `sepalwidth`, `petallength`, `petalwidth` ve `class` özniteliklerini göreceksiniz. `class` özniteliği, modelimizin tahmin etmeye çalışacağı hedef değişkendir ve üç farklı nominal değere sahiptir: `Iris-setosa`, `Iris-versicolor`, `Iris-virginica`. Her bir özniteliğin istatistiksel özetini (minimum, maksimum, ortalama, standart sapma) ve dağılımını inceleyebilirsiniz.
 
-Aşağıdaki adımlar uygulanır:
+#### 2. Sınıflandırma Modeli Eğitimi ve Değerlendirme
 
-a) **Classify sekmesinden choose bölümüne girilerek** belli başlı algoritmalar (birçok sınıflandırma probleminde yüksek performans gösterdiği diğer araştırmacılar tarafından test edilmiş) kullanılarak denemeler yapılır. Algoritmaları birbirleri ile karşılaştırmak için Correctly Classified Instance, Kappa statistic, mean absolute error... metriklerinin değerlerine göre kullanılır. Buna göre başarıları artırmak amacıyla algoritmaların parametreleri choose butonun yanındaki isimlerine direkt tıklatılarak parametreler değiştirilebilir. Test options bölümünde yer alan eğitim ve test seti kullanma şekilleri değiştirilebilir.
+Şimdi, Iris veri setini kullanarak bir sınıflandırma modeli eğitecek ve performansını değerlendireceğiz.
 
-Başarı oranı tatmin edici ise bir sonraki adıma geçilir. Değil ise önceki makine öğrenmesi aşamalarına geri gönderilir.
+1.  **"Classify" Sekmesine Geçin:** WEKA Explorer arayüzünde "Classify" (Sınıflandır) sekmesine tıklayın.
+2.  **Sınıflandırıcı Seçimi:** "Choose" (Seç) butonuna tıklayın. Açılan menüden `trees` (ağaçlar) altındaki `J48` algoritmasını seçin. J48, karar ağacı tabanlı, anlaşılması kolay ve genellikle iyi performans gösteren bir algoritmadır.
+3.  **Test Seçeneklerini Ayarlayın:** "Test options" (Test seçenekleri) bölümünde, modelin performansını güvenilir bir şekilde ölçmek için "Cross-validation" (Çapraz Doğrulama) seçeneğinin işaretli olduğundan emin olun. Varsayılan olarak "Folds" (Katman sayısı) 10 olarak ayarlanmıştır, bu Iris veri seti için uygun bir değerdir. "Class" (Sınıf) açılır menüsünde `class` özniteliğinin seçili olduğundan emin olun; bu, modelin tahmin etmeye çalışacağı hedef değişkendir.
+4.  **Modeli Eğitin ve Değerlendirin:** "Start" (Başlat) butonuna tıklayın. WEKA, J48 algoritmasını 10 katlı çapraz doğrulama yöntemiyle eğitecek ve değerlendirecektir.
+5.  **Sonuçları Yorumlayın:** "Classifier output" (Sınıflandırıcı çıktısı) panelinde modelin performans raporunu göreceksiniz:
+    *   **`Correctly Classified Instances` (Doğru Sınıflandırılan Örnekler):** Modelin toplam örneklerin yüzde kaçını doğru sınıflandırdığını gösterir.
+    *   **`Incorrectly Classified Instances` (Yanlış Sınıflandırılan Örnekler):** Modelin hatalı sınıflandırdığı örneklerin yüzdesidir.
+    *   **`Kappa statistic` (Kappa Katsayısı):** Modelin başarısının şans faktörünün ne kadar ötesinde olduğunu gösteren bir metriktir.
+    *   **`Detailed Accuracy By Class` (Sınıf Bazında Detaylı Doğruluk):** Her bir Iris türü için ayrı ayrı `TP Rate` (Duyarlılık/Recall), `FP Rate`, `Precision` (Kesinlik), `F-Measure` (F1-Skoru) ve `ROC Area` (AUC) değerlerini gösterir. Bu tablo, modelin hangi sınıflarda daha başarılı, hangilerinde daha zayıf olduğunu anlamak için önemlidir.
+    *   **`Confusion Matrix` (Karışıklık Matrisi):** En altta yer alan bu matris, modelin hangi sınıfları birbiriyle karıştırdığını görsel olarak sunar. Örneğin, `a` Iris-setosa, `b` Iris-versicolor, `c` Iris-virginica ise, matristeki `b` satırı ve `c` sütunundaki değer, gerçekte Iris-versicolor olan kaç örneğin Iris-virginica olarak tahmin edildiğini gösterir.
 
-### 3) Seçilen modele sağ tıklatılarak "Save model" seçilir ve model kaydedilir.
+    Bu metrikleri dikkatlice inceleyerek modelinizin genel performansını ve her bir sınıf üzerindeki başarısını değerlendirebilirsiniz. Eğer performans tatmin edici değilse, farklı algoritmalar denemek, öznitelik mühendisliği yapmak veya algoritma parametrelerini değiştirmek gibi önceki adımlara geri dönebilirsiniz.
 
-### 4) WEKA kapatılmadan test verileriyle test yapılacaksa:
+#### 3. Eğitilmiş Modeli Kaydetme
 
-a) **Veri seti .arff formatında kaydedilir.**
+Modelinizin performansı tatmin edici olduğunda, bu modeli daha sonra kullanmak üzere kaydedebilirsiniz.
 
-b) **Veri seti .arff bir text editöründe açılır.** @data'dan sonra genel kısım silinerek buraya modelin sınıflandırması istenilen test verileri yazılır. Test verilerinin zaten eğitim verisi içinde olup olmadığı kontrol edilir. Çünkü eğitim verisi içerisinde bulunan bir satır test verisindeki satır ile örtüşürse model %100 doğru sınıflandıracaktır. Ancak gerçekçi bir test olmaktan uzaklaşacaktır. Test verisi içerisinde modelin cevaplama istediğimiz ve genelde son virgülde olan sınıf bilgisinin yerine soru işareti konulabilir. Bu yapılırsa model test verisi geçirildikten sonra hataları görmek mümkün olmaz. Soru işareti konulmayıp, sınıf bilgisi verilirse WEKA hata raporu hazırlayabilecektir.
+1.  **Modeli Kaydedin:** "Result list" (Sonuç listesi) panelinde, az önce eğittiğiniz modelin üzerine sağ tıklayın. Açılan menüden "Save model" (Modeli Kaydet) seçeneğini seçin.
+2.  **Dosya Adı ve Konum Belirleyin:** Modeli kaydetmek istediğiniz konumu ve bir dosya adını (örneğin, `iris_j48_model.model`) belirleyerek kaydedin.
 
-c) **Test options → supplied test set → set** butonuyla .arff formatındaki test videosu gösterilir.
+#### 4. Yeni Test Verisi Hazırlama (Notepad++ ile)
 
-**WEKA kapatıldıktan sonra test yapılacaksa:**
+Şimdi, modelimizin daha önce hiç görmediği yeni Iris çiçeği örneklerini tahmin etmesini sağlayacak bir test veri seti oluşturalım. Bu, modelin genelleme yeteneğini ölçmek için önemlidir.
 
-a) Bir önceki maddede anlatıldığı üzere test verisi .arff formatında oluşturulur.
-b) WEKA açılarak Explorer ekranına geçilir.
-c) Classify sekmesine geçmek gerekir. Ancak bu sekme herhangi bir veri WEKA yazılımına aktarılmamışsa pasiftir. Bu yüzden geçilmez. Bu engeli aşmak için herhangi bir veri hiç kullanılmayacak olsa da preprocess sekmesinden açılır. (generate seçeneğiyle WEKA'nın sentetik veri üretmesi sağlanarak bu yapılabilir.)
-d) Classify sekmesine geçilir result list bölümündeki boşluğa sağ tıklatılır Load model seçilerek daha önce kaydedilmiş olan model gösterilir.
-e) Test options bölümündeki supplied test set → set .arff formatındaki test videosu gösterilir.
+1.  **Yeni Bir `.arff` Dosyası Oluşturun:** Notepad++ gibi bir metin düzenleyici açın.
+2.  **Başlık Bilgilerini Kopyalayın:** `iris.arff` dosyasını da Notepad++ ile açın ve `@relation` ile `@attribute` bölümlerini kopyalayarak yeni dosyanıza yapıştırın. Bu, test verinizin eğitim verisiyle aynı yapıya sahip olmasını sağlar.
+3.  **Test Verilerini Ekleyin:** `@data` başlığının altına, modelin tahmin etmesini istediğiniz yeni Iris çiçeği örneklerinin öznitelik değerlerini virgülle ayırarak yazın. Sınıf bilgisini bilmediğimiz veya modelin tahmin etmesini istediğimiz için, `class` özniteliğinin yerine bir soru işareti (`?`) koyun.
 
-### 5) Test options → More options → açılan pencerede output predictions → plain text vb. 
-istenilen türe ayarlanır. Output predictions modelin tahminlerinin ve göstergelerinin nereye hangi formatta çıkacağını belirler. plain text seçilirse WEKA'nın kendi çıktı ekranında görülecektir. Bu seçildikten sonra result list sağ tıklatılır. Re-evaluate model on current test set seçilir. Bu aşamadan sonra WEKA kendi tahminlerini ve raporlarını ekrana basacaktır.
+    **Örnek `iris_yeni_test.arff` içeriği:**
+    ```arff
+    @relation iris-yeni-test
 
----
+    @attribute sepallength numeric
+    @attribute sepalwidth numeric
+    @attribute petallength numeric
+    @attribute petalwidth numeric
+    @attribute class {Iris-setosa,Iris-versicolor,Iris-virginica}
 
-## El Yazısı Notlar (Sayfa 3-4)
+    @data
+    5.1,3.5,1.4,0.2,?  % Gerçekte Iris-setosa
+    6.0,2.2,5.0,1.5,?  % Gerçekte Iris-versicolor
+    7.0,3.2,4.7,1.4,?  % Gerçekte Iris-versicolor
+    4.9,3.0,1.4,0.2,?  % Gerçekte Iris-setosa
+    6.3,3.3,6.0,2.5,?  % Gerçekte Iris-virginica
+    ```
+    (Yorum satırları (`%`) sadece sizin için, dosyaya eklemenize gerek yok.)
 
-### WEKA'DA MODEL ÜZERİNDE TEST YAPMAK
+4.  **Kaydedin:** Bu dosyayı `iris_yeni_test.arff` adıyla kaydedin.
 
-Model oluşturma yöntem ve kurallarına göre bir model elde edildikten sonra sınıfının model tarafından tahmin edilmesini istediğimiz verilerin aşağıdaki adımları izleyerek test edilebiliriz:
+#### 5. Kaydedilmiş Modeli Kullanarak Yeni Verileri Test Etme
 
-1. **Öncelikle test verilerinin eğitim verisi formatında hazırlanması gerekir.**
+Şimdi, kaydettiğimiz modeli kullanarak yeni oluşturduğumuz test verileri üzerindeki tahminleri görelim.
 
-2. **Kolaylık olarak eğitim verisinin tanımla-gerçek başlık kısımları alduray gibi kopyalanabilir.** Daha sonra @data başlığındaki verilerde model sarulacak denitelik bilgilerini içeren satırlar yazılır. Satır sonuna class isimlerini silinerek soru işareti konulabilir veya olduğu gibi bırakılabilir. ? konursa model gerçek değeri bilmediği için performans değerlendirmesi yapamaz.
+**Senaryo A: WEKA Hala Açık ve Model "Result list"te Görünüyor**
 
-3. **Test edilecek veriler zaten eğitim verileri içerisinde varsa, model %100 başarı gösterir** ancak bu doğru sarıçlar vermez.
+1.  **Test Verisini Yükleyin:** "Classify" sekmesindeyken, "Test options" bölümünde "Supplied test set" (Sağlanan test seti) seçeneğini işaretleyin. Ardından "Set..." (Ayarla) butonuna tıklayarak `iris_yeni_test.arff` dosyasını yükleyin.
+2.  **Tahmin Çıktısını Ayarlayın:** "More options" (Daha fazla seçenek) butonuna tıklayın. Açılan pencerede "Output predictions" (Tahminleri Çıkar) seçeneğini "PlainText" (Düz Metin) olarak ayarlayın. Bu, modelin her bir örnek için yaptığı tahmini WEKA'nın çıktı ekranında görmenizi sağlar.
+3.  **Modeli Yeniden Değerlendirin:** "Result list" panelinde, daha önce eğittiğiniz ve kaydettiğiniz modelin üzerine sağ tıklayın. Açılan menüden "Re-evaluate model on current test set" (Mevcut test seti üzerinde modeli yeniden değerlendir) seçeneğini seçin.
+4.  **Tahminleri İnceleyin:** "Classifier output" panelinde, modelin `iris_yeni_test.arff` dosyasındaki her bir örnek için yaptığı tahminleri göreceksiniz. Her satırda örnek numarası, gerçek sınıf (eğer varsa), tahmin edilen sınıf ve bu tahmine olan güven (olasılık) yer alacaktır.
 
-4. **Test verileri içeren arff dosya hazırlandıktan sonra weka explorer ekranına gelinir** ancak weka herhangi bir veri seti açılmadan classify sekmesine aktif etmez. Bu yüzden öncci eğitim olmasada classify sekmesine geçmek için generate butonuna basılır ve Classify sekmesine geçilir.
+**Senaryo B: WEKA Kapatıldı ve Yeniden Açıldı**
 
-5. **Supplied Test Set işaretlenir, set butonuna basılır Test verisi gösterilir.**
+1.  **WEKA Explorer'ı Açın:** WEKA'yı başlatın ve "Explorer" seçeneğine tıklayın.
+2.  **Herhangi Bir Veri Seti Yükleyin:** "Classify" sekmesi, herhangi bir veri seti yüklenmediğinde pasif kalır. Bu yüzden, "Preprocess" sekmesinden `iris.arff` veya `iris_yeni_test.arff` gibi herhangi bir `.arff` dosyasını yükleyerek veya `Generate` butonu ilr rastgele bir sentetik veri üretip "Classify" sekmesini aktif hale getirin.
+3.  **"Classify" Sekmesine Geçin:** Artık "Classify" sekmesine tıklayabilirsiniz.
+4.  **Kaydedilmiş Modeli Yükleyin:** "Result list" panelindeki boş alana sağ tıklayın ve "Load model" (Modeli Yükle) seçeneğini seçin. Kaydettiğiniz `iris_j48_model.model` dosyasını seçerek yükleyin.
+5.  **Test Verisini Yükleyin:** "Test options" bölümünde "Supplied test set" seçeneğini işaretleyin. "Set..." butonuna tıklayarak `iris_yeni_test.arff` dosyasını yükleyin.
+6.  **Tahmin Çıktısını Ayarlayın:** "More options" butonuna tıklayın ve "Output predictions" seçeneğini "PlainText" olarak ayarlayın.
+7.  **Modeli Yeniden Değerlendirin:** "Result list" panelinde yüklediğiniz modelin üzerine sağ tıklayın ve "Re-evaluate model on current test set" seçeneğini seçin.
+8.  **Tahminleri İnceleyin:** "Classifier output" panelinde, modelin yeni test verileri üzerindeki tahminlerini göreceksiniz.
 
-### Son Hafta Notları (21.12.17)
-
-6. **Result List sağa tıklayıp "Load model" komutu verilir ve model dosyası gösterilir.**
-
-7. **More options butonuna tıklayıp Output predictions choose butonuna basılarak PlainText seçilir.**
-
-8. **Result Liste çıkan model verisine sağa tıklayıp "Re-evaluate model on current test set" seçilir (tıklanır).**
-
-**Yukarıdaki işlemler yapıldıktan sonra model tahminlerini Classifier Output ekranına döker.**
-
-
+Bu adımlarla, bir makine öğrenmesi modelinin nasıl eğitildiğini, değerlendirildiğini, kaydedildiğini ve yeni, daha önce hiç görmediği veriler üzerinde nasıl tahminler yapabildiğini pratik olarak deneyimlemiş oldunuz. Bu süreç, gerçek dünya problemlerini çözerken izleyeceğiniz temel yol haritasıdır.
 
 ### 4. Ensemble Learning
 
@@ -1653,4 +1672,123 @@ Python, makine öğrenmesi uygulamaları için en popüler dillerden biridir ve 
 
 Python'da kod yazarak, bu algoritmaların her bir adımını daha detaylı kontrol edebilir, farklı parametre kombinasyonlarını deneyebilir ve modellerinizi kendi özel ihtiyaçlarınıza göre uyarlayabilirsiniz. Bu, özellikle daha derinlemesine analizler ve özelleştirilmiş çözümler geliştirmek istediğinizde büyük avantaj sağlar.
 
+### Uygulama: Iris Veri Seti Üzerinde Topluluk Öğrenmesi (Weka ve Python)
+
+Şimdi gençler, topluluk öğrenmesinin gücünü kendi gözlerimizle göreceğimiz bir uygulama yapalım. Daha önceki bölümde tek bir J48 karar ağacı modeliyle sınıflandırdığımız meşhur Iris veri setini bu kez bir uzmanlar komitesine, yani topluluk öğrenmesi yöntemlerine emanet edeceğiz. Amacımız, Bagging, Boosting ve Stacking gibi farklı takım çalışması stratejilerinin, tek bir modelin performansını aşıp aşamadığını görmek.
+
+#### Weka ile Topluluk Öğrenmesi Uygulaması
+
+Weka'nın görsel arayüzü, bu güçlü yöntemlerin arkasındaki mantığı anlamak için harika bir başlangıç noktasıdır.
+
+**Adım 1: Referans Noktamızı Belirleyelim (Tek J48 Modeli)**
+
+Karşılaştırma yapabilmek için önce tek bir modelin başarısını hatırlamamız gerekiyor. Önceki uygulamamızda `iris.arff` veri setini yükleyip, `Classify` sekmesinde `trees` altından `J48` algoritmasını 10 katlı çapraz doğrulama ile çalıştırdığımızda yaklaşık **%96** gibi bir doğruluk oranı elde etmiştik. Bu bizim referans noktamız olacak.
+
+**Adım 2: Bagging Uygulaması**
+
+Bagging, birbirinden bağımsız çalışan birçok J48 ağacı oluşturup onların ortak kararına başvuracak.
+
+1.  **Algoritma Seçimi:** `Classify` sekmesinde "Choose" butonuna tıklayın. Bu kez `meta` klasörünün altındaki `Bagging` seçeneğini seçin.
+2.  **Yapılandırma:** `Bagging` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresi, toplulukta kullanılacak temel model türünü belirtir. Varsayılan olarak `REPTree` seçilidir. Bunu, referans noktamızla tutarlı bir karşılaştırma yapabilmek için `J48` olarak değiştirin.
+    *   `numIterations` parametresi, toplulukta kaç adet model oluşturulacağını belirtir. Varsayılan değer olan 10'u şimdilik değiştirmeyelim. Bu, 10 farklı J48 ağacının eğitileceği anlamına gelir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Sonuçları incelediğinizde, doğruluk oranının muhtemelen tek J48 modeline göre bir miktar arttığını veya en azından daha kararlı bir sonuç verdiğini göreceksiniz. Bagging, tek bir ağacın verideki küçük değişimlere aşırı tepki vererek ezber yapma riskini (varyansı) azalttığı için genellikle daha güvenilir sonuçlar üretir.
+
+**Adım 3: Boosting (AdaBoostM1) Uygulaması**
+
+Boosting, modelleri sırayla eğiterek her birinin bir öncekinin hatalarından ders almasını sağlar.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `AdaBoostM1` yolunu izleyin.
+2.  **Yapılandırma:** `AdaBoostM1` ayarlarına girdiğinizde, `classifier` olarak `DecisionStump` (Karar Kütüğü) seçili olduğunu göreceksiniz. Bu, sadece tek bir soru soran, çok basit bir karar ağacıdır ve "zayıf öğrenici" tanımına mükemmel bir örnektir. Boosting, bu tür zayıf ama hızlı modelleri bir araya getirerek güçlendirmekte çok başarılıdır. Bu ayarı değiştirmeyelim.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. AdaBoost, bu basit `DecisionStump`'ları ardışık olarak eğiterek, özellikle sınıflandırılması zor olan Iris çiçeklerine odaklanacak ve sonunda oldukça yüksek bir doğruluk oranı elde edecektir. Bu, birçok zayıf modelin, hataları düzelterek nasıl güçlü bir modele dönüşebileceğinin harika bir örneğidir.
+
+**Adım 4: Stacking Uygulaması**
+
+Stacking, farklı türdeki modellerin uzmanlıklarını birleştiren daha gelişmiş bir yöntemdir.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Stacking` seçeneğini seçin.
+2.  **Yapılandırma:** Ayarlar penceresi biraz daha karmaşıktır:
+    *   `baseLearners` (Temel Öğreniciler): Bunlar, ilk seviyede tahmin yapacak olan uzmanlarımızdır. Listeye birden fazla model ekleyebilirsiniz. Örneğin, bir `J48` karar ağacı ve bir `NaiveBayes` sınıflandırıcısını temel öğreniciler olarak belirleyelim.
+    *   `metaClassifier` (Meta Sınıflandırıcı): Bu, temel öğrenicilerin tahminlerini girdi olarak alıp nihai kararı verecek olan "proje yöneticisi" modeldir. Meta model olarak genellikle `Logistic` gibi daha basit bir model seçmek iyi bir başlangıçtır.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Stacking, J48'in ve NaiveBayes'in tahminlerini akıllıca birleştirerek bir sonuç üretir. Bu yöntem, temel modellerin birbirlerinin zayıf yönlerini telafi etme potansiyeli taşıdığı için çok yüksek performanslar elde edebilir.
+
+#### Python (Scikit-learn) ile Topluluk Öğrenmesi Uygulaması
+
+Şimdi aynı işlemleri Python'un güçlü `scikit-learn` kütüphanesi ile nasıl yapacağımıza bakalım. Kod yazmak, bize süreç üzerinde çok daha fazla kontrol ve esneklik sağlar.
+
+Aşağıdaki kod bloğu, Iris veri setini yükler, tek bir karar ağacı ile referans performansını ölçer ve ardından Bagging (Random Forest), Boosting (Gradient Boosting) ve Stacking yöntemlerini uygulayarak sonuçları karşılaştırır.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Temel ve Topluluk Modelleri
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, StackingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+# 1. Veri Setini Yükleme ve Hazırlama
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Veriyi %70 eğitim, %30 test olarak ayıralım
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
+
+print("--- Iris Veri Seti ile Topluluk Öğrenmesi Karşılaştırması ---")
+
+# 2. Referans Model: Tek bir Karar Ağacı
+# Modelimizi oluşturalım (max_depth=3 ile ağacın çok karmaşık olmasını engelliyoruz)
+tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+tree_model.fit(X_train, y_train)
+tree_pred = tree_model.predict(X_test)
+tree_accuracy = accuracy_score(y_test, tree_pred)
+print(f"1. Tek Karar Ağacı Doğruluğu: {tree_accuracy:.4f}")
+
+# 3. Bagging Yöntemi: Random Forest (Rastgele Orman)
+# 100 adet karar ağacından oluşan bir orman kuralım
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
+rf_pred = rf_model.predict(X_test)
+rf_accuracy = accuracy_score(y_test, rf_pred)
+print(f"2. Random Forest (Bagging) Doğruluğu: {rf_accuracy:.4f}")
+
+# 4. Boosting Yöntemi: Gradient Boosting
+# Ardışık olarak 100 zayıf model eğitelim
+gb_model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+gb_model.fit(X_train, y_train)
+gb_pred = gb_model.predict(X_test)
+gb_accuracy = accuracy_score(y_test, gb_pred)
+print(f"3. Gradient Boosting Doğruluğu: {gb_accuracy:.4f}")
+
+# 5. Stacking Yöntemi
+# Seviye-0: Temel modellerimizi tanımlayalım
+base_estimators = [
+    ('svc', SVC(probability=True, random_state=42)),
+    ('rf', RandomForestClassifier(n_estimators=50, random_state=42))
+]
+
+# Seviye-1: Meta modelimizi tanımlayalım
+# Bu model, temel modellerin tahminlerini birleştirmeyi öğrenecek
+meta_model = LogisticRegression()
+
+# Stacking modelini oluşturalım
+stacking_model = StackingClassifier(estimators=base_estimators, final_estimator=meta_model, cv=5)
+stacking_model.fit(X_train, y_train)
+stacking_pred = stacking_model.predict(X_test)
+stacking_accuracy = accuracy_score(y_test, stacking_pred)
+print(f"4. Stacking Doğruluğu: {stacking_accuracy:.4f}")
+print("-" * 60)
+```
+
+**Kodu Yorumlayalım:**
+
+Gençler, bu kodda öncelikle tek bir karar ağacını eğitip yaklaşık %95.5 doğrulukla referans noktamızı belirledik. Ardından:
+*   **Random Forest (Bagging):** 100 farklı karar ağacını, veri setinin rastgele alt kümeleri üzerinde eğitip sonuçlarını birleştirdik. Sonucun, tek bir ağaca göre genellikle daha iyi veya en azından eşit olduğunu görürüz.
+*   **Gradient Boosting:** 100 adet zayıf modeli ardışık olarak, birbirinin hatalarını düzeltecek şekilde eğittik. Bu yöntem de genellikle tek bir modelden daha yüksek performans gösterir.
+*   **Stacking:** İki güçlü modeli (bir Destek Vektör Makinesi ve bir Rastgele Orman) temel öğrenici olarak kullandık. Bu modellerin yaptığı tahminleri, bir Lojistik Regresyon modeline "yeni veri" olarak sunduk ve nihai kararı bu meta-modelin vermesini sağladık.
+
+Bu uygulama, topluluk öğrenmesi yöntemlerinin tek bir modelin sınırlarını nasıl aşabileceğini ve daha sağlam, güvenilir ve genellikle daha doğru tahminler üretebileceğini somut bir şekilde göstermektedir. Unutmayın, en iyi yöntemi seçmek, elinizdeki problemin doğasına ve verinin yapısına bağlıdır; bu yüzden farklı yaklaşımları denemek, makine öğrenmesi sürecinin önemli bir parçasıdır.
 
