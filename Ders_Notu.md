@@ -1314,7 +1314,6 @@ Gençler, bu kod parçasının ne yaptığını daha iyi anlayalım:
 6.  **Karışıklık Matrisi:** Teoride gördüğümüz karışıklık matrisini `seaborn` kütüphanesiyle görselleştirdik. Bu ısı haritası, modelin ne tür hatalar yaptığını (FP veya FN) bir bakışta anlamamızı sağlar.
 7.  **ROC Eğrisi ve AUC:** Modelin pozitif sınıf için ürettiği olasılıkları (`y_pred_proba`) kullanarak, farklı karar eşikleri için Sahte Pozitif Oranı (FPR) ve Gerçek Pozitif Oranı (TPR) değerlerini hesapladık. Bu noktaları birleştirerek ROC eğrisini çizdik. Eğrinin altında kalan alan (AUC), modelin genel ayırt etme gücünün sayısal bir ölçüsüdür. AUC değeri 1'e ne kadar yakınsa, model o kadar iyidir.
 
-## Son Sözler
 
 Gençler, unutmayın ki tek bir "en iyi" performans ölçütü yoktur; probleme ve hedefe "en uygun" ölçüt vardır. Bir modelin başarısını değerlendirirken, problemin bağlamını göz önünde bulundurarak birden fazla metriği birlikte analiz etmek esastır.
 
@@ -1391,6 +1390,77 @@ WEKA'nın güçlü veri işleme ve modelleme yeteneklerini, R'ın zengin istatis
 5.  **WEKA'yı Yeniden Başlatma:** Plugin kurulumundan sonra WEKA'yı kapatıp tekrar açın. Artık WEKA GUI Chooser ekranında "R Console" adında yeni bir seçenek görmelisiniz. Bu, WEKA içinden R komutlarını çalıştırmanıza ve iki platform arasında veri alışverişi yapmanıza olanak tanır.
 
 Bu entegrasyon sayesinde, WEKA'nın kullanıcı dostu arayüzünü kullanarak hızlı modellemeler yapabilir, ardından R'ın gelişmiş istatistiksel analiz ve görselleştirme yetenekleriyle sonuçlarınızı daha detaylı inceleyebilirsiniz.
+
+
+# WEKA'DA MODEL OLUŞTURMA
+
+
+Kullanılacak olan makine öğrenmesi yazılımı ne olursa olsun öncelikle veriler bir elektronik tablolama programı veri tabanı vb. ile yapılandırılmış hale getirilerek kaydedilmelidir. Bunun yanında veriler üzerinde indirgeme, temizleme, aykırılık kontrolü, normalizasyon vb. işlemler yapılarak veri seti analiz edilebilecek son hale getirilmelidir. Veri bu forma dönüştürüldükten sonra sırasıyla aşağıdaki tanımlar kullanılır.
+
+### 1) WEKA yazılımı açılarak Explorer girilir burada:
+- **Open File →** Dosyadan (.csv, .txt, .xls)
+- **Open URL →** Bir web adresinden veri almak için
+- **Generate →** Alıştırma yapmak için sentetik veri oluşturur
+- Seçeneklerinden uygun olan bölüme girilir. Veriler WEKA'ya alınır.
+
+### 2) Bu veriler üzerinde sınıflandırıcı model oluşacaksa "Classify" sekmesine geçilir.
+
+Aşağıdaki adımlar uygulanır:
+
+a) **Classify sekmesinden choose bölümüne girilerek** belli başlı algoritmalar (birçok sınıflandırma probleminde yüksek performans gösterdiği diğer araştırmacılar tarafından test edilmiş) kullanılarak denemeler yapılır. Algoritmaları birbirleri ile karşılaştırmak için Correctly Classified Instance, Kappa statistic, mean absolute error... metriklerinin değerlerine göre kullanılır. Buna göre başarıları artırmak amacıyla algoritmaların parametreleri choose butonun yanındaki isimlerine direkt tıklatılarak parametreler değiştirilebilir. Test options bölümünde yer alan eğitim ve test seti kullanma şekilleri değiştirilebilir.
+
+Başarı oranı tatmin edici ise bir sonraki adıma geçilir. Değil ise önceki makine öğrenmesi aşamalarına geri gönderilir.
+
+### 3) Seçilen modele sağ tıklatılarak "Save model" seçilir ve model kaydedilir.
+
+### 4) WEKA kapatılmadan test verileriyle test yapılacaksa:
+
+a) **Veri seti .arff formatında kaydedilir.**
+
+b) **Veri seti .arff bir text editöründe açılır.** @data'dan sonra genel kısım silinerek buraya modelin sınıflandırması istenilen test verileri yazılır. Test verilerinin zaten eğitim verisi içinde olup olmadığı kontrol edilir. Çünkü eğitim verisi içerisinde bulunan bir satır test verisindeki satır ile örtüşürse model %100 doğru sınıflandıracaktır. Ancak gerçekçi bir test olmaktan uzaklaşacaktır. Test verisi içerisinde modelin cevaplama istediğimiz ve genelde son virgülde olan sınıf bilgisinin yerine soru işareti konulabilir. Bu yapılırsa model test verisi geçirildikten sonra hataları görmek mümkün olmaz. Soru işareti konulmayıp, sınıf bilgisi verilirse WEKA hata raporu hazırlayabilecektir.
+
+c) **Test options → supplied test set → set** butonuyla .arff formatındaki test videosu gösterilir.
+
+**WEKA kapatıldıktan sonra test yapılacaksa:**
+
+a) Bir önceki maddede anlatıldığı üzere test verisi .arff formatında oluşturulur.
+b) WEKA açılarak Explorer ekranına geçilir.
+c) Classify sekmesine geçmek gerekir. Ancak bu sekme herhangi bir veri WEKA yazılımına aktarılmamışsa pasiftir. Bu yüzden geçilmez. Bu engeli aşmak için herhangi bir veri hiç kullanılmayacak olsa da preprocess sekmesinden açılır. (generate seçeneğiyle WEKA'nın sentetik veri üretmesi sağlanarak bu yapılabilir.)
+d) Classify sekmesine geçilir result list bölümündeki boşluğa sağ tıklatılır Load model seçilerek daha önce kaydedilmiş olan model gösterilir.
+e) Test options bölümündeki supplied test set → set .arff formatındaki test videosu gösterilir.
+
+### 5) Test options → More options → açılan pencerede output predictions → plain text vb. 
+istenilen türe ayarlanır. Output predictions modelin tahminlerinin ve göstergelerinin nereye hangi formatta çıkacağını belirler. plain text seçilirse WEKA'nın kendi çıktı ekranında görülecektir. Bu seçildikten sonra result list sağ tıklatılır. Re-evaluate model on current test set seçilir. Bu aşamadan sonra WEKA kendi tahminlerini ve raporlarını ekrana basacaktır.
+
+---
+
+## El Yazısı Notlar (Sayfa 3-4)
+
+### WEKA'DA MODEL ÜZERİNDE TEST YAPMAK
+
+Model oluşturma yöntem ve kurallarına göre bir model elde edildikten sonra sınıfının model tarafından tahmin edilmesini istediğimiz verilerin aşağıdaki adımları izleyerek test edilebiliriz:
+
+1. **Öncelikle test verilerinin eğitim verisi formatında hazırlanması gerekir.**
+
+2. **Kolaylık olarak eğitim verisinin tanımla-gerçek başlık kısımları alduray gibi kopyalanabilir.** Daha sonra @data başlığındaki verilerde model sarulacak denitelik bilgilerini içeren satırlar yazılır. Satır sonuna class isimlerini silinerek soru işareti konulabilir veya olduğu gibi bırakılabilir. ? konursa model gerçek değeri bilmediği için performans değerlendirmesi yapamaz.
+
+3. **Test edilecek veriler zaten eğitim verileri içerisinde varsa, model %100 başarı gösterir** ancak bu doğru sarıçlar vermez.
+
+4. **Test verileri içeren arff dosya hazırlandıktan sonra weka explorer ekranına gelinir** ancak weka herhangi bir veri seti açılmadan classify sekmesine aktif etmez. Bu yüzden öncci eğitim olmasada classify sekmesine geçmek için generate butonuna basılır ve Classify sekmesine geçilir.
+
+5. **Supplied Test Set işaretlenir, set butonuna basılır Test verisi gösterilir.**
+
+### Son Hafta Notları (21.12.17)
+
+6. **Result List sağa tıklayıp "Load model" komutu verilir ve model dosyası gösterilir.**
+
+7. **More options butonuna tıklayıp Output predictions choose butonuna basılarak PlainText seçilir.**
+
+8. **Result Liste çıkan model verisine sağa tıklayıp "Re-evaluate model on current test set" seçilir (tıklanır).**
+
+**Yukarıdaki işlemler yapıldıktan sonra model tahminlerini Classifier Output ekranına döker.**
+
+
 
 ### 4. Ensemble Learning
 
