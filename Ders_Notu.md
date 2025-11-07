@@ -694,7 +694,7 @@ Bu yöntemin getirdiği en önemli avantajlardan biri, elimizdeki verinin tamam�
 Büyük bir `K` değeri seçmek, kalabalık bir uzmanlar komitesi kurmaya benzer. Örneğin, 1000 verimiz varsa ve K=10 seçersek, model her seferinde 900 veriyle eğitilir.
 
 *   **Avantajı: Düşük Yanlılık (Low Bias)**
-    *   Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmindir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
+    *   Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmini verir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
 
 *   **Dezavantajı: Yüksek Varyans (High Variance)**
     *   Her döngüde kullanılan eğitim setleri birbirine çok benzerdir (sadece %10'luk bir kısmı farklıdır). Bu yüzden eğitilen modeller de birbirinin neredeyse aynısı olur. Eğer veri setimizde tesadüfen yanıltıcı bir desen varsa, tüm modeller bu deseni öğrenir ve aynı hataya düşer. Bu durum, elde ettiğimiz ortalama performans skorunun **hassas ve değişken** olmasına neden olur. Yani, veri setimiz birazcık farklı olsaydı, elde edeceğimiz sonuç bambaşka olabilirdi. Değerlendirmemiz, elimizdeki o spesifik veri setine aşırı bağımlı hale gelir. Ayrıca, çok sayıda döngü gerektiği için hesaplama maliyeti de artar.
@@ -1163,11 +1163,11 @@ $$ R_{\text{adj}}^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1} $$
 
 Tıpkı sınıflandırma metriklerinde olduğu gibi, regresyon metriklerini de Weka gibi görsel araçlarla kolayca hesaplayabiliriz. Az önce öğrendiğimiz MAE, RMSE ve R-Kare gibi değerlerin Weka arayüzünde nasıl karşımıza çıktığını görelim.
 
-**Not:** Weka'nın `data` klasöründe `auto-price.arff` dosyasını bulamayabilirsiniz. Bu veri setini aşağıdaki bağlantıdan indirebilirsiniz: [auto-price.arff](https://www.cs.waikato.ac.nz/ml/weka/datasets/auto-price.arff)
+Weka'nın `data` klasöründe `cpu.arff` dosyasını bulabilirsiniz.
 
-Bu veri seti, arabaların beygir gücü, motor hacmi gibi özelliklerini kullanarak fiyatlarını (`price` niteliği) tahmin etmeyi amaçlar.
+Bu veri seti, bilgisayar CPU'larının çeşitli özelliklerini (saat döngüsü, önbellek boyutu vb.) kullanarak tahmini göreceli performansını (`ERP` niteliği) tahmin etmeyi amaçlar.
 
-1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile indirdiğiniz `auto-price.arff` dosyasını açın.
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile Weka'nın kurulu olduğu dizindeki `data` klasöründen `cpu.arff` dosyasını açın.
 2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonu ile `functions` altından `LinearRegression` algoritmasını seçin. Hedef değişkenimiz sayısal olduğu için Weka, otomatik olarak bir regresyon analizi yapacaktır.
 3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) seçiliyken "Start" butonuna basın.
 4.  **Sonuçları Yorumlama:** "Classifier output" panelinde, regresyon modelimizin performansını özetleyen bir bölüm göreceksiniz:
@@ -1192,8 +1192,8 @@ Root relative squared error          39.8851 %
 Total Number of Instances            159
 ```
 
-*   **`Mean absolute error` (MAE):** Modelimizin araba fiyatı tahminleri, gerçek fiyattan ortalama olarak yaklaşık **2093 birim** sapmaktadır.
-*   **`Correlation coefficient`:** Bu, R değeridir ve 0.908 olarak bulunmuştur. Modelimizin tahminleri ile gerçek değerler arasında çok güçlü pozitif bir ilişki olduğunu gösterir. **R-Kare (R-Squared)** değerini bulmak için bu katsayının karesini almamız yeterlidir: `(0.908)² ≈ 0.824`. Bu sonuca göre, araba fiyatlarındaki değişkenliğin yaklaşık **%82.4'ü** modelimizdeki özellikler tarafından açıklanabilmektedir.
+*   **`Mean absolute error` (MAE):** Modelimizin CPU performans tahminleri, gerçek performanstan ortalama olarak yaklaşık **2093 birim** sapmaktadır.
+*   **`Correlation coefficient`:** Bu, R değeridir ve 0.908 olarak bulunmuştur. Modelimizin tahminleri ile gerçek değerler arasında çok güçlü pozitif bir ilişki olduğunu gösterir. **R-Kare (R-Squared)** değerini bulmak için bu katsayının karesini almamız yeterlidir: `(0.908)² ≈ 0.824`. Bu sonuca göre, CPU performansındaki değişkenliğin yaklaşık **%82.4'ü** modelimizdeki özellikler tarafından açıklanabilmektedir.
 
 Gördüğünüz gibi, Weka bu temel regresyon metriklerini bizim için otomatik olarak hesaplayarak modelimizin performansı hakkında hızlı ve anlaşılır bir özet sunar.
 *   **`Root mean squared error` (RMSE):** Büyük hataları daha fazla dikkate alan bu metrik ise yaklaşık **2935 birimdir**. RMSE'nin MAE'den daha yüksek olması, modelin bazı örneklerde daha büyük hatalar yaptığının bir göstergesidir.
@@ -1313,7 +1313,7 @@ Gençler, bu kod parçasının ne yaptığını daha iyi anlayalım:
 3.  **Model Eğitimi:** Basit ama güçlü bir sınıflandırma algoritması olan `LogisticRegression` modelini eğitim verileriyle (`X_train`, `y_train`) eğittik.
 4.  **Tahmin Yapma:** Eğitilen modelimizi daha önce hiç görmediği test verileri (`X_test`) üzerinde çalıştırdık. Burada iki tür tahmin yaptık: `predict()` ile modelin kesin kararını (0 veya 1) ve `predict_proba()` ile modelin bir örneğin pozitif sınıfa ait olma olasılığını aldık. Bu olasılık değeri, ROC eğrisini çizmek için kritik öneme sahiptir.
 5.  **Sınıflandırma Raporu:** `classification_report` fonksiyonu, her sınıf için Kesinlik (Precision), Duyarlılık (Recall) ve F1-Skoru değerlerini tek bir tabloda özetleyerek bize hızlı bir genel bakış sunar.
-6.  **Karışıklık Matrisi:** Teoride gördüğümüz karışıklık matrisini `seaborn` kütüphanesiyle görselleştirdik. Bu ısı haritası, modelin ne tür hatalar yaptığını (FP veya FN) bir bakışta anlamamızı sağlar.
+6.  **Karışıklık Matrisi:** Daha önce gördüğümüz karışıklık matrisini `seaborn` kütüphanesiyle görselleştirdik. Bu ısı haritası, modelin ne tür hatalar yaptığını (FP veya FN) bir bakışta anlamamızı sağlar.
 7.  **ROC Eğrisi ve AUC:** Modelin pozitif sınıf için ürettiği olasılıkları (`y_pred_proba`) kullanarak, farklı karar eşikleri için Sahte Pozitif Oranı (FPR) ve Gerçek Pozitif Oranı (TPR) değerlerini hesapladık. Bu noktaları birleştirerek ROC eğrisini çizdik. Eğrinin altında kalan alan (AUC), modelin genel ayırt etme gücünün sayısal bir ölçüsüdür. AUC değeri 1'e ne kadar yakınsa, model o kadar iyidir.
 
 
@@ -1802,13 +1802,13 @@ Regresyon Uygulaması için benzer adımları izleyebilir ve `RandomForestRegres
 
 #### WEKA ile Regresyon Topluluk Öğrenmesi Uygulaması
 
-Weka'nın `auto-price.arff` veri seti, arabaların çeşitli özelliklerine göre fiyatlarını tahmin etmeye yönelik bir regresyon problemidir. Bu veri setini kullanarak topluluk öğrenmesi yöntemlerini uygulayalım.
+Weka'nın `cpu.arff` veri seti, bilgisayar CPU'larının çeşitli özelliklerine göre tahmini göreceli performansını (`ERP` niteliği) tahmin etmeye yönelik bir regresyon problemidir. Bu veri setini kullanarak topluluk öğrenmesi yöntemlerini uygulayalım.
 
 **Adım 1: Veri Setini Yükleme**
 
 1.  **WEKA'yı Başlatın:** WEKA GUI Chooser ekranından "Explorer" seçeneğine tıklayın.
-2.  **Veri Setini Yükleyin:** "Preprocess" sekmesindeyken, "Open file..." butonuna tıklayın. WEKA'nın kurulu olduğu dizindeki `data` klasörüne gidin ve `auto-price.arff` dosyasını seçerek yükleyin.
-3.  **Hedef Değişkeni Belirleyin:** Sağ taraftaki "Attributes" panelinde `price` özniteliğini seçin. Bu, tahmin etmeye çalışacağımız hedef değişkendir.
+2.  **Veri Setini Yükleyin:** "Preprocess" sekmesindeyken "Open file..." butonuna tıklayın ve Weka'nın kurulu olduğu dizindeki `data` klasöründen `cpu.arff` dosyasını seçerek yükleyin.
+3.  **Hedef Değişkeni Belirleyin:** Sağ taraftaki "Attributes" panelinde `ERP` özniteliğini seçin. Bu, tahmin etmeye çalışacağımız hedef değişkendir.
 
 **Adım 2: Referans Model (Tek bir Regresyon Ağacı - M5P)**
 
@@ -1816,7 +1816,7 @@ Topluluk modellerinin performansını karşılaştırmak için önce tek bir reg
 
 1.  **"Classify" Sekmesine Geçin:** "Classify" sekmesine tıklayın.
 2.  **Algoritma Seçimi:** "Choose" butonuna tıklayın. Açılan menüden `trees` altındaki `M5P` algoritmasını seçin.
-3.  **Test Seçenekleri:** "Test options" bölümünde "Cross-validation" seçeneğinin işaretli olduğundan ve "Folds" değerinin 10 olduğundan emin olun. "Class" açılır menüsünde `price` özniteliğinin seçili olduğundan emin olun.
+3.  **Test Seçenekleri:** "Test options" bölümünde "Cross-validation" seçeneğinin işaretli olduğundan ve "Folds" değerinin 10 olduğundan emin olun. "Class" açılır menüsünde `ERP` özniteliğinin seçili olduğundan emin olun.
 4.  **Modeli Eğitin ve Değerlendirin:** "Start" butonuna basın.
 5.  **Sonuçları Not Alın:** "Classifier output" panelinde `Mean absolute error` (MAE), `Root mean squared error` (RMSE) ve `Correlation coefficient` (R-Kare için karesini alacağız) değerlerini not alın. Bu değerler, tek bir M5P modelinin referans performansını oluşturacaktır.
 
