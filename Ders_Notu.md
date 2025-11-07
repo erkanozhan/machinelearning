@@ -1,6 +1,6 @@
 # Makine Öğrenmesi (Machine Learning) ve Yapay Zeka (AI)
 
----
+# Makine Öğrenmesi (Machine Learning) ve Yapay Zeka (AI)
 
 ### 1. Temel Kavramlar ve Avantaj
 
@@ -17,14 +17,14 @@ Veri, bilgiye dönüşürken bir hiyerarşiden geçer:
 
 $$\text{Raw Data (İşlenmemiş Veri)} \rightarrow \text{Data (Veri)} \rightarrow \text{Knowledge (Bilgi)}$$
 
-* **İşlenmemiş Veri Örn.:** Yeni doğan bir bebeğin ağırlığı (Henüz bilinmiyor ancak bir ağırlığı var).
+*   **İşlenmemiş Veri Örn.:** Yeni doğan bir bebeğin ağırlığı (Henüz bilinmiyor ancak bir ağırlığı var).
 
-* **Veri Örn.:** Bir metriğe (örn. m, kg, inç, galon vb.) göre bu bebeğin ağırlığının ölçülüp bir yere kayıt edilmesi.
+*   **Veri Örn.:** Bir metriğe (örn. m, kg, inç, galon vb.) göre bu bebeğin ağırlığının ölçülüp bir yere kayıt edilmesi.
 
-* **Bilgi (information) Örn.:** Bebeğin kilosu vb. özelliklerini kullanarak elde edilen gerçeklerdir. Örn: Çorlu'da Mart ayında doğan bebeklerin kilo ortalaması 2.8 kg'dır.
+*   **Bilgi (information) Örn.:** Bebeğin kilosu vb. özelliklerini kullanarak elde edilen gerçeklerdir. Örn: Çorlu'da Mart ayında doğan bebeklerin kilo ortalaması 2.8 kg'dır.
 
-* **Knowledge (Anlamlı-İşe yarar bilgi):** Büyük ve karmaşık verilerden, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, işe yarar ve anlamlı gerçeklerdir.
-    * **Yapay Zeka (AI) ile Elde Edilen Bilgi Örn.:** Bir yapay zeka sistemi, yeni doğan bebeklerin ağlama seslerini analiz ederek, ağlamanın açlık, uykusuzluk veya rahatsızlık gibi farklı nedenlerini ayırt edebilir. Bu sayede ebeveynlere, bebeğin neden ağladığına dair daha hızlı ve doğru bir tahmin sunarak, bebeğin ihtiyaçlarına daha etkili yanıt vermelerine yardımcı olabilir.
+*   **Knowledge (Anlamlı-İşe yarar bilgi):** Büyük ve karmaşık verilerden, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, işe yarar ve anlamlı gerçeklerdir.
+    *   **Yapay Zeka (AI) ile Elde Edilen Bilgi Örn.:** Bir yapay zeka sistemi, yeni doğan bebeklerin ağlama seslerini analiz ederek, ağlamanın açlık, uykusuzluk veya rahatsızlık gibi farklı nedenlerini ayırt edebilir. Bu sayede ebeveynlere, bebeğin neden ağladığına dair daha hızlı ve doğru bir tahmin sunarak, bebeğin ihtiyaçlarına daha etkili yanıt vermelerine yardımcı olabilir.
 
 ### 3. Süreç ve İlişkili Disiplinler
 
@@ -39,9 +39,9 @@ graph LR
 
 #### İlişkili Alanların Bazıları
 
-* **Veri Madenciliği (Mining)**
-* **Temel Bilimler:** İstatistik, Matematik
-* **Mühendislik Dalları:** Bilg. Müh., Elek. Müh.
+*   **Veri Madenciliği (Mining)**
+*   **Temel Bilimler:** İstatistik, Matematik
+*   **Mühendislik Dalları:** Bilg. Müh., Elek. Müh.
 ```mermaid
 flowchart LR
     Girdi["Girdi"] --> MakineÖğrenimi
@@ -71,32 +71,32 @@ Makine öğrenmesi teknolojilerinin günlük hayatımıza getirdiği kolaylıkla
 
 #### Avantajları:
 
-1. **Uzman Desteği**
-    - Uzman sayısının yetersiz olduğu alanlarda karar desteği sağlar
-    - Yeni verilerle sürekli kendini güncelleyerek uzman görüşlerini öğrenir
+1.  **Uzman Desteği**
+    -   Uzman sayısının yetersiz olduğu alanlarda karar desteği sağlar
+    -   Yeni verilerle sürekli kendini güncelleyerek uzman görüşlerini öğrenir
 
-2. **Uyum ve Yenilik**
-    - Daha önce karşılaşılmamış durumlar için yeni kurallar geliştirebilir
-    - Veri setindeki gizli örüntüleri ve ilişkileri keşfedebilir
+2.  **Uyum ve Yenilik**
+    -   Daha önce karşılaşılmamış durumlar için yeni kurallar geliştirebilir
+    -   Veri setindeki gizli örüntüleri ve ilişkileri keşfedebilir
 
-3. **Verimlilik**
-    - 7/24 kesintisiz çalışabilir
-    - Klasik programlama ile çözülemeyen problemlere veri-odaklı çözümler üretebilir
+3.  **Verimlilik**
+    -   7/24 kesintisiz çalışabilir
+    -   Klasik programlama ile çözülemeyen problemlere veri-odaklı çözümler üretebilir
 
 #### Dezavantajları:
 
-1. **Veri Gereksinimleri**
-    - Modelin doğru çalışması için sürekli güncel veri gerekir
-    - Büyük veri setleri bile bazen doğru öğrenme için yeterli olmayabilir
+1.  **Veri Gereksinimleri**
+    -   Modelin doğru çalışması için sürekli güncel veri gerekir
+    -   Büyük veri setleri bile bazen doğru öğrenme için yeterli olmayabilir
 
-2. **Tahmin Doğruluğu**
-    - Sonuçlar kesin değil, olasılıksal tahminlerdir
-    - Problem yapısı değiştiğinde modelin yeniden eğitilmesi gerekir
+2.  **Tahmin Doğruluğu**
+    -   Sonuçlar kesin değil, olasılıksal tahminlerdir
+    -   Problem yapısı değiştiğinde modelin yeniden eğitilmesi gerekir
 
-3. **Teknik Sınırlamalar**
-    - Karmaşık algoritmalar yüksek işlemci gücü ve bellek gerektirir
-    - Gerçek zamanlı veri akışlarında performans sorunları yaşanabilir
-    - Yüksek başarımlı hesaplama sistemlerine ihtiyaç duyulabilir
+3.  **Teknik Sınırlamalar**
+    -   Karmaşık algoritmalar yüksek işlemci gücü ve bellek gerektirir
+    -   Gerçek zamanlı veri akışlarında performans sorunları yaşanabilir
+    -   Yüksek başarımlı hesaplama sistemlerine ihtiyaç duyulabilir
 
 ```mermaid
 graph TD
@@ -181,7 +181,7 @@ Makine öğrenmesinin temel taşlarından biri, bilgisayarların veriden nasıl 
 
 Şöyle düşünün gençler, küçük bir çocuğa hayvanları öğretirken, ona bir kedi resmi gösterip "bu bir kedi" deriz, bir köpek resmi gösterip "bu bir köpek" deriz. Yani, her resim için doğru cevabı, yani "etiketi" ona veririz. Çocuk yeterince örnek gördüğünde, daha önce hiç görmediği bir hayvan resmini bile doğru tahmin etmeye başlar.
 
-İşte denetimli öğrenme de tam olarak bu prensiple çalışır. Elimizde, girdilerin (örneğin bir hayvanın özellikleri) ve bunlara karşılık gelen doğru çıktıların (örneğin "kedi" veya "köpek" etiketi) bulunduğu bir veri seti vardır. Bu verilere **etiketlenmiş veri** adını veririz. Amacımız, bu etiketlenmiş veriyi kullanarak, bilgisayarın yeni, daha önce görmediği girdiler için doğru çıktıyı tahmin edebilecek bir **model** oluşturmasını sağlamaktır. Bu model, geçmişteki deneyimlerden (veri) öğrenerek gelecekteki durumlar hakkında tahminler yapar.
+İşte denetimli öğrenme de tam olarak bu prensiple çalışır. Elimizde, girdilerin (örneğin bir hayvanın özellikleri) ve bunlara karşılık gelen doğru çıktıların (örneğin "kedi" veya "köpek" etiketi) bulunduğu bir veri seti vardır. Bu verilere **etiklenmiş veri** adını veririz. Amacımız, bu etiketlenmiş veriyi kullanarak, bilgisayarın yeni, daha önce görmediği girdiler için doğru çıktıyı tahmin edebilecek bir **model** oluşturmasını sağlamaktır. Bu model, geçmişteki deneyimlerden (veri) öğrenerek gelecekteki durumlar hakkında tahminler yapar.
 
 Bu öğrenme türü, makine öğrenmesinde en sık karşılaştığımız yaklaşımdır. Temelinde, belirli bir hedef değişkeni (çıktı) tahmin etme veya sınıflandırma amacı yatar. Model, girdiler ile çıktılar arasındaki karmaşık ilişkileri öğrenir ve bu ilişkileri yeni verilere genellemeye çalışır.
 
@@ -199,7 +199,7 @@ Denetimli öğrenme, özellikle şu tür problemlerin çözümünde kullanılır
 
 Şimdi de şöyle bir senaryo düşünelim: Size bir kutu dolusu farklı renkte ve şekilde oyuncak veriliyor ve "Bunları benzerliklerine göre gruplandır" deniyor. Ama size hangi oyuncağın ne olduğunu veya kaç grup olması gerektiğini söyleyen kimse yok. Siz de oyuncakların renklerine, boyutlarına, şekillerine bakarak kendinizce gruplar oluşturuyorsunuz.
 
-Denetimsiz öğrenme de bu mantıkla çalışır. Elimizde **etiketlenmemiş veriler** bulunur; yani, girdilere karşılık gelen doğru çıktıları önceden bilmeyiz ve sınıflar önceden belirli değildir. Buradaki temel amaç, verinin kendi içindeki gizli yapıları, örüntüleri veya ilişkileri keşfetmektir. Denetimsiz öğrenme algoritmaları (örneğin kümeleme ve birliktelik kuralları gibi yöntemler) bu etiketlenmemiş verilerde var olan örüntüyü ortaya çıkarır. Bu süreçte veri analisti, algoritmalar üzerinde beklentileri doğrultusunda ayarlamalar yaparak en anlamlı sonuçları elde etmeye çalışır. Özellikle kümeleme analizi, verinin anlaşılırlığını artırır ve kümeler arası uzaklıklar, farklılıklar veya benzerlikler gibi önemli bilgilerin tespit edilmesini sağlar. Model, herhangi bir dış rehberlik olmaksızın, verinin doğal düzenini anlamaya çalışır.
+Denetimsiz öğrenme de bu mantıkla çalışır. Elimizde **etiklenmemiş veriler** bulunur; yani, girdilere karşılık gelen doğru çıktıları önceden bilmeyiz ve sınıflar önceden belirli değildir. Buradaki temel amaç, verinin kendi içindeki gizli yapıları, örüntüleri veya ilişkileri keşfetmektir. Denetimsiz öğrenme algoritmaları (örneğin kümeleme ve birliktelik kuralları gibi yöntemler) bu etiketlenmemiş verilerde var olan örüntüyü ortaya çıkarır. Bu süreçte veri analisti, algoritmalar üzerinde beklentileri doğrultusunda ayarlamalar yaparak en anlamlı sonuçları elde etmeye çalışır. Özellikle kümeleme analizi, verinin anlaşılırlığını artırır ve kümeler arası uzaklıklar, farklılıklar veya benzerlikler gibi önemli bilgilerin tespit edilmesini sağlar. Model, herhangi bir dış rehberlik olmaksızın, verinin doğal düzenini anlamaya çalışır.
 
 **Yöntemler ve Uygulamalar:**
 *   **Kümeleme (Clustering):** Bu alandaki en yaygın yöntemlerden biri kümelemedir. Kümeleme, veri noktalarını birbirine benzer özelliklere sahip gruplara ayırır. Örneğin, bir e-ticaret sitesi, müşterilerinin satın alma alışkanlıklarına bakarak onları farklı segmentlere ayırabilir. Böylece her segmente özel pazarlama stratejileri geliştirebilir. Burada kaç müşteri grubu olduğunu veya hangi müşterinin hangi gruba ait olduğunu önceden bilmeyiz, model bunu veriden öğrenir.
@@ -534,7 +534,7 @@ Bu kod bloğunda, aynı veri setine iki farklı ölçeklendirme tekniğini uygul
 
 Her şeyden önce, doğru soruları sormamız gerekir: Bir kişinin kredisini geri ödeme olasılığını ne gibi faktörler etkiler? Bu noktada tek başımıza hareket etmeyiz, alanında uzman kişilerden, yani bankacılardan ve kredi analistlerinden destek alırız. Onların tecrübeleri bize hangi bilgilerin değerli olduğunu söyler.
 
-Kredi analistlerinden, geçmişte kredi kullanmış yüzlerce veya binlerce müşterinin bilgilerini alırız. Bu bilgiler, müşterinin krediyi zamanında ödeyip ödemediği bilgisiyle birlikte gelir. İşte bu 'sonucu belli olan' geçmiş veriler, bizim **etiketlenmiş eğitim verimizi** oluşturur. Modelimiz, bu verilerden öğrenerek gelecekteki müşteriler için tahmin yapmayı öğrenecektir.
+Kredi analistlerinden, geçmişte kredi kullanmış yüzlerce veya binlerce müşterinin bilgilerini alırız. Bu bilgiler, müşterinin krediyi zamanında ödeyip ödemediği bilgisiyle birlikte gelir. İşte bu 'sonucu belli olan' geçmiş veriler, bizim **etiklenmiş eğitim verimizi** oluşturur. Modelimiz, bu verilerden öğrenerek gelecekteki müşteriler için tahmin yapmayı öğrenecektir.
 
 Bu iş birliği sonucunda, modelimize girdi olarak sunacağımız bazı temel öznitelikleri belirlediğimizi varsayalım:
 *   **Müşterinin Aylık Geliri:** Kişinin borcunu ödeme kapasitesini gösteren en temel bilgilerden biri.
@@ -694,20 +694,20 @@ Bu yöntemin getirdiği en önemli avantajlardan biri, elimizdeki verinin tamam�
 Büyük bir `K` değeri seçmek, kalabalık bir uzmanlar komitesi kurmaya benzer. Örneğin, 1000 verimiz varsa ve K=10 seçersek, model her seferinde 900 veriyle eğitilir.
 
 *   **Avantajı: Düşük Yanlılık (Low Bias)**
-    *  Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmindir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
+    *   Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmindir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
 
 *   **Dezavantajı: Yüksek Varyans (High Variance)**
-    *  Her döngüde kullanılan eğitim setleri birbirine çok benzerdir (sadece %10'luk bir kısmı farklıdır). Bu yüzden eğitilen modeller de birbirinin neredeyse aynısı olur. Eğer veri setimizde tesadüfen yanıltıcı bir desen varsa, tüm modeller bu deseni öğrenir ve aynı hataya düşer. Bu durum, elde ettiğimiz ortalama performans skorunun **hassas ve değişken** olmasına neden olur. Yani, veri setimiz birazcık farklı olsaydı, elde edeceğimiz sonuç bambaşka olabilirdi. Değerlendirmemiz, elimizdeki o spesifik veri setine aşırı bağımlı hale gelir. Ayrıca, çok sayıda döngü gerektiği için hesaplama maliyeti de artar.
+    *   Her döngüde kullanılan eğitim setleri birbirine çok benzerdir (sadece %10'luk bir kısmı farklıdır). Bu yüzden eğitilen modeller de birbirinin neredeyse aynısı olur. Eğer veri setimizde tesadüfen yanıltıcı bir desen varsa, tüm modeller bu deseni öğrenir ve aynı hataya düşer. Bu durum, elde ettiğimiz ortalama performans skorunun **hassas ve değişken** olmasına neden olur. Yani, veri setimiz birazcık farklı olsaydı, elde edeceğimiz sonuç bambaşka olabilirdi. Değerlendirmemiz, elimizdeki o spesifik veri setine aşırı bağımlı hale gelir. Ayrıca, çok sayıda döngü gerektiği için hesaplama maliyeti de artar.
 
 ##### Durum 2: `K` Değerinin Küçük Olması (Örn: K=2 veya K=3)
 
 Küçük bir `K` değeri seçmek, az sayıda uzmandan oluşan küçük bir komite kurmak gibidir. Örneğin, 1000 verimiz varsa ve K=2 seçersek, model her seferinde sadece 500 veriyle eğitilir.
 
 *   **Avantajı: Düşük Varyans (Low Variance)**
-    *  Her döngüde kullanılan eğitim setleri birbirinden oldukça farklıdır (birbirleriyle hiç ortak verileri yoktur). Bu sayede eğitilen modellerin bakış açıları daha çeşitli olur. Bir modelin yaptığı hatayı diğeri yapmayabilir. Sonuç olarak, bu farklı modellerden gelen performans skorlarının ortalaması, daha **tutarlı ve güvenilir** bir sonuç verir. Veri setimiz biraz farklı olsaydı bile, ortalama sonuç muhtemelen çok fazla değişmezdi.
+    *   Her döngüde kullanılan eğitim setleri birbirinden oldukça farklıdır (birbirleriyle hiç ortak verileri yoktur). Bu sayede eğitilen modellerin bakış açıları daha çeşitli olur. Bir modelin yaptığı hatayı diğeri yapmayabilir. Sonuç olarak, bu farklı modellerden gelen performans skorlarının ortalaması, daha **tutarlı ve güvenilir** bir sonuç verir. Veri setimiz biraz farklı olsaydı bile, ortalama sonuç muhtemelen çok fazla değişmezdi.
 
 *   **Dezavantajı: Yüksek Yanlılık (High Bias)**
-    *  Anlamı:** Model, her seferinde eldeki verinin sadece küçük bir kısmıyla (örneğimizde %50'siyle) eğitilir. Daha az veriyle eğitilen bir model, genellikle daha fazla veriyle eğitilen bir modelden daha kötü performans gösterir. Bu nedenle, elde ettiğimiz performans skoru, modelin gerçek potansiyelini yansıtmayan, **kötümser ve yanlılığı yüksek** bir tahmin olur. Komitedeki uzmanlar projenin sadece yarısını gördükleri için, projenin gerçek kalitesini tam olarak anlayamaz ve genellikle olduğundan daha düşük bir puan verirler.
+    *   Anlamı:** Model, her seferinde eldeki verinin sadece küçük bir kısmıyla (örneğimizde %50'siyle) eğitilir. Daha az veriyle eğitilen bir model, genellikle daha fazla veriyle eğitilen bir modelden daha kötü performans gösterir. Bu nedenle, elde ettiğimiz performans skoru, modelin gerçek potansiyelini yansıtmayan, **kötümser ve yanlılığı yüksek** bir tahmin olur. Komitedeki uzmanlar projenin sadece yarısını gördükleri için, projenin gerçek kalitesini tam olarak anlayamaz ve genellikle olduğundan daha düşük bir puan verirler.
 
 **Sonuç: Tatlı Noktayı Bulmak**
 
@@ -1136,7 +1136,7 @@ Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneğ
 
 **R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
 
-#### Örnek  Hesaplama
+#### Örnek Hesaplama
 
 Yukarıdaki ev fiyatı örneğimizde, modelimizin tahminleri ile gerçek fiyatlar arasındaki korelasyon katsayısını hesaplayabiliriz.
 
@@ -1163,9 +1163,11 @@ $$ R_{\text{adj}}^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1} $$
 
 Tıpkı sınıflandırma metriklerinde olduğu gibi, regresyon metriklerini de Weka gibi görsel araçlarla kolayca hesaplayabiliriz. Az önce öğrendiğimiz MAE, RMSE ve R-Kare gibi değerlerin Weka arayüzünde nasıl karşımıza çıktığını görelim.
 
-Bunun için Weka ile birlikte gelen `auto-price.arff` veri setini kullanacağız. Bu veri seti, arabaların beygir gücü, motor hacmi gibi özelliklerini kullanarak fiyatlarını (`price` niteliği) tahmin etmeyi amaçlar.
+**Not:** Weka'nın `data` klasöründe `auto-price.arff` dosyasını bulamayabilirsiniz. Bu veri setini aşağıdaki bağlantıdan indirebilirsiniz: [auto-price.arff](https://www.cs.waikato.ac.nz/ml/weka/datasets/auto-price.arff)
 
-1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile Weka'nın kurulu olduğu dizindeki `data` klasöründen `auto-price.arff` dosyasını açın.
+Bu veri seti, arabaların beygir gücü, motor hacmi gibi özelliklerini kullanarak fiyatlarını (`price` niteliği) tahmin etmeyi amaçlar.
+
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile indirdiğiniz `auto-price.arff` dosyasını açın.
 2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonu ile `functions` altından `LinearRegression` algoritmasını seçin. Hedef değişkenimiz sayısal olduğu için Weka, otomatik olarak bir regresyon analizi yapacaktır.
 3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) seçiliyken "Start" butonuna basın.
 4.  **Sonuçları Yorumlama:** "Classifier output" panelinde, regresyon modelimizin performansını özetleyen bir bölüm göreceksiniz:
@@ -1608,7 +1610,7 @@ graph TD
 
     YeniVeri["Yeni Özellik Seti<br/>[Tahmin A, Tahmin B, Tahmin C]"]
 
-    P1 & P2 & P3 --> YeniVeri
+    P1 & P2 & P3 --> YeniVer
 
     subgraph "Seviye 1: Meta Model"
         Meta["Meta-Model<br/>(Örn: XGBoost)"]
@@ -1792,3 +1794,140 @@ Gençler, bu kodda öncelikle tek bir karar ağacını eğitip yaklaşık %95.5 
 
 Bu uygulama, topluluk öğrenmesi yöntemlerinin tek bir modelin sınırlarını nasıl aşabileceğini ve daha sağlam, güvenilir ve genellikle daha doğru tahminler üretebileceğini somut bir şekilde göstermektedir. Unutmayın, en iyi yöntemi seçmek, elinizdeki problemin doğasına ve verinin yapısına bağlıdır; bu yüzden farklı yaklaşımları denemek, makine öğrenmesi sürecinin önemli bir parçasıdır.
 
+Regresyon Uygulaması için benzer adımları izleyebilir ve `RandomForestRegressor`, `GradientBoostingRegressor` ve `StackingRegressor` sınıflarını kullanabilirsiniz.
+
+### Uygulama: Regresyon Problemlerinde Topluluk Öğrenmesi (WEKA ve Python ile)
+
+Şimdi de topluluk öğrenmesi yöntemlerini, sayısal bir değeri tahmin etmeye çalıştığımız regresyon problemlerinde nasıl uygulayacağımızı görelim. Amacımız, tek bir regresyon modelinin performansını, birden fazla modelin bir araya gelerek nasıl iyileştirebileceğini gözlemlemektir.
+
+#### WEKA ile Regresyon Topluluk Öğrenmesi Uygulaması
+
+Weka'nın `auto-price.arff` veri seti, arabaların çeşitli özelliklerine göre fiyatlarını tahmin etmeye yönelik bir regresyon problemidir. Bu veri setini kullanarak topluluk öğrenmesi yöntemlerini uygulayalım.
+
+**Adım 1: Veri Setini Yükleme**
+
+1.  **WEKA'yı Başlatın:** WEKA GUI Chooser ekranından "Explorer" seçeneğine tıklayın.
+2.  **Veri Setini Yükleyin:** "Preprocess" sekmesindeyken, "Open file..." butonuna tıklayın. WEKA'nın kurulu olduğu dizindeki `data` klasörüne gidin ve `auto-price.arff` dosyasını seçerek yükleyin.
+3.  **Hedef Değişkeni Belirleyin:** Sağ taraftaki "Attributes" panelinde `price` özniteliğini seçin. Bu, tahmin etmeye çalışacağımız hedef değişkendir.
+
+**Adım 2: Referans Model (Tek bir Regresyon Ağacı - M5P)**
+
+Topluluk modellerinin performansını karşılaştırmak için önce tek bir regresyon ağacının performansını ölçelim. Weka'da regresyon ağaçları için `M5P` algoritması kullanılır.
+
+1.  **"Classify" Sekmesine Geçin:** "Classify" sekmesine tıklayın.
+2.  **Algoritma Seçimi:** "Choose" butonuna tıklayın. Açılan menüden `trees` altındaki `M5P` algoritmasını seçin.
+3.  **Test Seçenekleri:** "Test options" bölümünde "Cross-validation" seçeneğinin işaretli olduğundan ve "Folds" değerinin 10 olduğundan emin olun. "Class" açılır menüsünde `price` özniteliğinin seçili olduğundan emin olun.
+4.  **Modeli Eğitin ve Değerlendirin:** "Start" butonuna basın.
+5.  **Sonuçları Not Alın:** "Classifier output" panelinde `Mean absolute error` (MAE), `Root mean squared error` (RMSE) ve `Correlation coefficient` (R-Kare için karesini alacağız) değerlerini not alın. Bu değerler, tek bir M5P modelinin referans performansını oluşturacaktır.
+
+**Adım 3: Bagging Uygulaması (M5P ile)**
+
+Şimdi, birçok M5P ağacını bir araya getirerek Bagging yöntemini uygulayalım.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Bagging` seçeneğini seçin.
+2.  **Yapılandırma:** `Bagging` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresini `trees.M5P` olarak değiştirin.
+    *   `numIterations` (oluşturulacak model sayısı) varsayılan 10 olarak kalabilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Sonuçları (MAE, RMSE, R-Kare) referans M5P modeliyle karşılaştırın. Bagging'in genellikle varyansı azaltarak daha kararlı ve potansiyel olarak daha iyi sonuçlar verdiğini gözlemleyebilirsiniz.
+
+**Adım 4: Boosting Uygulaması (AdditiveRegression ile M5P)**
+
+Weka'da regresyon için Boosting yöntemlerinden biri `AdditiveRegression`'dır. Bu, zayıf öğrenicileri ardışık olarak eğiterek hataları düzeltmeye odaklanır.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `AdditiveRegression` seçeneğini seçin.
+2.  **Yapılandırma:** `AdditiveRegression` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresini `trees.M5P` olarak değiştirin. (Daha zayıf bir öğrenici olan `DecisionStump` da denenebilir, ancak M5P ile de iyi sonuçlar alınabilir.)
+    *   `numIterations` (oluşturulacak model sayısı) varsayılan 10 olarak kalabilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Boosting'in, özellikle modelin sistematik hatalarını (yanlılığını) azaltarak performansı nasıl artırdığını gözlemleyin.
+
+**Adım 5: Stacking Uygulaması (LinearRegression ve M5P ile)**
+
+Stacking, farklı regresyon modellerinin tahminlerini birleştirerek daha güçlü bir meta-model oluşturur.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Stacking` seçeneğini seçin.
+2.  **Yapılandırma:** `Stacking` ayarlarına girdiğinizde:
+    *   `baseLearners` (Temel Öğreniciler): Listeye iki farklı regresyon modeli ekleyelim. Örneğin, `functions.LinearRegression` ve `trees.M5P`.
+    *   `metaClassifier` (Meta Sınıflandırıcı): Temel modellerin tahminlerini birleştirecek olan modeldir. Genellikle basit bir regresyon modeli (örneğin `functions.LinearRegression`) tercih edilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Stacking'in, farklı modellerin güçlü yönlerini birleştirerek nasıl daha iyi bir tahmin performansı sunduğunu gözlemleyin.
+
+#### Python (Scikit-learn) ile Regresyon Topluluk Öğrenmesi Uygulaması
+
+Python'da `scikit-learn` kütüphanesi, regresyon için topluluk öğrenmesi algoritmalarını uygulamak için güçlü ve esnek araçlar sunar. Bu örnekte, `load_diabetes` veri setini kullanarak Bagging (Random Forest), Boosting (Gradient Boosting) ve Stacking yöntemlerini uygulayacağız.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+# Temel ve Topluluk Regresyon Modelleri
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, StackingRegressor
+from sklearn.linear_model import LinearRegression, Ridge
+
+# 1. Veri Setini Yükleme ve Hazırlama
+diabetes = load_diabetes()
+X, y = diabetes.data, diabetes.target
+
+# Veriyi %70 eğitim, %30 test olarak ayıralım
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+print("--- Diyabet Veri Seti ile Regresyon Topluluk Öğrenmesi Karşılaştırması ---")
+
+# Yardımcı fonksiyon: Model performansını raporlamak için
+def evaluate_regression_model(model, X_test, y_test, model_name):
+    y_pred = model.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = mean_squared_error(y_test, y_pred, squared=False) # squared=False for RMSE
+    r2 = r2_score(y_test, y_pred)
+    print(f"{model_name} Performansı:")
+    print(f"  MAE: {mae:.2f}")
+    print(f"  RMSE: {rmse:.2f}")
+    print(f"  R-kare: {r2:.2f}")
+    print("-" * 30)
+
+# 2. Referans Model: Tek bir Karar Ağacı Regresyonu
+tree_model = DecisionTreeRegressor(max_depth=5, random_state=42)
+tree_model.fit(X_train, y_train)
+evaluate_regression_model(tree_model, X_test, y_test, "Tek Karar Ağacı")
+
+# 3. Bagging Yöntemi: Random Forest Regresyonu
+rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
+evaluate_regression_model(rf_model, X_test, y_test, "Random Forest (Bagging)")
+
+# 4. Boosting Yöntemi: Gradient Boosting Regresyonu
+gb_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
+gb_model.fit(X_train, y_train)
+evaluate_regression_model(gb_model, X_test, y_test, "Gradient Boosting")
+
+# 5. Stacking Yöntemi
+# Seviye-0: Temel regresyon modellerimizi tanımlayalım
+base_estimators = [
+    ('lr', LinearRegression()),
+    ('dtr', DecisionTreeRegressor(max_depth=5, random_state=42)),
+    ('ridge', Ridge(random_state=42))
+]
+
+# Seviye-1: Meta modelimizi tanımlayalım (temel modellerin tahminlerini birleştirecek)
+meta_model = LinearRegression()
+
+# Stacking regresyon modelini oluşturalım
+stacking_model = StackingRegressor(estimators=base_estimators, final_estimator=meta_model, cv=5)
+stacking_model.fit(X_train, y_train)
+evaluate_regression_model(stacking_model, X_test, y_test, "Stacking Regresyon")
+
+print("-" * 60)
+```
+
+**Kodu Yorumlayalım:**
+
+Bu Python kodunda, diyabet veri setini kullanarak regresyon problemi için topluluk öğrenmesi yöntemlerini uyguladık.
+
+1.  **Veri Seti ve Ayırma:** `load_diabetes` ile bir regresyon veri seti yükledik ve eğitim/test setlerine ayırdık.
+2.  **Referans Model:** Tek bir `DecisionTreeRegressor` eğiterek başlangıç performansımızı belirledik.
+3.  **Random Forest (Bagging):** `RandomForestRegressor` ile 100 adet karar ağacını paralel olarak eğitip tahminlerini ortalamasını aldık. Bu, tek bir ağacın aşırı öğrenme (overfitting) eğilimini azaltarak daha genellenebilir sonuçlar üretir.
+4.  **Gradient Boosting (Boosting):** `GradientBoostingRegressor` ile 100 adet zayıf regresyon ağacını ardışık olarak eğiterek, her birinin bir öncekinin hatalarını düzeltmesini sağladık. Bu yöntem, modelin sistematik hatalarını azaltmada etkilidir.
+5.  **Stacking Regresyon:** `LinearRegression`, `DecisionTreeRegressor` ve `Ridge` gibi farklı temel regresyon modellerinin tahminlerini bir araya getirdik. Bu tahminleri yeni özellikler olarak kullanarak bir `LinearRegression` meta-modelini eğittik. Stacking, farklı algoritmaların güçlü yönlerini birleştirerek genellikle en iyi performansı sunma potansiyeline sahiptir.
+
+Her bir modelin MAE, RMSE ve R-kare metriklerini raporlayarak performanslarını karşılaştırdık. Genellikle topluluk öğrenmesi modellerinin, tek bir temel modele göre daha düşük hata oranları (MAE, RMSE) ve daha yüksek açıklayıcılık (R-kare) değerleri sunduğunu gözlemleyeceksiniz. Bu, topluluk öğrenmesinin regresyon problemlerinde de tahmin doğruluğunu artırmak için ne kadar etkili bir yöntem olduğunu göstermektedir.
