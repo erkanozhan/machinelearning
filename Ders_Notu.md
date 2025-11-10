@@ -1931,3 +1931,177 @@ Bu Python kodunda, diyabet veri setini kullanarak regresyon problemi için toplu
 5.  **Stacking Regresyon:** `LinearRegression`, `DecisionTreeRegressor` ve `Ridge` gibi farklı temel regresyon modellerinin tahminlerini bir araya getirdik. Bu tahminleri yeni özellikler olarak kullanarak bir `LinearRegression` meta-modelini eğittik. Stacking, farklı algoritmaların güçlü yönlerini birleştirerek genellikle en iyi performansı sunma potansiyeline sahiptir.
 
 Her bir modelin MAE, RMSE ve R-kare metriklerini raporlayarak performanslarını karşılaştırdık. Genellikle topluluk öğrenmesi modellerinin, tek bir temel modele göre daha düşük hata oranları (MAE, RMSE) ve daha yüksek açıklayıcılık (R-kare) değerleri sunduğunu gözlemleyeceksiniz. Bu, topluluk öğrenmesinin regresyon problemlerinde de tahmin doğruluğunu artırmak için ne kadar etkili bir yöntem olduğunu göstermektedir.
+
+
+### Destek Vektör Makineleri (Support Vector Machines - SVM)
+
+Gençler, şimdi sınıflandırma problemlerine farklı ve oldukça güçlü bir açıdan yaklaşan bir algoritmayı inceleyeceğiz: Destek Vektör Makineleri, ya da kısaca SVM.
+
+#### 1. Temel Fikir: En Geniş Yolu Bulmak
+
+Diyelim ki elimizde iki farklı gruba ait veri noktaları var ve amacımız bu iki grubu birbirinden ayıran bir çizgi çekmek. Lojistik regresyon gibi algoritmalar bu işi yapabilen bir çizgi bulur. Ancak genellikle bu işi yapabilecek sonsuz sayıda farklı çizgi vardır. Peki, bu çizgilerden hangisi en iyisidir?
+
+SVM, bu soruya çok net bir cevap verir: İki sınıfa da en uzak olan, yani aradaki "güvenlik marjını" en geniş tutan çizgi en iyisidir.
+
+Bu durumu, iki farklı köyün arazisini ayıran bir yol yapmaya benzetebiliriz. En güvenli yol, her iki köyün en yakın evine de eşit ve maksimum uzaklıkta olan yoldur. Bu yol, gelecekte köylerin sınırlarında olabilecek küçük oynamalardan en az etkilenecek olan yoldur. İşte SVM de bu en geniş "yolu" veya "marjı" bulmaya çalışır.
+
+Bu süreçte üç temel kavramla tanışacağız:
+
+*   **Hiperdüzlem (Hyperplane):** Bu, bizim ayırıcı çizgimizdir. İki boyutta bu bir doğrudur, üç boyutta bir düzlemdir. Daha yüksek boyutlarda ise adına "hiperdüzlem" deriz.
+*   **Destek Vektörleri (Support Vectors):** Yolun kenarına en yakın olan, yani marjın sınırlarını belirleyen veri noktalarıdır. Algoritmanın adını da bu noktalardan alır. Bütün veri seti içinden sadece bu noktalar önemlidir; diğer noktaları kaldırsanız bile hiperdüzlemin yeri değişmez.
+*   **Marj (Margin):** Hiperdüzlem ile destek vektörleri arasındaki toplam mesafedir. SVM'nin temel amacı bu marjı maksimize etmektir.
+
+```mermaid
+graph TD
+    subgraph "SVM Konsepti"
+        A[Veri Noktaları] --> B{En Geniş Marjı Bul};
+        B --> C[Hiperdüzlemi Belirle];
+        C --> D[Sınıflandırma Yap];
+        E[Destek Vektörleri] -.-> C;
+    end
+```
+
+<svg width="500" height="350" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sınıf A noktaları -->
+    <circle cx="100" cy="100" r="6" fill="#4285F4"/>
+    <circle cx="150" cy="150" r="6" fill="#4285F4"/>
+    <circle cx="120" cy="200" r="6" fill="#4285F4"/>
+    <!-- Sınıf B noktaları -->
+    <circle cx="350" cy="150" r="6" fill="#DB4437"/>
+    <circle cx="400" cy="200" r="6" fill="#DB4437"/>
+    <circle cx="380" cy="250" r="6" fill="#DB4437"/>
+    <!-- Destek Vektörleri -->
+    <circle cx="200" cy="220" r="8" fill="#4285F4" stroke="black" stroke-width="2"/>
+    <circle cx="300" cy="120" r="8" fill="#DB4437" stroke="black" stroke-width="2"/>
+    <!-- Hiperdüzlem -->
+    <line x1="50" y1="320" x2="450" y2="50" stroke="black" stroke-width="3"/>
+    <!-- Marj Çizgileri -->
+    <line x1="95" y1="340" x2="495" y2="70" stroke="black" stroke-width="1" stroke-dasharray="5,5"/>
+    <line x1="5" y1="300" x2="405" y2="30" stroke="black" stroke-width="1" stroke-dasharray="5,5"/>
+    <!-- Etiketler -->
+    <text x="220" y="40" font-size="14" font-weight="bold">Hiperdüzlem</text>
+    <text x="350" y="90" font-size="14" fill="#DB4437">Destek Vektörü</text>
+    <text x="80" y="240" font-size="14" fill="#4285F4">Destek Vektörü</text>
+    <text x="250" y="200" font-size="14" transform="rotate(-35 250,200)">Maksimum Marj</text>
+</svg>
+
+Matematiksel olarak ifade etmek gerekirse, hiperdüzlemin denklemi `w·x + b = 0`'dır. Marjın sınırları ise `w·x + b = 1` ve `w·x + b = -1` denklemleriyle tanımlanır. SVM'nin optimizasyon problemi, `yᵢ(w·xᵢ + b) ≥ 1` koşulunu sağlarken, marjı (`2/||w||`) maksimize etmek, yani `||w||²`'yi minimize etmektir.
+
+#### 2. Gerçek Dünya Problemleri: Yumuşak Marj ve Çekirdek Sihri
+
+Teoride her şey güzel, peki ya veriler iç içe geçmişse ve tek bir doğruyla mükemmel bir şekilde ayrılamıyorsa? Gerçek dünya verileri nadiren bu kadar temizdir. İşte burada SVM'nin iki güçlü özelliği devreye girer.
+
+**a) Yumuşak Marj (Soft Margin)**
+
+Bazen en iyi ayrımı yapabilmek için birkaç veri noktasını feda etmek, yani yanlış sınıflandırılmasına izin vermek daha mantıklıdır. Buna **yumuşak marj** yaklaşımı denir. Modelin, aykırı değerlere (outliers) karşı daha dayanıklı olmasını ve daha iyi genelleme yapmasını sağlar.
+
+Bu tolerans seviyesini `C` adını verdiğimiz bir hiperparametre ile kontrol ederiz:
+*   **Yüksek `C` değeri:** Modelin hatalara karşı toleransı çok düşüktür. Her noktayı doğru sınıflandırmaya çalışır, bu da daha dar bir marja ve potansiyel olarak ezberlemeye (overfitting) yol açabilir.
+*   **Düşük `C` değeri:** Model hatalara karşı daha toleranslıdır. Daha geniş bir marj bulmaya odaklanır, bu da genellikle daha iyi bir genelleme yeteneği demektir.
+
+**b) Çekirdek Yöntemi (The Kernel Trick)**
+
+Peki ya verilerimiz dairesel bir şekilde dağılmışsa? Bu durumda doğrusal bir çizgi işe yaramaz.
+
+<svg width="500" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- 2D Görünüm -->
+    <g>
+        <text x="100" y="20" font-size="14" font-weight="bold">2D Uzay (Ayrılamaz)</text>
+        <circle cx="125" cy="125" r="80" fill="none" stroke="#DB4437" stroke-width="2"/>
+        <circle cx="125" cy="125" r="30" fill="none" stroke="#4285F4" stroke-width="2"/>
+        <circle cx="125" cy="95" r="5" fill="#4285F4"/>
+        <circle cx="125" cy="155" r="5" fill="#4285F4"/>
+        <circle cx="95" cy="125" r="5" fill="#4285F4"/>
+        <circle cx="155" cy="125" r="5" fill="#4285F4"/>
+        <circle cx="125" cy="45" r="5" fill="#DB4437"/>
+        <circle cx="125" cy="205" r="5" fill="#DB4437"/>
+        <circle cx="45" cy="125" r="5" fill="#DB4437"/>
+        <circle cx="205" cy="125" r="5" fill="#DB4437"/>
+    </g>
+    <!-- Ok -->
+    <line x1="240" y1="125" x2="280" y2="125" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
+    <text x="245" y="115" font-size="12">Çekirdek</text>
+    <text x="245" y="145" font-size="12">Dönüşümü</text>
+    <!-- 3D Görünüm -->
+    <g>
+        <text x="350" y="20" font-size="14" font-weight="bold">3D Uzay (Ayrılabilir)</text>
+        <ellipse cx="375" cy="180" rx="100" ry="30" fill="#DB4437" opacity="0.2"/>
+        <ellipse cx="375" cy="80" rx="40" ry="15" fill="#4285F4" opacity="0.2"/>
+        <line x1="275" y1="130" x2="475" y2="130" stroke="black" stroke-width="2" stroke-dasharray="4,4"/>
+        <text x="400" y="120" font-size="12">Ayırıcı Düzlem</text>
+    </g>
+</svg>
+
+SVM'nin buradaki çözümü dahiyanedir. Veriyi, doğrusal olarak ayrılabileceği daha yüksek boyutlu bir uzaya taşır. Yukarıdaki örnekte, iki boyutlu dairesel veriyi üçüncü bir boyuta taşıdığımızda, bir düzlemle kolayca ayrılabildiğini görürüz.
+
+Bu taşıma işlemi hesaplama açısından çok maliyetli olabilir. **Çekirdek Yöntemi (Kernel Trick)**, bu dönüşümü gerçekten yapmadan, sanki yapmışız gibi sonuçları hesaplamamızı sağlayan matematiksel bir kısayoldur. Bu sayede SVM, çok karmaşık ve doğrusal olmayan karar sınırları çizebilir.
+
+*   **Lineer Çekirdek:** Standart, doğrusal SVM.
+*   **Polinomsal Çekirdek:** Eğrisel sınırlar oluşturur.
+*   **RBF (Radial Basis Function) Çekirdeği:** En yaygın kullanılan ve en esnek olanıdır. Veri noktalarının birbirine olan yakınlığına göre karmaşık sınırlar çizebilir.
+
+Özetle, SVM marj maksimizasyonu temel fikri üzerine kurulu, yumuşak marj ve çekirdek yöntemleri sayesinde hem doğrusal hem de karmaşık, doğrusal olmayan problemlerde oldukça başarılı sonuçlar veren, zarif ve güçlü bir sınıflandırma algoritmasıdır.
+
+### Kümeleme
+
+Şimdi, elimizde çıktı etiketleri bulunmayan veri setleriyle çalıştığımız, Makine Öğrenmesinin bambaşka bir alanına geçiyoruz: Denetimsiz Öğrenme.
+
+#### 1. Denetimsiz Öğrenme (Unsupervised Learning)
+
+Denetimli öğrenmede amaç bir fonksiyona ($y=f(x)$) ulaşmaktı. Denetimsiz öğrenmede ise amacımız, verinin kendi iç yapısını, desenlerini ve gizli korelasyonlarını keşfetmektir.
+
+**Örnekler:**
+*   Bir pazar sepetinde hangi ürünlerin birlikte alındığını bulmak (Birliktelik Kuralları).
+*   Müşterileri demografik veya davranışsal özelliklerine göre gruplandırmak (Kümeleme).
+
+#### 2. K-Means Kümeleme (K-Means Clustering)
+
+K-Means, en popüler ve basit kümeleme algoritmalarından biridir. Amacı, veri setini $K$ adet ayrı, birbirinden farklı ve homojen gruba (kümeye) ayırmaktır.
+
+**K-Means Çalışma Mantığı:**
+
+1.  **K'yı Belirleme:** Öncelikle, kaç adet küme oluşturulacağını (K) belirleriz.
+2.  **Rastgele Merkez Seçimi:** Veri uzayında rastgele $K$ adet merkez noktası (centroid) seçilir.
+3.  **Atama (Assignment):** Her veri noktası, kendisine en yakın olan merkez noktasına atanır ve böylece $K$ adet başlangıç kümesi oluşur. (Genellikle Öklid mesafesi kullanılır.)
+4.  **Güncelleme (Update):** Her kümenin yeni merkezi, o kümeye atanmış tüm noktaların ortalaması (merkezi) alınarak tekrar hesaplanır.
+5.  **Tekrarlama:** Atama ve Güncelleme adımları, merkez noktalarının artık kayda değer bir şekilde değişmediği ana kadar veya maksimum iterasyon sayısına ulaşılana kadar tekrarlanır.
+
+**Başarı Kriteri:** K-Means, küme içi varyansı (yani küme içindeki noktaların merkeze olan uzaklığını) minimize etmeye çalışır.
+
+#### 3. Optimal K Değerini Bulmak
+
+$K$ değerini doğru seçmek kritiktir. Bunun için kullanılan yaygın bir yöntem:
+
+*   **Dirsek Metodu (Elbow Method):** Farklı $K$ değerleri (örneğin $K=1$'den $K=10$'a) için küme içi varyansı (veya sapmayı) hesaplarız. Bu varyans değerlerini grafiğe döktüğümüzde, varyansın azalma hızının aniden yavaşladığı bir "dirsek" noktası oluşur. Bu nokta, genellikle optimal $K$ değeri olarak kabul edilir.
+
+---
+
+### Boyut Azaltma ve Temel Bileşen Analizi (PCA)
+
+Büyük veri setleriyle çalışırken, yüzlerce hatta binlerce öznitelikle karşılaşabiliriz. Bu durum, hem hesaplama maliyetini artırır hem de modelin genelleme yeteneğini (Overfitting) olumsuz etkiler. Bu sorunun çözümüne **Boyut Azaltma** diyoruz.
+
+#### 1. Boyut Azaltmanın Önemi
+
+Boyut azaltmanın iki ana nedeni vardır:
+
+1.  **Performans ve Maliyet:** Hesaplama süresini hızlandırmak ve depolama gereksinimlerini azaltmak.
+2.  **Gürültü ve Aşırı Öğrenme:** Gereksiz veya gürültülü öznitelikleri çıkararak modelin sadece önemli bilgilere odaklanmasını sağlamak ve böylece aşırı öğrenmeyi önlemek.
+
+Boyut azaltma ikiye ayrılır: **Özellik Seçimi** (mevcut özniteliklerden en iyilerini seçmek) ve **Özellik Çıkarımı** (yeni, daha az sayıda öznitelik oluşturmak).
+
+#### 2. Temel Bileşen Analizi (Principal Component Analysis - PCA)
+
+PCA, en yaygın kullanılan **lineer özellik çıkarımı** tekniğidir. Amacı, veri setindeki en yüksek varyansı (yani en çok bilgiyi) taşıyan yeni ve daha az sayıda öznitelik (temel bileşen) oluşturmaktır.
+
+**PCA Sezgi:**
+
+Veri noktalarını, kayıpları en aza indirecek şekilde yeni bir eksene (veya hiperdüzleme) yansıtırız.
+
+*   Diyelim ki iki öznitelik ($X_1$ ve $X_2$) var ve bu öznitelikler arasında yüksek bir korelasyon mevcut. PCA, bu iki ekseni birleştiren, verinin en çok yayıldığı tek bir yeni eksen oluşturur. Bu yeni eksen, orijinal verinin varyansının büyük çoğunluğunu yakalar.
+*   **Temel Bileşenler:** Bu yeni eksenlere "Temel Bileşenler" (Principal Components) denir. Birinci Temel Bileşen (PC1), en yüksek varyansı açıklar. İkinci Temel Bileşen (PC2), kalan varyansı açıklar ve PC1'e ortogonaldir (dik).
+
+**PCA'nın Matematiksel Amacı:**
+Veriyi, yeni eksenlere yansıttıktan sonra, veri noktalarının bu eksenler boyunca en fazla yayılmasını (maksimum varyans) sağlamaktır.
+
+**Sonuç:** PCA, verinin özünü koruyarak gürültüyü ve gereksiz karmaşıklığı ortadan kaldırır. Bu, özellikle görüntü işleme veya genomik gibi çok boyutlu alanlarda vazgeçilmez bir ön işlemdir.
