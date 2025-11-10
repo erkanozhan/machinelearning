@@ -1383,6 +1383,7 @@ En iyi performansa sahip algoritma belirlendikten sonra, "Result list" bölümü
 WEKA'nın güçlü veri işleme ve modelleme yeteneklerini, R'ın zengin istatistiksel analiz ve görselleştirme kütüphaneleriyle birleştirmek, analizlerinizi daha da derinleştirebilir. Bu bağlantıyı kurmak için aşağıdaki adımları izleyebilirsiniz:
 
 1.  **R ve WEKA Kurulumu:** Bilgisayarınızda hem R programlama dilinin hem de WEKA yazılımının kurulu olduğundan emin olun.
+Dilerseniz tüm süreci Weka geliştirilerinin anlatımıyla https://www.youtube.com/watch?v=EGwHXC3baWU adresinden uygulayabilirsiniz.
 2.  **`rJava` Paketini Yükleme:** R konsolunu açın ve `install.packages("rJava")` komutunu çalıştırarak R'ın Java ile iletişim kurmasını sağlayan bu paketi yükleyin.
 3.  **Ortam Değişkenlerini Ayarlama:** Bilgisayarınızın "Ortam Değişkenleri" (Environment Variables) ayarlarına erişin. Burada, R'ın doğru şekilde tanınması için bazı değişkenleri tanımlamanız veya düzenlemeniz gerekir:
     *   `R.HOME`: R'ın kurulu olduğu ana dizini (sürüm numarası dahil) belirtin. Örneğin: `C:\Program Files\R\R-4.x.x`
