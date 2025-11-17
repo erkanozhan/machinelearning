@@ -1879,28 +1879,28 @@ print("--- Diyabet Veri Seti ile Regresyon Topluluk Öğrenmesi Karşılaştırm
 def evaluate_regression_model(model, X_test, y_test, model_name):
     y_pred = model.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
-    rmse = mean_squared_error(y_test, y_pred, squared=False) # squared=False for RMSE
+    # RMSE'yi hesaplamak için mean_squared_error'da squared=False kullanılır
+    rmse = mean_squared_error(y_test, y_pred, squared=False)
     r2 = r2_score(y_test, y_pred)
-    print(f"{model_name} Performansı:")
-    print(f"  MAE: {mae:.2f}")
-    print(f"  RMSE: {rmse:.2f}")
-    print(f"  R-kare: {r2:.2f}")
-    print("-" * 30)
+    print(f"\n{model_name} Performansı:")
+    print(f"  Ortalama Mutlak Hata (MAE): {mae:.2f}")
+    print(f"  Kök Ortalama Karesel Hata (RMSE): {rmse:.2f}")
+    print(f"  R-Kare (R²): {r2:.2f}")
 
 # 2. Referans Model: Tek bir Karar Ağacı Regresyonu
 tree_model = DecisionTreeRegressor(max_depth=5, random_state=42)
 tree_model.fit(X_train, y_train)
-evaluate_regression_model(tree_model, X_test, y_test, "Tek Karar Ağacı")
+evaluate_regression_model(tree_model, X_test, y_test, "1. Tek Karar Ağacı")
 
 # 3. Bagging Yöntemi: Random Forest Regresyonu
 rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
 rf_model.fit(X_train, y_train)
-evaluate_regression_model(rf_model, X_test, y_test, "Random Forest (Bagging)")
+evaluate_regression_model(rf_model, X_test, y_test, "2. Random Forest (Bagging)")
 
 # 4. Boosting Yöntemi: Gradient Boosting Regresyonu
 gb_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
 gb_model.fit(X_train, y_train)
-evaluate_regression_model(gb_model, X_test, y_test, "Gradient Boosting")
+evaluate_regression_model(gb_model, X_test, y_test, "3. Gradient Boosting")
 
 # 5. Stacking Yöntemi
 # Seviye-0: Temel regresyon modellerimizi tanımlayalım
@@ -1916,9 +1916,8 @@ meta_model = LinearRegression()
 # Stacking regresyon modelini oluşturalım
 stacking_model = StackingRegressor(estimators=base_estimators, final_estimator=meta_model, cv=5)
 stacking_model.fit(X_train, y_train)
-evaluate_regression_model(stacking_model, X_test, y_test, "Stacking Regresyon")
-
-print("-" * 60)
+evaluate_regression_model(stacking_model, X_test, y_test, "4. Stacking Regresyon")
+print("\n" + "-" * 60)
 ```
 
 **Kodu Yorumlayalım:**
