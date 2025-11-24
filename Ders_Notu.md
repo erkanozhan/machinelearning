@@ -1945,7 +1945,7 @@ SVM, bu soruya çok net bir cevap verir: İki sınıfa da en uzak olan, yani ara
 
 Bu durumu, iki farklı köyün arazisini ayıran bir yol yapmaya benzetebiliriz. En güvenli yol, her iki köyün en yakın evine de eşit ve maksimum uzaklıkta olan yoldur. Bu yol, gelecekte köylerin sınırlarında olabilecek küçük oynamalardan en az etkilenecek olan yoldur. İşte SVM de bu en geniş "yolu" veya "marjı" bulmaya çalışır.
 
-Bu süreçte üç temel kavramla tanışacağız:
+Bu süreçte üç temel kavram öne çıkar:
 
 *   **Hiperdüzlem (Hyperplane):** Bu, bizim ayırıcı çizgimizdir. İki boyutta bu bir doğrudur, üç boyutta bir düzlemdir. Daha yüksek boyutlarda ise adına "hiperdüzlem" deriz.
 *   **Destek Vektörleri (Support Vectors):** Yolun kenarına en yakın olan, yani marjın sınırlarını belirleyen veri noktalarıdır. Algoritmanın adını da bu noktalardan alır. Bütün veri seti içinden sadece bu noktalar önemlidir; diğer noktaları kaldırsanız bile hiperdüzlemin yeri değişmez.
@@ -2040,59 +2040,268 @@ Bu taşıma işlemi hesaplama açısından çok maliyetli olabilir. **Çekirdek 
 *   **Lineer Çekirdek:** Standart, doğrusal SVM.
 *   **Polinomsal Çekirdek:** Eğrisel sınırlar oluşturur.
 *   **RBF (Radial Basis Function) Çekirdeği:** En yaygın kullanılan ve en esnek olanıdır. Veri noktalarının birbirine olan yakınlığına göre karmaşık sınırlar çizebilir.
+#### 3. Uygulama: Weka ve Python ile SVM
+
+Gençler, şimdi bu teorik bilgileri somut birer uygulamaya dönüştürelim. Hem görsel bir arayüz sunan Weka ile hem de kodlama esnekliği sağlayan Python ile SVM modelini nasıl eğiteceğimizi göreceğiz.
+
+##### Weka ile SVM (SMO) Uygulaması
+
+Weka'da SVM algoritması, onu çözen optimizasyon yönteminin adıyla, yani **SMO (Sequential Minimal Optimization)** olarak karşımıza çıkar. Adım adım bir sınıflandırma problemi çözelim.
+
+1.  **Veri Setini Yükleme:** Weka Explorer arayüzünü açın. "Preprocess" sekmesinden, Weka'nın kendi `data` klasöründe bulunan `iris.arff` veri setini yükleyin.
+2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonuna tıklayın ve açılan menüden `functions` klasörünün altındaki `SMO` algoritmasını seçin.
+3.  **Parametreleri İnceleme:** `SMO` yazısının üzerine tıklayarak ayarlar penceresini açalım. Burada, daha önce teorisini öğrendiğimiz iki kritik parametre bizi karşılar:
+    *   **`C`:** Bu, bizim yumuşak marj (soft margin) toleransımızı belirleyen parametredir. Değeri ne kadar yüksek olursa, modelin eğitim verisindeki hatalara toleransı o kadar az olur.
+    *   **`kernel`:** Bu, çekirdek yöntemini seçtiğimiz yerdir. Varsayılan olarak `PolyKernel` (Polinomsal Çekirdek) seçilidir. Buraya tıklayarak `RBFKernel` gibi daha esnek bir çekirdeği de seçebiliriz. `RBFKernel`, genellikle birçok problem türü için güçlü bir başlangıç noktasıdır.
+4.  **Modeli Eğitme ve Değerlendirme:** Test seçeneği olarak "Cross-validation" seçiliyken "Start" butonuna basın. "Classifier output" panelinde, modelin doğruluk oranı ve karışıklık matrisi gibi performans metriklerini göreceksiniz. Farklı `C` değerleri ve çekirdek türleri deneyerek sonuçların nasıl değiştiğini gözlemleyebilirsiniz.
+
+##### Python (Scikit-learn) ile SVM Uygulaması
+
+Şimdi aynı işlemi bir de Python'un en yaygın makine öğrenmesi kütüphanesi olan `scikit-learn` ile yapalım. Kod yazmak, bize süreç üzerinde daha fazla kontrol imkanı tanır. Burada SVM sınıflandırıcısı `SVC` (Support Vector Classifier) adıyla bulunur.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# 1. Veri Setini Yükleme
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# 2. Veriyi Eğitim ve Test Olarak Ayırma
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 3. SVM Modelini Oluşturma ve Eğitme
+# kernel='rbf': Doğrusal olmayan problemler için RBF çekirdeğini kullanıyoruz.
+# C=1.0: Yumuşak marj için regularizasyon parametresi.
+# gamma='auto': RBF çekirdeğinin bir parametresi.
+model = SVC(kernel='rbf', C=1.0, gamma='auto')
+
+# Modeli eğitim verileriyle eğitiyoruz
+model.fit(X_train, y_train)
+
+# 4. Tahmin Yapma ve Performansı Değerlendirme
+y_pred = model.predict(X_test)
+
+# Modelin doğruluğunu hesaplıyoruz
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"SVM Modelinin Doğruluk Oranı: {accuracy:.4f}")
+```
+
+Bu kod bloğunda, Iris veri setini yükledikten sonra bir `SVC` nesnesi oluşturduk. Modelin en önemli parametrelerini burada belirttik:
+*   `kernel`: Verimizin doğrusal olarak ayrılamayacağını varsayarak en yaygın seçeneklerden biri olan `'rbf'`yi seçtik. Eğer problemimiz basit olsaydı `'linear'` seçebilirdik.
+*   `C`: Hatalara karşı ne kadar katı olacağımızı belirleyen parametremiz. Bu değeri artırmak, modelin eğitim verisine daha sıkı uymasına, azaltmak ise daha genel bir sınır bulmasına neden olur.
+*   `gamma`: RBF çekirdeğine özgü bir parametredir ve tek bir eğitim örneğinin etki alanının ne kadar geniş olacağını kontrol eder.
+
+Modeli eğittikten sonra test verisi üzerindeki doğruluğunu hesapladık. Bu parametrelerle oynayarak SVM'nin ne kadar esnek ve güçlü bir model olduğunu kendiniz de test edebilirsiniz.
 
 Özetle, SVM marj maksimizasyonu temel fikri üzerine kurulu, yumuşak marj ve çekirdek yöntemleri sayesinde hem doğrusal hem de karmaşık, doğrusal olmayan problemlerde oldukça başarılı sonuçlar veren, zarif ve güçlü bir sınıflandırma algoritmasıdır.
 
-### Kümeleme
+### Kümeleme (Clustering)
 
-Şimdi, elimizde çıktı etiketleri bulunmayan veri setleriyle çalıştığımız, Makine Öğrenmesinin bambaşka bir alanına geçiyoruz: Denetimsiz Öğrenme.
+Gençler, şimdi makine öğrenmesinin denetimsiz (unsupervised) olarak adlandırılan alanına bir giriş yapıyoruz. Burada elimizde, modelimize yol gösterecek "doğru cevaplar" yani etiketler bulunmaz. Amacımız, verinin kendi içindeki doğal yapısını, gizli grupları ve desenleri ortaya çıkarmaktır. Bu alanın en temel ve yaygın kullanılan tekniği kümelemedir.
 
-#### 1. Denetimsiz Öğrenme (Unsupervised Learning)
+Kümelemenin temel amacı, veri noktalarını birbirine benzer özelliklere sahip gruplara ayırmaktır. Bir küme içindeki veri noktaları birbirine çok benzerken, farklı kümelerdeki veri noktaları birbirinden olabildiğince farklı olmalıdır. Şimdi bu işi yapan bazı popüler algoritmaları ve çalışma mantıklarını inceleyelim.
 
-Denetimli öğrenmede amaç bir fonksiyona ($y=f(x)$) ulaşmaktı. Denetimsiz öğrenmede ise amacımız, verinin kendi iç yapısını, desenlerini ve gizli korelasyonlarını keşfetmektir.
+#### K-Ortalamalar Kümelemesi (K-Means Clustering)
 
-**Örnekler:**
-*   Bir pazar sepetinde hangi ürünlerin birlikte alındığını bulmak (Birliktelik Kuralları).
-*   Müşterileri demografik veya davranışsal özelliklerine göre gruplandırmak (Kümeleme).
+K-Means, en bilinen ve sezgisel kümeleme algoritmalarından biridir. Adındaki "K", veri setini kaç adet kümeye ayırmak istediğimizi belirttiğimiz bir parametredir.
 
-#### 2. K-Means Kümeleme (K-Means Clustering)
+**Çalışma Mantığı**
 
-K-Means, en popüler ve basit kümeleme algoritmalarından biridir. Amacı, veri setini $K$ adet ayrı, birbirinden farklı ve homojen gruba (kümeye) ayırmaktır.
+Süreci, $K$ adet grup lideri seçip, herkesin kendisine en yakın liderin grubuna katıldığı bir organize olma sürecine benzetebiliriz. Liderler, grupları oluştuktan sonra grubun tam ortasına geçerek pozisyonlarını günceller ve bu süreç, gruplar stabil hale gelene kadar devam eder.
 
-**K-Means Çalışma Mantığı:**
+1.  **Başlangıç:** İlk olarak, veri setini kaç kümeye ($K$) ayıracağımıza karar veririz. Ardından, veri uzayında rastgele $K$ adet nokta **küme merkezi (centroid)** olarak belirlenir.
+2.  **Atama Adımı:** Her bir veri noktası, kendisine en yakın olan küme merkezine atanır. Bu yakınlık genellikle Öklid mesafesi ile ölçülür. Bu adımın sonunda, $K$ adet başlangıç kümesi oluşmuş olur.
+3.  **Güncelleme Adımı:** Her kümenin yeni merkezi, o kümeye atanmış tüm noktaların geometrik ortalaması alınarak yeniden hesaplanır. Yani her küme merkezi, temsil ettiği grubun tam ortasına kaydırılır.
+4.  **Tekrarlama:** Atama ve Güncelleme adımları, küme merkezlerinin yeri artık kayda değer bir şekilde değişmeyene veya önceden belirlenmiş bir tekrar sayısına ulaşılana kadar tekrarlanır. Algoritma durduğunda, son oluşan gruplar bizim kümelerimizdir.
 
-1.  **K'yı Belirleme:** Öncelikle, kaç adet küme oluşturulacağını (K) belirleriz.
-2.  **Rastgele Merkez Seçimi:** Veri uzayında rastgele $K$ adet merkez noktası (centroid) seçilir.
-3.  **Atama (Assignment):** Her veri noktası, kendisine en yakın olan merkez noktasına atanır ve böylece $K$ adet başlangıç kümesi oluşur. (Genellikle Öklid mesafesi kullanılır.)
-4.  **Güncelleme (Update):** Her kümenin yeni merkezi, o kümeye atanmış tüm noktaların ortalaması (merkezi) alınarak tekrar hesaplanır.
-5.  **Tekrarlama:** Atama ve Güncelleme adımları, merkez noktalarının artık kayda değer bir şekilde değişmediği ana kadar veya maksimum iterasyon sayısına ulaşılana kadar tekrarlanır.
+K-Means'in temel optimizasyon hedefi, küme içi hata kareleri toplamını (Sum of Squared Errors - SSE), yani her bir noktanın kendi küme merkezine olan uzaklıklarının kareleri toplamını minimize etmektir.
 
-**Başarı Kriteri:** K-Means, küme içi varyansı (yani küme içindeki noktaların merkeze olan uzaklığını) minimize etmeye çalışır.
+<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Adım 1 -->
+    <g>
+        <text x="50" y="20" font-size="14" font-weight="bold">1. Rastgele Merkezler</text>
+        <circle cx="100" cy="100" r="4" fill="gray"/>
+        <circle cx="50" cy="150" r="4" fill="gray"/>
+        <circle cx="150" cy="120" r="4" fill="gray"/>
+        <circle cx="80" cy="200" r="4" fill="gray"/>
+        <circle cx="120" cy="50" r="4" fill="gray"/>
+        <!-- Merkezler -->
+        <rect x="70" y="80" width="10" height="10" fill="red"/>
+        <rect x="130" y="160" width="10" height="10" fill="blue"/>
+    </g>
+    <!-- Adım 2 -->
+    <g>
+        <text x="250" y="20" font-size="14" font-weight="bold">2. Atama Adımı</text>
+        <circle cx="300" cy="100" r="4" fill="red"/>
+        <circle cx="250" cy="150" r="4" fill="blue"/>
+        <circle cx="350" cy="120" r="4" fill="red"/>
+        <circle cx="280" cy="200" r="4" fill="blue"/>
+        <circle cx="320" cy="50" r="4" fill="red"/>
+        <!-- Merkezler -->
+        <rect x="270" y="80" width="10" height="10" fill="red"/>
+        <rect x="330" y="160" width="10" height="10" fill="blue"/>
+    </g>
+    <!-- Adım 3 -->
+    <g>
+        <text x="450" y="20" font-size="14" font-weight="bold">3. Güncelleme Adımı</text>
+        <circle cx="500" cy="100" r="4" fill="red"/>
+        <circle cx="450" cy="150" r="4" fill="blue"/>
+        <circle cx="550" cy="120"r="4" fill="red"/>
+        <circle cx="480" cy="200" r="4" fill="blue"/>
+        <circle cx="520" cy="50" r="4" fill="red"/>
+        <!-- Yeni Merkezler -->
+        <rect x="515" y="88" width="10" height="10" fill="red" stroke="black"/>
+        <rect x="463" y="173" width="10" height="10" fill="blue" stroke="black"/>
+        <line x1="470" y1="80" x2="515" y2="88" stroke="red" stroke-dasharray="2,2"/>
+        <line x1="530" y1="160" x2="463" y2="173" stroke="blue" stroke-dasharray="2,2"/>
+    </g>
+</svg>
 
-#### 3. Optimal K Değerini Bulmak
+**Optimal K Değerini Bulmak**
 
-$K$ değerini doğru seçmek kritiktir. Bunun için kullanılan yaygın bir yöntem:
+K-Means'in en zorlayıcı yanlarından biri, en başta $K$ değerini doğru belirlemektir. Bunun için yaygın olarak kullanılan yöntemlerden biri **Dirsek Metodu (Elbow Method)**'dur.
+Farklı $K$ değerleri (örneğin $K=1$'den $K=10$'a kadar) için algoritmayı çalıştırır ve her seferinde küme içi hata kareleri toplamını (SSE) hesaplarız. Bu değerleri bir grafiğe döktüğümüzde, genellikle SSE değerinin hızla düştüğü ve ardından düşüş hızının yavaşladığı bir nokta görülür. Grafikteki bu bükülme noktası, bir kolun dirseğine benzediği için "dirsek noktası" olarak adlandırılır ve genellikle optimal $K$ değeri için iyi bir adaydır.
 
-*   **Dirsek Metodu (Elbow Method):** Farklı $K$ değerleri (örneğin $K=1$'den $K=10$'a) için küme içi varyansı (veya sapmayı) hesaplarız. Bu varyans değerlerini grafiğe döktüğümüzde, varyansın azalma hızının aniden yavaşladığı bir "dirsek" noktası oluşur. Bu nokta, genellikle optimal $K$ değeri olarak kabul edilir.
+#### Hiyerarşik Kümeleme (Hierarchical Clustering)
+
+Hiyerarşik kümeleme, K-Means gibi önceden bir küme sayısı belirlememizi gerektirmeyen, farklı bir yaklaşım sunar. Veri noktaları arasında bir hiyerarşi veya "ağaç yapısı" oluşturur. İki temel türü vardır:
+
+1.  **Birleştirici (Agglomerative):** "Aşağıdan yukarıya" bir yaklaşımdır. Başlangıçta her veri noktası kendi başına bir küme olarak kabul edilir. Ardından, her adımda birbirine en yakın olan iki küme birleştirilir. Bu süreç, en sonunda tüm noktalar tek bir büyük küme altında toplanana kadar devam eder.
+2.  **Bölücü (Divisive):** "Yukarıdan aşağıya" bir yaklaşımdır. Başlangıçta tüm veri noktaları tek bir kümededir. Her adımda, küme daha küçük parçalara bölünür. Bu, daha az kullanılan bir yöntemdir.
+
+Birleştirici yaklaşımın sonucu, **dendrogram** adı verilen bir ağaç diyagramı ile görselleştirilir. Bu diyagram, hangi kümelerin hangi "uzaklık" seviyesinde birleştiğini gösterir. Dendrograma bakarak, ağacı belirli bir seviyeden "kesebilir" ve istediğimiz sayıda küme elde edebiliriz.
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <text x="150" y="20" font-size="14" font-weight="bold">Dendrogram</text>
+    <!-- Veri Noktaları -->
+    <text x="45" y="280">A</text>
+    <line x1="50" y1="270" x2="50" y2="250" stroke="black"/>
+    <text x="95" y="280">B</text>
+    <line x1="100" y1="270" x2="100" y2="250" stroke="black"/>
+    <text x="195" y="280">C</text>
+    <line x1="200" y1="270" x2="200" y2="200" stroke="black"/>
+    <text x="295" y="280">D</text>
+    <line x1="300" y1="270" x2="300" y2="150" stroke="black"/>
+    <text x="345" y="280">E</text>
+    <line x1="350" y1="270" x2="350" y2="150" stroke="black"/>
+    <!-- Birleşmeler -->
+    <line x1="50" y1="250" x2="100" y2="250" stroke="black"/>
+    <line x1="75" y1="250" x2="75" y2="200" stroke="black"/>
+    <line x1="75" y1="200" x2="200" y2="200" stroke="black"/>
+    <line x1="137.5" y1="200" x2="137.5" y2="100" stroke="black"/>
+    <line x1="300" y1="150" x2="350" y2="150" stroke="black"/>
+    <line x1="325" y1="150" x2="325" y2="100" stroke="black"/>
+    <line x1="137.5" y1="100" x2="325" y2="100" stroke="black"/>
+    <!-- Uzaklık Ekseni -->
+    <line x1="20" y1="270" x2="20" y2="50" stroke="black" marker-start="url(#arrow-up)" marker-end="url(#arrow-up)"/>
+    <text x="0" y="40">Uzaklık</text>
+    <defs><marker id="arrow-up" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 5 L 5 0 L 10 5" fill="none" stroke="black"/></marker></defs>
+</svg>
+
+#### DBSCAN (Yoğunluk Tabanlı Kümeleme)
+
+K-Means gibi algoritmalar, küresel (yuvarlak) şekilli kümeleri bulmada başarılıdır. Peki ya kümelerimiz iç içe geçmiş halkalar veya muz gibi garip şekillere sahipse? İşte bu noktada DBSCAN (Density-Based Spatial Clustering of Applications with Noise) devreye girer.
+
+DBSCAN, küme merkezleri yerine veri noktalarının **yoğunluğuna** odaklanır. Kümeleri, "yoğun bölgelerin" birbirine bağlı olduğu alanlar olarak tanımlar. Bu yaklaşım ona iki önemli avantaj sağlar:
+1.  İstediği şekilde (keyfi şekilli) kümeler bulabilir.
+2.  Herhangi bir kümeye ait olmayan noktaları **gürültü (noise)** veya **aykırı değer (outlier)** olarak etiketleyebilir.
+
+**Çalışma Mantığı**
+
+Algoritma iki temel parametreye dayanır:
+*   **`epsilon (ε)`:** Bir noktanın komşuluğunu tanımlayan yarıçap.
+*   **`minPts`:** Bir noktanın "yoğun" bir bölgede sayılması için `ε` yarıçapı içinde bulunması gereken minimum komşu sayısı.
+
+Bu parametrelere göre, veri noktaları üç kategoriye ayrılır:
+*   **Çekirdek Nokta (Core Point):** `ε` yarıçapı içinde en az `minPts` kadar komşusu olan bir nokta.
+*   **Sınır Noktası (Border Point):** Kendisi bir çekirdek nokta değil, ancak bir çekirdek noktanın komşuluğu içinde yer alan bir nokta.
+*   **Gürültü Noktası (Noise Point):** Ne çekirdek ne de sınır noktası olan, seyrek bir bölgedeki bir nokta.
+
+DBSCAN, rastgele bir noktadan başlar. Eğer bu nokta bir çekirdek noktaysa, ondan yeni bir küme başlatır ve `ε` komşuluğundaki tüm erişilebilir noktaları (hem çekirdek hem de sınır noktalarını) bu kümeye ekler. Bu süreç, küme daha fazla genişleyemeyene kadar devam eder.
 
 ---
+### Uygulama: Weka ile Kümeleme Analizi
+
+Şimdi, bu kümeleme algoritmalarından birini Weka'nın görsel arayüzünü kullanarak pratik bir örnek üzerinde uygulayalım. Bu uygulama için yine `iris.arff` veri setini kullanacağız. Amacımız, çiçeğin türünü bilmeden, sadece yaprak ölçümlerine bakarak Weka'nın bu çiçekleri doğal gruplarına ayırıp ayıramayacağını görmek.
+
+1.  **Veri Setini Yükleme:** Weka Explorer'ı açın ve "Preprocess" sekmesinden `iris.arff` dosyasını yükleyin.
+2.  **"Cluster" Sekmesine Geçiş:** Veri yüklendikten sonra, üst menüden "Cluster" sekmesine tıklayın.
+3.  **Algoritma Seçimi:** "Choose" butonuna tıklayarak kümeleme algoritmaları listesini açın. Buradan `SimpleKMeans`'i seçelim.
+4.  **Parametreleri Ayarlama:** `SimpleKMeans` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `numClusters`: Bu, K-Means'in K değeridir. Iris veri setinde üç farklı çiçek türü olduğunu bildiğimiz için bu değeri `3` olarak ayarlayalım.
+    *   Diğer parametreleri şimdilik varsayılan değerlerinde bırakıp "OK" butonuna tıklayın.
+5.  **Analizi Başlatma:** "Cluster mode" bölümünde, varsayılan olarak "Use training set" seçilidir. Bu, tüm veri seti üzerinde kümeleme yapılacağı anlamına gelir. "Start" butonuna basarak analizi başlatın.
+6.  **Sonuçları Yorumlama:** "Clusterer output" panelinde analizin sonuçları gösterilir:
+    *   **Clustered Instances:** Hangi kümede kaç adet örnek olduğunu gösterir. İdeal bir durumda, her kümede yaklaşık 50 örnek görmeyi bekleriz.
+    *   **Cluster centroids:** Her bir kümenin merkez noktasının öznitelik değerlerini gösterir. Bu, her bir kümenin "ortalama" çiçeğini tanımlar.
+    *   Eğer "Cluster mode" olarak "Classes to clusters evaluation" seçeneğini seçip analizi tekrar çalıştırırsanız, Weka, bulduğu kümeleri gerçek sınıf etiketleriyle (`class` özniteliği) karşılaştırır. Bu, kümelemenin ne kadar başarılı olduğunu anlamak için çok faydalıdır. "Incorrectly clustered instances" satırı, kümelerin gerçek sınıflarla ne kadar uyuşmadığını gösterir.
+7.  **Sonuçları Görselleştirme:** En ilginç kısımlardan biri de sonuçları görselleştirmektir. "Result list" panelinde az önce yaptığınız analizin üzerine sağ tıklayın ve "Visualize cluster assignments" seçeneğini seçin.
+    *   Açılan pencerede, veri noktalarının bir grafiğini göreceksiniz. Eksenleri farklı öznitelikler arasında değiştirerek verinin dağılımını inceleyebilirsiniz.
+    *   `Color` açılır menüsünden `Cluster` seçeneğini seçtiğinizde, her bir nokta ait olduğu kümeye göre renklendirilir. Bu, Weka'nın bulduğu grupları net bir şekilde görmenizi sağlar.
+
+Bu basit uygulama ile, etiketlenmemiş verilerdeki gizli yapıları keşfetmek için kümeleme algoritmalarının nasıl kullanılabileceğini pratik olarak görmüş olduk.
 
 ### Boyut Azaltma ve Temel Bileşen Analizi (PCA)
 
-Büyük veri setleriyle çalışırken, yüzlerce hatta binlerce öznitelikle karşılaşabiliriz. Bu durum, hem hesaplama maliyetini artırır hem de modelin genelleme yeteneğini (Overfitting) olumsuz etkiler. Bu sorunun çözümüne **Boyut Azaltma** diyoruz.
-
-#### 1. Boyut Azaltmanın Önemi
+Büyük veri setleriyle çalışırken, yüzlerce hatta binlerce öznitelikle karşılaşabiliriz. Bu durum "boyutluluğun laneti (Boyutluluğun laneti (curse of dimensionality): boyut sayısı arttıkça verinin uzayda seyrekleşmesi, uzaklık/benzerlik ölçümlerinin anlamsızlaşması ve modelin daha fazla veriyle bile genellemede zorlanması. Bu yüzden yüksek boyutlu özellikleri seçmek, dönüştürmek veya azaltmak (ör. PCA, düzenlileştirme) gerekir.)" olarak da bilinir ve hem hesaplama maliyetini artırır hem de modelin ezber yapma (overfitting) riskini yükseltir. Bu sorunun çözümüne **Boyut Azaltma** diyoruz.
 
 Boyut azaltmanın iki ana nedeni vardır:
+1.  **Verimlilik:** Hesaplama süresini hızlandırmak ve depolama gereksinimlerini azaltmak.
+2.  **Model Performansı:** Gereksiz veya gürültülü öznitelikleri eleyerek modelin sadece en önemli bilgilere odaklanmasını sağlamak ve böylece genelleme yeteneğini artırmak.
 
-1.  **Performans ve Maliyet:** Hesaplama süresini hızlandırmak ve depolama gereksinimlerini azaltmak.
-2.  **Gürültü ve Aşırı Öğrenme:** Gereksiz veya gürültülü öznitelikleri çıkararak modelin sadece önemli bilgilere odaklanmasını sağlamak ve böylece aşırı öğrenmeyi önlemek.
+Boyut azaltma iki temel yaklaşımla yapılır: **Özellik Seçimi** (mevcut özniteliklerden en bilgilendirici olanları seçmek) ve **Özellik Çıkarımı** (mevcut özniteliklerden yola çıkarak, veriyi daha iyi temsil eden yeni ve daha az sayıda öznitelik oluşturmak).
 
-Boyut azaltma ikiye ayrılır: **Özellik Seçimi** (mevcut özniteliklerden en iyilerini seçmek) ve **Özellik Çıkarımı** (yeni, daha az sayıda öznitelik oluşturmak).
+#### Temel Bileşen Analizi (Principal Component Analysis - PCA)
 
-#### 2. Temel Bileşen Analizi (Principal Component Analysis - PCA)
+PCA, en yaygın kullanılan **doğrusal özellik çıkarımı** tekniğidir. Temel amacı, birbiriyle ilişkili (korelasyonlu) olabilecek çok sayıdaki özniteliği, birbiriyle ilişkisiz ve verideki varyansı (değişkenliği) en iyi şekilde açıklayan daha az sayıda yeni özniteliğe dönüştürmektir. Bu yeni özniteliklere **Temel Bileşenler (Principal Components)** denir.
 
-PCA, en yaygın kullanılan **lineer özellik çıkarımı** tekniğidir. Amacı, veri setindeki en yüksek varyansı (yani en çok bilgiyi) taşıyan yeni ve daha az sayıda öznitelik (temel bileşen) oluşturmaktır.
+PCA'nın arkasındaki sezgiyi, karmaşık bir 3D nesnenin fotoğrafını çekmeye benzetebiliriz. Nesnenin yapısını en iyi anlatan 2D bir görüntü elde etmek için, onu en çok bilgi veren açıdan çekmemiz gerekir. PCA, matematiksel olarak verimiz için bu "en iyi açıları" bulur.
+
+*   **Birinci Temel Bileşen (PC1):** Verideki en büyük varyansın olduğu yönü temsil eden yeni eksendir. Yani verinin en çok "yayıldığı" doğrultudur.
+*   **İkinci Temel Bileşen (PC2):** Geriye kalan varyansın en büyük olduğu ve PC1'e dik (ortogonal) olan ikinci yöndür.
+*   Bu süreç, orijinal öznitelik sayısı kadar devam eder. Ancak amaç boyut azaltmak olduğu için, genellikle toplam varyansın büyük bir kısmını (örneğin %95'ini) açıklayan ilk birkaç temel bileşen seçilir ve diğerleri atılır.
+
+<svg width="500" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Orijinal Eksenler ve Veri -->
+    <text x="50" y="20">Orijinal Veri</text>
+    <line x1="50" y1="230" x2="200" y2="230" stroke="black" marker-end="url(#arrow-h)"/>
+    <text x="205" y="235">X1</text>
+    <line x1="50" y1="230" x2="50" y2="80" stroke="black" marker-end="url(#arrow-v)"/>
+    <text x="40" y="70">X2</text>
+    <circle cx="80" cy="200" r="3" fill="gray"/>
+    <circle cx="90" cy="180" r="3" fill="gray"/>
+    <circle cx="100" cy="190" r="3" fill="gray"/>
+    <circle cx="110" cy="160" r="3" fill="gray"/>
+    <circle cx="120" cy="170" r="3" fill="gray"/>
+    <circle cx="130" cy="140" r="3" fill="gray"/>
+    <circle cx="140" cy="150" r="3" fill="gray"/>
+    <circle cx="150" cy="120" r="3" fill="gray"/>
+    <!-- PCA Eksenleri -->
+    <text x="300" y="20">Temel Bileşenler</text>
+    <line x1="325" y1="205" x2="475" y2="105" stroke="red" stroke-width="2" marker-end="url(#arrow-h)"/>
+    <text x="480" y="105" fill="red" font-weight="bold">PC1</text>
+    <line x1="360" y1="120" x2="460" y2="220" stroke="blue" stroke-width="2" marker-end="url(#arrow-v)"/>
+    <text x="460" y="230" fill="blue" font-weight="bold">PC2</text>
+    <circle cx="330" cy="200" r="3" fill="gray"/>
+    <circle cx="340" cy="180" r="3" fill="gray"/>
+    <circle cx="350" cy="190" r="3" fill="gray"/>
+    <circle cx="360" cy="160" r="3" fill="gray"/>
+    <circle cx="370" cy="170" r="3" fill="gray"/>
+    <circle cx="380" cy="140" r="3" fill="gray"/>
+    <circle cx="390" cy="150" r="3" fill="gray"/>
+    <circle cx="400" cy="120" r="3" fill="gray"/>
+    <defs>
+        <marker id="arrow-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker>
+        <marker id="arrow-v" viewBox="0 0 10 10" refX="5" refY="2" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 10 L 5 0 L 10 10 z" /></marker>
+    </defs>
+</svg>
+
+Sonuç olarak PCA, öznitelikler arasındaki gereksiz ilişkileri ortadan kaldırır ve verinin özünü daha az sayıda temel bileşenle ifade ederek, sonraki makine öğrenmesi adımları için daha temiz ve daha verimli bir veri seti oluşturur.
 
 **PCA Sezgi:**
 
@@ -2105,3 +2314,105 @@ Veri noktalarını, kayıpları en aza indirecek şekilde yeni bir eksene (veya 
 Veriyi, yeni eksenlere yansıttıktan sonra, veri noktalarının bu eksenler boyunca en fazla yayılmasını (maksimum varyans) sağlamaktır.
 
 **Sonuç:** PCA, verinin özünü koruyarak gürültüyü ve gereksiz karmaşıklığı ortadan kaldırır. Bu, özellikle görüntü işleme veya genomik gibi çok boyutlu alanlarda vazgeçilmez bir ön işlemdir.
+
+### Uygulama: Weka ve Python ile Boyut Azaltma
+
+Şimdi gençler, bu boyut azaltma tekniğinin pratikte nasıl çalıştığını görelim. PCA'yı hem görsel bir araç olan Weka'da hem de esnek bir programlama ortamı olan Python'da Iris veri setine uygulayacağız. Amacımız, dört özniteliğe (çanak ve taç yaprağı uzunluk/genişlik) sahip bu veri setini, bilginin büyük çoğunluğunu koruyarak daha az sayıda öznitelikle nasıl ifade edebileceğimizi görmektir.
+
+#### Weka ile PCA Uygulaması: Performans Karşılaştırması
+
+Gençler, şimdi bir makine öğrenmesi projesinde boyut azaltmanın pratik etkisini gözlemleyelim. Bir hipotezimiz var: Veri setindeki öznitelik sayısını, bilgi kaybını en aza indirerek azaltırsak, sınıflandırma modelimizin performansını koruyabilir, hatta belki de iyileştirebiliriz. Bu hipotezi Weka üzerinde test edeceğiz.
+
+**1. Adım: Başlangıç Performansını Belirleme (Referans Noktası)**
+
+Karşılaştırma yapabilmek için öncelikle boyut azaltma uygulamadan, orijinal veri seti üzerindeki model performansını ölçmemiz gerekir.
+
+1.  **Veriyi Yükleme:** Weka Explorer'ı açın ve "Preprocess" sekmesinden `iris.arff` dosyasını yükleyin.
+2.  **Modeli Eğitme:** "Classify" sekmesine geçin. "Choose" butonu ile `trees` altından `J48` (bir karar ağacı algoritması) seçin. Test seçeneği olarak "Cross-validation" (10 katlı) seçiliyken "Start" butonuna basın.
+3.  **Sonucu Not Alma:** "Classifier output" panelini incelediğimizde, `Correctly Classified Instances` (Doğru Sınıflandırılan Örnekler) oranının yaklaşık **%96** olduğunu görürüz. Bu, bizim referans noktamızdır. Dört öznitelik kullanarak ulaştığımız başarı bu seviyededir.
+
+**2. Adım: PCA ile Boyut Azaltma**
+
+Şimdi, verinin özünü koruyarak bu dört özniteliği daha aza indirelim.
+
+1.  **Filtre Seçimi:** "Preprocess" sekmesine geri dönün. "Filter" bölümündeki "Choose" butonuna tıklayın. Açılan menüden `weka` -> `filters` -> `unsupervised` -> `attribute` yolunu izleyin ve `PrincipalComponents` filtresini seçin.
+2.  **Parametre Ayarlama:** `PrincipalComponents` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   **`varianceCovered`:** Bu parametre, orijinal verideki toplam değişkenliğin (bilginin) yüzde kaçını korumak istediğimizi belirtir. Varsayılan değer olan `0.95`'i koruyalım. Bu, Weka'ya "Verideki bilginin %95'ini taşıyan en az sayıda yeni öznitelik oluştur" talimatını verir.
+3.  **Filtreyi Uygulama:** "Apply" butonuna basın.
+
+Filtreyi uyguladıktan sonra "Attributes" paneline baktığınızda, orijinal dört özniteliğin (`sepallength`, `sepalwidth`, vb.) yerini `PrincipalComponent_1` ve `PrincipalComponent_2` adında sadece iki yeni özniteliğin aldığını göreceksiniz. Weka, verideki bilginin %95'ini bu iki yeni, türetilmiş öznitelikle temsil etmenin yeterli olduğuna karar verdi. Dört boyutlu problemimizi, iki boyuta indirgemiş olduk.
+
+**3. Adım: Azaltılmış Veri Setiyle Performansı Ölçme**
+
+Artık elimizde daha az sayıda ama daha yoğun bilgi içeren bir veri seti var. Şimdi aynı sınıflandırma modelini bu yeni veri üzerinde tekrar çalıştıralım.
+
+1.  **Modeli Yeniden Eğitme:** "Classify" sekmesine geri dönün. Ayarları değiştirmeden (yine J48 ve 10 katlı çapraz doğrulama) "Start" butonuna tekrar basın.
+2.  **Sonuçları Karşılaştırma:** Yeni sonuçlara baktığımızda, doğruluk oranının yine **%94-%96** aralığında, yani referans noktamıza çok yakın bir değerde olduğunu görürüz.
+
+**Değerlendirme**
+
+Bu deney bize ne gösterdi? Dört öznitelik kullanarak elde ettiğimiz yaklaşık %96'lık başarıya, sadece iki öznitelik kullanarak neredeyse ulaştık. Öznitelik sayısını yarıya indirgememize rağmen performansta kayda değer bir düşüş yaşamadık. Bu, PCA'nın öznitelikler arasındaki gereksiz bilgileri (korelasyon gibi) ve gürültüyü başarıyla temizlediğini, geriye sadece sınıflandırma için en anlamlı olan "öz" bilgiyi bıraktığını gösterir.
+
+Daha teknik bir bakışla, "Filter output" panelinde PCA analizinin detaylarını inceleyebiliriz. Burada, oluşturulan her bir temel bileşenin orijinal verideki varyansın ne kadarını açıkladığı (`eigenvalue` ve varyans oranı) listelenir. Iris veri seti için genellikle ilk bileşenin toplam varyansın yaklaşık %73'ünü, ikinci bileşenin ise yaklaşık %23'ünü açıkladığını görürüz. Bu iki bileşen birlikte toplam varyansın %96'sını kapsar, bu nedenle `varianceCovered=0.95` ayarı ile iki bileşen elde etmemiz beklenen bir sonuçtur.
+
+Bu sonuç, makine öğrenmesinde önemli bir prensibi doğrular: Daha fazla öznitelik her zaman daha iyi değildir. Bazen daha az, daha temiz ve daha anlamlı özniteliklerle çalışmak, hem daha basit ve hızlı modeller kurmamızı sağlar hem de modelin genelleme yeteneğini artırarak ezberlemenin (overfitting) önüne geçer.
+
+#### Python (Scikit-learn) ile PCA Uygulaması
+
+Python ve `scikit-learn` kütüphanesi, PCA sürecini daha detaylı kontrol etmemize ve sonuçları görselleştirmemize olanak tanır.
+
+**Önemli Not:** PCA, özniteliklerin varyansına dayalı bir yöntem olduğu için, farklı ölçeklerdeki öznitelikler (örneğin biri 1-10 aralığında, diğeri 1000-5000 aralığında) analizi yanıltabilir. Bu nedenle PCA uygulamadan önce veriyi standartlaştırmak (ortalaması 0, standart sapması 1 olacak şekilde ölçeklemek) genel kabul görmüş bir en iyi uygulamadır.
+
+```python
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# 1. Veri Setini Yükleme
+iris = load_iris()
+X = iris.data
+y = iris.target
+target_names = iris.target_names
+
+# 2. Veriyi Standartlaştırma
+# PCA'nın doğru çalışması için öznitelikleri ölçeklendiriyoruz
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 3. PCA Uygulama
+# n_components=2: Veriyi 2 boyuta indirgemek istediğimizi belirtiyoruz.
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+# 4. Sonuçları İnceleme
+# Açıklanan varyans oranı, her bir temel bileşenin
+# toplam bilginin (varyansın) yüzde kaçını taşıdığını gösterir.
+print(f"Açıklanan Varyans Oranı: {pca.explained_variance_ratio_}")
+print(f"Toplam Açıklanan Varyans: {sum(pca.explained_variance_ratio_):.2f}")
+
+# 5. Sonuçları Görselleştirme
+plt.figure(figsize=(8, 6))
+colors = ['navy', 'turquoise', 'darkorange']
+
+for color, i, target_name in zip(colors, [0, 1, 2], target_names):
+    plt.scatter(X_pca[y == i, 0], X_pca[y == i, 1], color=color, alpha=.8, lw=2,
+                label=target_name)
+
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+plt.title('PCA ile Iris Veri Setinin 2 Boyuta İndirgenmesi')
+plt.xlabel('Birinci Temel Bileşen')
+plt.ylabel('İkinci Temel Bileşen')
+plt.show()
+
+```
+
+**Kodu Yorumlayalım:**
+
+1.  **Standartlaştırma:** İlk olarak, `StandardScaler` kullanarak dört özniteliğimizi de aynı ölçeğe getirdik.
+2.  **PCA Uygulaması:** `PCA(n_components=2)` komutuyla, veriyi en bilgilendirici iki boyuta indirgemek istediğimizi belirttik.
+3.  **Açıklanan Varyans:** Çıktıyı incelediğimizde, ilk temel bileşenin toplam varyansın yaklaşık %73'ünü, ikinci temel bileşenin ise yaklaşık %23'ünü açıkladığını görürüz. Yani bu iki yeni öznitelik, orijinal verideki toplam bilginin yaklaşık %96'sını taşımaktadır. Dört öznitelik yerine sadece bu ikisini kullanarak modelimizi eğitebiliriz.
+4.  **Görselleştirme:** Oluşturduğumuz grafik, PCA'nın başarısını net bir şekilde ortaya koyar. Dört boyutlu uzayda bulunan veri noktaları, sadece iki boyuta indirgenmiş olmalarına rağmen, üç farklı Iris türünün ne kadar belirgin bir şekilde birbirinden ayrıldığını görebiliriz. Bu, PCA'nın verinin temel yapısını koruyarak boyutunu ne kadar etkili bir şekilde azalttığının görsel bir kanıtıdır.
+
+Öznitelik indirgemede PCA'nın kullanımı, makine öğrenmesi modellerinin performansını artırabilir ve eğitim süresini kısaltabilir. Ancak, PCA'nın doğrusal bir yöntem olduğunu ve tüm veri yapıları için uygun olmayabileceğini unutmamak önemlidir. Karmaşık, doğrusal olmayan ilişkiler içeren veriler için tıpkı SVM'deki çekirdek yöntemlerinde olduğu gibi, doğrusal olmayan boyut azaltma teknikleri (örneğin t-SNE, UMAP) de kullanılabilir.
+
