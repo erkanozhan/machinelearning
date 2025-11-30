@@ -2246,33 +2246,37 @@ DBSCAN, rastgele bir noktadan başlar. Eğer bu nokta bir çekirdek noktaysa, on
 
 Bu basit uygulama ile, etiketlenmemiş verilerdeki gizli yapıları keşfetmek için kümeleme algoritmalarının nasıl kullanılabileceğini pratik olarak görmüş olduk.
 
-### Boyut Azaltma ve Temel Bileşen Analizi (PCA)
+# Boyut Azaltma ve Temel Bileşen Analizi (PCA)
 
-Büyük veri setleriyle çalışırken, yüzlerce hatta binlerce öznitelikle karşılaşabiliriz. Bu durum "boyutluluğun laneti (Boyutluluğun laneti (curse of dimensionality): boyut sayısı arttıkça verinin uzayda seyrekleşmesi, uzaklık/benzerlik ölçümlerinin anlamsızlaşması ve modelin daha fazla veriyle bile genellemede zorlanması. Bu yüzden yüksek boyutlu özellikleri seçmek, dönüştürmek veya azaltmak (ör. PCA, düzenlileştirme) gerekir.)" olarak da bilinir ve hem hesaplama maliyetini artırır hem de modelin ezber yapma (overfitting) riskini yükseltir. Bu sorunun çözümüne **Boyut Azaltma** diyoruz.
+Gençler, veri bilimiyle uğraşırken sıklıkla düştüğümüz bir tuzak vardır: "Veri ne kadar bolsa, sonuç o kadar iyidir." Ancak gerçek dünyada işler böyle yürümez. Yüzlerce, hatta binlerce öznitelikle (sütunla) karşılaştığımızda "Boyut Laneti" (Curse of Dimensionality) dediğimiz bir fenomenle yüzleşiriz. Boyut sayısı arttıkça veri uzayda seyrekleşir, uzaklık ve benzerlik ölçümleri anlamsızlaşmaya başlar ve modelimiz, verinin genel yapısını öğrenmek yerine onu ezberlemeye (overfitting) başlar.
 
-Boyut azaltmanın iki ana nedeni vardır:
-1.  **Verimlilik:** Hesaplama süresini hızlandırmak ve depolama gereksinimlerini azaltmak.
-2.  **Model Performansı:** Gereksiz veya gürültülü öznitelikleri eleyerek modelin sadece en önemli bilgilere odaklanmasını sağlamak ve böylece genelleme yeteneğini artırmak.
+İşte burada devreye **Boyut Azaltma** girer. Bunu yapmamızın iki temel sebebi vardır. Birincisi verimliliktir; hesaplama maliyetini düşürmek ve depolama alanından tasarruf etmek isteriz. İkincisi ve daha önemlisi model performansıdır; gürültüyü ayıklayarak modelin sadece "sinyale" odaklanmasını sağlarız.
 
-Boyut azaltma iki temel yaklaşımla yapılır: **Özellik Seçimi** (mevcut özniteliklerden en bilgilendirici olanları seçmek) ve **Özellik Çıkarımı** (mevcut özniteliklerden yola çıkarak, veriyi daha iyi temsil eden yeni ve daha az sayıda öznitelik oluşturmak).
+Boyut azaltmayı iki yolla yaparız: Ya eldeki özniteliklerden en iyilerini seçeriz (**Özellik Seçimi**) ya da eldeki öznitelikleri matematiksel bir potada eritip, veriyi daha iyi temsil eden daha az sayıda yeni öznitelik üretiriz (**Özellik Çıkarımı**). Bugün odaklanacağımız Temel Bileşen Analizi (PCA), bu ikinci grubun en güçlü temsilcisidir.
 
-#### Temel Bileşen Analizi (Principal Component Analysis - PCA)
+***
 
-PCA, en yaygın kullanılan **doğrusal özellik çıkarımı** tekniğidir. Temel amacı, birbiriyle ilişkili (korelasyonlu) olabilecek çok sayıdaki özniteliği, birbiriyle ilişkisiz ve verideki varyansı (değişkenliği) en iyi şekilde açıklayan daha az sayıda yeni özniteliğe dönüştürmektir. Bu yeni özniteliklere **Temel Bileşenler (Principal Components)** denir.
+### Temel Bileşen Analizi (Principal Component Analysis - PCA)
 
-PCA'nın arkasındaki sezgiyi, karmaşık bir 3D nesnenin fotoğrafını çekmeye benzetebiliriz. Nesnenin yapısını en iyi anlatan 2D bir görüntü elde etmek için, onu en çok bilgi veren açıdan çekmemiz gerekir. PCA, matematiksel olarak verimiz için bu "en iyi açıları" bulur.
+PCA, doğrusal bir özellik çıkarımı tekniğidir. Temel amacı şudur: Birbiriyle ilişkili (korelasyonlu) çok sayıdaki değişkeni alıp, bunları aralarında ilişki olmayan (korelasyonsuz) ve verideki değişimi (varyansı) en iyi açıklayan daha az sayıda "yeni" değişkene dönüştürmek. Bu yeni değişkenlere **Temel Bileşenler** diyoruz.
 
-*   **Birinci Temel Bileşen (PC1):** Verideki en büyük varyansın olduğu yönü temsil eden yeni eksendir. Yani verinin en çok "yayıldığı" doğrultudur.
-*   **İkinci Temel Bileşen (PC2):** Geriye kalan varyansın en büyük olduğu ve PC1'e dik (ortogonal) olan ikinci yöndür.
-*   Bu süreç, orijinal öznitelik sayısı kadar devam eder. Ancak amaç boyut azaltmak olduğu için, genellikle toplam varyansın büyük bir kısmını (örneğin %95'ini) açıklayan ilk birkaç temel bileşen seçilir ve diğerleri atılır.
+Bunu zihninizde canlandırmak için bir fotoğrafçıyı düşünün. Elinde karmaşık, 3 boyutlu bir nesne var ve bu nesneyi en iyi anlatacak tek bir kare fotoğraf (2 boyut) çekmek istiyor. Fotoğrafçı, nesnenin en çok detayını gösteren, gölgede en az bilgi bırakan açıyı arar. PCA’nın yaptığı da matematiksel olarak tam budur; verinin "en iyi fotoğrafını çekecek" açıyı bulmaktır.
+
+Süreç şöyle işler:
+1.  **Birinci Temel Bileşen (PC1):** Verideki en büyük değişimin (varyansın) olduğu yönü bulur. Veri noktaları en çok hangi doğrultuda yayılıyor? İşte bu bizim ilk yeni eksenimizdir.
+2.  **İkinci Temel Bileşen (PC2):** Geriye kalan değişimin en büyük olduğu yönü bulur. Ancak çok önemli bir kural vardır: Bu yeni yön, ilk yöne dik (ortogonal) olmak zorundadır. Böylece PC1'in taşıdığı bilgiyi tekrar etmemiş oluruz.
+
+Bu işlem orijinal öznitelik sayısı kadar devam edebilir ancak biz genellikle toplam bilginin büyük kısmını (örneğin %95'ini) açıklayan ilk birkaç bileşeni alır, gerisini gürültü kabul edip atarız.
+
+Aşağıdaki grafik, iki boyutlu bir verinin (X1 ve X2) nasıl yeni eksenlere (PC1 ve PC2) taşındığını özetlemektedir:
 
 <svg width="500" height="250" xmlns="http://www.w3.org/2000/svg">
     <!-- Orijinal Eksenler ve Veri -->
-    <text x="50" y="20">Orijinal Veri</text>
+    <text x="50" y="20" font-family="sans-serif" font-size="12">Orijinal Veri</text>
     <line x1="50" y1="230" x2="200" y2="230" stroke="black" marker-end="url(#arrow-h)"/>
-    <text x="205" y="235">X1</text>
+    <text x="205" y="235" font-family="sans-serif" font-size="10">X1</text>
     <line x1="50" y1="230" x2="50" y2="80" stroke="black" marker-end="url(#arrow-v)"/>
-    <text x="40" y="70">X2</text>
+    <text x="40" y="70" font-family="sans-serif" font-size="10">X2</text>
     <circle cx="80" cy="200" r="3" fill="gray"/>
     <circle cx="90" cy="180" r="3" fill="gray"/>
     <circle cx="100" cy="190" r="3" fill="gray"/>
@@ -2282,11 +2286,11 @@ PCA'nın arkasındaki sezgiyi, karmaşık bir 3D nesnenin fotoğrafını çekmey
     <circle cx="140" cy="150" r="3" fill="gray"/>
     <circle cx="150" cy="120" r="3" fill="gray"/>
     <!-- PCA Eksenleri -->
-    <text x="300" y="20">Temel Bileşenler</text>
+    <text x="300" y="20" font-family="sans-serif" font-size="12">Temel Bileşenler</text>
     <line x1="325" y1="205" x2="475" y2="105" stroke="red" stroke-width="2" marker-end="url(#arrow-h)"/>
-    <text x="480" y="105" fill="red" font-weight="bold">PC1</text>
+    <text x="480" y="105" fill="red" font-weight="bold" font-family="sans-serif" font-size="10">PC1</text>
     <line x1="360" y1="120" x2="460" y2="220" stroke="blue" stroke-width="2" marker-end="url(#arrow-v)"/>
-    <text x="460" y="230" fill="blue" font-weight="bold">PC2</text>
+    <text x="460" y="230" fill="blue" font-weight="bold" font-family="sans-serif" font-size="10">PC2</text>
     <circle cx="330" cy="200" r="3" fill="gray"/>
     <circle cx="340" cy="180" r="3" fill="gray"/>
     <circle cx="350" cy="190" r="3" fill="gray"/>
@@ -2301,67 +2305,43 @@ PCA'nın arkasındaki sezgiyi, karmaşık bir 3D nesnenin fotoğrafını çekmey
     </defs>
 </svg>
 
-Sonuç olarak PCA, öznitelikler arasındaki gereksiz ilişkileri ortadan kaldırır ve verinin özünü daha az sayıda temel bileşenle ifade ederek, sonraki makine öğrenmesi adımları için daha temiz ve daha verimli bir veri seti oluşturur.
+Özetle PCA, veriyi yeni bir koordinat sistemine taşır. Bu yeni sistemde eksenler, verinin en çok yayıldığı (yani en çok bilginin olduğu) yönlere göre hizalanır.
 
-**PCA Sezgi:**
+***
 
-Veri noktalarını, kayıpları en aza indirecek şekilde yeni bir eksene (veya hiperdüzleme) yansıtırız.
+### Uygulama: Weka ile PCA Analizi
 
-*   Diyelim ki iki öznitelik ($X_1$ ve $X_2$) var ve bu öznitelikler arasında yüksek bir korelasyon mevcut. PCA, bu iki ekseni birleştiren, verinin en çok yayıldığı tek bir yeni eksen oluşturur. Bu yeni eksen, orijinal verinin varyansının büyük çoğunluğunu yakalar.
-*   **Temel Bileşenler:** Bu yeni eksenlere "Temel Bileşenler" (Principal Components) denir. Birinci Temel Bileşen (PC1), en yüksek varyansı açıklar. İkinci Temel Bileşen (PC2), kalan varyansı açıklar ve PC1'e ortogonaldir (dik).
+Teoriyi anlamak güzeldir ancak mühendislik uygulamada gizlidir. Gelin, Iris veri setindeki dört boyutu (çanak ve taç yaprakların eni/boyu), bilgi kaybı yaşamadan nasıl azaltabileceğimizi Weka üzerinde görelim.
 
-**PCA'nın Matematiksel Amacı:**
-Veriyi, yeni eksenlere yansıttıktan sonra, veri noktalarının bu eksenler boyunca en fazla yayılmasını (maksimum varyans) sağlamaktır.
+Buradaki hipotezimiz şudur: Veri setindeki öznitelik sayısını azaltsak bile, sınıflandırma başarımız düşmemeli.
 
-**Sonuç:** PCA, verinin özünü koruyarak gürültüyü ve gereksiz karmaşıklığı ortadan kaldırır. Bu, özellikle görüntü işleme veya genomik gibi çok boyutlu alanlarda vazgeçilmez bir ön işlemdir.
+**1. Adım: Referans Noktası (Baseline) Oluşturma**
+Önce hiçbir işlem yapmadan elimizdeki ham veriyle ne kadar başarılıyız, bunu görmeliyiz.
+*   Weka'da `iris.arff` dosyasını yükleyin.
+*   **Classify** sekmesinde `trees` -> `J48` algoritmasını seçin.
+*   Modeli çalıştırdığınızda (Cross-validation ile) doğruluk oranının yaklaşık **%96** olduğunu göreceksiniz. Bu bizim referansımız.
 
-### Uygulama: Weka ve Python ile Boyut Azaltma
+**2. Adım: PCA ile Boyut İndirgeme**
+Şimdi verinin "özünü" çıkaralım.
+*   **Preprocess** sekmesine dönün.
+*   **Filter** kısmından `weka` -> `filters` -> `unsupervised` -> `attribute` -> `PrincipalComponents` yolunu izleyin.
+*   Filtre ayarlarına (yazının üzerine tıklayarak) girin. Burada `varianceCovered` parametresi kritiktir. Varsayılan olarak **0.95** gelir. Bu, "Bana verinin %95'ini açıklayan en az sayıda değişkeni ver" demektir.
+*   **Apply** dediğinizde, 4 özniteliğin silinip yerine sadece 2 yeni özniteliğin (`PrincipalComponent_1` ve `2`) geldiğini göreceksiniz. Weka analiz etti ve "Senin 4 sütununda yatan bilginin %95'i aslında bu 2 sütunda gizli" dedi.
 
-Şimdi gençler, bu boyut azaltma tekniğinin pratikte nasıl çalıştığını görelim. PCA'yı hem görsel bir araç olan Weka'da hem de esnek bir programlama ortamı olan Python'da Iris veri setine uygulayacağız. Amacımız, dört özniteliğe (çanak ve taç yaprağı uzunluk/genişlik) sahip bu veri setini, bilginin büyük çoğunluğunu koruyarak daha az sayıda öznitelikle nasıl ifade edebileceğimizi görmektir.
+**3. Adım: Sonuçların Karşılaştırılması**
+Yeni, 2 sütunlu veri setiyle tekrar **Classify** sekmesine gidip aynı J48 modelini çalıştırın.
+*   Sonuç yine **%94-96** bandında çıkacaktır.
 
-#### Weka ile PCA Uygulaması: Performans Karşılaştırması
+**Yorum:**
+Gençler, buradaki ders şudur: Öznitelik sayısını yarıya indirdik (4'ten 2'ye), ancak başarı oranımız neredeyse hiç değişmedi. Bu demektir ki, o atılan 2 boyutluk bilgi aslında gereksiz detaylardan veya tekrarlardan ibaretmiş. Daha az veriyle, daha hızlı ve aynı başarıda çalışan bir model elde ettik.
 
-Gençler, şimdi bir makine öğrenmesi projesinde boyut azaltmanın pratik etkisini gözlemleyelim. Bir hipotezimiz var: Veri setindeki öznitelik sayısını, bilgi kaybını en aza indirerek azaltırsak, sınıflandırma modelimizin performansını koruyabilir, hatta belki de iyileştirebiliriz. Bu hipotezi Weka üzerinde test edeceğiz.
+***
 
-**1. Adım: Başlangıç Performansını Belirleme (Referans Noktası)**
+### Uygulama: Python (Scikit-learn) ile Mühendislik Yaklaşımı
 
-Karşılaştırma yapabilmek için öncelikle boyut azaltma uygulamadan, orijinal veri seti üzerindeki model performansını ölçmemiz gerekir.
+Aynı işlemi Python ortamında, kodun mutfağında nasıl yaparız? Burada dikkat etmeniz gereken çok kritik bir "ön işlem" adımı var.
 
-1.  **Veriyi Yükleme:** Weka Explorer'ı açın ve "Preprocess" sekmesinden `iris.arff` dosyasını yükleyin.
-2.  **Modeli Eğitme:** "Classify" sekmesine geçin. "Choose" butonu ile `trees` altından `J48` (bir karar ağacı algoritması) seçin. Test seçeneği olarak "Cross-validation" (10 katlı) seçiliyken "Start" butonuna basın.
-3.  **Sonucu Not Alma:** "Classifier output" panelini incelediğimizde, `Correctly Classified Instances` (Doğru Sınıflandırılan Örnekler) oranının yaklaşık **%96** olduğunu görürüz. Bu, bizim referans noktamızdır. Dört öznitelik kullanarak ulaştığımız başarı bu seviyededir.
-
-**2. Adım: PCA ile Boyut Azaltma**
-
-Şimdi, verinin özünü koruyarak bu dört özniteliği daha aza indirelim.
-
-1.  **Filtre Seçimi:** "Preprocess" sekmesine geri dönün. "Filter" bölümündeki "Choose" butonuna tıklayın. Açılan menüden `weka` -> `filters` -> `unsupervised` -> `attribute` yolunu izleyin ve `PrincipalComponents` filtresini seçin.
-2.  **Parametre Ayarlama:** `PrincipalComponents` yazısının üzerine tıklayarak ayarlar penceresini açın.
-    *   **`varianceCovered`:** Bu parametre, orijinal verideki toplam değişkenliğin (bilginin) yüzde kaçını korumak istediğimizi belirtir. Varsayılan değer olan `0.95`'i koruyalım. Bu, Weka'ya "Verideki bilginin %95'ini taşıyan en az sayıda yeni öznitelik oluştur" talimatını verir.
-3.  **Filtreyi Uygulama:** "Apply" butonuna basın.
-
-Filtreyi uyguladıktan sonra "Attributes" paneline baktığınızda, orijinal dört özniteliğin (`sepallength`, `sepalwidth`, vb.) yerini `PrincipalComponent_1` ve `PrincipalComponent_2` adında sadece iki yeni özniteliğin aldığını göreceksiniz. Weka, verideki bilginin %95'ini bu iki yeni, türetilmiş öznitelikle temsil etmenin yeterli olduğuna karar verdi. Dört boyutlu problemimizi, iki boyuta indirgemiş olduk.
-
-**3. Adım: Azaltılmış Veri Setiyle Performansı Ölçme**
-
-Artık elimizde daha az sayıda ama daha yoğun bilgi içeren bir veri seti var. Şimdi aynı sınıflandırma modelini bu yeni veri üzerinde tekrar çalıştıralım.
-
-1.  **Modeli Yeniden Eğitme:** "Classify" sekmesine geri dönün. Ayarları değiştirmeden (yine J48 ve 10 katlı çapraz doğrulama) "Start" butonuna tekrar basın.
-2.  **Sonuçları Karşılaştırma:** Yeni sonuçlara baktığımızda, doğruluk oranının yine **%94-%96** aralığında, yani referans noktamıza çok yakın bir değerde olduğunu görürüz.
-
-**Değerlendirme**
-
-Bu deney bize ne gösterdi? Dört öznitelik kullanarak elde ettiğimiz yaklaşık %96'lık başarıya, sadece iki öznitelik kullanarak neredeyse ulaştık. Öznitelik sayısını yarıya indirgememize rağmen performansta kayda değer bir düşüş yaşamadık. Bu, PCA'nın öznitelikler arasındaki gereksiz bilgileri (korelasyon gibi) ve gürültüyü başarıyla temizlediğini, geriye sadece sınıflandırma için en anlamlı olan "öz" bilgiyi bıraktığını gösterir.
-
-Daha teknik bir bakışla, "Filter output" panelinde PCA analizinin detaylarını inceleyebiliriz. Burada, oluşturulan her bir temel bileşenin orijinal verideki varyansın ne kadarını açıkladığı (`eigenvalue` ve varyans oranı) listelenir. Iris veri seti için genellikle ilk bileşenin toplam varyansın yaklaşık %73'ünü, ikinci bileşenin ise yaklaşık %23'ünü açıkladığını görürüz. Bu iki bileşen birlikte toplam varyansın %96'sını kapsar, bu nedenle `varianceCovered=0.95` ayarı ile iki bileşen elde etmemiz beklenen bir sonuçtur.
-
-Bu sonuç, makine öğrenmesinde önemli bir prensibi doğrular: Daha fazla öznitelik her zaman daha iyi değildir. Bazen daha az, daha temiz ve daha anlamlı özniteliklerle çalışmak, hem daha basit ve hızlı modeller kurmamızı sağlar hem de modelin genelleme yeteneğini artırarak ezberlemenin (overfitting) önüne geçer.
-
-#### Python (Scikit-learn) ile PCA Uygulaması
-
-Python ve `scikit-learn` kütüphanesi, PCA sürecini daha detaylı kontrol etmemize ve sonuçları görselleştirmemize olanak tanır.
-
-**Önemli Not:** PCA, özniteliklerin varyansına dayalı bir yöntem olduğu için, farklı ölçeklerdeki öznitelikler (örneğin biri 1-10 aralığında, diğeri 1000-5000 aralığında) analizi yanıltabilir. Bu nedenle PCA uygulamadan önce veriyi standartlaştırmak (ortalaması 0, standart sapması 1 olacak şekilde ölçeklemek) genel kabul görmüş bir en iyi uygulamadır.
+PCA varyansa (değişime) bakar. Eğer bir sütundaki sayılar 1 ile 10 arasındayken, diğer sütunda 1000 ile 5000 arasındaysa, PCA büyük sayıların olduğu sütunu "daha önemli" zanneder. Bu bir hatadır. Bu yüzden PCA uygulamadan önce veriyi mutlaka **Standartlaştırmalıyız** (Ortalama=0, Standart Sapma=1).
 
 ```python
 import matplotlib.pyplot as plt
@@ -2369,29 +2349,28 @@ from sklearn.datasets import load_iris
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-# 1. Veri Setini Yükleme
+# 1. Veri Yükleme
 iris = load_iris()
 X = iris.data
 y = iris.target
 target_names = iris.target_names
 
-# 2. Veriyi Standartlaştırma
-# PCA'nın doğru çalışması için öznitelikleri ölçeklendiriyoruz
+# 2. Kritik Adım: Standartlaştırma
+# Ölçek farklarını ortadan kaldırmazsak PCA hatalı çalışır.
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# 3. PCA Uygulama
-# n_components=2: Veriyi 2 boyuta indirgemek istediğimizi belirtiyoruz.
+# 3. PCA Uygulaması
+# n_components=2: Veriyi 4 boyuttan 2 boyuta indirmek istiyoruz.
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 
-# 4. Sonuçları İnceleme
-# Açıklanan varyans oranı, her bir temel bileşenin
-# toplam bilginin (varyansın) yüzde kaçını taşıdığını gösterir.
-print(f"Açıklanan Varyans Oranı: {pca.explained_variance_ratio_}")
-print(f"Toplam Açıklanan Varyans: {sum(pca.explained_variance_ratio_):.2f}")
+# 4. Ne Kadar Bilgi Korundu?
+# explained_variance_ratio_ bize her bileşenin taşıdığı bilgi oranını verir.
+print(f"Bileşenlerin Açıkladığı Varyans: {pca.explained_variance_ratio_}")
+print(f"Toplam Korunan Bilgi: {sum(pca.explained_variance_ratio_):.2f}")
 
-# 5. Sonuçları Görselleştirme
+# 5. Görselleştirme
 plt.figure(figsize=(8, 6))
 colors = ['navy', 'turquoise', 'darkorange']
 
@@ -2401,18 +2380,88 @@ for color, i, target_name in zip(colors, [0, 1, 2], target_names):
 
 plt.legend(loc='best', shadow=False, scatterpoints=1)
 plt.title('PCA ile Iris Veri Setinin 2 Boyuta İndirgenmesi')
-plt.xlabel('Birinci Temel Bileşen')
-plt.ylabel('İkinci Temel Bileşen')
+plt.xlabel('Birinci Temel Bileşen (PC1)')
+plt.ylabel('İkinci Temel Bileşen (PC2)')
 plt.show()
-
 ```
 
-**Kodu Yorumlayalım:**
+Kodun çıktısını incelediğinizde, ilk bileşenin bilginin %73'ünü, ikincisinin %23'ünü taşıdığını göreceksiniz. Toplamda %96'lık bir bilgi korunumu var. Grafiğe baktığınızda ise, 4 boyutlu karmaşık bir yapının 2 boyutta ne kadar net ayrıştığını, çiçek türlerinin kümeler halinde nasıl toplandığını görebilirsiniz.
 
-1.  **Standartlaştırma:** İlk olarak, `StandardScaler` kullanarak dört özniteliğimizi de aynı ölçeğe getirdik.
-2.  **PCA Uygulaması:** `PCA(n_components=2)` komutuyla, veriyi en bilgilendirici iki boyuta indirgemek istediğimizi belirttik.
-3.  **Açıklanan Varyans:** Çıktıyı incelediğimizde, ilk temel bileşenin toplam varyansın yaklaşık %73'ünü, ikinci temel bileşenin ise yaklaşık %23'ünü açıkladığını görürüz. Yani bu iki yeni öznitelik, orijinal verideki toplam bilginin yaklaşık %96'sını taşımaktadır. Dört öznitelik yerine sadece bu ikisini kullanarak modelimizi eğitebiliriz.
-4.  **Görselleştirme:** Oluşturduğumuz grafik, PCA'nın başarısını net bir şekilde ortaya koyar. Dört boyutlu uzayda bulunan veri noktaları, sadece iki boyuta indirgenmiş olmalarına rağmen, üç farklı Iris türünün ne kadar belirgin bir şekilde birbirinden ayrıldığını görebiliriz. Bu, PCA'nın verinin temel yapısını koruyarak boyutunu ne kadar etkili bir şekilde azalttığının görsel bir kanıtıdır.
+Unutmayın; PCA doğrusal bir yöntemdir. Eğer verinizde çok karmaşık, eğrisel ilişkiler varsa (bir İsviçre rulosu şekli gibi), PCA yetersiz kalabilir. O zaman t-SNE veya UMAP gibi doğrusal olmayan yöntemlere başvurmamız gerekir. Ancak çoğu mühendislik probleminde PCA, veri setini temizlemek ve sadeleştirmek için ilk ve en sağlam durağımızdır.
 
-Öznitelik indirgemede PCA'nın kullanımı, makine öğrenmesi modellerinin performansını artırabilir ve eğitim süresini kısaltabilir. Ancak, PCA'nın doğrusal bir yöntem olduğunu ve tüm veri yapıları için uygun olmayabileceğini unutmamak önemlidir. Karmaşık, doğrusal olmayan ilişkiler içeren veriler için tıpkı SVM'deki çekirdek yöntemlerinde olduğu gibi, doğrusal olmayan boyut azaltma teknikleri (örneğin t-SNE, UMAP) de kullanılabilir.
+### Weka'da Öznitelik Seçimi: "Select Attributes" Sekmesi
 
+Gençler, az önce PCA ile veriyi nasıl "dönüştürerek" (transformation) boyut azalttığımızı inceledik. Orada eski değişkenleri karıştırıp yeni değişkenler ürettik. Şimdi ise metodolojik olarak farklı bir yaklaşıma geçiyoruz: **Öznitelik Seçimi (Feature Selection).**
+
+Buradaki felsefemiz, elimizdeki değişkenleri değiştirmek değil, onları bir elekten geçirmektir. "Hangi sütun benim işime yarıyor, hangisi sadece kalabalık yapıyor?" sorusuna yanıt arayacağız. Weka'da bu işlemi **"Select Attributes"** sekmesi üzerinden yönetiriz. Bu sekme, veri madenciliği sürecinin en kritik kararlarının verildiği kokpitlerden biridir.
+
+Bu panelde bilmeniz gereken iki temel mekanizma vardır. Bunlar birbiriyle uyumlu çalışmak zorundadır:
+
+1.  **Attribute Evaluator (Öznitelik Değerlendirici):** Bu, jüridir. Özniteliklere not verir. "Bu özellik sınıfı tahmin etmede ne kadar başarılı?" sorusunu matematiksel olarak yanıtlar (Örn: Bilgi Kazancı, Korelasyon).
+2.  **Search Method (Arama Yöntemi):** Bu ise izcidir. Öznitelik uzayında nasıl dolaşacağımızı belirler. Hepsini tek tek mi puanlayacağız (Ranker), yoksa ikili-üçlü gruplar halinde mi deneyeceğiz (BestFirst)?
+
+Iris veri seti üzerinde bu mekanizmayı iki farklı senaryo ile çalıştıralım.
+
+---
+
+#### Senaryo 1: Öznitelikleri Tek Tek Puanlama (Ranking)
+
+Bu yaklaşımda her özniteliği tek başına sahneye çıkarırız ve performansına göre bir sıralama yaparız.
+
+**Adım 1: Algoritma Seçimi**
+Weka'da "Select Attributes" sekmesine gelin. **Attribute Evaluator** kısmından `InfoGainAttributeEval` (Bilgi Kazancı) algoritmasını seçin.
+*   **Mantığı:** Bu algoritma Entropi kavramına dayanır. "Ben sadece bu özniteliği bilirsem, çiçeğin türünü tahmin etme belirsizliğim ne kadar azalır?" diye sorar.
+*   Bu seçimi yaptığınızda Weka size bir uyarı verecektir: "Bu değerlendirici ile `Ranker` arama yöntemini kullanmalısın." Bunu onaylayın. `Ranker`, öznitelikleri en yüksek puandan en düşüğe doğru dizer.
+
+**Adım 2: Modu Belirleme**
+Sonuçların güvenilir olması için **Attribute Selection Mode** kısmından `Cross-validation` (Çapraz Doğrulama) seçeneğini işaretleyin. Bu, sonucun verinin sadece belli bir kısmına göre değil, geneline göre tutarlı olmasını sağlar.
+
+**Adım 3: Analiz ve Çıktı**
+Start tuşuna bastığınızda, sağ taraftaki ekranda şöyle bir tablo göreceksiniz:
+
+```text
+Ranked attributes:
+ 1.418  3 petallength
+ 1.378  4 petalwidth
+ 0.698  1 sepallength
+ 0.363  2 sepalwidth
+```
+
+
+Tablo bize net bir hiyerarşi sunuyor.
+1.  `petallength` (1.418 puan) ve `petalwidth` (1.378 puan) çok yüksek bilgi taşıyor. Bu ikisi, problemi çözmek için neredeyse yeterli.
+2.  `sepalwidth` (0.363 puan) ise oldukça zayıf kalmış.
+
+Buradan çıkaracağımız ders şudur: Eğer hesaplama maliyetimiz yüksekse veya modelimiz çok karmaşıksa, `sepalwidth` sütununu veritabanımızdan silebiliriz. Bu bilgi kaybı bize zarar vermez, aksine modeli gürültüden arındırır.
+
+---
+
+#### Senaryo 2: En İyi Alt Kümeyi Seçme (Subset Selection)
+
+Gençler, bazen en iyi oyuncuları bir araya getirmek en iyi takımı kurmak demek değildir. Oyuncuların birbirleriyle uyumu da önemlidir. İlk senaryoda bireysel yeteneklere baktık. Şimdi ise "Hangi grup birlikte daha iyi çalışır?" sorusuna yanıt arayacağız.
+
+**Adım 1: Algoritma Seçimi**
+Bu sefer **Attribute Evaluator** kısmından `CfsSubsetEval` (Correlation-based Feature Selection) seçeneğini işaretleyin.
+*   **Mantığı:** Bu algoritma şu prensibi savunur: "İyi bir alt kümedeki öznitelikler, sınıf (hedef) ile yüksek korelasyonlu olmalı, ancak birbirleriyle düşük korelasyonlu olmalıdır." Yani aynı bilgiyi tekrar eden iki özelliği istemiyoruz.
+
+**Adım 2: Arama Yöntemi**
+Weka otomatik olarak **Search Method** kısmını `BestFirst` veya `GreedyStepwise` olarak değiştirecektir.
+*   `BestFirst`: Farklı öznitelik kombinasyonlarını (örneğin 1 ile 3, 2 ile 4 gibi) deneyerek en iyi grubu bulmaya çalışır. Hepsini tek tek puanlamaz, takımları yarıştırır.
+
+**Adım 3: Analiz ve Çıktı**
+Start'a bastığınızda çıktı ekranında sayısal bir sıralama yerine şunu görürsünüz:
+
+```text
+Selected attributes: 3,4 : 2
+                     petallength
+                     petalwidth
+```
+
+**Mühendislik Yorumu:**
+Bakın, algoritma `sepallength` ve `sepalwidth` özelliklerini tamamen eledi. Bize dedi ki: "Iris türlerini ayırmak istiyorsan sadece `petallength` ve `petalwidth` özelliklerini kullanman yeterli. Diğerlerini gruba dahil etme, onlar sadece kalabalık yapıyor."
+
+### Genel Değerlendirme
+
+Gördüğünüz gibi, PCA ile veriyi matematiksel uzayda bükerek boyut azaltmıştık. "Select Attributes" sekmesinde ise verinin orijinal yapısını bozmadan, sadece "işe yaramayanları" tespit edip ayıkladık.
+
+Bir veri bilimci olarak projenize başladığınızda, elinizdeki yüzlerce sütunu doğrudan modele sokmak yerine, önce bu sekmede bir ön analiz yapmanız gerekir. Hangi değişkenlerin probleminizle gerçekten ilişkili olduğunu görmek, kuracağınız modelin başarısını doğrudan etkileyecek en stratejik adımdır.
