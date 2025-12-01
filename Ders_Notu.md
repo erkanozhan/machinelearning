@@ -2440,14 +2440,14 @@ Buradaki hipotezimiz şudur: Veri setindeki öznitelik sayısını azaltsak bile
 *   **Preprocess** sekmesine dönün.
 *   **Filter** kısmından `weka` -> `filters` -> `unsupervised` -> `attribute` -> `PrincipalComponents` yolunu izleyin.
 *   Filtre ayarlarına (yazının üzerine tıklayarak) girin. Burada `varianceCovered` parametresi kritiktir. Varsayılan olarak **0.95** gelir. Bu, "Bana verinin %95'ini açıklayan en az sayıda değişkeni ver" demektir.
-*   **Apply** dediğinizde, 4 özniteliğin silinip yerine sadece 2 yeni özniteliğin (`PrincipalComponent_1` ve `2`) geldiğini göreceksiniz. Weka analiz etti ve "Senin 4 sütununda yatan bilginin %95'i aslında bu 2 sütunda gizli" dedi.
+*   **Apply** dediğinizde, 4 özniteliğin silinip yerine sadece 2 yeni özniteliğin (`PrincipalComponent_1` ve `2`) geldiğini göreceksiniz. Weka analiz etti ve "Senin 4 sütununda yatan bilginin %95'i aslında bu 2 sütunda gizli" dedi. Bu işlemden önce standardizasyon (Z-Score gibi, içinde negatif değer oalbilir. Max ve Min noktaları veriye göre değişir) veya normalizasyon (Negatif değer olmaz, 0-1 aralığına indirgenir) yapılması tavsiye edilir.
 
 **3. Adım: Sonuçların Karşılaştırılması**
 Yeni, 2 sütunlu veri setiyle tekrar **Classify** sekmesine gidip aynı J48 modelini çalıştırın.
 *   Sonuç yine **%94-96** bandında çıkacaktır.
 
 **Yorum:**
-Gençler, buradaki ders şudur: Öznitelik sayısını yarıya indirdik (4'ten 2'ye), ancak başarı oranımız neredeyse hiç değişmedi. Bu demektir ki, o atılan 2 boyutluk bilgi aslında gereksiz detaylardan veya tekrarlardan ibaretmiş. Daha az veriyle, daha hızlı ve aynı başarıda çalışan bir model elde ettik.
+Gençler, buradaki ders şudur: Öznitelik sayısını yarıya indirdik (4'ten 2'ye), ancak başarı oranımız artmadı, tam tersine düştü. Bu demektir ki, o atılan 2 boyutluk bilgi aslında gereksiz detaylardan veya tekrarlardan ibaret değilmiş. Daha az veriyle, daha hızlı ve aynı başarıda çalışan bir model elde etmek için PCA bu veri setinde işe yaramadı. Ohalde çantamızdaki 2. seçeneği kullanalım.
 
 ***
 
@@ -2582,4 +2582,5 @@ Bir veri bilimci olarak projenize başladığınızda, elinizdeki yüzlerce süt
 
 ***
 ## Uygulama:
-Github sitesinde DataMining repository'de insanlar.csv dosyasını indirin. Weka da açın. AddCluster Filtresi ile k-means algoritmasına göre 3 kümeye ayırın. Classify sekmesinden en iyi sınıflandırma başarısını veren (Kappa değeri yüksek olan) algoritmayı tespit edin. Daha sonra Feature Selection sekmesinden bboyut indirgeenimi yappmaya çalışın ve sonuçlarrı paylaşın.  
+Bu uygulama neredeyse tüm konuları içine alan bir uygulamadır. Bu uygulamayı yapabiliyorsanız önemli bir iş yaptınız. 
+Github sitesinde erkanozhan\DataMining repository'de Data klasöründe ```insanlar.csv``` dosyasını indirin. Weka da açın. ```AddCluster``` Filtresi ile k-means algoritmasına göre 3 kümeye ayırın. ```Classify``` sekmesinden en iyi sınıflandırma başarısını veren (Kappa değeri yüksek olan) algoritmayı tespit edin. Daha sonra ```Feature Selection``` sekmesinden boyut indirgenimi yappmaya çalışın ve sonuçlarrı paylaşın.  
