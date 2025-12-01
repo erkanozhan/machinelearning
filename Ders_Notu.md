@@ -2579,3 +2579,7 @@ Bakın, algoritma `sepallength` ve `sepalwidth` özelliklerini tamamen eledi. Bi
 Gördüğünüz gibi, PCA ile veriyi matematiksel uzayda bükerek boyut azaltmıştık. "Select Attributes" sekmesinde ise verinin orijinal yapısını bozmadan, sadece "işe yaramayanları" tespit edip ayıkladık.
 
 Bir veri bilimci olarak projenize başladığınızda, elinizdeki yüzlerce sütunu doğrudan modele sokmak yerine, önce bu sekmede bir ön analiz yapmanız gerekir. Hangi değişkenlerin probleminizle gerçekten ilişkili olduğunu görmek, kuracağınız modelin başarısını doğrudan etkileyecek en stratejik adımdır.
+
+***
+## Uygulama:
+Github sitesinde DataMining repository'de insanlar.csv dosyasını indirin. Weka da açın. AddCluster Filtresi ile k-means algoritmasına göre 3 kümeye ayırın. Classify sekmesinden en iyi sınıflandırma başarısını veren (Kappa değeri yüksek olan) algoritmayı tespit edin. Daha sonra Feature Selection sekmesinden bboyut indirgeenimi yappmaya çalışın ve sonuçlarrı paylaşın.  
