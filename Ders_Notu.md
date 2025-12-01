@@ -2244,15 +2244,129 @@ DBSCAN, rastgele bir noktadan başlar. Eğer bu nokta bir çekirdek noktaysa, on
     *   Açılan pencerede, veri noktalarının bir grafiğini göreceksiniz. Eksenleri farklı öznitelikler arasında değiştirerek verinin dağılımını inceleyebilirsiniz.
     *   `Color` açılır menüsünden `Cluster` seçeneğini seçtiğinizde, her bir nokta ait olduğu kümeye göre renklendirilir. Bu, Weka'nın bulduğu grupları net bir şekilde görmenizi sağlar.
 
-Bu basit uygulama ile, etiketlenmemiş verilerdeki gizli yapıları keşfetmek için kümeleme algoritmalarının nasıl kullanılabileceğini pratik olarak görmüş olduk.
+Bu basit uygulama ile, etiketlenmemiş verilerdeki gizli yapıları bulmak için kümeleme algoritmalarının nasıl kullanılabileceğini pratik olarak görmüş olduk.
 
-# Boyut Azaltma ve Temel Bileşen Analizi (PCA)
 
-Gençler, veri bilimiyle uğraşırken sıklıkla düştüğümüz bir tuzak vardır: "Veri ne kadar bolsa, sonuç o kadar iyidir." Ancak gerçek dünyada işler böyle yürümez. Yüzlerce, hatta binlerce öznitelikle (sütunla) karşılaştığımızda "Boyut Laneti" (Curse of Dimensionality) dediğimiz bir fenomenle yüzleşiriz. Boyut sayısı arttıkça veri uzayda seyrekleşir, uzaklık ve benzerlik ölçümleri anlamsızlaşmaya başlar ve modelimiz, verinin genel yapısını öğrenmek yerine onu ezberlemeye (overfitting) başlar.
+***
 
-İşte burada devreye **Boyut Azaltma** girer. Bunu yapmamızın iki temel sebebi vardır. Birincisi verimliliktir; hesaplama maliyetini düşürmek ve depolama alanından tasarruf etmek isteriz. İkincisi ve daha önemlisi model performansıdır; gürültüyü ayıklayarak modelin sadece "sinyale" odaklanmasını sağlarız.
+# Weka ile Iris Veri Seti Üzerinde Değerlendirmeli-Kümeleme Analizi
 
-Boyut azaltmayı iki yolla yaparız: Ya eldeki özniteliklerden en iyilerini seçeriz (**Özellik Seçimi**) ya da eldeki öznitelikleri matematiksel bir potada eritip, veriyi daha iyi temsil eden daha az sayıda yeni öznitelik üretiriz (**Özellik Çıkarımı**). Bugün odaklanacağımız Temel Bileşen Analizi (PCA), bu ikinci grubun en güçlü temsilcisidir.
+
+## Veri Seti Tanıtımı
+
+Kullanacağımız **Iris veri seti**, 150 adet süsen çiçeğinin ölçümlerinden oluşur. Bu veri setinde üç farklı çiçek türü vardır: *Setosa*, *Versicolor* ve *Virginica*. Her bir çiçek için dört özellik ölçülmüştür:
+1.  Çanak yaprak uzunluğu (Sepal Length)
+2.  Çanak yaprak genişliği (Sepal Width)
+3.  Taç yaprak uzunluğu (Petal Length)
+4.  Taç yaprak genişliği (Petal Width)
+
+Bizim amacımız, bilgisayara bu çiçeklerin türünü (etiketini) söylemeden, sadece yaprak ölçülerine bakarak bu 150 çiçeği 3 farklı gruba ayırmasını istemektir. Bakalım yaprak boyutlarına bakarak doğru türleri bir araya getirebilecek mi?
+
+### Weka Üzerinde Uygulama Adımları
+
+1.  **Weka'yı Açın:** "Explorer" butonuna tıklayarak ana ekranı açıyoruz.
+2.  **Veriyi Yükleyin:** `Preprocess` sekmesinden `Open file...` diyerek Weka'nın kurulu olduğu klasördeki `data` klasöründen `iris.arff` dosyasını seçiyoruz.
+3.  **Kümeleme Sekmesine Geçin:** Yukarıdaki sekmelerden `Cluster` kısmına geliyoruz.
+4.  **Algoritma Seçimi:** `Choose` butonuna basıp `SimpleKMeans` algoritmasını seçiyoruz. Bu algoritma, verileri belirlediğimiz sayıda merkeze (K) göre gruplar.
+5.  **Parametre Ayarı:** Seçtiğimiz algoritmanın üzerine tıklayarak ayarlarını açıyoruz. `numClusters` değerini **3** yapıyoruz. Çünkü doğada 3 farklı Iris türü olduğunu biliyoruz ve bilgisayarın bunları bulmasını istiyoruz.
+6.  **Analiz Modu:** Sol taraftaki "Cluster mode" seçeneklerinden `Classes to clusters evaluation` seçeneğini işaretliyoruz. Bu seçenek, algoritmanın oluşturduğu kümeler ile gerçek çiçek türlerini karşılaştırmamızı sağlar.
+7.  **Başlat:** `Start` butonuna basıyoruz.
+
+Çıktı ekranında "Cluster 0", "Cluster 1" ve "Cluster 2" diye gruplar göreceksiniz. Eğer bir grupta çoğunlukla aynı tür çiçekler varsa, algoritma başarılı olmuş demektir. Genellikle Setosa türü diğerlerinden çok farklı yaprak ölçülerine sahip olduğu için kolayca ayrılırken, diğer iki türün birbirine karıştığını görebilirsiniz.
+
+---
+
+### Çıktıların Analizi
+
+Weka'nın "Result list" ekranında karşımıza çıkan verileri şu şekilde okumalıyız:
+
+#### 1. Merkez Noktaları (Final Cluster Centroids)
+Çıktıda her kümenin "Centroid" değerlerini görürsünüz.
+
+```text
+Attribute      Full Data   Cluster 0   Cluster 1   Cluster 2
+               (150.0)     (50.0)      (61.0)      (39.0)
+=========================================================
+sepallength    5.8433      5.006       5.9016      6.8538
+sepalwidth     3.0573      3.428       2.7484      3.0769
+petallength    3.758       1.462       4.3934      5.7423
+petalwidth     1.1993      0.246       1.4344      2.0718
+```
+
+Bu tablo bize şunu anlatır:
+*   **Cluster 0:** Petal length (1.462) ve Petal width (0.246) ortalamaları çok düşüktür. Bu biyolojik olarak *Iris Setosa* türüne karşılık gelir.
+*   **Cluster 2:** En büyük yaprak ölçülerine (Petal length: 5.74) sahiptir. Bu da genellikle *Iris Virginica* türüdür.
+
+#### 2. Sınıflandırma Matrisi (Confusion Matrix)
+Algoritmanın başarısını en net göreceğimiz yer burasıdır.
+
+```text
+Clustered Instances
+
+0      50 ( 33%)
+1      61 ( 41%)
+2      39 ( 26%)
+
+Class attribute: class
+Classes to Clusters:
+
+  0  1  2  <-- assigned to cluster
+ 50  0  0 | Iris-setosa
+  0 47  3 | Iris-versicolor
+  0 14 36 | Iris-virginica
+```
+
+Gençler, bu tabloyu okumak analizin en kritik noktasıdır:
+*   **Satır 1:** 50 tane *Iris-setosa* çiçeğinin tamamı (50 tanesi) "Cluster 0"a atanmış. Hata oranı %0. Bu, Setosa'nın diğerlerinden çok net ayrıldığını gösterir.
+*   **Satır 2:** 50 tane *Iris-versicolor* çiçeğinin 47 tanesi doğru kümeye (Cluster 1) gitmiş, ancak 3 tanesi yanlışlıkla Cluster 2'ye (Virginica grubuna) dahil edilmiş.
+*   **Satır 3:** 50 tane *Iris-virginica* çiçeğinin sadece 36'sı kendi grubunda (Cluster 2) kalabilmiş, 14 tanesi Cluster 1'e kaymış.
+
+**Sonuç:** Toplamda 150 çiçekten 17 tanesi yanlış kümelenmiştir (3 + 14). Hata oranı yaklaşık %11.3'tür. Versicolor ve Virginica türlerinin birbirine karışmasının nedeni, bu iki türün yaprak boyutlarının birbirine çok yakın olması ve veri uzayında iç içe geçmiş bir dağılım sergilemesidir.
+
+Bu analizde gördüğümüz üzere, denetimsiz öğrenme (unsupervised learning) algoritmaları, etiketleri bilmeseler dahi verinin geometrik yakınlıklarını kullanarak başarılı ayrımlar yapabilmektedir. Ancak verilerin doğası gereği (birbirine çok benzeyen türler gibi) her zaman %100 ayrım mümkün olmayabilir. Analist olarak görevimiz, bu hata paylarını yorumlamak ve algoritmanın neden bu hataları yaptığını verinin yapısına bakarak açıklamaktır.
+
+Analiz raporunun son satırlarına indiğinizde, yapılan kümelemenin başarısını ve matematiksel tutarlılığını gösteren şu iki kritik satırı göreceksiniz. Bunları nasıl yorumlamanız gerektiğini inceleyelim.
+
+### 1. Hatalı Kümelenmiş Örnekler (Incorrectly Clustered Instances)
+
+Weka çıktısında şu satırı arayın:
+
+```text
+Incorrectly clustered instances : 17.0  11.3333 %
+```
+
+Burası az önce "Confusion Matrix" (Karışıklık Matrisi) tablosunda elle saydığımız hatanın bilgisayar tarafından hesaplanmış halidir.
+*   **17.0:** Toplamda kaç çiçeğin yanlış gruba atandığını gösterir (3 tane Versicolor + 14 tane Virginica).
+*   **%11.3333:** Bu da toplam veri sayısına (150) oranla hata yüzdesidir.
+
+Gençler, bu oran bize algoritmanın dışsal geçerliliğini, yani gerçek etiketlerle ne kadar uyuştuğunu söyler. Ancak gerçek hayatta her zaman elimizde etiketler (çiçek türleri) olmayabilir. O zaman neye bakacağız? İşte o zaman aşağıdaki matematiksel terim devreye girer.
+
+### 2. Küme İçi Kareler Toplamı (Within Cluster Sum of Squared Errors)
+
+Çıktıda şu ifadeyi göreceksiniz:
+
+```text
+Within cluster sum of squared errors: 6.998114004826762
+```
+
+Bu değer, "Classes to clusters evaluation" seçeneğini seçmeseniz bile, kümeleme işlemlerinde her zaman karşınıza çıkar ve modelin **içsel tutarlılığını** ölçer.
+
+Bunu şöyle düşünün: Bir küme oluşturduğumuzda, o kümedeki elemanların birbirine (ve küme merkezine) ne kadar yakın olduğunu bilmek isteriz.
+*   Eğer bu sayı **çok yüksekse**: Küme elemanları merkezden çok uzağa saçılmış demektir. Yani küme gevşektir, elemanlar birbirine çok benzemiyordur.
+*   Eğer bu sayı **düşükse**: Elemanlar merkezin etrafında sıkı sıkıya toplanmıştır. Küme homojendir, yani başarılı bir gruplama yapılmıştır.
+
+K-Means algoritmasının asıl matematiksel amacı, bu hata karesi toplamını (Error Sum of Squares) mümkün olduğunca **küçültmektir**.
+
+Özetle; **Incorrectly clustered instances** bize "Doğru bildin mi?" sorusunun cevabını verirken, **Sum of squared errors** bize "Yaptığın gruplama ne kadar sıkı ve derli toplu?" sorusunun cevabını verir. Analizlerinizde bu iki değeri raporlamanız, çalışmanızın güvenilirliği açısından şarttır.
+
+***
+# Boyut Azaltma (Dimensionality Reduction) ve Temel Bileşen Analizi (PCA)
+
+Gençler, veri bilimiyle uğraşırken sıklıkla düştüğümüz bir tuzak vardır: "Veri ne kadar bolsa, sonuç o kadar iyidir." Ancak gerçek dünyada işler böyle yürümez. Yüzlerce, hatta binlerce öznitelikle (feature) karşılaştığımızda "Boyut Belası" (Curse of Dimensionality) dediğimiz bir fenomenle yüzleşiriz. Boyut sayısı arttıkça veri uzayda seyrekleşir, uzaklık ve benzerlik ölçümleri anlamsızlaşmaya başlar ve modelimiz, verinin genel yapısını öğrenmek yerine onu ezberlemeye (overfitting) başlar.
+
+İşte burada devreye **Boyut Azaltma (Dimensionality Reduction)** girer. Bunu yapmamızın iki temel sebebi vardır. Birincisi verimliliktir; hesaplama maliyetini düşürmek ve depolama alanından tasarruf etmek isteriz. İkincisi ve daha önemlisi model performansıdır; gürültüyü (noise) ayıklayarak modelin sadece "sinyale" (signal) odaklanmasını sağlarız.
+
+Boyut azaltmayı iki yolla yaparız: Ya eldeki özniteliklerden en iyilerini seçeriz (**Özellik Seçimi (Feature Selection)**) ya da eldeki öznitelikleri matematiksel bir potada eritip, veriyi daha iyi temsil eden daha az sayıda yeni öznitelik üretiriz (**Özellik Çıkarımı (Feature Extraction)**). Bugün odaklanacağımız Temel Bileşen Analizi (PCA), bu ikinci grubun en güçlü temsilcisidir.
 
 ***
 
