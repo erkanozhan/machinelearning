@@ -1,7 +1,6 @@
-# Makine Öğrenmesi (Machine Learning) ve Yapay Zeka (AI)
+# Makine Öğrenmesi'ne Giriş (Introduciton to Machine Learning)
 
-# Makine Öğrenmesi (Machine Learning) ve Yapay Zeka (AI)
-
+***
 ### 1. Temel Kavramlar ve Avantaj
 
 **Yapay Zeka (AI)**, İnsanın sahip olduğu **deneyim** ve **tecrübeyi** bilgisayarlara aktarılmasının yollarını inceleyen bilim dalının en genel adıdır. **Makine Öğrenmesi** ise bu amaç için kendine özgü teknikleri barındıran yapay zekanın bir **alt koludur**.
@@ -2589,53 +2588,70 @@ Github sitesinde erkanozhan\DataMining repository'de Data klasöründe ```insanl
 
 ## Maliyete Duyarlı Öğrenme (Cost-Sensitive Learning)
 
-Gençler, şimdiye kadar modellerimizi eğitirken genellikle tek bir hedefe odaklandık: Mümkün olduğunca çok doğru tahminde bulunmak, yani doğruluk oranını (accuracy) maksimize etmek. Ancak gerçek dünyadaki problemlerde her hata aynı ağırlıkta değildir.
+Gençler, şimdiye kadar modellerimizi eğitirken genellikle tek bir hedefe odaklandık: Mümkün olduğunca çok doğru tahminde bulunmak, yani doğruluk oranını (accuracy) maksimize etmek. Ancak gerçek dünyadaki problemlerde her hata aynı ağırlıkta değildir ve her yanlışın bedeli eşit ödenmez.
 
-Bir tıp doktorunun, hasta bir kişiye yanlışlıkla "sağlıklısın" demesi (yanlış negatif - false negative) ile sağlıklı bir kişiye "emin olmak için bir test daha yapalım" demesi (yanlış pozitif - false positive) arasındaki farkı düşünelim. İlk hata, bir hastanın tedavi edilememesine yol açabilirken, ikincisi en fazla zaman ve kaynak israfına neden olur. İşte bu "hata maliyeti" fikrini, makine öğrenmesi modelimize öğretebiliriz. Bu durumda amacımız artık sadece hata sayısını değil, toplam hata maliyetini minimize etmektir.
+Bir tıp doktorunun, hasta bir kişiye yanlışlıkla "sağlıklısın" demesi (yanlış negatif - false negative) ile sağlıklı bir kişiye "emin olmak için bir test daha yapalım" demesi (yanlış pozitif - false positive) arasındaki farkı düşünelim. İlk hata, bir hastanın tedavi edilememesine ve hastalığın ilerlemesine yol açabilirken, ikincisi en fazla zaman ve kaynak israfına neden olur. İşte bu "hata maliyeti" fikrini, makine öğrenmesi modelimize öğretebiliriz. Bu durumda amacımız artık sadece hata sayısını değil, toplam hata maliyetini minimize etmektir.
+
+Bu bağlamda, standart sınıflandırma algoritmalarının temel varsayımı, tüm hataların eşit maliyete sahip olduğudur. Yani algoritma için bir kanser vakasını kaçırmakla, spam olmayan bir e-postayı spam kutusuna düşürmek matematiksel olarak aynı "ceza" puanına sahiptir. Oysa pratikte, özellikle dengesiz veri setlerinde (imbalanced datasets) bu yaklaşım ciddi sorunlar doğurur. Nadir görülen ancak kritik öneme sahip bir sınıfı (örneğin kredi kartı dolandırıcılığı veya üretim hattındaki hatalı parça) tespit etmek, çoğunluk sınıfını doğru bilmekten çok daha kıymetlidir.
+
+Bu asimetrik durumu yönetebilmek için **Maliyet Matrisi (Cost Matrix)** kavramı devreye girer. Standart bir karışıklık matrisinde (confusion matrix) sadece sayıları görürüz. Maliyet matrisinde ise bu durumların her birine atanan ağırlıklar veya cezalar yer alır.
+
+Matematiksel olarak ifade edildiğinde, klasik bir makine öğrenmesi algoritması genellikle şu hata fonksiyonunu minimize etmeye çalışır:
+
+$$ Error = \sum_{i=1}^{N} I(y_i \neq \hat{y}_i) $$
+
+Burada $I$, gösterge fonksiyonudur ve tahmin $(\hat{y}_i)$ gerçek değere $(y_i)$ eşit değilse 1, eşitse 0 değerini alır. Görüldüğü üzere, her hatanın ağırlığı 1'dir.
+
+Maliyete duyarlı öğrenmede ise bu fonksiyonu, her bir hatanın getirdiği maliyeti ($C$) içerecek şekilde genişletiriz. Toplam maliyeti ($Cost_{total}$) minimize etmeyi hedefleriz:
+
+$$ Cost_{total} = \sum_{i=1}^{N} C(y_i, \hat{y}_i) \times I(y_i \neq \hat{y}_i) $$
+
+Burada $C(y_i, \hat{y}_i)$, gerçek sınıf $y_i$ iken $\hat{y}_i$ tahminini yapmanın maliyetidir. Örneğin, bir bankacılık uygulamasında, batık bir krediyi "sağlam" olarak tahmin etmenin maliyeti ($C_{FN}$), sağlam bir krediyi "riskli" olarak tahmin edip müşteriyi kaçırmanın maliyetinden ($C_{FP}$) çok daha yüksek belirlenmelidir. Yani $C_{FN} \gg C_{FP}$ eşitsizliği sisteme tanıtılmalıdır.
+
+Bu yaklaşımı uygulamanın temel olarak üç farklı yolu bulunmaktadır:
+
+1.  **Veri Seviyesinde Müdahale (Data-level Approaches):** Algoritmayı değiştirmeden önce veri setini manipüle etme yöntemidir. Maliyeti yüksek olan sınıfın (genellikle azınlık sınıfı) örnekleri, maliyet oranına göre çoğaltılabilir (oversampling) veya maliyeti düşük olan sınıfın örnekleri azaltılabilir (undersampling). Böylece model, maliyetli sınıfı daha sık görerek ona daha fazla önem atfeder.
+2.  **Algoritma Seviyesinde Müdahale (Algorithm-level Approaches):** Bu yöntemde, öğrenme algoritmasının iç yapısı değiştirilir. Örneğin, bir Karar Ağacı (Decision Tree) veya Random Forest algoritmasında, düğümlerin bölünme kriterleri (Gini veya Entropi) hesaplanırken sadece sınıf dağılımı değil, aynı zamanda hatalı sınıflandırmanın maliyeti de denkleme dahil edilir. Benzer şekilde, Destek Vektör Makineleri (SVM) veya Sinir Ağları eğitilirken, kayıp fonksiyonuna (loss function) sınıflara özgü ağırlıklar ($w$) eklenir:
+    $$ Loss = - \sum_{i=1}^{N} w_{y_i} \log(\hat{y}_i) $$
+    Bu formülde $w_{y_i}$, o sınıfın hata maliyetiyle orantılı bir katsayıdır.
+3.  **Karar Eşiğinin Ayarlanması (Threshold Moving):** Birçok sınıflandırma algoritması (örneğin Lojistik Regresyon), çıktı olarak bir olasılık değeri üretir. Standart yaklaşımda 0.5 eşik değeri kullanılır. Ancak maliyete duyarlı bir yaklaşımda, maliyeti yüksek olan sınıfı yakalamak için bu eşik değeri optimize edilir. Örneğin, "dolandırıcılık" ihtimali %20 bile olsa, maliyeti çok yüksek olduğu için o işlemi "şüpheli" olarak işaretlemek, toplam maliyeti düşürecek bir strateji olabilir.
+
+Sonuç olarak, bir modelin başarısını değerlendirirken sadece "ne kadar bildiğine" değil, "yanıldığında ne kadar kaybettirdiğine" odaklanmak, gerçek hayat problemlerinin çözümünde mühendislik açısından daha olgun ve sürdürülebilir bir bakış açısı sağlar. Özellikle riskin ve maliyetin yüksek olduğu alanlarda, maliyete duyarlı öğrenme tekniklerinin kullanılması bir tercih değil, bir zorunluluktur.
 
 #### Weka ile Cost-Sensitive Learning Uygulaması
 
-Bu yaklaşıma Weka'da `CostSensitiveClassifier` adlı bir meta-sınıflandırıcı ile olanak tanınır. "Meta" olarak adlandırılmasının sebebi, kendi başına bir öğrenme algoritması olmasından ziyade, J48 gibi başka bir temel sınıflandırıcıyı sarmalayarak ona maliyet bilinci kazandıran bir üst katman görevi görmesidir. Şimdi, bu aracı nasıl kullanacağımıza bakalım.
+Gençler, teorik altyapısını kurduğumuz maliyete duyarlı öğrenme yaklaşımının Weka platformundaki karşılığı `CostSensitiveClassifier` algoritmasıdır. Bu algoritma, literatürde "meta-sınıflandırıcı" (meta-classifier) olarak adlandırılan bir yapıya sahiptir. Yani, kendi başına bir karar mekanizması üretmekten ziyade, J48 veya Naive Bayes gibi temel bir sınıflandırıcıyı sarmalayarak (wrapping), ona maliyet bilinci kazandıran üst düzey bir yönetim katmanı işlevi görür. Bu sürecin pratikte nasıl işlediğini anlamak adına, Weka kütüphanesinde yer alan `credit-g.arff` veri seti uygun bir örnektir. Bu veri seti, bankacılık sektöründeki kredi başvurularının risk analizini içermektedir ve temel problem, müşterilerin "iyi" (good) veya "kötü" (bad) olarak sınıflandırılmasıdır.
 
-**Adımlar:**
+Buradaki asimetrik maliyet yapısı şöyledir: Kötü bir müşteriye yanlışlıkla kredi vermek (finansal kayıp/yanlış pozitif), iyi bir müşteriyi yanlışlıkla reddetmekten (potansiyel kâr kaybı/yanlış negatif) banka için çok daha maliyetlidir. Uygulama adımları şu şekilde gerçekleştirilir:
 
-1.  **Veri Setini Yükleme**
-    *   Weka Explorer arayüzünü açın.
-    *   `Preprocess` sekmesinden, `credit-g.arff` gibi hata maliyetlerinin farklı olduğu bir veri setini yükleyin. Bu veri seti, kredi başvurularının "iyi" (good) veya "kötü" (bad) olarak sınıflandırılmasını içerir. Burada, "kötü" bir müşteriye "iyi" diyerek kredi vermek (yanlış pozitif), banka için çok daha maliyetlidir.
+**1. Veri Seti ve Algoritma Seçimi:**
+Weka Explorer arayüzünde `credit-g.arff` veri seti yüklendikten sonra, `Classify` sekmesi altında `meta` grubundan `CostSensitiveClassifier` seçilir. Bu meta-sınıflandırıcının ayarları içerisinden, temel sınıflandırıcı (`classifier`) olarak karar ağacı tabanlı `J48` algoritması belirlenebilir.
 
-2.  **Cost-Sensitive Classifier Seçimi**
-    *   `Classify` sekmesine geçin.
-    *   `Choose` butonuna tıklayarak açılan menüden `meta` → `CostSensitiveClassifier` yolunu izleyin.
-    *   `CostSensitiveClassifier` yapılandırmasını açtığınızda, bir temel sınıflandırıcı (`classifier`) seçmeniz istenir. Buradan `trees` → `J48` gibi bildiğiniz bir algoritmayı seçebilirsiniz.
+**2. Maliyet Matrisinin (Cost Matrix) Tanımlanması:**
+Bu sürecin en kritik matematiksel adımı **Maliyet Matrisi**'nin tanımlanmasıdır. Bu matris, modelin optimizasyon sürecinde kullanacağı ceza katsayılarını barındırır. Standart bir 2-sınıflı problem için maliyet matrisi $C$, şu şekilde ifade edilebilir:
 
-3.  **Maliyet Matrisini (Cost Matrix) Tanımlama**
-    *   Bu sürecin en kritik kısmı **Maliyet Matrisi**'dir. Bu matris, modelimize hangi hatanın ne kadar "pahalıya" mal olacağını bildiren bir tablodur.
-    *   `CostSensitiveClassifier` ayarlarında `costMatrix` özelliğini düzenlemek için üzerine tıklayın. Karşınıza genellikle şöyle 2x2'lik bir matris çıkar:
-        ```
-        [[0.0, 1.0], [1.0, 0.0]]
-        ```
-    *   Bu matris şöyle yorumlanır: Satırlar **gerçek sınıfı**, sütunlar ise **tahmin edilen sınıfı** temsil eder. Sınıflarımız sırasıyla `(good, bad)` olsun.
-        *   `[0,0]` (sol üst): Gerçek `good`, tahmin `good` (Doğru Pozitif). Maliyet 0'dır, çünkü hata yoktur.
-        *   `[0,1]` (sağ üst): Gerçek `good`, tahmin `bad` (Yanlış Negatif). Maliyeti 1.0'dir.
-        *   `[1,0]` (sol alt): Gerçek `bad`, tahmin `good` (Yanlış Pozitif). Maliyeti 1.0'dir.
-        *   `[1,1]` (sağ alt): Gerçek `bad`, tahmin `bad` (Doğru Negatif). Maliyet 0'dır, çünkü hata yoktur.
-    *   Şimdi bu matrisi kredi problemimize göre düzenleyelim. Gerçekte "kötü" olan bir müşteriyi "iyi" olarak etiketlemek (yanlış pozitif) bizim için çok daha maliyetli olsun. Bu hatanın maliyetini 10 yapalım. Diğer hatanın maliyeti 1 olarak kalsın. Matrisimiz şöyle görünür:
-        ```
-        [[0.0, 1.0], [10.0, 0.0]]
-        ```
-    *   Bu matrisle Weka'ya şunu söylemiş oluruz: "Birinci sınıfta (`good`) hata yapmanın maliyeti 1 birimken, ikinci sınıftaki (`bad`) bir hatanın maliyeti 10 birimdir. Sınıflandırma kararlarını bu maliyetleri göz önünde bulundurarak ver."
+$$ C = \begin{bmatrix} C_{0,0} & C_{0,1} \\ C_{1,0} & C_{1,1} \end{bmatrix} $$
 
-4.  **Modeli Eğitme ve Değerlendirme**
-    *   `Start` butonuna basarak modeli eğitin.
-    *   Sonuçları incelerken sadece doğruluk oranına değil, **Karışıklık Matrisi (Confusion Matrix)**'ne odaklanın.
-    *   Modelin, maliyeti 10 birim olan hatayı (bizim örneğimizde `bad` müşteriyi `good` olarak tahmin etme) yapmaktan kaçınmak için daha temkinli davrandığını göreceksiniz. Bu kritik hatanın sayısı azalırken, daha ucuz olan diğer hata türünün sayısı artabilir.
-    *   Genel doğruluk oranı belki bir miktar düşebilir, ancak bizim için önemli olan pahalı hataları önlemektir. Hedefimiz en yüksek doğruluğa ulaşmak değil, en düşük toplam maliyetle süreci tamamlamaktır.
+Burada satırlar **gerçek sınıfları**, sütunlar ise **tahmin edilen sınıfları** temsil eder. Kredi risk analizi örneğimizde, "bad" sınıfını (kötü müşteri) gözden kaçırıp ona "good" demenin maliyetini artırmak istiyoruz. Diyelim ki bu hatanın bedeli, diğer hatalardan 10 kat daha fazla olsun. Bu durumda matris konfigürasyonu şu şekilde düzenlenmelidir:
 
-Weka, bu maliyet bilincini modele entegre etmek için iki temel strateji sunar:
-*   **Reweighting:** Eğitim setindeki örnekleri maliyetlerine göre yeniden ağırlıklandırır. Hatası pahalı olan sınıfa ait örnekleri eğitim sırasında daha "önemli" hale getirir.
-*   **Minimize Expected Cost:** Sınıflandırma sırasında her bir tahminin beklenen maliyetini hesaplar ve en düşük maliyetli olanı seçer.
+```text
+ Sınıflar: good, bad
+      0     1
+ 0  [0.0   1.0]   <-- Gerçek: Good, Tahmin: Bad (Maliyet: 1)
+ 1  [10.0  0.0]   <-- Gerçek: Bad,  Tahmin: Good (Maliyet: 10 - Kritik Hata)
+```
 
-Bu yöntemler, özellikle tıp, finans ve güvenlik gibi alanlarda, bir hatanın sonuçlarının diğerinden çok daha ağır olduğu durumlarda modellerimizi daha akıllı ve amaca yönelik hale getirmemizi sağlar.
+Matrisin sol alt köşesindeki $[1,0]$ hücresine atanan 10 değeri, algoritmayla şu matematiksel kısıtı paylaşır: "Gerçekte kötü olan bir müşteriyi iyi olarak sınıflandırmanın cezası 10 birimdir." Bu, algoritmayı eğitim sürecinde bu hatayı yapmaktan kaçınmaya zorlar.
+
+**3. Modelin Eğitilmesi ve Değerlendirilmesi:**
+Model eğitildiğinde, elde edilen sonuçların değerlendirilmesi standart doğruluk (accuracy) metriğinden ziyade **Karışıklık Matrisi (Confusion Matrix)** üzerinden yapılmalıdır. Burada gözlemleyeceğiniz durum şudur: Model, maliyeti 10 birim olan hatayı minimize etmek için karar sınırlarını (decision boundaries) daha muhafazakar hale getirmiştir. Bu durum, genel doğruluk oranında bir miktar düşüşe neden olsa bile, maliyetli hataların sayısı azaldığı için toplam maliyet düşmüş olur. Mühendislikte hedefimiz en yüksek doğruluğa ulaşmak değil, problemi en düşük toplam maliyetle çözmektir.
+
+Weka, bu maliyet bilincini modele entegre etmek için iki temel matematiksel strateji sunar:
+
+*   **Yeniden Ağırlıklandırma (Reweighting):** Eğitim veri setindeki örneklerin ağırlıkları değiştirilir. Hatası pahalı olan sınıfa (örneğin "bad") ait örnekler, eğitim sırasında yapay olarak çoğaltılmış gibi işlem görür ve modelin bu sınıfa matematiksel olarak daha fazla önem atfetmesi sağlanır.
+*   **Beklenen Maliyeti Minimize Etme (Minimize Expected Cost):** Sınıflandırma aşamasında, model her bir sınıf için olasılık değerleri üretir. Son karar verilirken, en yüksek olasılığa sahip sınıf yerine, beklenen maliyeti ($Expected Cost$) en düşük olan sınıf seçilir.
+
+Bu yöntemler, özellikle tıp, finans ve siber güvenlik gibi bir hatanın sonuçlarının diğerinden çok daha ağır olduğu alanlarda, modellerin daha güvenilir ve amaca yönelik kararlar vermesini sağlar.
 
 ## Python ile Maliyete Duyarlı Sınıflandırma Örneği
 
