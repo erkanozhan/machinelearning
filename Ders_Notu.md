@@ -2795,3 +2795,288 @@ print(f"Baseline Toplam Maliyet:       {total_cost_b:.1f}")
 print(f"Sınıf Ağırlıklandırma Maliyeti: {total_cost_c:.1f}")
 print(f"Optimal Eşik Maliyeti:         {total_cost_o:.1f}")
 ```
+***
+# **Weka KnowledgeFlow: Mimari Analiz ve İleri Seviye Uygulamalı Sınıflandırma Metodolojileri**
+## 
+
+Weka platformu, kullanıcılarına veri ile etkileşim kurmaları için "Explorer" (Kaşif), "Experimenter" (Deneyci), "Workbench" (Çalışma Alanı) ve "Simple CLI" (Basit Komut Satırı) gibi çeşitli arayüzler sunmaktadır. Ancak, karmaşık veri işleme süreçlerini modüler bir "boru hattı" (pipeline) mantığıyla tasarlamak, büyük veri setlerini bellek kısıtlamalarına takılmadan işlemek ve özellikle akan veri (streaming data) üzerinde dinamik modeller geliştirmek isteyen uzmanlar için **KnowledgeFlow** (Bilgi Akışı) arayüzü en kritik ve yetenekli ortamı teşkil etmektedir.4
+
+KnowledgeFlow, geleneksel "hepsini yükle ve işle" mantığının ötesine geçerek, veri kaynağından başlayıp ön işleme, modelleme, değerlendirme ve görselleştirme adımlarının birbirine bağlı "Bean" adı verilen bileşenler üzerinden aktığı bir veri akışı modelini benimser.4 Bu rapor, okuyucuya J48 karar ağacı algoritması ile yapılan statik bir sınıflandırma analizinden, NaiveBayesUpdateable ile gerçekleştirilen dinamik veri akışı analizine kadar uzanan geniş bir yetkinlik seti kazandırmayı hedeflemektedir.
+
+## **2\. Weka KnowledgeFlow Mimarisi ve Veri Akış Paradigması**
+
+### **2.1. Veri Akışı (Data-Flow) Programlama Modeli**
+
+Geleneksel prosedürel programlamada, işlemler belirli bir komut sırasını takip ederken, veri akışı programlama modelinde (data-flow programming), işlemin yürütülmesi verinin mevcudiyetine bağlıdır. KnowledgeFlow, bu paradigmayı görsel bir programlama ortamına taşıyarak, veri madenciliği süreçlerinin birer yönlü graf (directed graph) olarak temsil edilmesini sağlar. Bu yapıda düğümler (nodes) işlem birimlerini (filtreler, sınıflandırıcılar), kenarlar (edges) ise verinin akış yolunu temsil eder.4
+
+KnowledgeFlow'un mimarisi, Java Beans teknolojisi üzerine kuruludur. Her bir bileşen (örneğin bir ArffLoader veya J48 sınıflandırıcısı), belirli olayları (events) dinleyen ve tetikleyen bağımsız birer nesnedir. Bu olay tabanlı yapı, sistemin asenkron çalışmasına olanak tanır. Bir veri yükleyici veriyi okuduğunda bir dataSet olayı üretir; bu olay, kendisine abone olan (bağlı olan) bir sonraki bileşen tarafından yakalanır ve işleme alınır. Bu mekanizma, Weka'nın diğer arayüzlerinden farklı olarak, birden fazla işlemin paralel olarak yürütülmesine (multi-threading) imkan tanır. Örneğin, bir çapraz doğrulama (cross-validation) işleminde, farklı veri katmanları (folds) üzerindeki eğitim süreçleri farklı işlemci çekirdeklerinde aynı anda gerçekleşebilir.6
+
+### **2.2. Explorer ve KnowledgeFlow**
+
+Weka ekosisteminde en sık kullanılan iki arayüz Explorer ve KnowledgeFlow'dur. Her ne kadar aynı temel algoritmaları kullansalar da, çalışma prensipleri ve kullanım senaryoları açısından köklü farklılıklar gösterirler.
+
+| Özellik | Weka Explorer | Weka KnowledgeFlow |
+| :---- | :---- | :---- |
+| **Veri İşleme Modu** | Sadece Toplu (Batch) İşlem. Verinin tamamı belleğe yüklenir. | Hem Toplu (Batch) hem de Artımlı (Incremental) İşlem. Veri parça parça işlenebilir. |
+| **Bellek Yönetimi** | Büyük veri setlerinde RAM yetersizliği (Out of Memory) riski yüksektir. | Akış modu sayesinde bellek verimli kullanılır, çok büyük veri setleri işlenebilir. |
+| **Süreç Tasarımı** | Sekmeler arası manuel geçiş gerektirir. Doğrusal bir akış vardır. | Sürükle-bırak yöntemiyle görsel akış diyagramları tasarlanır. Dallanan ve paralel akışlar mümkündür. |
+| **Otomasyon** | İşlemleri tekrarlamak için manuel müdahale gerekir. | Tasarlanan akışlar .kf veya .kfml formatında kaydedilip tekrar kullanılabilir. |
+| **Çoklu Model Karşılaştırma** | Modeller sırayla eğitilir ve sonuçlar liste halinde sunulur. | Birden fazla model (örneğin J48 ve Random Forest) paralel bağlanarak aynı grafik üzerinde (ROC eğrileri) karşılaştırılabilir. |
+
+2
+
+Explorer arayüzü, verinin ön işlenmesi (Preprocess) sekmesinde yapılan değişikliklerin tüm veri setine anında uygulandığı ve bir sonraki adıma (Classify) bu değiştirilmiş halin aktarıldığı "durum tabanlı" bir yaklaşıma sahiptir. Buna karşın KnowledgeFlow, her bileşenin kendi girdisini ve çıktısını yönettiği daha esnek bir yapı sunar. Bir veri kaynağından çıkan veri, iki farklı filtreye gönderilip, iki farklı işlenmiş veri seti olarak paralel analizlere tabi tutulabilir.10
+
+### **2.3. Bileşen (Bean) Kategorileri ve İşlevleri**
+
+KnowledgeFlow arayüzü, kullanıcıya sunduğu araçları işlevlerine göre kategorize etmiştir. Bu kategoriler, bir veri madenciliği projesinin yaşam döngüsünü (CRISP-DM gibi) yansıtır.
+
+#### **2.3.1. DataSources (Veri Kaynakları)**
+
+Veri madenciliği sürecinin başlangıç noktasıdır. KnowledgeFlow, veriyi yerel dosya sisteminden, web URL'lerinden veya veritabanlarından okuyabilir.
+
+* **ArffLoader:** Weka'nın standart veri formatı olan ARFF dosyalarını okur. ARFF (Attribute-Relation File Format), verinin yapısını (öznitelik tipleri, isimleri) ve veri örneklerini içeren metin tabanlı bir formattır.1  
+* **CsvLoader:** Virgülle ayrılmış değerler (CSV) dosyalarını okur.  
+* **DatabaseLoader:** JDBC üzerinden SQL veritabanlarına bağlanarak veri çeker.
+
+#### **2.3.2. DataSinks (Veri Havuzları)**
+
+İşlenmiş verinin veya model çıktılarının kaydedildiği bileşenlerdir.
+
+* **ArffSaver:** Veriyi ARFF formatında diske yazar.  
+* **SerializedInstancesSaver:** Veriyi Java'nın serileştirilmiş nesne formatında kaydeder, bu yöntem büyük verilerde daha hızlı okuma/yazma sağlar.7
+
+#### **2.3.3. Filters (Filtreler)**
+
+Veri ön işleme adımlarının gerçekleştirildiği bileşenlerdir. Weka'da filtreler "Denetimli" (Supervised) ve "Denetimsiz" (Unsupervised) olarak ikiye ayrılır. Ayrıca "Attribute" (Sütun) ve "Instance" (Satır) tabanlı filtreler de mevcuttur.
+
+* **Discretize:** Sayısal verileri kategorik aralıklara dönüştürür.  
+* **Normalize:** Sayısal verileri belirli bir aralığa (genellikle 0-1) ölçekler.  
+* **Remove:** İstenmeyen öznitelikleri veri setinden çıkarır.1
+
+#### **2.3.4. Classifiers (Sınıflandırıcılar)**
+
+Veriden öğrenme işlemini gerçekleştiren algoritmalardır. KnowledgeFlow'da tüm Weka sınıflandırıcıları mevcuttur.
+
+* **J48:** C4.5 karar ağacı algoritmasının Weka implementasyonudur. Bilgi kazancı (Information Gain) metriğini kullanarak ağaç oluşturur.4  
+* **NaiveBayes:** Bayes teoremine dayanan olasılıksal bir sınıflandırıcıdır.  
+* **RandomForest:** Birden fazla karar ağacının oylama usulüyle çalıştığı topluluk (ensemble) öğrenme yöntemidir.10
+
+#### **2.3.5. Evaluation (Değerlendirme)**
+
+Modellerin başarısını ölçmek için kullanılan bileşenlerdir.
+
+* **ClassAssigner:** Veri setindeki hangi sütunun "hedef sınıf" (class attribute) olduğunu belirler.4  
+* **CrossValidationFoldMaker:** Veriyi eğitim ve test setlerine (katmanlara) ayırarak çapraz doğrulama sürecini yönetir.4  
+* **ClassifierPerformanceEvaluator:** Sınıflandırıcının tahminlerini gerçek değerlerle karşılaştırarak başarı metriklerini (Doğruluk, F-Ölçütü, ROC Alanı vb.) hesaplar.4
+
+#### **2.3.6. Visualization (Görselleştirme)**
+
+Sonuçların insan tarafından okunabilir formata dönüştürüldüğü bileşenlerdir.
+
+* **TextViewer:** Metin tabanlı sonuçları (karışıklık matrisi, model özeti) gösterir.  
+* **GraphViewer:** Ağaç tabanlı modellerin veya grafiksel modellerin görsel yapısını sergiler.  
+* **StripChart:** Akan veri (streaming data) analizinde model performansının zaman içindeki değişimini canlı grafik olarak çizer.6  
+* **ModelPerformanceChart:** ROC eğrileri, Hassasiyet-Duyarlılık (Recall-Precision) eğrileri gibi eşik değeri analizlerini görselleştirir.10
+
+## **3\. Uygulama 1: J48 Karar Ağacı ile Toplu (Batch) Sınıflandırma**
+
+Bu bölümde, teorik temelleri verilen KnowledgeFlow bileşenlerini kullanarak, uçtan uca bir sınıflandırma projesinin nasıl gerçekleştirileceği en ince detayına kadar anlatılacaktır. Senaryomuzda, literatürde sıkça kullanılan ve Weka kurulumuyla birlikte gelen "weather.nominal.arff" veya "iris.arff" veri seti kullanılacaktır. Amaç, J48 karar ağacı algoritmasını kullanarak, verideki örüntüleri öğrenmek ve modelin başarısını 10-katlı çapraz doğrulama ile test etmektir.
+
+### **Adım 1: Arayüzün Hazırlanması ve Veri Yükleme**
+
+1. Başlatma: Weka GUI Chooser penceresinden KnowledgeFlow butonuna tıklanır. Açılan pencerede sol tarafta bileşen paleti, sağ tarafta ise tasarım tuvali (canvas) bulunur.  
+2. Veri Kaynağı Seçimi: Sol paneldeki DataSources sekmesine tıklanır. Buradan ArffLoader bileşeni seçilir. Fare imleci tuval üzerine getirildiğinde şekli değişir; tıklanarak bileşen tuvale bırakılır.  
+3. Dosya Seçimi: Tuvale yerleştirilen ArffLoader simgesi üzerine sağ tıklanır (Mac OS'ta Ctrl+Click). Açılan bağlam menüsünden Configure (Yapılandır) seçeneği seçilir. Dosya gezgini penceresi açılır. Weka'nın kurulu olduğu dizindeki data klasörüne gidilerek weather.nominal.arff (veya iris.arff) dosyası seçilir.  
+   * Teknik Detay: ArffLoader, dosyayı hemen belleğe yüklemez. Sadece dosya yolunu ve temel meta veriyi (başlık bilgisi) okur. Veri akışı başladığında yükleme gerçekleşecektir. Bu, "Lazy Loading" (Tembel Yükleme) prensibidir.4
+
+### **Adım 2: Sınıf Özniteliğinin Atanması (Class Assignment)**
+
+Weka, varsayılan olarak veri setinin son sütununu "sınıf" (hedef değişken) olarak kabul eder. Ancak, karmaşık akışlarda veya farklı veri setlerinde bu varsayıma güvenmek hatalı olabilir. ClassAssigner bileşeni ile bu atama açıkça yapılır.
+
+1. Bileşen Ekleme: Evaluation sekmesinden ClassAssigner bileşeni seçilip tuvale, ArffLoader'ın sağına yerleştirilir.  
+2. Bağlantı Kurma (Connection): ArffLoader üzerine sağ tıklanır ve Connections menüsü altından dataSet seçeneği işaretlenir. Bu seçim, verinin bir "toplu veri seti" (batch dataset) olarak aktarılacağını belirtir. Ardından fare ile ArffLoader'dan ClassAssigner'a doğru sürükleme yapılarak bağlantı çizgisi (kırmızı renkli) oluşturulur.  
+3. Yapılandırma: ClassAssigner üzerine sağ tıklanıp Configure seçilir. "Class attribute" açılır menüsünden sınıflandırma hedefi olan sütun (örneğin "play" veya "class") seçilir. Genellikle "Last" (Sonuncu) seçeneği bırakılır.4
+
+### **Adım 3: Çapraz Doğrulama (Cross-Validation) Stratejisi**
+
+Modelin güvenilirliğini ölçmek için, veriyi eğitim ve test olarak ayıran bir mekanizmaya ihtiyaç vardır. CrossValidationFoldMaker bu işlemi otomatikleştirir.
+
+1. Bileşen Ekleme: Evaluation sekmesinden CrossValidationFoldMaker bileşeni eklenir.  
+2. Bağlantı: ClassAssigner bileşeni, dataSet bağlantı tipi ile CrossValidationFoldMaker bileşenine bağlanır.  
+3. Parametre Ayarı: CrossValidationFoldMaker yapılandırmasında (Configure), "Folds" değeri standart olarak 10 gelir. Bu, verinin 10 eşit parçaya bölüneceğini, her seferinde 9 parçanın eğitim, 1 parçanın test için kullanılacağını ve bu işlemin 10 kez tekrarlanacağını ifade eder. "Seed" değeri (varsayılan 1), verinin karıştırılmasındaki rastgeleliği kontrol eder. Tekrarlanabilir sonuçlar için bu değer sabit tutulmalıdır.13
+
+### **Adım 4: J48 Karar Ağacı Modelinin Entegrasyonu**
+
+Bu aşamada, veriyi modelleyecek olan asıl algoritma devreye girer.
+
+1. Sınıflandırıcı Seçimi: Classifiers sekmesi altında, trees (ağaçlar) klasörü genişletilir ve J48 bileşeni seçilerek tuvale yerleştirilir.  
+   * 48, Ross Quinlan'ın C4.5 algoritmasının Java implementasyonudur. Veriyi, bilgi kazancını (Information Gain) maksimize edecek şekilde öznitelikler üzerinden böler. Bu süreçte entropi hesabı kullanılır:
+
+    $$Entropy(S) = -\sum_{i=1}^{c} p_i \log_2 p_i$$
+
+     Burada $p\_i$, $S$ veri setindeki $i$. sınıfın olasılığıdır. J48, hem kategorik hem de sayısal verileri işleyebilir ve aşırı öğrenmeyi (overfitting) önlemek için budama (pruning) mekanizmalarına sahiptir.12  
+2. Çift Yönlü Bağlantı (Kritik): Çapraz doğrulama mekanizması gereği, CrossValidationFoldMaker hem eğitim hem de test verisi üretir. Bu nedenle J48'e iki ayrı bağlantı yapılmalıdır:  
+   * CrossValidationFoldMaker \-\> sağ tık \-\> trainingSet \-\> J48'e bağla.  
+   * CrossValidationFoldMaker \-\> sağ tık \-\> testSet \-\> J48'e bağla.  
+   * Bu çift bağlantı, J48'in her döngüde önce eğitim verisini alıp modeli kurmasını, hemen ardından test verisini alıp tahmin üretmesini sağlar.4
+
+### **Adım 5: Performans Değerlendirmesi ve Sonuçların Toplanması**
+
+Sınıflandırıcının ürettiği tahminlerin doğruluğunu hesaplamak için bir değerlendirici (evaluator) gerekir.
+
+1. Değerlendirici Ekleme: Evaluation sekmesinden ClassifierPerformanceEvaluator bileşeni eklenir.  
+2. Bağlantı: J48 bileşeni üzerine sağ tıklanır. Burada bağlantı tipi olarak batchClassifier seçilmelidir. Bu, J48'in toplu eğitim modunda çalıştığını ve üretilen modelin/tahminlerin bir paket olarak değerlendiriciye gönderileceğini belirtir. J48 \-\> batchClassifier \-\> ClassifierPerformanceEvaluator bağlantısı kurulur.4
+
+### **Adım 6: Görselleştirme ve Sonuç Analizi**
+
+Sonuçları insan tarafından okunabilir formata çevirmek için görselleştirme araçları kullanılır.
+
+1. Metin Görüntüleyici (TextViewer):  
+   * Visualization sekmesinden TextViewer eklenir.  
+   * ClassifierPerformanceEvaluator \-\> text \-\> TextViewer bağlantısı yapılır. Bu bağlantı, doğruluk oranı, karışıklık matrisi (confusion matrix), kappa istatistiği gibi sayısal özetleri taşır.4  
+2. Grafik Görüntüleyici (GraphViewer):  
+   * J48 bir ağaç yapısı ürettiği için, bu yapıyı görselleştirmek mümkündür.  
+   * Visualization sekmesinden GraphViewer eklenir.  
+   * J48 \-\> graph \-\> GraphViewer bağlantısı yapılır. Dikkat: Bu bağlantı ClassifierPerformanceEvaluator üzerinden değil, doğrudan J48 üzerinden alınır, çünkü görselleştirilecek olan şey modelin kendisidir, performans metrikleri değildir.15
+
+### **Adım 7: Akışın Çalıştırılması ve Yorumlanması**
+
+1. Başlatma: Tasarım tamamlandıktan sonra, akışı başlatmak için araç çubuğundaki "Play" (Oynat) butonuna basılır veya en baştaki ArffLoader üzerine sağ tıklanıp Start loading denilir.  
+2. İzleme: KnowledgeFlow arayüzünün altındaki "Status" (Durum) çubuğunda işlemlerin ilerleyişi ("Loading...", "Building model...", "Finished") takip edilir. Bileşenler çalışırken üzerlerinde animasyonlar görülebilir veya "x1" gibi işlem sayaçları belirebilir.  
+3. Sonuçları İnceleme:  
+   * TextViewer üzerine sağ tıklanıp Show results seçilir. Açılan pencerede Summary (Özet) sekmesi altında "Correctly Classified Instances" (Doğru Sınıflandırılmış Örnekler) yüzdesi ve Confusion Matrix incelenir. Karışıklık matrisinde köşegen üzerindeki değerler doğru tahminleri, diğerleri hataları gösterir.12  
+   * GraphViewer üzerine sağ tıklanıp Show results seçilir. Burada J48 tarafından oluşturulan karar ağacı görsel olarak sunulur. Dallanmalar, verinin hangi özniteliklere göre ayrıldığını (örneğin; "outlook \= sunny") gösterir.
+
+   
+
+---
+
+## **Çoklu Model Karşılaştırma ve ROC Analizi**
+
+Şimdi kurduğumuz temel J48 akışını alıp, KnowledgeFlow’un esnek mimarisini kullanarak analizi bir üst seviyeye taşıyacağız. Amacımız, J48 karar ağacının yanına popüler bir topluluk (ensemble) öğrenme algoritması olan **RandomForest**'ı eklemek ve her iki modelin performansını tek bir Grafiksel Performans Çizimi üzerinde karşılaştırmaktır.
+
+## 
+
+### **ROC Eğrileri ve AUC Metriği**
+
+Bir sınıflandırıcının eşik değerine (threshold) bağlı olarak değişen performansını görselleştirmek için **ROC (Receiver Operating Characteristic) Eğrisi** kullanılır.
+
+* **Eğri:** Yatay eksen Yanlış Pozitif Oranı'nı (False Positive Rate \- Özgüllük Tersi) ve dikey eksen Doğru Pozitif Oranı'nı (True Positive Rate \- Hassasiyet) gösterir.  
+* **AUC (Area Under Curve):** Eğrinin altında kalan alandır. Bu alan ne kadar büyükse (1'e ne kadar yakınsa), modelin performansı o kadar iyidir ve tahmin yeteneği o kadar yüksektir. İki modeli aynı grafikte çizerek, hangi modelin daha geniş bir AUC alanına sahip olduğunu anında görebiliriz.
+
+
+## **İkinci Modeli Ekleme ve Karşılaştırma**
+
+Daha önce kurduğunuz **CrossValidationFoldMaker** bileşenini başlangıç noktası olarak alıyoruz. Unutmayın, KnowledgeFlow'da bir kaynaktan çıkan veri, birden fazla hedefe paralel olarak akabilir.
+
+### **Adım 4.1: İkinci Sınıflandırıcıyı (RandomForest) Ekleme**
+
+1. **Bileşen Ekleme:** Sol paneldeki **Classifiers** sekmesinden `trees` klasörünü genişletin ve **RandomForest** bileşenini seçerek tuvalinize J48'in yanına yerleştirin.  
+2. **Paralel Bağlantı:** `CrossValidationFoldMaker`, hem J48 hem de RandomForest için veri kaynağımız olacak:  
+   * `CrossValidationFoldMaker` üzerine sağ tıklayın, **trainingSet** bağlantı tipini seçin ve `RandomForest` üzerine sürükleyerek bağlantıyı kurun.  
+   * Aynı şekilde, `CrossValidationFoldMaker` üzerine tekrar sağ tıklayın, bu sefer **testSet** bağlantı tipini seçin ve `RandomForest` üzerine sürükleyerek ikinci bağlantıyı kurun.
+
+### **Adım 4.2: İkinci Bir Değerlendirici Ekleme**
+
+Her modelin tahmin çıktısını bağımsız olarak işlemesi için yeni bir değerlendiriciye ihtiyacımız var.
+
+1. **Bileşen Ekleme:** **Evaluation** sekmesinden bir adet daha **ClassifierPerformanceEvaluator** ekleyin.  
+2. **Bağlantı:** `RandomForest` bileşeni üzerine sağ tıklayın, **batchClassifier** bağlantı tipini seçin ve yeni eklediğiniz `ClassifierPerformanceEvaluator`'a bağlayın.
+
+### **Adım 4.3: Model Performans Grafiğini (ModelPerformanceChart) Hazırlama**
+
+Bu bileşen, iki modelin sonuçlarını tek bir grafikte birleştirecek olan ana araçtır.
+
+1. **Bileşen Ekleme:** **Visualization** sekmesinden **ModelPerformanceChart** bileşenini tuvale ekleyin.  
+2. **Performans Verisi Bağlantısı (Kritik Nokta):** İki farklı performans değerlendiricisinden çıkan veriyi bu tek grafik bileşeninde birleştireceğiz.  
+   * İlk `ClassifierPerformanceEvaluator` (J48'e bağlı olan) üzerine sağ tıklayın ve **thresholdData** bağlantı tipini seçerek `ModelPerformanceChart`'a bağlayın.  
+   * İkinci `ClassifierPerformanceEvaluator` (RandomForest'a bağlı olan) üzerine sağ tıklayın ve yine **thresholdData** bağlantı tipini seçerek aynı `ModelPerformanceChart`'a bağlayın.  
+   * **Unutmayın:** `thresholdData` bağlantısı, ROC eğrilerinin çizilmesi için gereken hassasiyet (TP) ve özgüllük (FP) oranlarına ait eşik (threshold) verilerini taşır.
+
+### **Adım 4.4: Sınıf Değeri Seçimi (Opsiyonel Ama Önerilen)**
+
+ROC analizi, hangi sınıfın ("Pozitif Sınıf") tahmin edilmeye çalışıldığına odaklanarak yapılır.
+
+1. **Bileşen Ekleme:** **Evaluation** sekmesinden **ClassValuePicker** bileşenini ekleyin.  
+2. **Konum:** Bu bileşeni **ClassAssigner** ile **CrossValidationFoldMaker** arasına yerleştirin. `ClassAssigner`'dan gelen `dataSet` bağlantısını kesip önce `ClassValuePicker`'a, oradan çıkan `dataSet` bağlantısını da `CrossValidationFoldMaker`'a bağlayın.  
+3. **Yapılandırma:** `ClassValuePicker`'ı yapılandırın ve "Positive Class" olarak analiz etmek istediğiniz sınıf etiketini (örneğin, hava durumu veri setinde `play=yes` gibi) seçin.
+
+### **Adım 4.5: Akışı Çalıştırma ve Sonuçları Yorumlama**
+
+1. **Başlatma:** Akışı başlatın. Her iki sınıflandırıcı, çapraz doğrulama döngüleri içinde paralel olarak eğitilecek ve test edilecektir.  
+2. **Görsel Sonuçlar:** `ModelPerformanceChart` bileşenine sağ tıklayıp **Show Chart** seçeneğini seçtiğinizde, iki farklı renkli ROC eğrisi tek bir grafik üzerinde üst üste bindirilmiş olarak görünecektir.  
+3. **Yorumlama:** Eğrisi sol üst köşeye (mükemmel performans) daha yakın olan ve altında kalan alan (AUC) değeri daha yüksek olan model, o sınıflandırma problemi için daha başarılı kabul edilecektir. Bu, size hangi modelin performansının daha güvenilir olduğunu gösteren en somut ve kapsamlı görsel kanıttır.
+
+## **5\. Uygulama 2: Artımlı (Incremental) Öğrenme ve Akan Veri Analizi**
+
+Veri madenciliğinin modern uygulamalarında (IoT, finansal işlemler, web logları), veri statik bir dosya olarak değil, sürekli bir akış (stream) olarak gelir. Bu durumda, tüm veriyi bekleyip eğitmek imkansızdır. KnowledgeFlow, bu senaryo için **Artımlı Öğrenme** desteği sunar.
+
+### **5.1. Artımlı Öğrenme Teorisi ve UpdateableClassifier Arayüzü**
+
+Artımlı öğrenmede, model her yeni gelen veri örneği (instance) ile kendini günceller. Weka'da bir algoritmanın artımlı çalışabilmesi için UpdateableClassifier arayüzünü implemente etmesi gerekir. Bu algoritmalar, tüm veri setini hafızada tutmak yerine, sadece gerekli istatistikleri (örneğin Naive Bayes için olasılık tablolarını) güncellerler.4
+
+Öne çıkan artımlı algoritmalar:
+
+* **NaiveBayesUpdateable:** Her yeni örnekle olasılık tablolarını günceller.  
+* **IBk (K-Nearest Neighbors):** "Window size" parametresi ile son *n* örneği hafızada tutarak çalışır.  
+* **HoeffdingTree (VFDT):** Çok yüksek hızlı veri akışları için tasarlanmış, her örneği sadece bir kez okuyarak ağaç oluşturan gelişmiş bir karar ağacıdır.21
+
+### **5.2. Artımlı Akış Kurulumu**
+
+Artımlı öğrenme akışı, toplu öğrenme akışından yapısal olarak farklıdır. Veri "dataset" olarak değil, "instance" olarak akar.
+
+1. **Veri Kaynağı:** ArffLoader eklenir ve dosya seçilir. Ancak bu sefer bağlantı tipi olarak **instance** seçilir. Bu, verinin satır satır akacağını belirtir.  
+2. **Artımlı Sınıflandırıcı:** **Classifiers \-\> bayes** altından **NaiveBayesUpdateable** seçilir. ArffLoader'dan gelen instance bağlantısı bu bileşene bağlanır.  
+3. **Artımlı Değerlendirici:** Toplu değerlendirici yerine **IncrementalClassifierEvaluator** (Evaluation sekmesi) kullanılır. Sınıflandırıcıdan bu bileşene **incrementalClassifier** bağlantısı yapılır. Bu değerlendirici, "Prequential Evaluation" (Test-then-Train) yöntemini kullanır; yani model önce gelen örneği tahmin etmeye çalışır (test), sonra o örneğin gerçek etiketini kullanarak kendini günceller (eğitim).7  
+4. **Canlı İzleme (StripChart):** Performansın zaman içindeki değişimini görmek için **StripChart** (Visualization sekmesi) kullanılır. Değerlendiriciden StripChart'a **chart** bağlantısı yapılır.  
+   * *Yapılandırma:* StripChart üzerinde sağ tıklanıp "Show chart" denildiğinde boş bir grafik penceresi açılır. Akış başladığında, bu grafik üzerinde doğruluk (accuracy) ve hata (RMSE) değerleri hareketli bir çizgi olarak (EKG cihazı gibi) akmaya başlar. X ekseni zamanı/örnek sayısını, Y ekseni performansı gösterir.6
+
+## **6\. İleri Seviye Konular ve Sorun Giderme**
+
+### **6.1. Veri Sızıntısı (Data Leakage) ve Doğru Değerlendirme**
+
+KnowledgeFlow kullanırken en sık yapılan hatalardan biri, ön işleme (filtreleme) adımlarının yanlış konumlandırılmasıdır. Eğer bir Normalize veya Discretize filtresi, CrossValidationFoldMaker'dan *önce* uygulanırsa, tüm veri seti (test verisi dahil) kullanılarak istatistikler hesaplanır. Bu durum "Veri Sızıntısı"na (Data Leakage) yol açar ve sonuçların olduğundan daha iyi görünmesine neden olur (optimistic bias). Doğru yaklaşım, filtreleri CrossValidationFoldMaker'dan *sonra* yerleştirmek veya FilteredClassifier meta-sınıflandırıcısını kullanmaktır. Bu sayede filtre parametreleri sadece eğitim verisinden öğrenilir ve test verisine uygulanır.9
+
+### **6.2. Bellek Yönetimi ve Performans**
+
+Büyük veri setleri ile çalışırken Java Sanal Makinesi'nin (JVM) bellek sınırı (Heap Size) aşılabilir. KnowledgeFlow, akış yapısı sayesinde bunu minimize etse de, bazı bileşenler (örneğin görselleştiriciler) veriyi bellekte tutabilir. Performansı artırmak için:
+
+* Görselleştirme bileşenlerini (DataVisualizer vb.) sadece gerekli olduğunda kullanın.  
+* Weka'yı başlatırken daha fazla bellek tahsis edin (örneğin: java \-Xmx4g \-jar weka.jar).  
+* Veri akışını hızlandırmak için ArffLoader yerine serileştirilmiş dosyaları (.bsi) kullanan SerializedInstancesLoader tercih edilebilir.
+
+## **7\. Sonuç**
+
+Weka KnowledgeFlow, makine öğrenmesi süreçlerini yönetmek için esnek, güçlü ve görsel bir ortam sunar. Bu raporda detaylandırılan mimari yapı ve uygulama senaryoları, KnowledgeFlow'un sadece basit bir sürükle-bırak aracı olmadığını, karmaşık veri bilimi problemlerini çözmek için gerekli teorik derinliğe ve teknik kapasiteye sahip olduğunu göstermektedir. Özellikle artımlı öğrenme yeteneği, KnowledgeFlow'u statik veri analizi yapan Explorer arayüzünden ayırarak, büyük veri ve gerçek zamanlı analitik dünyasına bağlayan bir köprü görevi görür. Araştırmacılar, burada sunulan J48 ve NaiveBayesUpdateable örneklerini temel alarak, kendi veri setleri üzerinde çok daha karmaşık (örneğin; meta-sınıflandırıcılar, özellik seçimi entegrasyonu, maliyet duyarlı öğrenme) akışlar tasarlayabilirler.
+
+---
+
+Rapor İçeriğinde Atıfta Bulunulan Kaynaklar:
+
+1
+
+#### **Alıntılanan çalışmalar**
+
+1. Weka \- Quick Guide \- Tutorials Point, erişim tarihi Aralık 10, 2025, [https://www.tutorialspoint.com/weka/weka\_quick\_guide.htm](https://www.tutorialspoint.com/weka/weka_quick_guide.htm)  
+2. What is the Weka Machine Learning Workbench \- MachineLearningMastery.com, erişim tarihi Aralık 10, 2025, [https://machinelearningmastery.com/what-is-the-weka-machine-learning-workbench/](https://machinelearningmastery.com/what-is-the-weka-machine-learning-workbench/)  
+3. Data Mining in WEKA | Baeldung on Computer Science, erişim tarihi Aralık 10, 2025, [https://www.baeldung.com/cs/weka-data-mining](https://www.baeldung.com/cs/weka-data-mining)  
+4. Weka KnowledgeFlow \- LIACS, erişim tarihi Aralık 10, 2025, [https://liacs.leidenuniv.nl/\~kokjn/DM/knowledge.htm](https://liacs.leidenuniv.nl/~kokjn/DM/knowledge.htm)  
+5. Start working with WEKA tool kit and understand the features of WEKA tool kit such as Explorer, Experimenter, Knowledge flow, Workbench, and Simple CLI \- Study Glance, erişim tarihi Aralık 10, 2025, [https://studyglance.in/labprograms/dmdisplay.php?url1=dm/wekaintroduction.html\&title=Start%20working%20with%20WEKA%20tool%20kit%20and%20understand%20the%20features%20of%20WEKA%20tool%20kit%20such%20as%20Explorer,%20Experimenter,%20Knowledge%20flow,%20Workbench,%20and%20Simple%20CLI](https://studyglance.in/labprograms/dmdisplay.php?url1=dm/wekaintroduction.html&title=Start+working+with+WEKA+tool+kit+and+understand+the+features+of+WEKA+tool+kit+such+as+Explorer,+Experimenter,+Knowledge+flow,+Workbench,+and+Simple+CLI)  
+6. wekadocs/manual/knowledgeflow.tex · dev-3-7-10 \- GitLab, erişim tarihi Aralık 10, 2025, [https://git.cms.waikato.ac.nz/weka/weka/-/blob/dev-3-7-10/wekadocs/manual/knowledgeflow.tex?ref\_type=tags](https://git.cms.waikato.ac.nz/weka/weka/-/blob/dev-3-7-10/wekadocs/manual/knowledgeflow.tex?ref_type=tags)  
+7. WEKA KnowledgeFlow Tutorial for Version 3-5-6 \- Huihoo, erişim tarihi Aralık 10, 2025, [https://docs.huihoo.com/weka/KnowledgeFlowTutorial-3.5.6.pdf](https://docs.huihoo.com/weka/KnowledgeFlowTutorial-3.5.6.pdf)  
+8. Weka \- differences between Explorer and Experimenter outcomes \- Stack Overflow, erişim tarihi Aralık 10, 2025, [https://stackoverflow.com/questions/12495877/weka-differences-between-explorer-and-experimenter-outcomes](https://stackoverflow.com/questions/12495877/weka-differences-between-explorer-and-experimenter-outcomes)  
+9. The WEKA Knowledge Flow user interface. | Download Scientific Diagram \- ResearchGate, erişim tarihi Aralık 10, 2025, [https://www.researchgate.net/figure/The-WEKA-Knowledge-Flow-user-interface\_fig2\_215990408](https://www.researchgate.net/figure/The-WEKA-Knowledge-Flow-user-interface_fig2_215990408)  
+10. KnowledgeFlow \- Weka Wiki, erişim tarihi Aralık 10, 2025, [https://waikato.github.io/weka-wiki/plotting\_multiple\_roc\_curves/](https://waikato.github.io/weka-wiki/plotting_multiple_roc_curves/)  
+11. wekadocs/README\_KnowledgeFlow · stable-3-4-19 · WEKA / weka \- GitLab, erişim tarihi Aralık 10, 2025, [https://git.cms.waikato.ac.nz/weka/weka/-/blob/stable-3-4-19/wekadocs/README\_KnowledgeFlow](https://git.cms.waikato.ac.nz/weka/weka/-/blob/stable-3-4-19/wekadocs/README_KnowledgeFlow)  
+12. How to Run Your First Classifier in Weka \- MachineLearningMastery.com, erişim tarihi Aralık 10, 2025, [https://machinelearningmastery.com/how-to-run-your-first-classifier-in-weka/](https://machinelearningmastery.com/how-to-run-your-first-classifier-in-weka/)  
+13. CrossValidationFoldMaker, erişim tarihi Aralık 10, 2025, [https://weka.sourceforge.io/doc.dev/weka/knowledgeflow/steps/CrossValidationFoldMaker.html](https://weka.sourceforge.io/doc.dev/weka/knowledgeflow/steps/CrossValidationFoldMaker.html)  
+14. Plotting error rate for incremental classifier \- Weka Wiki, erişim tarihi Aralık 10, 2025, [https://waikato.github.io/weka-wiki/visualization/plotting\_error\_rate\_for\_incremental\_classifier/](https://waikato.github.io/weka-wiki/visualization/plotting_error_rate_for_incremental_classifier/)  
+15. WEEK\[1\] | PDF | Applied Mathematics \- Scribd, erişim tarihi Aralık 10, 2025, [https://www.scribd.com/document/936783666/WEEK-1](https://www.scribd.com/document/936783666/WEEK-1)  
+16. \[1305.7331\] Alternating Decision trees for early diagnosis of dengue fever \- ar5iv \- arXiv, erişim tarihi Aralık 10, 2025, [https://ar5iv.labs.arxiv.org/html/1305.7331](https://ar5iv.labs.arxiv.org/html/1305.7331)  
+17. WEKA: The Knowledge Flow Interface | PPTX \- Slideshare, erişim tarihi Aralık 10, 2025, [https://www.slideshare.net/slideshow/weka-the-knowledge-flow-interface/3067546](https://www.slideshare.net/slideshow/weka-the-knowledge-flow-interface/3067546)  
+18. Waikato Environment for Knowledge Analysis Performing Classification Experiments Prof. Pietro Ducange, erişim tarihi Aralık 10, 2025, [https://docenti.ing.unipi.it/p.ducange/esercitazioniBI/6\_Weka\_experiments.pdf](https://docenti.ing.unipi.it/p.ducange/esercitazioniBI/6_Weka_experiments.pdf)  
+19. Knowledge Flow Application in Weka \- YouTube, erişim tarihi Aralık 10, 2025, [https://www.youtube.com/watch?v=fnQJauAe88A](https://www.youtube.com/watch?v=fnQJauAe88A)  
+20. WEKA: Evaluation. Knowledge flow, erişim tarihi Aralık 10, 2025, [http://csci.viu.ca/\~barskym/teaching/DM2012/labs/Lab4\_ROC\_weka.pdf](http://csci.viu.ca/~barskym/teaching/DM2012/labs/Lab4_ROC_weka.pdf)  
+21. Incremental classifiers in Weka \- FutureLearn, erişim tarihi Aralık 10, 2025, [https://www.futurelearn.com/info/courses/advanced-data-mining-with-weka/0/steps/29464](https://www.futurelearn.com/info/courses/advanced-data-mining-with-weka/0/steps/29464)  
+22. StripChart (weka-dev 3.9.6 API) \- SciJava Javadoc, erişim tarihi Aralık 10, 2025, [https://javadoc.scijava.org/Weka/weka/knowledgeflow/steps/StripChart.html](https://javadoc.scijava.org/Weka/weka/knowledgeflow/steps/StripChart.html)
