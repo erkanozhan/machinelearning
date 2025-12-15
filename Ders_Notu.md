@@ -2994,7 +2994,7 @@ Bu bileşen, iki modelin sonuçlarını tek bir grafikte birleştirecek olan ana
    * İkinci `ClassifierPerformanceEvaluator` (RandomForest'a bağlı olan) üzerine sağ tıklayın ve yine **thresholdData** bağlantı tipini seçerek aynı `ModelPerformanceChart`'a bağlayın.  
    * **Unutmayın:** `thresholdData` bağlantısı, ROC eğrilerinin çizilmesi için gereken hassasiyet (TP) ve özgüllük (FP) oranlarına ait eşik (threshold) verilerini taşır.
 
-### **Adım 4.4: Sınıf Değeri Seçimi (Opsiyonel Ama Önerilen)**
+### **Adım 4.4: Sınıf Değeri Seçimi**
 
 ROC analizi, hangi sınıfın ("Pozitif Sınıf") tahmin edilmeye çalışıldığına odaklanarak yapılır.
 
@@ -3002,11 +3002,22 @@ ROC analizi, hangi sınıfın ("Pozitif Sınıf") tahmin edilmeye çalışıldı
 2. **Konum:** Bu bileşeni **ClassAssigner** ile **CrossValidationFoldMaker** arasına yerleştirin. `ClassAssigner`'dan gelen `dataSet` bağlantısını kesip önce `ClassValuePicker`'a, oradan çıkan `dataSet` bağlantısını da `CrossValidationFoldMaker`'a bağlayın.  
 3. **Yapılandırma:** `ClassValuePicker`'ı yapılandırın ve "Positive Class" olarak analiz etmek istediğiniz sınıf etiketini (örneğin, hava durumu veri setinde `play=yes` gibi) seçin.
 
-### **Adım 4.5: Akışı Çalıştırma ve Sonuçları Yorumlama**
+### **Akışı Çalıştırma ve Sonuçları Yorumlama**
 
-1. **Başlatma:** Akışı başlatın. Her iki sınıflandırıcı, çapraz doğrulama döngüleri içinde paralel olarak eğitilecek ve test edilecektir.  
-2. **Görsel Sonuçlar:** `ModelPerformanceChart` bileşenine sağ tıklayıp **Show Chart** seçeneğini seçtiğinizde, iki farklı renkli ROC eğrisi tek bir grafik üzerinde üst üste bindirilmiş olarak görünecektir.  
-3. **Yorumlama:** Eğrisi sol üst köşeye (mükemmel performans) daha yakın olan ve altında kalan alan (AUC) değeri daha yüksek olan model, o sınıflandırma problemi için daha başarılı kabul edilecektir. Bu, size hangi modelin performansının daha güvenilir olduğunu gösteren en somut ve kapsamlı görsel kanıttır.
+Şimdi gençler, tasarladığımız bu veri akışını çalıştırarak, modellerimizin performansını karşılaştırma aşamasına geldik.
+
+1.  **Akışın Başlatılması:** Tasarım tuvalinin üzerindeki "Play" düğmesine tıkladığınızda veya ArffLoader bileşenine sağ tıklayıp "Start loading" seçeneğini seçtiğinizde, Weka tanımlanan adımları sırayla işleyecektir. Bu süreçte, veri önce ArffLoader'dan ClassAssigner'a, oradan da CrossValidationFoldMaker'a aktarılır. CrossValidationFoldMaker, veriyi belirlenen katmanlara (örneğin 10 katmana) ayırır. Her bir katman, sırayla test seti olarak kullanılırken, kalan diğer dokuz katman eğitim seti olarak işlev görür. Her bir döngüde, hem J48 karar ağacı hem de RandomForest algoritması, bu eğitim seti üzerinde **paralel olarak** eğitilir ve ardından aynı test seti üzerinde tahminler üretir. Bu paralel yürütme, Weka KnowledgeFlow'un sunduğu önemli bir avantajdır.
+
+2.  **Görsel Sonuçların İncelenmesi:** Akış tamamlandığında, `ModelPerformanceChart` bileşenine sağ tıklayıp "Show Chart" seçeneğini seçin. Karşınıza, iki farklı sınıflandırıcıya ait **ROC eğrilerinin** tek bir grafik üzerinde üst üste bindirilmiş olduğu bir pencere gelecektir. Her bir eğri, farklı bir modelin performansını temsil eder ve genellikle farklı renklerle gösterilir. Bu görselleştirme, modellerin tahmin yeteneklerini bütüncül bir bakış açısıyla karşılaştırmamızı sağlar.
+
+3.  **ROC Eğrilerini Yorumlama:** Bu grafik, bir sınıflandırıcının eşik değerine bağlı olarak pozitif ve negatif sınıfları ne kadar iyi ayırabildiğini gösteren kritik bir araçtır.
+    *   Yatay eksen **Sahte Pozitif Oranını (False Positive Rate - FPR)**, dikey eksen ise **Gerçek Pozitif Oranını (True Positive Rate - TPR)** temsil eder. FPR, gerçekte negatif olan örneklerden yanlışlıkla pozitif olarak tahmin edilenlerin oranıdır. TPR ise, gerçekte pozitif olan örneklerden doğru bir şekilde pozitif olarak tahmin edilenlerin oranıdır (bu aynı zamanda Duyarlılık veya Recall olarak da bilinir).
+    *   Grafiğin sol alt köşesi **(0,0)**, modelin hiçbir şeye pozitif demediği durumu; sağ üst köşesi **(1,1)** ise modelin her şeye pozitif dediği durumu gösterir. İdeal bir model, hiçbir yanlış pozitif yapmadan tüm gerçek pozitifleri yakalamayı hedefler, yani eğrisi grafiğin **sol üst köşesine (0,1)** en yakın olan modeldir.
+    *   Her bir eğrinin altında kalan alana **AUC (Area Under the Curve)** değeri denir. AUC değeri, modelin genel ayırt etme gücünü tek bir sayı ile özetler.
+        *   **AUC = 1.0** mükemmel bir modeldir; sınıfları hatasız ayırır.
+        *   **AUC = 0.5** rastgele tahmin yapan bir modeldir (tıpkı yazı tura atmak gibi); grafikte (0,0)'dan (1,1)'e uzanan köşegen çizgiyle temsil edilir.
+        *   **AUC < 0.5** ise modelin rastgele tahminden bile kötü olduğunu, yani tahminlerinin tersinin daha isabetli olabileceğini gösterir.
+    *   Karşılaştırdığınız modeller arasında, eğrisi sol üst köşeye daha yakın olan ve altında kalan **AUC değeri daha yüksek olan model, genel olarak daha başarılı kabul edilecektir.** Bu grafik, modellerin performansını sadece tek bir doğruluk değeriyle değil, tüm olası karar eşik değerleri üzerinden değerlendiren, somut ve kapsamlı bir görsel kanıt sunar. Bu sayede, hangi modelin belirli bir sınıflandırma problemi için daha güvenilir tahminler yapma potansiyeline sahip olduğunu net bir şekilde anlayabiliriz.
 
 ## **5\. Uygulama 2: Artımlı (Incremental) Öğrenme ve Akan Veri Analizi**
 
@@ -3030,21 +3041,23 @@ Artımlı öğrenme akışı, toplu öğrenme akışından yapısal olarak farkl
 2. **Artımlı Sınıflandırıcı:** **Classifiers \-\> bayes** altından **NaiveBayesUpdateable** seçilir. ArffLoader'dan gelen instance bağlantısı bu bileşene bağlanır.  
 3. **Artımlı Değerlendirici:** Toplu değerlendirici yerine **IncrementalClassifierEvaluator** (Evaluation sekmesi) kullanılır. Sınıflandırıcıdan bu bileşene **incrementalClassifier** bağlantısı yapılır. Bu değerlendirici, "Prequential Evaluation" (Test-then-Train) yöntemini kullanır; yani model önce gelen örneği tahmin etmeye çalışır (test), sonra o örneğin gerçek etiketini kullanarak kendini günceller (eğitim).7  
 4. **Canlı İzleme (StripChart):** Performansın zaman içindeki değişimini görmek için **StripChart** (Visualization sekmesi) kullanılır. Değerlendiriciden StripChart'a **chart** bağlantısı yapılır.  
-   * *Yapılandırma:* StripChart üzerinde sağ tıklanıp "Show chart" denildiğinde boş bir grafik penceresi açılır. Akış başladığında, bu grafik üzerinde doğruluk (accuracy) ve hata (RMSE) değerleri hareketli bir çizgi olarak (EKG cihazı gibi) akmaya başlar. X ekseni zamanı/örnek sayısını, Y ekseni performansı gösterir.6
+   * *Yapılandırma:* StripChart üzerinde sağ tıklanıp "Show chart" denildiğinde boş bir grafik penceresi açılır. Akış başladığında, bu grafik üzerinde doğruluk (accuracy) ve hata (RMSE) değerleri hareketli bir çizgi olarak (EKG cihazı gibi) akmaya başlar. X ekseni zamanı/örnek sayısını, Y ekseni performansı gösterir.
 
-## **6\. İleri Seviye Konular ve Sorun Giderme**
+## **6\. Veri Sızıntısı (Data Leakage) - Modelin Sınav Sorularını Önceden Görmesi**
 
-### **6.1. Veri Sızıntısı (Data Leakage) ve Doğru Değerlendirme**
+Gençler, makine öğrenmesi projelerinde karşılaştığımız en sinsi ve bir o kadar da tehlikeli hatalardan biri **Veri Sızıntısı (Data Leakage)**'dır. Bunu şöyle düşünebilirsiniz: Bir öğrenciden bir sınavı geçmesini istiyoruz. Ona tüm konuları öğretiyoruz, örnek sorular çözdürüyoruz (eğitim verisi). Sonra da onu daha önce hiç görmediği sorularla sınava sokuyoruz (test verisi). İşte bu, modelimizin genelleme yeteneğini, yani gerçek hayatta ne kadar başarılı olacağını ölçmemizin adil yoludur.
 
-KnowledgeFlow kullanırken en sık yapılan hatalardan biri, ön işleme (filtreleme) adımlarının yanlış konumlandırılmasıdır. Eğer bir Normalize veya Discretize filtresi, CrossValidationFoldMaker'dan *önce* uygulanırsa, tüm veri seti (test verisi dahil) kullanılarak istatistikler hesaplanır. Bu durum "Veri Sızıntısı"na (Data Leakage) yol açar ve sonuçların olduğundan daha iyi görünmesine neden olur (optimistic bias). Doğru yaklaşım, filtreleri CrossValidationFoldMaker'dan *sonra* yerleştirmek veya FilteredClassifier meta-sınıflandırıcısını kullanmaktır. Bu sayede filtre parametreleri sadece eğitim verisinden öğrenilir ve test verisine uygulanır.9
+Peki ya öğrencimiz, sınav sorularının bir kısmını veya en azından soruların nasıl hazırlanacağına dair ipuçlarını sınavdan önce bir şekilde öğrenirse? Mesela, sınavdaki soruların zorluk derecesinin veya ortalamasının ne olacağını bilirse... İşte o zaman, sınavdan aldığı yüksek not, onun konuyu gerçekten anladığı anlamına gelmez; sadece "kopya çektiği" anlamına gelir.
 
-### **6.2. Bellek Yönetimi ve Performans**
+Makine öğrenmesinde de durum aynen böyledir. Modelimizin, gelecekte karşılaşacağı verilere (test verisi) dair herhangi bir bilgiyi, daha eğitim aşamasında veya ön işleme sırasında görmesi durumuna **veri sızıntısı** diyoruz. Bu sızıntı, modelinizin performans metriklerini yapay olarak şişirir, size olduğundan çok daha iyiymiş gibi gösterir. Sonra modeli gerçek dünyaya saldığınızda, acı gerçekle yüzleşirsiniz: Modeliniz aslında o kadar da iyi değilmiş, çünkü "sınav sorularını ezberlemiş".
 
-Büyük veri setleri ile çalışırken Java Sanal Makinesi'nin (JVM) bellek sınırı (Heap Size) aşılabilir. KnowledgeFlow, akış yapısı sayesinde bunu minimize etse de, bazı bileşenler (örneğin görselleştiriciler) veriyi bellekte tutabilir. Performansı artırmak için:
+**KnowledgeFlow** gibi görsel akış araçlarını kullanırken bu sızıntı riskini göz ardı etmemek, bir mühendisin olmazsa olmazıdır. Şöyle ki:
 
-* Görselleştirme bileşenlerini (DataVisualizer vb.) sadece gerekli olduğunda kullanın.  
-* Weka'yı başlatırken daha fazla bellek tahsis edin (örneğin: java \-Xmx4g \-jar weka.jar).  
-* Veri akışını hızlandırmak için ArffLoader yerine serileştirilmiş dosyaları (.bsi) kullanan SerializedInstancesLoader tercih edilebilir.
+KnowledgeFlow kullanırken en sık yapılan hatalardan biri, ön işleme (filtreleme) adımlarının yanlış konumlandırılmasıdır. Eğer bir `Normalize` (verileri belirli bir aralığa sıkıştırma) veya `Discretize` (sayısal verileri kategorik aralıklara dönüştürme) filtresi, `CrossValidationFoldMaker`'dan *önce* uygulanırsa, tüm veri seti (hem eğitim hem de test verisi dahil) kullanılarak bu istatistikler (minimum, maksimum, ortalama gibi) hesaplanır. İşte bu durum, test verisinin özelliklerinin (o sınav sorularının ortalaması gibi) modele önceden sızmasına ve "Veri Sızıntısı"na (Data Leakage) yol açar. Bu da sonuçların olduğundan daha iyi görünmesine neden olur (`optimistic bias`).
+
+**Peki doğrusu ne olmalı?** Doğru yaklaşım, ön işleme filtrelerini `CrossValidationFoldMaker`'dan *sonra* yerleştirmektir. Ya da Weka'nın `FilteredClassifier` meta-sınıflandırıcısını kullanmaktır. Bu sayede, filtrelerin parametreleri (normalizasyon için min/max değerleri veya diskretizasyon için aralık sınırları) sadece eğitim verisinden öğrenilir ve bu öğrenilen kurallar daha sonra, tamamen yabancı olduğu test verisine uygulanır. Bu, modelimizin gerçekten "öğrenme" yeteneğini ölçmenin tek adil yoludur. Aksi takdirde, elde ettiğimiz yüksek başarı oranları sadece bir yanılsamadan ibaret kalır. Unutmayalım ki, bir modelin gerçek gücü, yeni ve bilinmeyen verilerle karşılaştığında ortaya çıkar, ezberledikleriyle değil.
+
+
 
 ## **7\. Sonuç**
 
@@ -3052,9 +3065,6 @@ Weka KnowledgeFlow, makine öğrenmesi süreçlerini yönetmek için esnek, gü�
 
 ---
 
-Rapor İçeriğinde Atıfta Bulunulan Kaynaklar:
-
-1
 
 #### **Alıntılanan çalışmalar**
 
