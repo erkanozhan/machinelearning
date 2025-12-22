@@ -3307,49 +3307,67 @@ Hesaplama maliyeti yüksektir; ancak “tahmin ederek ayar yapma” alışkanlı
 
 ---
 
-## WEKA’da İleri Düzey Optimizasyon: Meta-Sınıflandırıcılar
+## WEKA’da İleri Düzey Optimizasyon: Hiperparametre Ayarı ve Grid Search
 
-WEKA’da varsayılan ayarlarla çalışmak mümkündür; ancak bilimsel bir analizde bu genellikle yeterli olmaz. Parametre araması için WEKA’nın sunduğu çözüm, **Meta-Classifiers (üst sınıflandırıcılar)** başlığı altında yer alır.
+Gençler, makine öğrenmesi modelleri sadece veriden öğrenmekle kalmaz, aynı zamanda bizim "nasıl öğrenmesi gerektiğini" belirttiğimiz **hiperparametreler** üzerinden de davranışlarını şekillendirir. Varsayılan ayarlarla çalışmak, genellikle bir başlangıç için iyidir; ancak bilimsel bir analizde veya en iyi performansı hedeflerken yeterli olmaz. Modelimizin potansiyelini tam olarak ortaya çıkarmak için bu hiperparametreleri optimize etmemiz gerekir.
 
-Bu amaçla kullanılan temel araç: **CVParameterSelection**’dır.
-Bu sınıflandırıcı, **Cross-Validation (çapraz doğrulama)** ile birlikte çalışarak hiperparametre seçimini otomatikleştirir.
+WEKA'da bu sistematik arama sürecini, yani **Grid Search (ızgara araması)** yöntemini uygulamak için **Meta-Classifiers (üst sınıflandırıcılar)** başlığı altında yer alan güçlü bir araç kullanırız: **CVParameterSelection**.
 
-### Uygulama Akışı
+`CVParameterSelection`, adından da anlaşılacağı gibi, **Cross-Validation (çapraz doğrulama)** mekanizmasını kullanarak, belirlediğimiz parametre aralıkları içinde en iyi performansı veren hiperparametre kombinasyonunu bulmayı otomatikleştirir. Bu sayede, modelimizin rastgele şansa değil, tutarlı bir değerlendirmeye dayalı en iyi ayarlarla çalışmasını sağlarız.
+
+### Uygulama Akışı: J48 Karar Ağacı İçin Grid Search
+
+Şimdi, bir J48 Karar Ağacı algoritması için budama (pruning) seviyesini ve minimum örnek sayısını optimize etmek üzere bir uygulama akışı oluşturalım.
 
 1.  **Veri Yükleme**
-    Explorer sekmesinde `diabetes.arff` gibi bir veri seti açılır.
+    Weka Explorer sekmesinde `iris.arff` veya `weather.nominal.arff` gibi herhangi bir sınıflandırma veri setini açın.
 
-2.  **Sınıflandırıcı Seçimi**
+2.  **`CVParameterSelection` Seçimi**
 
-    *   `Classify` sekmesine geçilir.
-    *   `Choose` → `meta` → `CVParameterSelection` seçilir.
+    *   `Classify` sekmesine geçin.
+    *   `Choose` butonuna tıklayın → `meta` klasörünü genişletin → `CVParameterSelection` seçeneğini belirleyin.
 
-3.  **Konfigürasyon**
-    Ayar penceresinde iki alan özellikle önemlidir:
+3.  **Konfigürasyon (Ayarlar)**
+    `CVParameterSelection` yazısının üzerine tıklayarak ayarlar penceresini açın. Burada iki alan özellikle kritik önem taşır:
 
-    *   **classifier**: Optimize edilecek algoritma seçilir. Örneğin `functions` altından `SGD`.
-    *   **CVParameters**: Arama uzayı burada tanımlanır.
+    *   **`classifier`**: Bu parametreye, optimize etmek istediğimiz asıl algoritmayı seçeriz. Örneğin, `Choose` butonuna tıklayarak `trees` altından `J48` karar ağacını seçin.
+        *   *İpucu:* Seçtiğiniz `J48`'in üzerine tıklayarak kendi iç parametrelerini (örneğin `minNumObj` veya `confidenceFactor`) görebilirsiniz. Bunların adlarını CVParameters kısmında kullanacağız.
 
-    WEKA’da parametre tarama sözdizimi şöyledir:
+    *   **`CVParameters`**: Burası, Grid Search'ün "ızgarasını" tanımladığımız yerdir. Her bir satır, taranacak bir hiperparametre ve onun arama aralığını belirtir. WEKA'da parametre tarama sözdizimi şöyledir:
 
-    `parametre_adı alt_sınır üst_sınır adım_sayısı`
+        `parametre_adı alt_sınır üst_sınır adım_sayısı`
 
-    Örnek:
+        Şimdi J48 için iki farklı parametreyi optimize edelim:
+        *   **`C` (Confidence Factor - Güven Faktörü):** J48'de budama için kullanılan bir değerdir. Düşük C değeri daha agresif budama, yüksek C değeri daha az budama anlamına gelir. Genellikle 0.1 ile 0.5 arasında denenir.
+            `C 0.1 0.5 5`
+            Bu ifade, `C` parametresinin 0.1'den 0.5'e kadar, eşit aralıklı 5 farklı değerle (0.1, 0.2, 0.3, 0.4, 0.5) denenmesini söyler.
 
-    `L 0.001 0.1 5`
+        *   **`M` (Minumum Number of Instances Per Leaf - Yaprak Başına Minimum Örnek Sayısı):** Bir ağaç dalının yaprak olabilmesi için sahip olması gereken minimum örnek sayısı. Küçük değerler karmaşık ağaçlara, büyük değerler basit ağaçlara yol açar.
+            `M 1 10 10`
+            Bu ifade, `M` parametresinin 1'den 10'a kadar, eşit aralıklı 10 farklı tam sayı değeriyle (1, 2, ..., 10) denenmesini söyler.
 
-    Bu ifade, learning rate (L) parametresinin 0.001 ile 0.1 arasında, eşit aralıklı 5 değerle denenmesini söyler.
+        Grid Search, bu iki parametrenin tüm kombinasyonlarını deneyecektir: `5 (C değeri) x 10 (M değeri) = 50 farklı model`. Her bir model, `CVParameterSelection`'ın varsayılan çapraz doğrulama (genellikle 10 katlı) ile test edilecektir.
 
 4.  **Çalıştırma**
-    Ayarlar kapatılır ve `Start` tuşuna basılır.
+    Tüm ayarlar kapatıldıktan sonra `Start` tuşuna basın.
 
-WEKA, arka planda tüm kombinasyonlar için modeli eğitir, çapraz doğrulama ile performansı ölçer ve en iyi sonucu veren parametre setini raporlar.
+WEKA, arka planda belirlediğiniz tüm hiperparametre kombinasyonları için modelleri eğitir, çapraz doğrulama ile performanslarını ölçer ve en iyi skoru (genellikle en yüksek doğruluk veya en düşük hata) veren parametre setini raporlar.
 
-Çıktıda genellikle şu tür bir ifade görülür:
+Çıktının ilk bölümünde, en iyi parametrelerin ne olduğu ve bu parametrelerle elde edilen performans metrikleri detaylı olarak sunulur. Örneğin:
 
-`Best Value (L): 0.01`
+```text
+Best parameters found:
+J48: -C 0.2 -M 2
 
-Bu, seçimin sezgiye değil, ölçüme dayandığını gösterir.
+Resulting performance for the best parameters:
+Correctly Classified Instances:  96.0000 %
+Incorrectly Classified Instances: 4.0000 %
+... (Diğer metrikler)
+```
+
+Bu çıktı, J48 algoritması için en iyi `C` değerinin `0.2`, en iyi `M` değerinin ise `2` olduğunu ve bu ayarlarla elde edilen doğruluk oranını gösterir. Bu, model seçiminizi sezgilere değil, sistematik ölçümlere dayandırdığınız anlamına gelir.
+
+Unutmayın gençler, Grid Search'ün hesaplama maliyeti, taranan parametrelerin sayısına ve aralıkların genişliğine göre katlanarak artar. Bu yüzden, başlangıçta daha geniş aralıklar deneyip, en iyi sonuçların çıktığı bölgeleri daraltarak daha rafine aramalar yapmak (iteratif Grid Search) akıllıca bir stratejidir.
 
 ---
 
