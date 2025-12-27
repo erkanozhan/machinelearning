@@ -3063,319 +3063,256 @@ KnowledgeFlow kullanırken en sık yapılan hatalardan biri, ön işleme (filtre
 
 Weka KnowledgeFlow, makine öğrenmesi süreçlerini yönetmek için esnek, güçlü ve görsel bir ortam sunar. Bu raporda detaylandırılan mimari yapı ve uygulama senaryoları, KnowledgeFlow'un sadece basit bir sürükle-bırak aracı olmadığını, karmaşık veri bilimi problemlerini çözmek için gerekli teorik derinliğe ve teknik kapasiteye sahip olduğunu göstermektedir. Özellikle artımlı öğrenme yeteneği, KnowledgeFlow'u statik veri analizi yapan Explorer arayüzünden ayırarak, büyük veri ve gerçek zamanlı analitik dünyasına bağlayan bir köprü görevi görür. Araştırmacılar, burada sunulan J48 ve NaiveBayesUpdateable örneklerini temel alarak, kendi veri setleri üzerinde çok daha karmaşık (örneğin; meta-sınıflandırıcılar, özellik seçimi entegrasyonu, maliyet duyarlı öğrenme) akışlar tasarlayabilirler.
 
----
-## Optimizasyon ile Genelleme Arasındaki İnce Çizgi
-
-Bir model eğitilirken çoğu zaman şu durumla karşılaşılır:  
-Eğitim verisinde hata düşer, hatta çok düşer; fakat yeni bir veri geldiğinde performans bekleneni vermez.
-
-Burada yapılan hata genellikle şudur:  
-Modeli “öğretmek” ile modeli “ezberletmek” arasındaki fark gözden kaçar.
-
-Makine öğrenmesinde buna **genelleme (Generalization – genelleme yeteneği)** denir.  
-Latince kökü *generalis*tir; “genele ait” anlamına gelir.  
-Yani modelin sadece gördüğünü değil, görmediğini de makul biçimde tahmin edebilmesi.
-
-Optimizasyon tam bu noktada iki ucu keskin bir alete dönüşür.
+# Optimizasyon ve Hiperparametre Ayarlama
 
 ---
 
-## Aşırı Öğrenme ve Eksik Öğrenme
+## Model Neden Öğrenir?
 
-Bir modeli düşünün.  
-Bir tahtaya çizilen eğri gibi.
+Bir makine öğrenmesi modeli eğitilirken aslında şu soru cevaplanır: Elimdeki veriye en uygun matematiksel ifade nedir?
 
-- Veri noktalarına hiç yaklaşmıyorsa: **Eksik öğrenme (Underfitting – yetersiz uyum)**
-- Her noktadan tek tek geçiyorsa: **Aşırı öğrenme (Overfitting – aşırı uyum)**
+Bu soruya cevap aramak için bir **maliyet fonksiyonu (Cost Function)** tanımlanır. Maliyet fonksiyonu, modelin tahminleri ile gerçek değerler arasındaki farkı ölçer. Fark büyükse maliyet yüksek, fark küçükse maliyet düşüktür.
 
-İlkinde model tembeldir, ikincisinde ise fazla çalışkandır.
+Eğitim süreci, bu maliyeti mümkün olduğunca düşürmeye çalışır. Matematiksel olarak bu işleme **optimizasyon** denir. Latince *optimus* kelimesinden gelir; "en iyi" anlamındadır.
 
-Matematiksel olarak bakıldığında, her ikisi de optimizasyon problemidir:
-- İlki yeterince minimize edilmemiştir
-- İkincisi gereğinden fazla minimize edilmiştir
+Optimizasyonun en yaygın yöntemi **Gradient Descent (Gradyan İnişi)**'dir. Gradient kelimesi "eğim" demektir. Algoritma, maliyet fonksiyonunun eğimine bakarak hangi yöne giderse maliyetin düşeceğini hesaplar ve o yönde adım atar.
 
-Bu yüzden “en küçük hata” her zaman “en iyi model” değildir.
+Bir dağda gözleri kapalı en alçak noktaya inmeye çalıştığınızı düşünün. Ayağınızın altındaki zeminin eğimine bakarsınız; eğim aşağı doğruysa o yöne adım atarsınız. Gradient Descent tam olarak bunu yapar.
 
 ---
 
-## Regularization: Dizginleme Mekanizması
+## Öğrenmek ile Ezberlemek Arasındaki Fark
 
-Burada devreye **Regularization (düzenlileştirme)** girer.  
-Kelimenin kökü *regularis*tir; “kural koymak, hizaya sokmak”.
+Bir model eğitim verisinde çok iyi performans gösterebilir. Hata oranı düşer, tahminler tutarlıdır. Ancak aynı model yeni bir veri gördüğünde başarısız olabilir.
 
-Modelin parametrelerine şunu söyler:
-> “Çok büyüme, sakin ol.”
+Bu durumun sebebi şudur: Model veriyi öğrenmek yerine ezberlemiştir.
 
-En yaygın iki türü vardır.
+Makine öğrenmesinde asıl hedef, modelin daha önce görmediği verilerde de tutarlı tahmin yapabilmesidir. Bu yeteneğe **Generalization (Genelleme)** denir. Latince *generalis* kelimesinden türemiştir; "genele ait olan" anlamına gelir.
+
+İki uç durum vardır:
+
+**Underfitting (Eksik Öğrenme):** Model veriden yeterince öğrenememiştir. Hem eğitim verisinde hem test verisinde performansı düşüktür. Bir öğrencinin konuyu hiç çalışmadan sınava girmesi gibidir.
+
+**Overfitting (Aşırı Öğrenme):** Model eğitim verisini ezberlemiştir. Eğitim verisinde mükemmel performans gösterir ama yeni veride başarısız olur. Bir öğrencinin sadece geçmiş sınav sorularını ezberleyip, farklı soru geldiğinde şaşırması gibidir.
+
+Her iki durum da optimizasyonla ilgilidir. İlkinde optimizasyon yetersiz kalmıştır, ikincisinde gereğinden fazla ileri gitmiştir.
+
+---
+
+## Regularization: Modeli Dizginlemek
+
+Overfitting'i önlemenin yollarından biri, modele bir kısıtlama koymaktır. Bu kısıtlamaya **Regularization (Düzenlileştirme)** denir. Latince *regularis* kelimesinden gelir; "kurala uygun hale getirmek" anlamındadır.
+
+Regularization, maliyet fonksiyonuna ek bir terim ekler. Bu terim, model parametrelerinin çok büyümesini cezalandırır.
 
 ### L2 Regularization (Ridge)
 
-Maliyet fonksiyonuna şu terim eklenir:
+Maliyet fonksiyonuna eklenen terim:
 
-\[
-\lambda \sum \theta^2
-\]
+$$\lambda \sum \theta^2$$
 
-- Büyük katsayıları cezalandırır
-- Parametreleri küçültür ama sıfırlamaz
-- Daha pürüzsüz modeller üretir
+Burada $\theta$ model parametrelerini, $\lambda$ ise cezanın şiddetini belirleyen katsayıyı temsil eder.
 
-Bu, bir öğrencinin yazısını tamamen silmeden daha okunur hale getirmeye benzer.
+L2 regularization parametreleri küçültür ama sıfırlamaz. Sonuç olarak model daha yumuşak, daha az karmaşık bir yapıya kavuşur.
 
 ### L1 Regularization (Lasso)
 
-\[
-\lambda \sum |\theta|
-\]
+Maliyet fonksiyonuna eklenen terim:
 
-- Bazı parametreleri sıfıra indirir
-- Özellik seçimi yapar
-- Daha sade modeller üretir
+$$\lambda \sum |\theta|$$
 
-Burada gereksiz kelimeleri tamamen cümleden çıkarmak gibi bir etki vardır.
+L1 regularization bazı parametreleri tamamen sıfıra indirir. Bu sayede model otomatik olarak özellik seçimi yapar; gereksiz değişkenler devre dışı kalır.
 
----
+Fark şöyle özetlenebilir: L2 tüm kalemleri biraz kısar, L1 bazı kalemleri tamamen siler.
 
-## Optimizasyon Regularization ile Nasıl Değişir?
+Regularization uygulandığında Gradient Descent güncellemesi şu hale gelir:
 
-Gradient Descent artık sadece hatayı değil, karmaşıklığı da minimize eder.
+$$\theta_{t+1} = \theta_t - \eta \left( \nabla J(\theta) + \lambda \theta \right)$$
 
-Güncelleme kuralı sadeleştirilmiş haliyle şuna dönüşür:
-
-\[
-\theta_{t+1} = \theta_t - \eta (\nabla J(\theta) + \lambda \theta)
-\]
-
-Yani her adımda iki kuvvet vardır:
-- Hata azaltmaya çalışan kuvvet
-- Parametreyi dizginleyen kuvvet
-
-Bu iki kuvvet dengede değilse model ya savrulur ya da donuklaşır.
+Artık her adımda iki kuvvet dengelenir: Hatayı azaltmaya çalışan kuvvet ve parametreleri küçük tutmaya çalışan kuvvet.
 
 ---
 
-## Erken Durdurma (Early Stopping)
+## Early Stopping: Zamanında Durmak
 
-Bazen en iyi çözüm matematiksel değil, gözlemseldir.
+Bazen en iyi çözüm matematiksel formüllerden değil, gözlemden gelir.
 
-Modeli eğitirken:
-- Eğitim hatası sürekli düşer
-- Doğrulama hatası bir noktadan sonra yükselir
+Model eğitilirken iki metrik takip edilir:
+- Eğitim hatası
+- Doğrulama hatası
 
-İşte o nokta, durmanız gereken yerdir.
+Eğitim hatası genellikle sürekli düşer. Ancak doğrulama hatası bir noktadan sonra düşmeyi bırakır, hatta yükselmeye başlar. İşte o nokta, modelin ezberlemaya başladığı andır.
 
-Buna **Early Stopping (erken durdurma)** denir.  
-Latince bir kökü yoktur ama mantığı nettir:  
-“Daha fazla çalışırsan bozacaksın.”
+**Early Stopping (Erken Durdurma)** bu noktada eğitimi sonlandırır. Mantık basittir: Daha fazla çalışmak her zaman daha iyi sonuç vermez.
 
-Bu yöntem özellikle:
-- Sinir ağlarında (Neural Networks – yapay sinir ağları)
-- Uzun epoch sayılarında
-
-çok etkilidir.
+Bu yöntem özellikle **Neural Networks (Yapay Sinir Ağları)** gibi çok sayıda parametre içeren modellerde etkilidir.
 
 ---
 
-## Learning Rate Scheduling
+## Learning Rate: Adım Büyüklüğünü Ayarlamak
 
-Başta hızlı öğrenmek isteriz, sonra daha dikkatli.
+Gradient Descent'te her adımda ne kadar ilerleneceğini **Learning Rate (Öğrenme Oranı)** belirler. Genellikle $\eta$ (eta) ile gösterilir.
 
-Bu nedenle öğrenme oranını sabit tutmak her zaman iyi fikir değildir.
+Learning rate çok büyükse model hedefi atlar, etrafında salınır durur. Çok küçükse öğrenme aşırı yavaşlar, belki hiç sonuca ulaşamaz.
 
-**Learning Rate Scheduling (öğrenme oranı zamanlaması)** şu fikre dayanır:
-- Başta büyük adımlar
-- Sona doğru küçük adımlar
+**Learning Rate Scheduling (Öğrenme Oranı Zamanlaması)** bu soruna çözüm sunar. Eğitimin başında büyük adımlar atılır, ilerledikçe adımlar küçülür.
 
-Günlük hayatta buna benzer bir durum vardır:
-Yeni bir ortamda hızlı hareket edersiniz, alıştıkça daha kontrollü olursunuz.
+Yeni bir şehre taşındığınızda önce hızlı keşif yaparsınız, sonra detaylara inersiniz. Learning rate scheduling aynı mantıkla çalışır.
 
 Yaygın stratejiler:
-- Step decay
-- Exponential decay
-- Adaptive yöntemler (Adam burada devreye girer)
+- **Step Decay:** Belirli aralıklarla learning rate sabit oranda düşürülür
+- **Exponential Decay:** Her adımda üstel olarak azalır
+- **Adaptive Methods:** Adam gibi algoritmalar learning rate'i otomatik ayarlar
 
 ---
 
-## Ölçekleme Yapılmadığında Ne Olur?
+## Feature Scaling: Ölçeklendirme
 
-Optimizasyon algoritmaları mesafeye duyarlıdır.
+Gradient Descent mesafeye duyarlıdır. Bir özellik 0-1 aralığında, diğeri 0-10000 aralığındaysa optimizasyon dengesiz çalışır. Büyük ölçekli özellik gradyanı domine eder.
 
-Bir özellik 0–1 aralığında, diğeri 0–10000 aralığındaysa:
-- Gradient bir tarafa doğru çekilir
-- Öğrenme dengesizleşir
+Bu sorunu çözmek için **Feature Scaling (Özellik Ölçeklendirme)** uygulanır.
 
-Bu yüzden:
-- **Standardization (standardizasyon)**: ortalama 0, varyans 1
-- **Normalization (normalizasyon)**: belirli aralığa sıkıştırma
+**Standardization (Standardizasyon):** Verinin ortalaması 0, standart sapması 1 yapılır.
 
-optimizasyonun sessiz ama kritik ortaklarıdır.
+$$z = \frac{x - \mu}{\sigma}$$
 
-Ölçekleme yapılmadan çalışan bir Gradient Descent,
-eğimli bir zeminde tek ayakla yürümeye benzer.
+**Normalization (Normalizasyon):** Veri belirli bir aralığa (genellikle 0-1) sıkıştırılır.
 
----
+$$x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}}$$
 
-
-
-Gençler genellikle şunu sorar:
-> “Hangi optimizer en iyisi?”
-
-Bu soru eksiktir.
-
-Doğru soru şudur:
-> “Bu veri, bu model ve bu hedef için hangi optimizasyon davranışı daha uygun?”
-
-Bazen basit **SGD (Stochastic Gradient Descent – rastlantısal gradyan inişi)**,
-bazen **Adam (Adaptive Moment Estimation – uyarlamalı moment kestirimi)**,
-bazen de sadece doğru learning rate yeterlidir.
+Ölçeklendirme yapılmadan çalıştırılan bir Gradient Descent, bir ayağı uzun diğeri kısa iki bacakla yürümeye benzer.
 
 ---
 
+## Parametre ve Hiperparametre Ayrımı
 
+Model eğitilirken iki farklı parametre türü vardır. Bu ayrımı anlamak kritiktir.
 
-Optimizasyon, modelin direksiyonudur.  
-Veri yolun kendisidir.  
-Ama direksiyon ne kadar iyi olursa olsun, yolu tanımıyorsanız kaza kaçınılmazdır.
+**Model Parametreleri (Parameters):** Eğitim sırasında veriden öğrenilen değerlerdir. Regresyon katsayıları, sinir ağı ağırlıkları bu gruba girer. Bunlara doğrudan müdahale edilmez; optimizasyon algoritması bulur.
 
-Bu yüzden iyi bir çalışma:
-- Optimizasyonu bilir
-- Ama genellemeden kopmaz
+**Hiperparametreler (Hyperparameters):** Eğitime başlamadan önce belirlenen ayarlardır. Modelin nasıl öğreneceğini tanımlar. Learning rate, epoch sayısı, batch size, regularization katsayısı bu gruba dahildir.
 
-Bir sonraki adımda, optimizasyonun
-- sınıflandırma metrikleriyle ilişkisini,
-- dengesiz veri setlerinde nasıl davrandığını,
-- neden bazen accuracy yerine başka ölçütlere ihtiyaç duyduğumuzu
+"Hyper" ön eki Yunanca'dan gelir; "üstünde, ötesinde" anlamındadır. Hiperparametreler, parametrelerin nasıl öğrenileceğini belirleyen üst düzey ayarlardır.
 
-konuşabiliriz.
-
-Otimizasyon sürecinde **hangi ayarların nasıl seçileceği** meselesine geçelim. 
+Peki hiperparametreler nasıl seçilir? Learning rate için 0.01 mi yoksa 0.001 mi daha uygundur? Bu sorunun kesin cevabı yoktur. Denemek gerekir.
 
 ---
 
-# Hiperparametre Optimizasyonu ve Grid Search
+## Grid Search: Sistematik Arama
 
-Bir model eğitirken parametrelerin optimize edilmesinden söz ettik. Burada çoğu zaman gözden kaçan ince ama kritik bir ayrım vardır. Makine öğrenmesinde iki farklı parametre türüyle çalışılır.
+Hiperparametre seçimini rastgele yapmak yerine sistematik bir arama yapmak daha güvenilirdir. **Grid Search (Izgara Araması)** tüm olası kombinasyonları deneyerek en iyi sonucu veren yapılandırmayı bulur.
 
-*   **Model Parametreleri (Parameters – model parametreleri):**
-    Eğitim sırasında veriden öğrenilen değerlerdir. Regresyon katsayıları, sinir ağlarındaki ağırlıklar bu gruba girer. Bu değerlere doğrudan müdahale edilmez; gradyan inişi gibi matematiksel yöntemlerle bulunurlar.
+"Grid" kelimesi ızgara demektir. İki parametreyi aynı anda aradığınızda ortaya bir koordinat düzlemi çıkar.
 
-*   **Hiperparametreler (Hyperparameters – üst parametreler):**
-    Eğitime başlamadan önce belirlenen, modelin *nasıl* öğreneceğini tanımlayan ayarlardır.
+Örnek olarak iki hiperparametre düşünelim:
+- Learning Rate ($\eta$): 0.001, 0.01, 0.1
+- Regularization ($\lambda$): 0.1, 0.5
 
-Önceki notlarda geçen **Learning Rate (öğrenme oranı)**, **Epoch (tur sayısı)** ve **Batch Size (küme boyutu)** bu gruba dahildir.
+Toplam kombinasyon sayısı: $3 \times 2 = 6$
 
-Burada ortaya çıkan soru basittir:
-Learning rate için 0.01 mi daha uygundur, yoksa 0.001 mi?
-
-Bu sorunun kesin cevabı yoktur. Denemek gerekir.
-Ancak bu denemeyi rastgele değil, düzenli yapmak gerekir.
-
-Bu düzenli arama sürecine **Grid Search (ızgara araması)** denir.
-
----
-
-## Grid Search Mantığı
-
-Grid Search, belirlenen hiperparametrelerin tüm olası kombinasyonlarını sistematik biçimde deneyerek en iyi sonucu veren yapılandırmayı bulmayı amaçlar. Yöntem, doğası gereği **brute-force** (kaba kuvvet) yaklaşımına yakındır; pahalıdır ama nettir.
-
-“Grid” kelimesi buradan gelir. İki parametreyi aynı anda aradığınızda, ortaya bir koordinat düzlemi benzeri yapı çıkar.
-
-Örneğin bir **SGD (Stochastic Gradient Descent – rastlantısal gradyan inişi)** algoritması için şu iki ayarı düşünelim:
-
-*   Learning Rate ($\alpha$): 0.001, 0.01, 0.1
-*   Regularization ($\lambda$ – düzenlileştirme katsayısı): 0.1, 0.5
-
-Bu durumda toplam deneme sayısı:
-
-$$
-3 \times 2 = 6
-$$
-
-```text
-        λ = 0.1     λ = 0.5
-      +-----------+-----------+
-α=0.001 |   Deney   |   Deney   |
-      +-----------+-----------+
-α=0.01  |   Deney   |   Deney   |
-      +-----------+-----------+
-α=0.1   |   Deney   |   Deney   |
-      +-----------+-----------+
+```
+              λ = 0.1      λ = 0.5
+           ┌───────────┬───────────┐
+η = 0.001  │  Deney 1  │  Deney 2  │
+           ├───────────┼───────────┤
+η = 0.01   │  Deney 3  │  Deney 4  │
+           ├───────────┼───────────┤
+η = 0.1    │  Deney 5  │  Deney 6  │
+           └───────────┴───────────┘
 ```
 
-Her hücre, ayrı bir eğitim ve doğrulama sürecini temsil eder.
-Hesaplama maliyeti yüksektir; ancak “tahmin ederek ayar yapma” alışkanlığını ortadan kaldırır.
+Her hücre ayrı bir eğitim ve doğrulama sürecini temsil eder. Hesaplama maliyeti yüksektir ancak "tahmin ederek ayar yapma" yerine ölçüme dayalı seçim yapılmış olur.
 
 ---
 
-## WEKA’da İleri Düzey Optimizasyon: Hiperparametre Ayarı ve Grid Search
+## WEKA'da Hiperparametre Optimizasyonu
 
-Gençler, makine öğrenmesi modelleri sadece veriden öğrenmekle kalmaz, aynı zamanda bizim "nasıl öğrenmesi gerektiğini" belirttiğimiz **hiperparametreler** üzerinden de davranışlarını şekillendirir. Varsayılan ayarlarla çalışmak, genellikle bir başlangıç için iyidir; ancak bilimsel bir analizde veya en iyi performansı hedeflerken yeterli olmaz. Modelimizin potansiyelini tam olarak ortaya çıkarmak için bu hiperparametreleri optimize etmemiz gerekir.
+WEKA'da varsayılan ayarlarla çalışmak mümkündür ancak bilimsel bir çalışmada bu genellikle yeterli olmaz. Parametre araması için **Meta-Classifiers (Üst Sınıflandırıcılar)** kullanılır.
 
-WEKA'da bu sistematik arama sürecini, yani **Grid Search (ızgara araması)** yöntemini uygulamak için **Meta-Classifiers (üst sınıflandırıcılar)** başlığı altında yer alan güçlü bir araç kullanırız: **CVParameterSelection**.
+Bu amaçla kullanılan temel araç **CVParameterSelection**'dır. CV, **Cross-Validation (Çapraz Doğrulama)** kısaltmasıdır.
 
-`CVParameterSelection`, adından da anlaşılacağı gibi, **Cross-Validation (çapraz doğrulama)** mekanizmasını kullanarak, belirlediğimiz parametre aralıkları içinde en iyi performansı veren hiperparametre kombinasyonunu bulmayı otomatikleştirir. Bu sayede, modelimizin rastgele şansa değil, tutarlı bir değerlendirmeye dayalı en iyi ayarlarla çalışmasını sağlarız.
+### Uygulama Adımları
 
-### Uygulama Akışı: J48 Karar Ağacı İçin Grid Search
+1. Explorer sekmesinde veri seti açılır (örneğin `diabetes.arff`)
 
-Şimdi, bir J48 Karar Ağacı algoritması için budama (pruning) seviyesini ve minimum örnek sayısını optimize etmek üzere bir uygulama akışı oluşturalım.
+2. Classify sekmesine geçilir
 
-1.  **Veri Yükleme**
-    Weka Explorer sekmesinde `iris.arff` veya `weather.nominal.arff` gibi herhangi bir sınıflandırma veri setini açın.
+3. Choose → meta → CVParameterSelection seçilir
 
-2.  **`CVParameterSelection` Seçimi**
+4. Ayar penceresinde iki alan önemlidir:
+   - **classifier:** Optimize edilecek algoritma (örneğin functions → SGD)
+   - **CVParameters:** Arama uzayı tanımı
 
-    *   `Classify` sekmesine geçin.
-    *   `Choose` butonuna tıklayın → `meta` klasörünü genişletin → `CVParameterSelection` seçeneğini belirleyin.
+WEKA'da parametre tarama sözdizimi:
 
-3.  **Konfigürasyon (Ayarlar)**
-    `CVParameterSelection` yazısının üzerine tıklayarak ayarlar penceresini açın. Burada iki alan özellikle kritik önem taşır:
-
-    *   **`classifier`**: Bu parametreye, optimize etmek istediğimiz asıl algoritmayı seçeriz. Örneğin, `Choose` butonuna tıklayarak `trees` altından `J48` karar ağacını seçin.
-        *   *İpucu:* Seçtiğiniz `J48`'in üzerine tıklayarak kendi iç parametrelerini (örneğin `minNumObj` veya `confidenceFactor`) görebilirsiniz. Bunların adlarını CVParameters kısmında kullanacağız.
-
-    *   **`CVParameters`**: Burası, Grid Search'ün "ızgarasını" tanımladığımız yerdir. Her bir satır, taranacak bir hiperparametre ve onun arama aralığını belirtir. WEKA'da parametre tarama sözdizimi şöyledir:
-
-        `parametre_adı alt_sınır üst_sınır adım_sayısı`
-
-        Şimdi J48 için iki farklı parametreyi optimize edelim:
-        *   **`C` (Confidence Factor - Güven Faktörü):** J48'de budama için kullanılan bir değerdir. Düşük C değeri daha agresif budama, yüksek C değeri daha az budama anlamına gelir. Genellikle 0.1 ile 0.5 arasında denenir.
-            `C 0.1 0.5 5`
-            Bu ifade, `C` parametresinin 0.1'den 0.5'e kadar, eşit aralıklı 5 farklı değerle (0.1, 0.2, 0.3, 0.4, 0.5) denenmesini söyler.
-
-        *   **`M` (Minumum Number of Instances Per Leaf - Yaprak Başına Minimum Örnek Sayısı):** Bir ağaç dalının yaprak olabilmesi için sahip olması gereken minimum örnek sayısı. Küçük değerler karmaşık ağaçlara, büyük değerler basit ağaçlara yol açar.
-            `M 1 10 10`
-            Bu ifade, `M` parametresinin 1'den 10'a kadar, eşit aralıklı 10 farklı tam sayı değeriyle (1, 2, ..., 10) denenmesini söyler.
-
-        Grid Search, bu iki parametrenin tüm kombinasyonlarını deneyecektir: `5 (C değeri) x 10 (M değeri) = 50 farklı model`. Her bir model, `CVParameterSelection`'ın varsayılan çapraz doğrulama (genellikle 10 katlı) ile test edilecektir.
-
-4.  **Çalıştırma**
-    Tüm ayarlar kapatıldıktan sonra `Start` tuşuna basın.
-
-WEKA, arka planda belirlediğiniz tüm hiperparametre kombinasyonları için modelleri eğitir, çapraz doğrulama ile performanslarını ölçer ve en iyi skoru (genellikle en yüksek doğruluk veya en düşük hata) veren parametre setini raporlar.
-
-Çıktının ilk bölümünde, en iyi parametrelerin ne olduğu ve bu parametrelerle elde edilen performans metrikleri detaylı olarak sunulur. Örneğin:
-
-```text
-Best parameters found:
-J48: -C 0.2 -M 2
-
-Resulting performance for the best parameters:
-Correctly Classified Instances:  96.0000 %
-Incorrectly Classified Instances: 4.0000 %
-... (Diğer metrikler)
+```
+parametre_adı alt_sınır üst_sınır adım_sayısı
 ```
 
-Bu çıktı, J48 algoritması için en iyi `C` değerinin `0.2`, en iyi `M` değerinin ise `2` olduğunu ve bu ayarlarla elde edilen doğruluk oranını gösterir. Bu, model seçiminizi sezgilere değil, sistematik ölçümlere dayandırdığınız anlamına gelir.
+Örnek:
 
-Unutmayın gençler, Grid Search'ün hesaplama maliyeti, taranan parametrelerin sayısına ve aralıkların genişliğine göre katlanarak artar. Bu yüzden, başlangıçta daha geniş aralıklar deneyip, en iyi sonuçların çıktığı bölgeleri daraltarak daha rafine aramalar yapmak (iteratif Grid Search) akıllıca bir stratejidir.
+```
+L 0.001 0.1 5
+```
+
+Bu ifade, L parametresinin (learning rate) 0.001 ile 0.1 arasında 5 farklı değerle denenmesini söyler.
+
+5. Start tuşuna basıldığında WEKA tüm kombinasyonları dener ve en iyi sonucu raporlar
+
+Çıktıda şu tür bir ifade görülür:
+
+```
+Best Value (L): 0.01
+```
 
 ---
 
-## Python ile Grid Search (scikit-learn)
+## R ile Grid Search
 
-Python tarafında aynı yaklaşım **GridSearchCV** sınıfı ile uygulanır. Mantık aynıdır; fark, her şeyin kod ile ifade edilmesidir.
+R'da **caret** paketi Grid Search için kapsamlı bir altyapı sunar.
 
-Aşağıdaki örnek, **SGDRegressor** için düzenlileştirme katsayısı ve öğrenme oranını birlikte optimize eder.
+```r
+library(caret)
+
+# Veri yükleme
+data(PimaIndiansDiabetes, package = "mlbench")
+veri <- PimaIndiansDiabetes
+
+# Çapraz doğrulama ayarları
+kontrol <- trainControl(
+  method = "cv",
+  number = 5,
+  verboseIter = TRUE
+)
+
+# Parametre ızgarası
+parametre_grid <- expand.grid(
+  alpha = c(0, 0.5, 1),           # 0: Ridge, 1: Lasso
+  lambda = c(0.001, 0.01, 0.1)
+)
+
+# Grid Search ile model eğitimi
+model <- train(
+  diabetes ~ .,
+  data = veri,
+  method = "glmnet",
+  trControl = kontrol,
+  tuneGrid = parametre_grid,
+  preProcess = c("center", "scale")
+)
+
+# Sonuçlar
+print(model)
+print(model$bestTune)
+```
+
+Bu kod Elastic Net modelini farklı alpha ve lambda kombinasyonlarıyla dener. `alpha = 0` Ridge, `alpha = 1` Lasso, aradaki değerler ise ikisinin karışımı olan Elastic Net'i verir.
+
+---
+
+## Python ile Grid Search
+
+Python'da **scikit-learn** kütüphanesinin `GridSearchCV` sınıfı kullanılır.
 
 ```python
 from sklearn.datasets import load_diabetes
@@ -3384,19 +3321,23 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
+# Veri yükleme
 X, y = load_diabetes(return_X_y=True)
 
+# Pipeline oluşturma
 pipeline = Pipeline([
     ('scaler', StandardScaler()),
     ('sgd', SGDRegressor(max_iter=5000, tol=1e-3))
 ])
 
+# Parametre ızgarası
 param_grid = {
     'sgd__alpha': [0.0001, 0.001, 0.01, 0.1],
     'sgd__learning_rate': ['constant', 'optimal', 'invscaling'],
     'sgd__eta0': [0.01, 0.1]
 }
 
+# Grid Search
 grid_search = GridSearchCV(
     pipeline,
     param_grid,
@@ -3410,104 +3351,238 @@ print("En iyi parametreler:", grid_search.best_params_)
 print("En iyi skor:", grid_search.best_score_)
 ```
 
-Bu yapı çalıştırıldığında toplam eğitim sayısı:
+Toplam eğitim sayısı: $4 \times 3 \times 2 \times 5 = 120$
 
-$$
-4 \times 3 \times 2 \times 5 = 120
-$$
-
-Parametre uzayı büyüdükçe deneme sayısının hızla artması, literatürde **Curse of Dimensionality (boyut laneti)** olarak bilinir.
+Parametre sayısı arttıkça kombinasyon sayısı üstel olarak büyür. Bu duruma literatürde **Curse of Dimensionality (Boyut Laneti)** denir.
 
 ---
 
-## Random Search Alternatifi
+## Random Search: Rastgele Arama
 
-Parametre sayısı çok arttığında Grid Search pratik olmaktan çıkar. Bu durumda tercih edilen yöntem **Random Search (rastgele arama)**’tır.
+Parametre uzayı çok genişlediğinde Grid Search pratik olmaktan çıkar. **Random Search (Rastgele Arama)** bu durumda tercih edilir.
 
-Bu yaklaşımda tüm noktalar denenmez; belirlenen aralıklardan rastgele örnekler seçilir. İstatistiksel olarak, yeterli sayıda deneme yapıldığında iyi çözümlere ulaşma olasılığı yüksektir ve hesaplama maliyeti düşer.
+Tüm noktalar denenmez; belirlenen dağılımlardan rastgele örnekler seçilir. Yeterli sayıda deneme yapıldığında iyi çözümlere ulaşma olasılığı yüksektir ve hesaplama maliyeti düşer.
 
-*   WEKA: `MultiSearch`
-*   Python: `RandomizedSearchCV`
+Araştırmalar göstermiştir ki parametre uzayı geniş olduğunda Random Search, Grid Search'ten daha verimli sonuçlar üretebilir. Çünkü Grid Search parametrelerin eşit aralıklı noktalarını denerken, Random Search tüm uzayı daha geniş biçimde örnekler.
+
+R'da `caret` paketinde:
+
+```r
+kontrol <- trainControl(
+  method = "cv",
+  number = 5,
+  search = "random"
+)
+
+model <- train(
+  diabetes ~ .,
+  data = veri,
+  method = "glmnet",
+  trControl = kontrol,
+  tuneLength = 20  # 20 rastgele kombinasyon
+)
+```
+
+Python'da `RandomizedSearchCV`:
+
+```python
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import uniform, loguniform
+
+param_distributions = {
+    'sgd__alpha': loguniform(1e-5, 1e-1),
+    'sgd__eta0': uniform(0.001, 0.1)
+}
+
+random_search = RandomizedSearchCV(
+    pipeline,
+    param_distributions,
+    n_iter=50,
+    cv=5,
+    scoring='neg_mean_squared_error'
+)
+```
 
 ---
 
+## Nested Cross-Validation: Güvenilir Değerlendirme
 
-Optimizasyon, yalnızca bir fonksiyonu minimize etmek değildir.
-Aynı zamanda *hangi şartlar altında* minimize edileceğine karar vermektir.
+Grid Search kullanıldığında sık yapılan bir hata vardır: Aynı veri üzerinde hem hiperparametre seçimi yapılır hem de performans raporlanır. Bu durum iyimser sonuçlar üretir çünkü model dolaylı olarak test verisini görmüş olur.
 
-Sağlam bir çalışma genellikle şu yolu izler:
+**Nested Cross-Validation (İç İçe Çapraz Doğrulama)** bu sorunu çözer. Temel fikir basittir: Hiperparametre seçimi ile model değerlendirmesi birbirinden ayrılır.
 
-1.  Varsayılan ayarlarla bir başlangıç modeli kurulur.
-2.  Etkili hiperparametreler belirlenir.
-3.  Makul aralıklarda sistematik arama yapılır.
-4.  Hesaplama maliyeti her adımda gözetilir.
+Yapı iki döngüden oluşur:
 
-En iyi model, teorik olarak en iyi olan değil;
-eldeki zaman ve kaynaklar içinde en tutarlı sonucu verendir.
+**Dış Döngü (Outer Loop):** Modelin genelleme performansını ölçer. Veri k katmana bölünür; her iterasyonda bir katman test için ayrılır.
+
+**İç Döngü (Inner Loop):** Hiperparametre optimizasyonunu yürütür. Eğitim verisi üzerinde Grid Search yapılır.
+<img src="./images/nested_cv.svg" alt="Nested Cross-Validation Süreci">
+```
+
+Bu yapı 10 kez tekrarlandığında 10 farklı test sonucu elde edilir. Her biri bağımsız hiperparametre optimizasyonu ile desteklenir. Raporlanan performans, hiperparametre seçiminin etkisinden arındırılmış olur.
+
+### R ile Nested Cross-Validation
+
+```r
+library(caret)
+library(mlbench)
+
+data(PimaIndiansDiabetes)
+veri <- PimaIndiansDiabetes
+
+# Dış döngü için katmanlar
+set.seed(42)
+dis_katmanlar <- createFolds(veri$diabetes, k = 10, returnTrain = FALSE)
+
+# Sonuçları saklayacak vektör
+dis_sonuclar <- numeric(10)
+
+for (i in 1:10) {
+  # Dış döngü: eğitim ve test ayrımı
+  test_indeks <- dis_katmanlar[[i]]
+  egitim_veri <- veri[-test_indeks, ]
+  test_veri <- veri[test_indeks, ]
+  
+  # İç döngü: Grid Search
+  ic_kontrol <- trainControl(method = "cv", number = 5)
+  
+  parametre_grid <- expand.grid(
+    alpha = c(0, 0.5, 1),
+    lambda = c(0.001, 0.01, 0.1)
+  )
+  
+  model <- train(
+    diabetes ~ .,
+    data = egitim_veri,
+    method = "glmnet",
+    trControl = ic_kontrol,
+    tuneGrid = parametre_grid,
+    preProcess = c("center", "scale")
+  )
+  
+  # Dış döngüde test
+  tahmin <- predict(model, test_veri)
+  dis_sonuclar[i] <- mean(tahmin == test_veri$diabetes)
+}
+
+cat("Ortalama Doğruluk:", mean(dis_sonuclar), "\n")
+cat("Standart Sapma:", sd(dis_sonuclar), "\n")
+```
+
+### Python ile Nested Cross-Validation
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+import numpy as np
+
+# Veri yükleme
+X, y = load_breast_cancer(return_X_y=True)
+
+# Pipeline
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('clf', LogisticRegression(max_iter=1000))
+])
+
+# İç döngü için Grid Search
+param_grid = {
+    'clf__C': [0.01, 0.1, 1, 10],
+    'clf__penalty': ['l1', 'l2'],
+    'clf__solver': ['saga']
+}
+
+ic_cv = GridSearchCV(
+    pipeline,
+    param_grid,
+    cv=5,
+    scoring='accuracy'
+)
+
+# Dış döngü
+dis_skorlar = cross_val_score(ic_cv, X, y, cv=10, scoring='accuracy')
+
+print(f"Ortalama Doğruluk: {dis_skorlar.mean():.4f}")
+print(f"Standart Sapma: {dis_skorlar.std():.4f}")
+```
 
 ---
 
+## WEKA Experimenter: İstatistiksel Karşılaştırma
 
+Explorer ekranında tek tek algoritma çalıştırmak fikir verir. Ancak şu soru cevapsız kalır: Gözlenen fark gerçekten anlamlı mı?
 
-# Nested Cross-Validation, Deney Karşılaştırmaları ve Sonuçların Raporlanması
+WEKA'nın **Experimenter** modülü bu soruya cevap arar. Tüm algoritmaları aynı veri bölünmeleri üzerinde çalıştırır ve sonuçları istatistiksel testlerle karşılaştırır.
 
-Bir noktadan sonra model kurmaktan çok, modeli **nasıl değerlendirdiğimiz** belirleyici hâle gelir. Aynı veri üzerinde hem hiperparametre seçimi yapıp hem de performans raporlamak, çoğu zaman fark edilmeden iyimser sonuçlar üretir. Bu durum özellikle Grid Search kullanıldığında daha belirgindir.
+### Experimenter Kullanımı
 
-Bu sorunu çözmek için kullanılan yaklaşım **Nested Cross-Validation (iç içe çapraz doğrulama)**’dır. Buradaki temel fikir basittir: Model ayarlarının belirlendiği süreç ile modelin sınandığı süreç birbirinden ayrılır.
+1. WEKA ana ekranından Experimenter seçilir
 
-Nested yapı iki döngüden oluşur. Dış döngü, modelin genelleme performansını ölçer. İç döngü ise hiperparametre optimizasyonunu yürütür. İç döngüde Grid Search çalışır, en iyi parametreler bulunur; bu parametrelerle model yeniden eğitilir ve yalnızca dış döngüde ayrılmış test verisi üzerinde değerlendirilir.
+2. Setup sekmesinde:
+   - New ile yeni deney oluşturulur
+   - Add new → Veri setleri eklenir
+   - Add new → Algoritmalar eklenir
 
-Nested Cross-Validation yapısı şu şekilde çalışır:
+3. Run sekmesinde Start ile deney başlatılır
 
-**Dış Döngü (Outer Loop):** Veri 10 katmana (fold) bölünür. Her iterasyonda 9 katman eğitim, 1 katman test için ayrılır.
+4. Analyse sekmesinde:
+   - Experiment yüklenir
+   - Test base olarak referans algoritma seçilir
+   - Perform test ile istatistiksel karşılaştırma yapılır
 
-**İç Döngü (Inner Loop):** Eğitim seti içinde Grid Search yapılır. Hiperparametreler bu 9 katman üzerinde optimize edilir.
+Sonuç tablosunda görülen işaretler:
+- `v` : İstatistiksel olarak anlamlı şekilde daha iyi
+- `*` : İstatistiksel olarak anlamlı şekilde daha kötü
+- Boş : Anlamlı fark yok
 
-**Sonuç:** En iyi parametrelerle eğitim tamamlandığında, model test setinde (ayrı tutulan 1 katman) değerlendirilir.
+Varsayılan olarak **Corrected Paired t-test** kullanılır. Bu test, iki algoritma arasındaki farkın rastlantısal olup olmadığını değerlendirir.
 
-Bu yapı 10 kez tekrarlandığında:
-- 10 farklı test sonucu elde edilir
-- Her biri bağımsız hiperparametre optimizasyonu ile desteklenir
-- Raporlanan performans, hiperparametre seçiminin etkisinden arındırılır
+---
 
-**Örnek akış:**
+## Sonuçların Raporlanması
 
-| Dış Katman | İç Katman (Grid Search) | Test Seti |
-|:---:|:---:|:---:|
-| 1 | Katmanlar 2-10 | Katman 1 |
-| 2 | Katmanlar 1,3-10 | Katman 2 |
-| ... | ... | ... |
-| 10 | Katmanlar 1-9 | Katman 10 |
+Akademik bir çalışmada sonuçların nasıl ifade edildiği de önemlidir.
 
-Sonuçta 10 bağımsız performans değeri ortalaması alınır ve standart sapması hesaplanır. Bu yaklaşım, modelin **gerçek genelleme gücünün** daha güvenilir bir tahmini sunar.
+Sadece "en iyi parametreler şunlardır" demek yeterli değildir. Parametrelerin hangi aralıkta, hangi doğrulama stratejisiyle ve hangi ölçütle arandığı açıkça belirtilmelidir.
 
-Nested yapı özellikle akademik çalışmalarda tercih edilir. Çünkü raporlanan performans, hiperparametre seçiminin etkisinden arındırılmış olur. Tek bir deneyden ziyade, tekrarlı ve kontrollü bir değerlendirme sunar.
+Örnek ifade:
 
-Bu noktada WEKA’nın **Experimenter** modülü devreye girer. Explorer ekranında tek tek algoritma çalıştırmak fikir verir; ancak Experimenter şu soruya cevap arar: “Gözlenen fark gerçekten anlamlı mı?”
+> "Model performansını artırmak amacıyla öğrenme oranı ve düzenlileştirme katsayısı, beş katlı çapraz doğrulama kullanılarak Grid Search yöntemiyle taranmıştır. En iyi performans, η = 0.01 ve λ = 0.001 değerleri ile elde edilmiştir."
 
-Experimenter, tüm algoritmaları aynı veri bölünmeleri üzerinde çalıştırır ve sonuçları istatistiksel testlerle karşılaştırır. Varsayılan olarak kullanılan yöntemler arasında **Paired t-test (eşleştirilmiş t-testi)** ve düzeltilmiş yeniden örnekleme testleri bulunur. Buradaki amaç, iki algoritma arasındaki farkın rastlantısal olup olmadığını değerlendirmektir.
+Nested Cross-Validation kullanıldıysa bu ayrıca vurgulanmalıdır:
 
-Sonuç ekranında görülen `(v)`, `(*)` gibi işaretler, performans farkının istatistiksel durumunu gösterir. Burada tek bir koşuya değil, deneylerin tamamına bakmak gerekir. Çok küçük farklar, istatistiksel olarak anlamlı değilse güçlü bir iddia kurmak doğru olmaz.
+> "Hiperparametre seçiminin genelleme performansını etkilememesi amacıyla iç içe çapraz doğrulama uygulanmıştır. İç döngüde Grid Search ile en iyi parametreler belirlenmiş, dış döngüde model performansı değerlendirilmiştir. On katlı dış döngü sonucunda ortalama doğruluk %76.3 ± 4.2 olarak hesaplanmıştır."
 
-Bu durum rapor diline de yansır. Akademik metinlerde genellikle şu yaklaşım tercih edilir:
+İstatistiksel karşılaştırma yapıldıysa:
 
-> “Model A, Model B’ye kıyasla daha yüksek ortalama doğruluk elde etmiştir; ancak bu fark istatistiksel olarak anlamlı bulunmamıştır.”
+> "Random Forest algoritması, Lojistik Regresyon'a kıyasla daha yüksek ortalama doğruluk elde etmiştir (sırasıyla %82.1 ve %76.3). Bu fark, düzeltilmiş eşleştirilmiş t-testi sonucunda p < 0.05 düzeyinde istatistiksel olarak anlamlı bulunmuştur."
 
-Bu tür ifadeler, sonucu abartmadan ama net biçimde sunar.
+Fark anlamlı değilse:
 
-Grid Search çıktılarının raporlanması da benzer bir dikkat gerektirir. Sadece “en iyi parametreler şunlardır” demek yeterli değildir. Parametrelerin hangi aralıkta, hangi doğrulama stratejisiyle ve hangi amaçla arandığı açıkça belirtilmelidir.
+> "İki algoritma arasında gözlenen performans farkı istatistiksel olarak anlamlı bulunmamıştır (p = 0.23)."
 
-Örnek bir ifade şöyle olabilir:
+---
 
-> “Model performansını artırmak amacıyla learning rate ve regularization katsayısı, beş katlı çapraz doğrulama kullanılarak Grid Search yöntemiyle taranmıştır. En iyi performans, learning rate = 0.01 ve α = 0.001 değerleri ile elde edilmiştir.”
+## Özet
 
-Eğer Nested Cross-Validation kullanıldıysa bu ayrıca vurgulanmalıdır. Çünkü bu, çalışmanın metodolojik olarak daha sağlam kurulduğunu gösterir.
+| Kavram | Açıklama |
+|--------|----------|
+| Generalization | Modelin yeni veride tutarlı tahmin yapabilmesi |
+| Overfitting | Modelin eğitim verisini ezberlemesi |
+| Underfitting | Modelin yeterince öğrenememesi |
+| Regularization | Parametreleri kısıtlayarak overfitting'i önleme |
+| Early Stopping | Doğrulama hatası yükselmeye başlayınca eğitimi durdurma |
+| Learning Rate | Gradient Descent adım büyüklüğü |
+| Feature Scaling | Özellikleri aynı ölçeğe getirme |
+| Hiperparametre | Eğitim öncesi belirlenen model ayarları |
+| Grid Search | Tüm parametre kombinasyonlarını deneme |
+| Random Search | Rastgele parametre örnekleme |
+| Nested CV | İç içe çapraz doğrulama ile güvenilir değerlendirme |
 
-> “Hiperparametre seçiminin genelleme performansını etkilememesi amacıyla iç içe çapraz doğrulama uygulanmıştır. İç döngüde Grid Search ile en iyi parametreler belirlenmiş, dış döngüde model performansı değerlendirilmiştir.”
-
-Sonuç olarak, model kurmak bir mühendislik faaliyetidir; ancak modeli değerlendirmek bir araştırma disiplinidir. Grid Search ayarları bulur, Nested Cross-Validation güvenilirlik sağlar, Experimenter ise farkların gerçekten var olup olmadığını test eder. Sağlam bir çalışma, bu üç yaklaşımı dengeli biçimde kullanır.
-
---- 
+Gençler, optimizasyon sadece bir fonksiyonu minimize etmek değildir. Aynı zamanda hangi şartlar altında minimize edileceğine karar vermektir. En iyi model, teorik olarak en iyi olan değil; eldeki zaman ve kaynaklar içinde en tutarlı, en genellenebilir sonucu verendir.
 
 
 
