@@ -3566,23 +3566,43 @@ Fark anlamlı değilse:
 
 ---
 
-## Özet
+## Özet: Optimizasyon ve Hiperparametre Ayarlama
 
-| Kavram | Açıklama |
-|--------|----------|
-| Generalization | Modelin yeni veride tutarlı tahmin yapabilmesi |
-| Overfitting | Modelin eğitim verisini ezberlemesi |
-| Underfitting | Modelin yeterince öğrenememesi |
-| Regularization | Parametreleri kısıtlayarak overfitting'i önleme |
-| Early Stopping | Doğrulama hatası yükselmeye başlayınca eğitimi durdurma |
-| Learning Rate | Gradient Descent adım büyüklüğü |
-| Feature Scaling | Özellikleri aynı ölçeğe getirme |
-| Hiperparametre | Eğitim öncesi belirlenen model ayarları |
-| Grid Search | Tüm parametre kombinasyonlarını deneme |
-| Random Search | Rastgele parametre örnekleme |
-| Nested CV | İç içe çapraz doğrulama ile güvenilir değerlendirme |
+| Kavram | Tanım | Pratik Çıkarım |
+|--------|-------|----------------|
+| **Generalization** | Modelin görülmemiş veride tutarlı tahmin yapabilmesi | Asıl hedef, eğitim verisinde değil yeni veride başarıdır |
+| **Overfitting** | Modelin eğitim verisini ezberlemesi, test verisinde başarısızlığı | Eğitim hatası düşerken test hatası yükselirse uyarısıdır |
+| **Underfitting** | Modelin ne eğitim ne de test verisinde yeterli öğrenememesi | Model kapasitesi artırılmalı veya daha fazla eğitim gerekir |
+| **Regularization (L1/L2)** | Parametreleri kısıtlayarak karmaşıklığı kontrol etme | Overfitting'i önler, daha stabil modeller oluşturur |
+| **Early Stopping** | Doğrulama hatası yükselmeye başlayınca eğitimi durdurma | Eğitim süresi kısalır, kaynaklar tasarruf edilir |
+| **Learning Rate (η)** | Gradient Descent'te her adımdaki ilerleme miktarı | Çok büyük: hedeftir atar; çok küçük: yavaş konverj |
+| **Feature Scaling** | Özellikleri aynı ölçeğe getirme (standardizasyon/normalizasyon) | Gradient Descent verimliliğini artırır, yakınsama hızlanır |
+| **Hiperparametre** | Eğitim öncesi belirlenen, veriden öğrenilmeyen model ayarları | Manuel seçim yerine sistematik arama yapılmalıdır |
+| **Grid Search** | Tüm parametre kombinasyonlarını sistematik deneme | Kesin sonuç verir ancak hesaplama maliyeti yüksektir |
+| **Random Search** | Parametre uzayından rastgele örnekler seçme | Geniş uzaylarda Grid Search'ten daha verimlidir |
+| **Nested Cross-Validation** | Hiperparametre seçimi ile model değerlendirmesinin ayrılması | Güvenilir, tarafsız performans raporu sağlar |
+| **Corrected Paired t-test** | İstatistiksel olarak anlamlı fark tespit etme | Gözlenen farkın gerçekten anlamlı olup olmadığını kontrol eder |
 
-Gençler, optimizasyon sadece bir fonksiyonu minimize etmek değildir. Aynı zamanda hangi şartlar altında minimize edileceğine karar vermektir. En iyi model, teorik olarak en iyi olan değil; eldeki zaman ve kaynaklar içinde en tutarlı, en genellenebilir sonucu verendir.
+### Temel İlkeler
+
+1. **Veriye Dayalı Karar Verin:** Sezgiye güvenmek yerine Grid Search veya Random Search kullanın
+2. **Test Verisini Koruyun:** Veri sızıntısını engellemek için ön işleme adımlarını çapraz doğrulamadan sonra yapın
+3. **İstatistik Kullanın:** Nested Cross-Validation ile güvenilir sonuçlar alın, t-test ile karşılaştırma yapın
+4. **Basitlikten Başlayın:** Karmaşık modeller değil, basit modeller ile başlayıp gerekirse geliştirin
+5. **Rapor Edin:** Kullanılan parametreleri, arama stratejisini ve istatistiksel testleri açıkça belirtin
+
+### Uygulamada Sıkça Yapılan Hatalar
+
+❌ **Yanlış:** Hiperparametreleri veya özellikleri tamamen veri setine göre optimize etmek
+✅ **Doğru:** Nested CV ile hiperparametre seçimi ve performans değerlendirmesini ayırmak
+
+❌ **Yanlış:** Sadece eğitim verisinde doğruluk raporlamak
+✅ **Doğru:** Test verisinde veya çapraz doğrulama ile genelleme performansını rapor etmek
+
+❌ **Yanlış:** Ön işleme filtrelerini tüm veri üzerinde uyguladıktan sonra çapraz doğrulama yapmak
+✅ **Doğru:** Filtrelemeleri çapraz doğrulamadaki her katmanda bağımsız olarak uygulamak
+
+Gençler, optimizasyon sadece bir maliyet fonksiyonunu minimize etmek değildir. Bu işlemin **hangi koşullar altında** yapılacağına karar vermektir. En iyi model, teorik olarak kusursuz olan değil; **eldeki zaman ve kaynaklar içinde en tutarlı, en genellenebilir sonucu veren modeldir**. Bilimsel araştırmada bu tutarlılığı ve tarafsızlığı kanıtlamak, raporların en önemli kısmıdır.
 
 
 
