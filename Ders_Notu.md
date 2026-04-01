@@ -928,19 +928,27 @@ Artık `Po` ve `Pe` değerlerini bildiğimize göre, formülde yerine koyabiliri
 
 Formül, modelimizin gerçek doğruluğundan (`Po`) şans eseri elde edilecek doğruluğu (`Pe`) çıkarır ve bu farkı, şansın üzerinde elde edilebilecek maksimum başarıya (`1 - Pe`) oranlar. Bu sayede Kappa, modelin sadece doğru tahmin yapma oranını değil, aynı zamanda bu doğruluğun ne kadarının tesadüfi olmadığını da hesaba katar. Bu özelliği, onu özellikle tıp veya finans gibi alanlarda dengesiz veri setleri üzerinde çalışırken doğruluk metriğine göre çok daha güvenilir bir alternatif yapar.
 
-**6. Ağırlıklı Ortalama (Weighted Average)**
+**6. Aritmetik Ortalama (Macro Avg) ve Ağırlıklı Ortalama (Weighted Avg)**
 
 Şimdi, birden fazla sınıfımız olduğunda (örneğimizdeki gibi ikili sınıflandırmanın ötesinde) metrikleri nasıl genelleyeceğimizi düşünelim. Örneğin, üç sınıfımız var: A, B ve C. Her sınıf için ayrı ayrı Precision, Recall ve F1-Skoru hesaplayabiliriz. Peki modelin genel performansı nedir?
 
-Burada devreye ortalama alma yöntemleri giriyor. En yaygın olanlardan biri **ağırlıklı ortalamadır**.
+Burada devreye ortalama alma yöntemleri giriyor. Bu noktada **Aritmetik Ortalama** (Scikit-learn'deki adıyla *macro avg*) ile **Ağırlıklı Ortalama** (*weighted avg*) arasındaki farkı anlamak çok önemlidir.
 
-Bu yaklaşım, her sınıfın metrik skorunu hesaplarken o sınıfın veri setindeki "ağırlığını" yani örnek sayısını (destek/support) dikkate alır. Sınıflar dengesizse bu çok önemlidir. Örneğin, 1000 örneklik bir veri setinde 800 tane A sınıfı, 150 tane B sınıfı ve 50 tane C sınıfı varsa, A sınıfının performansı genel skoru daha fazla etkilemelidir.
+**Aritmetik Ortalama (Macro Average): Tüm Sınıflara Eşit Hak**
+Aritmetik ortalama, sınıfların veri setinde ne kadar bulunduğuna (örnek sayısına) hiç bakmaz. Her sınıfı eşit derecede önemli kabul eder. 
+*Örnek:* Modelimizin F1-Skorları A sınıfı için %90 (0.90), B sınıfı için %40 (0.40) ve C sınıfı için %50 (0.50) olsun. 
+`Aritmetik Ortalama = (0.90 + 0.40 + 0.50) / 3 = 0.60 (%60)`
 
-**Hesaplanışı:**
-Her sınıf için metrik (örneğin F1-Skoru) hesaplanır.
-`Ağırlıklı F1 = (F1_A * 800 + F1_B * 150 + F1_C * 50) / (800 + 150 + 50)`
+**Ağırlıklı Ortalama (Weighted Average): Çoğunluğun Sesi**
+Ağırlıklı ortalama ise her sınıfın metrik skorunu hesaplarken o sınıfın veri setindeki "ağırlığını", yani örnek sayısını (destek/support) dikkate alır. Sınıflar **dengesizse** bu hayati bir fark yaratır. 
+*Örnek:* 1000 örneklik bir veri setinde 800 tane A sınıfı, 150 tane B sınıfı ve 50 tane C sınıfı olsun. Skorlarımız yine yukarıdakiyle aynı olsun.
+`Ağırlıklı Ortalama = (0.90 * 800 + 0.40 * 150 + 0.50 * 50) / 1000`
+`Ağırlıklı Ortalama = (720 + 60 + 25) / 1000 = 0.805 (%80.5)`
 
-Bu yöntem, her bir örneğin eşit derecede önemli olduğunu varsayar ve modelin genel performansını, veri setinin yapısını yansıtacak şekilde adil bir biçimde özetler. Scikit-learn gibi kütüphanelerin sınıflandırma raporlarında bu değeri "weighted avg" olarak görürsünüz.
+**Farkın Yorumu:**
+Aritmetik ortalamaya bakarsak modelin başarısı %60 gibi düşük görünüyor, çünkü azınlık sınıflarındaki (B ve C) kötü performans ortalamayı doğrudan aşağı çekiyor. Ancak ağırlıklı ortalamaya baktığımızda başarının %80.5 olduğunu görüyoruz, çünkü model, veri setinin büyük çoğunluğunu (%80'ini) oluşturan A sınıfında gayet başarılı. 
+
+Eğer sizin için azınlık sınıflarını (örneğin nadir görülen bir hastalığı) doğru tahmin etmek çoğunluk sınıfı kadar önemliyse **Aritmetik (Macro)** ortalamaya bakmalısınız. Ancak amacınız modelin genel olarak verinin bütününde ne kadar başarılı olduğunu, veri dağılımını adil bir şekilde yansıtarak görmekse **Ağırlıklı (Weighted)** ortalamayı kullanmalısınız. Scikit-learn gibi kütüphanelerin sınıflandırma raporlarında bu değerleri "macro avg" ve "weighted avg" olarak yan yana görürsünüz.
 
 ## ROC Eğrisinin Kökeni ve Oluşturulması
 
