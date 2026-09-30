@@ -15,6 +15,7 @@
       <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
     </marker>
   </defs>
+    <rect id="beyaz-arka-plan" x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
   <!-- Grafiğin çizim alanı (280x280) ve boşluklar (padding) -->
   <g transform="translate(50, 50)">
     <!-- ========================================= -->

@@ -1,0 +1,14 @@
+% Öğrenci vize-final notları (ders notu: Öznitelik Ölçeklendirme / Weka uygulaması)
+% % ile başlayan satırlar ARFF dosyalarında yorum satırıdır.
+@relation ogrenci_notlari
+
+@attribute vize numeric
+@attribute final numeric
+@attribute durum {gecti, kaldi}
+
+@data
+60,75,gecti
+45,50,kaldi
+80,90,gecti
+95,92,gecti
+30,40,kaldi

@@ -23,6 +23,7 @@
             <rect x="300" y="0" width="700" height="500"/>
         </clipPath>
     </defs>
+    <rect id="beyaz-arka-plan" x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
     <!-- ========================================= -->
     <!-- SOL GRAFİK (DETAYLI ANALİZ) -->
     <!-- ========================================= -->

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" role="img" aria-label="Hava durumu verisi için karar ağacı">
+<title>Hava durumu (weather.nominal) karar ağacı</title>
+<rect width="720" height="360" rx="12" fill="#fff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" text-anchor="middle" fill="#1e293b">
+<text x="360" y="30" font-size="16" font-weight="bold">Karar Ağacı: "Bugün tenis oynanır mı?" (weather.nominal, J48)</text>
+<g stroke="#64748b" stroke-width="2">
+<line x1="360" y1="90" x2="140" y2="165"/><line x1="360" y1="90" x2="360" y2="165"/><line x1="360" y1="90" x2="580" y2="165"/>
+<line x1="140" y1="200" x2="75" y2="275"/><line x1="140" y1="200" x2="205" y2="275"/>
+<line x1="580" y1="200" x2="515" y2="275"/><line x1="580" y1="200" x2="645" y2="275"/></g>
+<rect x="295" y="55" width="130" height="38" rx="19" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="360" y="79" font-weight="bold">outlook ?</text>
+<g font-size="12.5" fill="#475569"><text x="225" y="120">sunny</text><text x="390" y="135">overcast</text><text x="495" y="120">rainy</text>
+<text x="88" y="240">high</text><text x="198" y="240">normal</text><text x="530" y="240">true</text><text x="635" y="240">false</text></g>
+<rect x="75" y="165" width="130" height="36" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="140" y="188" font-weight="bold">humidity ?</text>
+<rect x="315" y="165" width="90" height="38" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="360" y="182" font-weight="bold" fill="#166534">YES</text><text x="360" y="197" font-size="10.5">(4 yes / 0 no)</text>
+<rect x="515" y="165" width="130" height="36" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="580" y="188" font-weight="bold">windy ?</text>
+<rect x="25" y="275" width="100" height="38" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="75" y="292" font-weight="bold" fill="#991b1b">NO</text><text x="75" y="307" font-size="10.5">(0 / 3)</text>
+<rect x="155" y="275" width="100" height="38" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="205" y="292" font-weight="bold" fill="#166534">YES</text><text x="205" y="307" font-size="10.5">(2 / 0)</text>
+<rect x="465" y="275" width="100" height="38" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="515" y="292" font-weight="bold" fill="#991b1b">NO</text><text x="515" y="307" font-size="10.5">(0 / 2)</text>
+<rect x="595" y="275" width="100" height="38" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="645" y="292" font-weight="bold" fill="#166534">YES</text><text x="645" y="307" font-size="10.5">(3 / 0)</text>
+<text x="360" y="342" font-size="12" fill="#64748b">Mavi = karar (iç) düğümü, yeşil/kırmızı = yaprak (sınıf). Parantez: (yes / no) örnek sayısı. Toplam 14 gün.</text>
+</g></svg>

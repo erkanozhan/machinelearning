@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gradyan İnişi Animasyonu | Lineer Regresyon</title>
+<style>
+  :root { --primary:#2563eb; --success:#16a34a; --danger:#dc2626; --warning:#ea580c; --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Tahoma,Arial,sans-serif; background:var(--bg); color:var(--text); padding:15px; line-height:1.55; }
+  .header { text-align:center; padding:15px; margin-bottom:18px; border-radius:10px; color:#fff; background:linear-gradient(135deg,var(--primary),#0891b2); }
+  .header h1 { font-size:23px; } .header p { font-size:13px; opacity:.95; }
+  .grid { max-width:1250px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
+  .card h2 { font-size:16px; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--border); }
+  canvas { width:100%; height:auto; background:#fff; border:1px solid var(--border); border-radius:8px; }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:10px 0; }
+  button { border:none; border-radius:7px; padding:9px 18px; font-weight:600; cursor:pointer; color:#fff; background:var(--primary); }
+  button.gray { background:var(--muted); } button.green { background:var(--success); }
+  button:hover { filter:brightness(.92); }
+  label { font-size:14px; }
+  input[type=range] { width:220px; vertical-align:middle; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
+  .stat { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; }
+  .stat b { display:block; font-size:18px; } .stat span { font-size:12px; color:var(--muted); }
+  .formula { font-family:Consolas,monospace; background:#f1f5f9; padding:10px; border-radius:8px; font-size:13.5px; margin:8px 0; white-space:pre-wrap; }
+  .msg { font-weight:600; margin-top:8px; min-height:24px; }
+  ul { padding-left:20px; font-size:14px; } li { margin:4px 0; }
+  @media (max-width:900px){ .grid { grid-template-columns:1fr; } .stats { grid-template-columns:repeat(2,1fr);} }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Gradyan İnişi (Gradient Descent) ile Lineer Regresyon</h1>
+  <p>Model ŷ = θ₀ + θ₁·x parametrelerini maliyeti adım adım düşürerek öğrenir. Öğrenme oranını değiştirip farkı gözlemleyin.</p>
+</div>
+<div class="grid">
+  <div class="card">
+    <h2>1) Veri ve modelin tahmin doğrusu</h2>
+    <canvas id="veri" width="600" height="380"></canvas>
+    <div class="controls">
+      <button id="baslat">▶ Başlat</button>
+      <button id="adim" class="green">+1 Adım</button>
+      <button id="sifirla" class="gray">↺ Sıfırla</button>
+    </div>
+    <div class="controls">
+      <label>Öğrenme oranı α = <b id="alfaYazi">0.050</b></label>
+      <input id="alfa" type="range" min="0.001" max="0.2" step="0.001" value="0.05">
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="sIter">0</b><span>Adım</span></div>
+      <div class="stat"><b id="sT0">0.00</b><span>θ₀ (kesişim)</span></div>
+      <div class="stat"><b id="sT1">0.00</b><span>θ₁ (eğim)</span></div>
+      <div class="stat"><b id="sJ">-</b><span>Maliyet J(θ)</span></div>
+    </div>
+    <div class="msg" id="mesaj"></div>
+  </div>
+  <div class="card">
+    <h2>2) Maliyetin adım adım değişimi</h2>
+    <canvas id="maliyet" width="600" height="380"></canvas>
+    <div class="formula">J(θ) = (1/2m) · Σ (ŷᵢ − yᵢ)²
+θ₀ ← θ₀ − α · (1/m) · Σ (ŷᵢ − yᵢ)
+θ₁ ← θ₁ − α · (1/m) · Σ (ŷᵢ − yᵢ) · xᵢ</div>
+    <ul>
+      <li><b>α ≈ 0.001–0.01:</b> çok yavaş öğrenir; binlerce adım gerekir.</li>
+      <li><b>α ≈ 0.05–0.15:</b> hızlı ve kararlı yakınsama.</li>
+      <li><b>α &gt; ~0.17:</b> adımlar minimumu atlar, maliyet büyür → <span style="color:var(--danger)">ıraksama</span>.</li>
+      <li>En iyi çözüm (en küçük kareler): θ₀ = 44.6, θ₁ = 6.8, J = 0.56</li>
+    </ul>
+  </div>
+</div>
+<script>
+// ----- Veri: çalışma süresi (saat) → sınav notu -----
+const X = [1, 2, 3, 4, 5], Y = [52, 58, 65, 70, 80], m = X.length;
+let t0 = 0, t1 = 0, iter = 0, gecmis = [], calisiyor = false, zamanlayici = null;
+
+const cV = document.getElementById('veri').getContext('2d');
+const cM = document.getElementById('maliyet').getContext('2d');
+
+function maliyet(a, b) {                         // J(θ) = 1/(2m) Σ (ŷ − y)²
+  let s = 0; for (let i = 0; i < m; i++) { const e = a + b * X[i] - Y[i]; s += e * e; }
+  return s / (2 * m);
+}
+function birAdim() {                             // Tek gradyan inişi güncellemesi
+  const alfa = parseFloat(document.getElementById('alfa').value);
+  let g0 = 0, g1 = 0;
+  for (let i = 0; i < m; i++) { const e = t0 + t1 * X[i] - Y[i]; g0 += e; g1 += e * X[i]; }
+  t0 -= alfa * g0 / m; t1 -= alfa * g1 / m; iter++;
+  gecmis.push(maliyet(t0, t1));
+}
+// Veri koordinatı → piksel
+function px(x, x0, x1, W, pad) { return pad + (x - x0) / (x1 - x0) * (W - 2 * pad); }
+function py(y, y0, y1, H, pad) { return H - pad - (y - y0) / (y1 - y0) * (H - 2 * pad); }
+
+function eksen(c, W, H, pad, xl, yl) {
+  c.strokeStyle = '#1e293b'; c.lineWidth = 1.5; c.beginPath();
+  c.moveTo(pad, pad - 10); c.lineTo(pad, H - pad); c.lineTo(W - pad + 10, H - pad); c.stroke();
+  c.fillStyle = '#1e293b'; c.font = '13px Segoe UI'; c.textAlign = 'center';
+  c.fillText(xl, W / 2, H - 12);
+  c.save(); c.translate(16, H / 2); c.rotate(-Math.PI / 2); c.fillText(yl, 0, 0); c.restore();
+}
+function ciz() {
+  // --- Veri paneli ---
+  const W = 600, H = 380, p = 50;
+  cV.clearRect(0, 0, W, H); eksen(cV, W, H, p, 'x: çalışma süresi (saat)', 'y: sınav notu');
+  cV.font = '11px Segoe UI'; cV.fillStyle = '#64748b';
+  for (let v = 0; v <= 6; v++) cV.fillText(v, px(v, 0, 6, W, p), H - p + 16);
+  cV.textAlign = 'right'; for (let v = 0; v <= 100; v += 20) cV.fillText(v, p - 6, py(v, 0, 100, H, p) + 4);
+  // tahmin doğrusu
+  cV.save(); cV.beginPath(); cV.rect(p, p - 10, W - 2 * p + 10, H - 2 * p + 10); cV.clip();
+  cV.strokeStyle = '#dc2626'; cV.lineWidth = 2.5; cV.beginPath();
+  cV.moveTo(px(0, 0, 6, W, p), py(t0, 0, 100, H, p)); cV.lineTo(px(6, 0, 6, W, p), py(t0 + 6 * t1, 0, 100, H, p)); cV.stroke();
+  // artıklar
+  cV.setLineDash([5, 3]); cV.strokeStyle = '#ea580c'; cV.lineWidth = 1.5;
+  for (let i = 0; i < m; i++) { cV.beginPath(); cV.moveTo(px(X[i], 0, 6, W, p), py(Y[i], 0, 100, H, p)); cV.lineTo(px(X[i], 0, 6, W, p), py(t0 + t1 * X[i], 0, 100, H, p)); cV.stroke(); }
+  cV.setLineDash([]); cV.restore();
+  cV.fillStyle = '#2563eb';
+  for (let i = 0; i < m; i++) { cV.beginPath(); cV.arc(px(X[i], 0, 6, W, p), py(Y[i], 0, 100, H, p), 6, 0, 2 * Math.PI); cV.fill(); }
+  // --- Maliyet paneli ---
+  cM.clearRect(0, 0, W, H); eksen(cM, W, H, p, 'adım (iterasyon)', 'J(θ) (log ölçek)');
+  if (gecmis.length) {
+    const n = Math.max(50, gecmis.length);
+    const logs = gecmis.map(v => Math.log10(Math.max(v, 1e-3)));
+    const lo = -0.5, hi = Math.max(4, ...logs.filter(isFinite));
+    cM.strokeStyle = '#2563eb'; cM.lineWidth = 2.2; cM.beginPath();
+    logs.forEach((v, i) => { const X_ = px(i + 1, 0, n, W, p), Y_ = py(Math.min(v, hi), lo, hi, H, p); i ? cM.lineTo(X_, Y_) : cM.moveTo(X_, Y_); });
+    cM.stroke();
+    cM.fillStyle = '#64748b'; cM.font = '11px Segoe UI'; cM.textAlign = 'right';
+    for (let e = 0; e <= hi; e++) cM.fillText('10^' + e, p - 6, py(e, lo, hi, H, p) + 4);
+    cM.textAlign = 'center'; cM.fillText(n, W - p, H - p + 16); cM.fillText(0, p, H - p + 16);
+  }
+  // --- İstatistikler ---
+  const J = maliyet(t0, t1);
+  document.getElementById('sIter').textContent = iter;
+  document.getElementById('sT0').textContent = isFinite(t0) ? t0.toFixed(2) : '∞';
+  document.getElementById('sT1').textContent = isFinite(t1) ? t1.toFixed(2) : '∞';
+  document.getElementById('sJ').textContent = isFinite(J) ? (J > 1e5 ? J.toExponential(1) : J.toFixed(2)) : '∞';
+  const msg = document.getElementById('mesaj');
+  if (!isFinite(J) || J > 1e6) { msg.style.color = '#dc2626'; msg.textContent = 'Iraksama! Öğrenme oranı çok büyük: her adım minimumu aşıp daha yükseğe çıkıyor.'; durdur(); }
+  else if (iter > 0 && J < 0.57) { msg.style.color = '#16a34a'; msg.textContent = '✓ Yakınsadı: en küçük kareler çözümüne ulaşıldı.'; }
+  else msg.textContent = '';
+}
+function durdur() { calisiyor = false; clearInterval(zamanlayici); document.getElementById('baslat').textContent = '▶ Başlat'; }
+document.getElementById('baslat').onclick = () => {
+  if (calisiyor) return durdur();
+  calisiyor = true; document.getElementById('baslat').textContent = '⏸ Durdur';
+  zamanlayici = setInterval(() => { for (let k = 0; k < 3; k++) birAdim(); ciz(); if (iter > 3000) durdur(); }, 40);
+};
+document.getElementById('adim').onclick = () => { birAdim(); ciz(); };
+document.getElementById('sifirla').onclick = () => { durdur(); t0 = 0; t1 = 0; iter = 0; gecmis = []; ciz(); };
+document.getElementById('alfa').oninput = e => document.getElementById('alfaYazi').textContent = parseFloat(e.target.value).toFixed(3);
+ciz();
+</script>
+</body>
+</html>

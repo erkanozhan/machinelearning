@@ -1,0 +1,3641 @@
+# Makine Öğrenmesi'ne Giriş (Introduciton to Machine Learning)
+
+***
+### 1. Temel Kavramlar ve Avantaj
+
+**Yapay Zeka (AI)**, İnsanın sahip olduğu **deneyim** ve **tecrübeyi** bilgisayarlara aktarılmasının yollarını inceleyen bilim dalının en genel adıdır. **Makine Öğrenmesi** ise bu amaç için kendine özgü teknikleri barındıran yapay zekanın bir **alt koludur**.
+
+Bilgisayarlar **dijital** kullanan makinelerdir. İnsanların sahip olduğu tecrübe, deneyim, uzmanlık, yetenekler ve kabiliyetlerin bu dil yardımıyla onlara aktarılması, bu alanın en büyük **avantajıdır**.
+
+### 2. Veri ve Bilgi Hiyerarşisi
+**Datum**, Latince kökenli bir kelime olup, "verilen şey" veya "gerçek" anlamına gelir. İngilizcede "data" kelimesinin tekil hali olarak kullanılır. Genellikle tek bir gözlemi, ölçümü veya gerçeği ifade ederken, "data" ise bu tekil gerçeklerin çoğulunu, yani bir koleksiyonunu temsil eder. Bu ayrım, özellikle bilimsel ve teknik metinlerde verinin temel birimini vurgulamak için önemlidir.
+
+**Veri**, bir nesne, varlık, durum, olay hakkında nitel ya da nicel bulguların (gerçeklerin) belirli bir sistematiğe göre kayıt altına alınmış haline denilir.
+
+Veri, bilgiye dönüşürken bir hiyerarşiden geçer:
+
+$$\text{Raw Data (İşlenmemiş Veri)} \rightarrow \text{Data (Veri)} \rightarrow \text{Knowledge (Bilgi)}$$
+
+*   **İşlenmemiş Veri Örn.:** Yeni doğan bir bebeğin ağırlığı (Henüz bilinmiyor ancak bir ağırlığı var).
+
+*   **Veri Örn.:** Bir metriğe (örn. m, kg, inç, galon vb.) göre bu bebeğin ağırlığının ölçülüp bir yere kayıt edilmesi.
+
+*   **Bilgi (information) Örn.:** Bebeğin kilosu vb. özelliklerini kullanarak elde edilen gerçeklerdir. Örn: Çorlu'da Mart ayında doğan bebeklerin kilo ortalaması 2.8 kg'dır.
+
+*   **Knowledge (Anlamlı-İşe yarar bilgi):** Büyük ve karmaşık verilerden, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, işe yarar ve anlamlı gerçeklerdir.
+    *   **Yapay Zeka (AI) ile Elde Edilen Bilgi Örn.:** Bir yapay zeka sistemi, yeni doğan bebeklerin ağlama seslerini analiz ederek, ağlamanın açlık, uykusuzluk veya rahatsızlık gibi farklı nedenlerini ayırt edebilir. Bu sayede ebeveynlere, bebeğin neden ağladığına dair daha hızlı ve doğru bir tahmin sunarak, bebeğin ihtiyaçlarına daha etkili yanıt vermelerine yardımcı olabilir.
+
+### 3. Süreç ve İlişkili Disiplinler
+
+Makine öğrenmesi **İstatistik** ve **matematiksel teorileri** kullanır.
+
+#### Süreç Akışı (Model)
+```mermaid
+graph LR
+    A[Girdi] --> B["ML Model"]
+    B --> C[Çıktı]
+```
+
+#### İlişkili Alanların Bazıları
+
+*   **Veri Madenciliği (Mining)**
+*   **Temel Bilimler:** İstatistik, Matematik
+*   **Mühendislik Dalları:** Bilg. Müh., Elek. Müh.
+```mermaid
+flowchart LR
+    Girdi["Girdi"] --> MakineÖğrenimi
+
+    Model["Model"] --> Çıktı["Çıktı"]
+
+    subgraph MakineÖğrenimi["Artificial Intelligence"]
+        direction TB
+        ML["Machine Learning"]
+        NN["Artificial Neural Networks"]
+        GA["Deep Learning"]
+        
+        ML --> NN --> GA
+    end 
+
+    Ekstra["İstatistik Matematik\nBilg., Müh., Elek., Müh.\nFinans\nHigh Performance Computing"]
+
+    MakineÖğrenimi --- Ekstra
+    MakineÖğrenimi --> Model
+```
+#
+
+
+### 5. Makine Öğrenmesinin Avantajları ve Dezavantajları
+
+Makine öğrenmesi teknolojilerinin günlük hayatımıza getirdiği kolaylıklar kadar, dikkat edilmesi gereken sınırlamaları da vardır. Bu bölümde her iki yönünü de inceleyeceğiz.
+
+#### Avantajları:
+
+1.  **Uzman Desteği**
+    -   Uzman sayısının yetersiz olduğu alanlarda karar desteği sağlar
+    -   Yeni verilerle sürekli kendini güncelleyerek uzman görüşlerini öğrenir
+
+2.  **Uyum ve Yenilik**
+    -   Daha önce karşılaşılmamış durumlar için yeni kurallar geliştirebilir
+    -   Veri setindeki gizli örüntüleri ve ilişkileri keşfedebilir
+
+3.  **Verimlilik**
+    -   7/24 kesintisiz çalışabilir
+    -   Klasik programlama ile çözülemeyen problemlere veri-odaklı çözümler üretebilir
+
+#### Dezavantajları:
+
+1.  **Veri Gereksinimleri**
+    -   Modelin doğru çalışması için sürekli güncel veri gerekir
+    -   Büyük veri setleri bile bazen doğru öğrenme için yeterli olmayabilir
+
+2.  **Tahmin Doğruluğu**
+    -   Sonuçlar kesin değil, olasılıksal tahminlerdir
+    -   Problem yapısı değiştiğinde modelin yeniden eğitilmesi gerekir
+
+3.  **Teknik Sınırlamalar**
+    -   Karmaşık algoritmalar yüksek işlemci gücü ve bellek gerektirir
+    -   Gerçek zamanlı veri akışlarında performans sorunları yaşanabilir
+    -   Yüksek başarımlı hesaplama sistemlerine ihtiyaç duyulabilir
+
+```mermaid
+graph TD
+     A[Makine Öğrenmesi] --> B[Avantajlar]
+     A --> C[Dezavantajlar]
+     
+     B --> D[Uzman Desteği]
+     B --> E[Uyum ve Yenilik]
+     B --> F[Verimlilik]
+     
+     C --> G[Veri İhtiyacı]
+     C --> H[Tahmin Belirsizliği]
+     C --> I[Sistem Gereksinimleri]
+```
+
+### Makine Öğrenmesi Projelerinde Adım Adım İlerleme
+
+Makine öğrenmesi, bilgisayarların veriden anlam çıkarmasını ve bu anlamı kullanarak kararlar almasını sağlayan güçlü bir alandır. Ancak bu süreci başarıyla yönetmek, belirli adımları titizlikle takip etmeyi gerektirir. Tıpkı bir bilimsel araştırma gibi, makine öğrenmesi projeleri de bir dizi aşamadan oluşur ve her aşama bir sonrakini etkiler. Unutulmamalıdır ki, bazı yöntemler eksik veya gürültülü veriyle başa çıkabilirken, çoğu algoritma için temiz ve düzenli veri hayati öneme sahiptir. En uygun modeli bulmak için genellikle birden fazla algoritma ve yaklaşım denemek gerekir.
+
+#### 1. Problemi Anlamak ve Tanımlamak
+
+Her şey, çözmek istediğimiz problemi net bir şekilde anlamakla başlar. Bu aşamada, karşılaştığımız sorunun makine öğrenmesi teknikleriyle çözülüp çözülemeyeceğini belirleriz. Örneğin, bir fırının sıcaklığını belirli bir seviyede tutmak daha çok kontrol sistemlerinin işiyken, bir marketteki müşterilerin yaş dağılımını bulmak istatistiksel bir analizdir. Makine öğrenmesi, özellikle şu tür durumlar için idealdir:
+
+*   **Kuralların Belirsiz Olduğu Durumlar:** Çözüm için açık ve net bir algoritma yazmanın zor olduğu, karmaşık ilişkilerin bulunduğu problemler.
+*   **Dinamik ve Büyük Veri Setleri:** Sürekli değişen ve çok sayıda girdiye sahip sistemlerde çıktıları tahmin etme ihtiyacı.
+*   **Gizli Örüntüleri Keşfetme:** Büyük ve karmaşık veri yığınlarından ilk bakışta fark edilmeyen, işe yarar ve anlamlı bilgileri ortaya çıkarma.
+
+Bu adımda, problemin kapsamını, hedeflerini ve başarı kriterlerini belirlemek, projenin geri kalanına yön verir.
+
+#### 2. Veri Toplama ve Yönetimi
+
+Problemi tanımladıktan sonra, modelimizi eğitmek için gerekli verileri toplamaya başlarız. Bu süreç, genellikle alanında uzman kişilerle iş birliği içinde yürütülür. Burada önemli olan, sadece veri toplamak değil, aynı zamanda bu verilerin nasıl yönetileceğini de planlamaktır:
+
+*   **Hangi Veriler?** Problemi çözmek için hangi özelliklerin (değişkenlerin) önemli olduğunu belirlemek.
+*   **Nereden ve Nasıl?** Veri kaynaklarını (veritabanları, sensörler, web vb.) ve toplama yöntemlerini seçmek.
+*   **Depolama ve Teknoloji:** Toplanan verilerin nerede (bulut, yerel sunucu) ve hangi teknolojiyle (SQL, NoSQL veritabanları, veri gölleri) depolanacağını kararlaştırmak.
+*   **Veri Türü ve Boyutu:** Verilerin nitel mi nicel mi olduğunu, ne kadar hacimli olacağını ve bu hacme uygun depolama stratejilerini belirlemek.
+
+Veri toplama aşaması, modelin kalitesini doğrudan etkileyecek temel bir adımdır.
+
+#### 3. Veri Temizleme ve Hazırlık
+
+Gerçek dünya verileri nadiren mükemmeldir. Çoğu zaman eksik değerler, hatalı girişler, aykırı gözlemler veya tutarsız formatlar içerirler. Bu aşama, ham veriyi makine öğrenmesi algoritmalarının anlayabileceği ve doğru sonuçlar üretebileceği bir formata dönüştürmeyi amaçlar:
+
+*   **Eksik Veriyle Başa Çıkma:** Boşlukları doldurma (imputation) veya ilgili kayıtları çıkarma gibi stratejiler.
+*   **Gürültü ve Aykırılıkları Giderme:** Modelin yanlış öğrenmesine neden olabilecek hatalı veya sıra dışı değerleri tespit edip düzeltme.
+*   **Veri Türü Dönüşümleri:** Algoritmaların gereksinimlerine göre veri tiplerini (örneğin, metin verisini sayısal temsile) dönüştürme.
+*   **Özellik Mühendisliği:** Mevcut verilerden yeni ve daha anlamlı özellikler türeterek modelin öğrenme kapasitesini artırma.
+
+Bu adımın ne kadar titizlikle yapıldığı, modelin nihai performansını büyük ölçüde belirler.
+
+#### 4. Model Eğitimi ve Seçimi
+
+Verilerimiz hazır olduğunda, makine öğrenmesi algoritmalarını kullanarak modellerimizi oluşturmaya başlarız. Bu aşamada, farklı algoritmalar (örneğin, karar ağaçları, destek vektör makineleri, sinir ağları) eğitim verisi üzerinde denenir ve her birinin performansı kaydedilir.
+
+*   **Algoritma Çeşitliliği:** Makine öğrenmesi dünyası, her biri farklı problem türleri ve veri yapıları için optimize edilmiş zengin bir algoritma yelpazesi sunar. En iyi modeli bulmak için bu algoritmalar arasında denemeler yapmak önemlidir.
+*   **Veri Tipi Uyumu:** Bazı algoritmalar yalnızca sayısal verilerle çalışırken, bazıları kategorik verileri de doğrudan işleyebilir. Bu nedenle, seçilen algoritmanın veri tipimizle uyumlu olduğundan emin olmak gerekir.
+*   **Performans Metrikleri:** Bir algoritmanın ne kadar iyi çalıştığını değerlendirmek için tek bir ölçüt yoktur. Doğruluk (accuracy), kesinlik (precision), geri çağırma (recall), F1 skoru gibi birçok farklı metrik, modelin farklı yönlerini değerlendirmemizi sağlar. Buradaki temel hedef, kabul edilebilir bir hata oranıyla en yüksek doğruluğu sunan algoritmayı ve onun parametrelerini bulmaktır.
+
+#### 5. Sonuçları Değerlendirme ve İyileştirme
+
+Model eğitimi tamamlandıktan sonra, elde edilen sonuçları dikkatlice değerlendirmemiz gerekir. Bu aşamada, daha önce belirlenen performans metrikleri kullanılarak modelin ne kadar başarılı olduğu analiz edilir.
+
+*   **Kapsamlı Değerlendirme:** Modelin sadece genel doğruluğuna değil, aynı zamanda belirli hata türlerine (örneğin, yanlış pozitifler veya yanlış negatifler) ne kadar yatkın olduğuna da bakılır.
+*   **İteratif Süreç:** Eğer modelin performansı, tanımlanan problem için yeterli düzeyde değilse, bu bir başarısızlık değil, bir öğrenme fırsatıdır. Bu durumda, önceki adımlara geri dönülerek (veri toplama, temizleme, özellik mühendisliği veya farklı algoritmalar deneme) iyileştirmeler yapılır. Bu döngü, tatmin edici sonuçlar elde edilene kadar devam eder.
+*   **İstatistiksel Doğrulama:** Elde edilen sonuçların istatistiksel olarak anlamlı olup olmadığını değerlendirmek, modelin genellenebilirliği hakkında önemli bilgiler sunar.
+
+#### Model Nedir?
+
+Makine öğrenmesinde bir "model", girdiye göre çıktıyı öngörebilen otomatik veya yarı otomatik bir sistemdir. Bu, gerçek dünyadaki bir sürecin matematiksel bir temsili olabileceği gibi, veriden öğrenilmiş karmaşık bir kural seti de olabilir. Önemli bir nokta, modellerin ürettiği sonuçların **kesin olmaması**, aksine **olasılıksal tahminler** olduğudur. Bir model, genellikle programlama dilleri aracılığıyla inşa edilen sistemlere entegre edilerek, ham girdiyi işleyip anlamlı çıktılara dönüştüren yapay zeka tekniklerini kullanan bir "beyin" görevi görür.
+
+#### Öğrenme Kavramı
+
+Bilgisayarlar için "öğrenme", bir konu, durum veya olay hakkında yeterli bilgiye sahip olma sürecidir. Bu, insanlardaki gibi tecrübe kazanma ve uygun davranışları geliştirme yoluyla gerçekleşir. Bilgisayarlar, kendilerine sunulan büyük miktardaki veriyi analiz ederek, bu verilerdeki örüntüleri ve ilişkileri keşfederler. Yeterli veri ve doğru algoritmalarla "eğitildiklerinde", tıpkı bir insanın yeni bir beceri kazanması gibi, belirli görevleri yerine getirme yeteneği kazanırlar. Bu sayede, daha önce görmedikleri verilere karşı bile anlamlı tahminler yapabilir veya kararlar alabilirler.
+
+
+### Öğrenme Türleri
+
+Makine öğrenmesinin temel taşlarından biri, bilgisayarların veriden nasıl öğrendiğini anlamaktır. Bu öğrenme süreçlerini genellikle iki ana kategoriye ayırırız: Denetimli ve Denetimsiz Öğrenme. Her birinin kendine özgü bir yaklaşımı ve kullanım alanı vardır.
+
+#### Denetimli Öğrenme (Supervised Learning)
+
+Şöyle düşünün gençler, küçük bir çocuğa hayvanları öğretirken, ona bir kedi resmi gösterip "bu bir kedi" deriz, bir köpek resmi gösterip "bu bir köpek" deriz. Yani, her resim için doğru cevabı, yani "etiketi" ona veririz. Çocuk yeterince örnek gördüğünde, daha önce hiç görmediği bir hayvan resmini bile doğru tahmin etmeye başlar.
+
+İşte denetimli öğrenme de tam olarak bu prensiple çalışır. Elimizde, girdilerin (örneğin bir hayvanın özellikleri) ve bunlara karşılık gelen doğru çıktıların (örneğin "kedi" veya "köpek" etiketi) bulunduğu bir veri seti vardır. Bu verilere **etiklenmiş veri** adını veririz. Amacımız, bu etiketlenmiş veriyi kullanarak, bilgisayarın yeni, daha önce görmediği girdiler için doğru çıktıyı tahmin edebilecek bir **model** oluşturmasını sağlamaktır. Bu model, geçmişteki deneyimlerden (veri) öğrenerek gelecekteki durumlar hakkında tahminler yapar.
+
+Bu öğrenme türü, makine öğrenmesinde en sık karşılaştığımız yaklaşımdır. Temelinde, belirli bir hedef değişkeni (çıktı) tahmin etme veya sınıflandırma amacı yatar. Model, girdiler ile çıktılar arasındaki karmaşık ilişkileri öğrenir ve bu ilişkileri yeni verilere genellemeye çalışır.
+
+**Uygulamalar:**
+Denetimli öğrenme, özellikle şu tür problemlerin çözümünde kullanılır:
+*   **Sınıflandırma Problemleri (Classification):** Bir verinin hangi kategoriye ait olduğunu tahmin etmek.
+*   **Regresyon Problemleri (Regression):** Sürekli bir sayısal değeri tahmin etmek.
+
+**Örnekler:**
+*   Bir e-postanın "Spam" mı yoksa "Normal" mi olduğunu belirlemek.
+*   Bir müşterinin kredi başvurusunun "Onaylandı" ya da "Reddedildi" olarak sonuçlanacağını tahmin etmek.
+*   Bir hastada "Şeker hastalığı var" ya da "Yok" teşhisi koymak.
+*   Bir evin özelliklerine (metrekare, oda sayısı, konum vb.) bakarak satış fiyatını öngörmek.
+#### Denetimsiz Öğrenme (Unsupervised Learning)
+
+Şimdi de şöyle bir senaryo düşünelim: Size bir kutu dolusu farklı renkte ve şekilde oyuncak veriliyor ve "Bunları benzerliklerine göre gruplandır" deniyor. Ama size hangi oyuncağın ne olduğunu veya kaç grup olması gerektiğini söyleyen kimse yok. Siz de oyuncakların renklerine, boyutlarına, şekillerine bakarak kendinizce gruplar oluşturuyorsunuz.
+
+Denetimsiz öğrenme de bu mantıkla çalışır. Elimizde **etiklenmemiş veriler** bulunur; yani, girdilere karşılık gelen doğru çıktıları önceden bilmeyiz ve sınıflar önceden belirli değildir. Buradaki temel amaç, verinin kendi içindeki gizli yapıları, örüntüleri veya ilişkileri keşfetmektir. Denetimsiz öğrenme algoritmaları (örneğin kümeleme ve birliktelik kuralları gibi yöntemler) bu etiketlenmemiş verilerde var olan örüntüyü ortaya çıkarır. Bu süreçte veri analisti, algoritmalar üzerinde beklentileri doğrultusunda ayarlamalar yaparak en anlamlı sonuçları elde etmeye çalışır. Özellikle kümeleme analizi, verinin anlaşılırlığını artırır ve kümeler arası uzaklıklar, farklılıklar veya benzerlikler gibi önemli bilgilerin tespit edilmesini sağlar. Model, herhangi bir dış rehberlik olmaksızın, verinin doğal düzenini anlamaya çalışır.
+
+**Yöntemler ve Uygulamalar:**
+*   **Kümeleme (Clustering):** Bu alandaki en yaygın yöntemlerden biri kümelemedir. Kümeleme, veri noktalarını birbirine benzer özelliklere sahip gruplara ayırır. Örneğin, bir e-ticaret sitesi, müşterilerinin satın alma alışkanlıklarına bakarak onları farklı segmentlere ayırabilir. Böylece her segmente özel pazarlama stratejileri geliştirebilir. Burada kaç müşteri grubu olduğunu veya hangi müşterinin hangi gruba ait olduğunu önceden bilmeyiz, model bunu veriden öğrenir.
+*   **Birliktelik Kuralları (Association Rules):** Bir diğer önemli denetimsiz öğrenme yöntemi ise birliktelik kurallarıdır. Bu yöntem, veriler arasındaki eş zamanlı oluşumları veya ilişkileri ortaya çıkarır. En bilinen örneği **sepet analizi**dir: "Eğer bir müşteri ekmek alıyorsa, büyük ihtimalle tereyağı da alır" gibi kurallar keşfedilir. Bu sayede marketler ürün yerleşimlerini veya kampanyalarını optimize edebilir.
+*   **Boyut Azaltma (Dimensionality Reduction):** Ayrıca, verinin daha anlaşılır hale getirilmesi veya görselleştirilmesi için boyut azaltma gibi teknikler de denetimsiz öğrenme kapsamına girer. Bu, çok sayıda özelliği olan veriyi, bilgi kaybını en aza indirerek daha az sayıda özellikle temsil etmeyi amaçlar.
+
+**Örnekler:**
+*   Bir şirketin müşteri tabanında kaç farklı "müşteri tipi" olduğunu bulmak ve bu tiplere göre pazarlama stratejileri geliştirmek.
+*   Sosyal medya gönderilerindeki konuları otomatik olarak gruplandırmak.
+*   Bir süpermarkette hangi ürünlerin sıklıkla birlikte satın alındığını keşfetmek (sepet analizi).
+*   Büyük bir veri setindeki anormallikleri veya sıra dışı durumları tespit etmek.
+
+
+### Lineer Regresyon (Doğrusal Regresyon)
+
+Şimdi de makine öğrenmesinin en temel ve en sık kullanılan modellerinden biri olan Lineer Regresyon'a (Doğrusal Regresyon) bir göz atalım gençler. Adından da anlaşılacağı gibi, bu model, değişkenler arasında doğrusal bir ilişki olduğunu varsayar ve bu ilişkiyi matematiksel olarak ifade etmeye çalışır.
+
+Hayatımızda birçok şeyin birbiriyle ilişkili olduğunu gözlemleriz. Örneğin, bir evin büyüklüğü arttıkça fiyatının da artması beklenir, ya da bir öğrencinin ders çalışma süresi uzadıkça sınav notunun yükselme ihtimali artar. Lineer regresyon, işte bu tür 'neden-sonuç' ilişkilerini, bir doğru denklemiyle ifade etmeyi hedefler.
+
+En basit haliyle, bir girdi (bağımsız değişken) ve bir çıktı (bağımlı değişken) arasındaki ilişkiyi şöyle bir denklemle gösterebiliriz:
+
+$$y = \theta_0 + \theta_1 x$$
+
+Burada:
+*   `y`, tahmin etmeye çalıştığımız sonuçtur (örneğin, evin fiyatı veya sınav notu).
+*   `x`, sonucu etkilediğini düşündüğümüz girdidir (örneğin, evin metrekaresi veya ders çalışma süresi).
+*   `θ₀` (teta sıfır), doğrunun y eksenini kestiği noktadır, yani `x` sıfır olduğunda `y`'nin alacağı değerdir. Buna 'sabit terim' veya 'kesişim' diyebiliriz.
+*   `θ₁` (teta bir), `x`'teki bir birimlik değişimin `y`'de ne kadarlık bir değişime yol açtığını gösteren 'eğim' veya 'katsayı'dır. Bu katsayı, `x` ile `y` arasındaki ilişkinin gücünü ve yönünü belirler.
+
+Makine öğrenmesinde bu `y = \theta_0 + \theta_1 x` denklemini bir 'hipotez' olarak adlandırırız. Yani, `x` ile `y` arasında böyle bir doğrusal ilişki olabileceğini varsayarız. Modelin 'öğrenme süreci' ise, elimizdeki mevcut verileri (geçmiş ev fiyatları ve metrekareleri gibi) kullanarak, bu hipoteze en uygun `θ₀` ve `θ₁` değerlerini bulmaktan ibarettir. Amacımız, bu parametreleri öyle bir şekilde belirlemektir ki, modelimiz mevcut verilere en iyi şekilde uysun ve gelecekteki yeni `x` değerleri için `y`'yi mümkün olan en doğru şekilde tahmin edebilsin.
+
+Peki ya bir sonucu etkileyen tek bir faktör değil de birden fazla faktör varsa? Örneğin, evin fiyatını sadece metrekaresi değil, aynı zamanda oda sayısı, bulunduğu semt, yaşı gibi birçok özellik etkileyebilir. İşte bu durumda modelimizi genişleterek 'Çoklu Lineer Regresyon'a geçeriz:
+
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n$$
+
+Burada `x₁`, `x₂`, ..., `xₙ` farklı girdi özelliklerini (metrekaresi, oda sayısı vb.) temsil ederken, `θ₁`, `θ₂`, ..., `θₙ` de her bir özelliğin `y` üzerindeki etkisini gösteren katsayılardır. Bu denklem hala 'lineer'dir, çünkü `y`'nin tahmini, her bir özelliğin katsayılarla çarpılıp toplanmasıyla elde edilir. Yani, parametreler (`θ` değerleri) açısından ilişki doğrusaldır.
+
+Lineer regresyonun en önemli özelliklerinden biri, makine öğrenmesi algoritmaları arasında en basit ve anlaşılır olanlardan biri olmasıdır. Bu basitliği sayesinde, sonuçları yorumlamak ve hangi faktörlerin çıktıyı ne kadar etkilediğini anlamak genellikle kolaydır. Ayrıca, hesaplama maliyeti düşüktür ve birçok gerçek dünya probleminde şaşırtıcı derecede iyi sonuçlar verebilir. Ancak unutmamak gerekir ki, bu modelin iyi çalışabilmesi için girdi ve çıktı arasında gerçekten doğrusal bir ilişki olması varsayılır. Eğer ilişki doğrusal değilse, daha karmaşık modellere ihtiyaç duyulabilir.
+
+Bu doğrusal modeller, yani bir sonuç (y) ve neden (x) değişkenlerini tanımlayan denklemler gibi yapılar, neden-sonuç ilişkilerini anlamak için oldukça güçlü araçlardır. Aralarında doğrusal bir ilişki bulunan durumları analiz etmek ve yorumlamak genellikle daha kolaydır.
+
+#### Lineer Modelin Avantajları:
+
+*   **Gelişmiş Teori ve Anlaşılırlık:** Lineer modellerin matematiksel teorisi oldukça iyi geliştirilmiştir. Özellikleri ve kapsamları net bir şekilde bilindiği için, bu modeller güvenilir bir temel sunar.
+*   **Kolay Tahmin ve Geliştirme:** Model parametrelerinin (yani `θ` değerlerinin) tahmini ve probleme göre modelin geliştirilmesi genellikle kolaydır.
+*   **Geniş Uygulama Alanı:** Basit yapılarına rağmen, çok geniş ve çeşitli ilişkileri ifade edebilirler. Birçok farklı alandaki problemleri çözmek için kullanılabilirler.
+*   **Karmaşık Veri Setleriyle Başarı:** Spesifik ve karmaşık veri setlerinin tahmin problemlerinde bile şaşırtıcı derecede iyi sonuçlar verebilirler.
+*   **Hesaplama Verimliliği:** Yüz binlerce parametre ve faktör içeren lineer modellerin bilgisayarla kurulması ve eğitilmesi genellikle kolay ve hızlıdır.
+*   **Esneklik:** Lineer modeller, doğrusal olmayan ilişkileri modelleme konusunda da şaşırtıcı bir esneklik sunar. Doğrudan doğrusal olmayan bir ilişkiyi ifade etmek yerine, mevcut değişkenler üzerinden yeni "geçici değişkenler" veya "dönüştürülmüş öznitelikler" tanımlayarak bu ilişkileri doğrusal bir forma dönüştürebiliriz. Örneğin, bir `x₁` değişkeninin karesi olan `x₁²`'yi yeni bir `X₂` özniteliği olarak düşünebiliriz. Ya da `log(x₁)` gibi bir dönüşüm uygulayarak bunu `X₃` olarak modele dahil edebiliriz. Bu durumda, orijinalde `y = θ₀ + θ₁x₁ + θ₂x₁²` gibi görünen bir denklemi, `X₂ = x₁²` tanımlamasıyla `y = θ₀ + θ₁x₁ + θ₂X₂` şeklinde parametreleri açısından doğrusal bir yapıya kavuşturmuş oluruz. Yani, `f(x₁) = X_{n+1}` veya `f(x₂) = X_{n+2}` gibi fonksiyonlarla orijinal öznitelikleri dönüştürerek, modelin parametreleri (`θ` değerleri) açısından doğrusal kalmasını sağlarız. Eğer veri kümesinde doğrusal olmayan ilişkiler barındıran parametreler varsa, bunlar temel değişkenlerden hesaplanıp veri kümesine yeni özellikler olarak eklenebilir ve bu genişletilmiş veri kümesinde doğrusal model kullanılabilir. Bu yaklaşım, lineer modellerin çok daha geniş bir problem yelpazesine uygulanabilmesine olanak tanır.
+
+
+Lineer modellerin nasıl ifade edildiğine ve görselleştirildiğine de kısaca değinelim.
+
+#### Lineer Modelin Gösterimi:
+
+Önce matematiksel modelimizi daha anlaşılır kılalım. Temel lineer model denklemi:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
+
+Bu denklemin tek değişkenli en basit hali şöyle görünür:
+$$y = \theta_0 + \theta_1 x$$
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black"/>
+    <line x1="50" y1="150" x2="350" y2="100" stroke="blue" stroke-width="2"/>
+    <text x="360" y="250">x</text>
+    <text x="40" y="40">y</text>
+    <text x="360" y="100">y = θ₀ + θ₁x</text>
+    <text x="70" y="180">θ₀ (y-kesişimi)</text>
+    <text x="200" y="140">θ₁ (eğim)</text>
+</svg>
+
+Burada:
+- `θ₀` doğrunun y eksenini kestiği noktayı belirler
+- `θ₁` doğrunun eğimini gösterir
+- Her x değeri için tek bir y değeri vardır
+
+İki değişkenli model için durum biraz farklıdır:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2$$
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,250 350,250 350,50" fill="lightblue" opacity="0.3"/>
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black"/>
+    <line x1="350" y1="250" x2="350" y2="50" stroke="black"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black"/>
+    <text x="360" y="250">x₁</text>
+    <text x="360" y="40">x₂</text>
+    <text x="40" y="40">y</text>
+    <text x="200" y="150">y = θ₀ + θ₁x₁ + θ₂x₂</text>
+</svg>
+
+Sınıflandırma problemlerinde, lineer model bir ayırıcı çizgi oluşturur:
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- X ve Y eksenleri -->
+    <line x1="50" y1="250" x2="350" y2="250" stroke="black" stroke-width="2"/>
+    <line x1="50" y1="250" x2="50" y2="50" stroke="black" stroke-width="2"/>
+    <!-- Ayırıcı çizgi -->
+    <line x1="50" y1="250" x2="350" y2="50" stroke="red" stroke-width="2"/>
+    <!-- Sınıf A noktaları -->
+    <circle cx="100" cy="100" r="5" fill="blue"/>
+    <circle cx="120" cy="120" r="5" fill="blue"/>
+    <circle cx="90" cy="80" r="5" fill="blue"/>
+    <!-- Sınıf B noktaları -->
+    <circle cx="250" cy="200" r="5" fill="green"/>
+    <circle cx="270" cy="220" r="5" fill="green"/>
+    <circle cx="290" cy="240" r="5" fill="green"/>
+    <!-- Etiketler -->
+    <text x="100" y="70" font-size="14">Sınıf A</text>
+    <text x="250" y="250" font-size="14">Sınıf B</text>
+    <text x="150" y="150" font-size="14" fill="red">Ayırıcı Çizgi</text>
+    <!-- Eksen etiketleri -->
+    <text x="360" y="255" font-size="14">x</text>
+    <text x="35" y="60" font-size="14">y</text>
+</svg>
+
+Bu gösterimlerdeki öznitelikler (x'ler), sonucu (y) etkileyen ölçülebilir özellikleri temsil eder. Her özniteliğin etkisi, kendi θ katsayısı ile belirlenir.
+
+
+#### Öznitelikler (Features)
+
+Bir makine öğrenmesi modelinde, tahmin etmeye çalıştığımız `y` sonucunu etkilediğini düşündüğümüz her bir girdi değişkenine **öznitelik (feature)** denir. Bunlara bazen **nitelik (attribute)**, **değişken (variable)**, **boyut (dimension)** veya modelin içindeki **parametreler (parameters)** de diyebiliriz.
+
+Yukarıdaki standart lineer model denklemimizde:
+$$y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m$$
+Burada `y` tahmin edilen sonuçken, `x₁`, `x₂`, ..., `xₘ` ifadeleri modelin kullandığı farklı özniteliklerdir.
+
+Bu özniteliklerin bir araya gelerek oluşturduğu topluluğa **öznitelik serisi** veya **öznitelik vektörü** denir. Bir öznitelik vektörünün oluşturulmasında, öncelikle alanında uzman kişilerin görüşleri ve bilgileri kullanılır. Bu uzmanlar, tahmin edilmeye çalışılan durumu en iyi şekilde karakterize eden özellikleri belirlememize yardımcı olurlar.
+
+**Örnek:** Yarınki hava durumunun tahmini probleminde:
+*   `y` = Yarınki hava durumu tahmini (örneğin, sıcaklık, yağış durumu)
+*   `x₁` = Bugünkü sıcaklık
+*   `x₂` = Bugünkü nem
+*   `x₃` = Bugünkü basınç
+*   `x₄` = Bugünkü rüzgar hızı
+*   `x₅` = Bugünkü rüzgarın yönü
+
+Şimdi gençler, bir makine öğrenmesi modelinin beynine giden bilgiyi, yani öznitelikleri biraz daha derinlemesine konuşalım. Bir doktorun doğru teşhisi koymak için hastanın ateşine, tansiyonuna, tahlil sonuçlarına bakması gibi, makine öğrenmesi modeli de bir tahminde bulunurken bu 'özniteliklere' bakar.
+
+Bir evin fiyatını tahmin etmeye çalıştığımızı düşünelim. Modelimize hangi bilgileri veririz? Evin metrekaresi, oda sayısı, bulunduğu semt, binanın yaşı... İşte bunların her biri birer **özniteliktir**.
+
+Peki, bu özniteliklerin hepsi eşit derecede önemli mi? Evin fiyatını tahmin ederken, evin kapı rengi önemli bir bilgi midir? Muhtemelen hayır. Ama metrekaresi? Kesinlikle evet. İşte bu yüzden doğru öznitelikleri seçmek, bir dedektifin doğru ipuçlarını takip etmesi gibidir. Yanlış veya alakasız ipuçları (öznitelikler) modelimizi yanıltabilir ve performansını ciddi şekilde düşürebilir.
+
+#### Öznitelik Türleri
+
+Öznitelikler genellikle birkaç temel kategoriye ayrılır:
+
+1.  **Sayısal (Numeric) Öznitelikler:** Bunlar bildiğimiz sayılardır. Bir evin metrekaresi (120 m²), bir arabanın motor gücü (150 beygir), hava sıcaklığı (25.5°C) gibi ölçülebilir değerlerdir.
+2.  **Kategorik (Categorical) Öznitelikler:** Belirli ve sınırlı sayıda seçenekten birini alan değerlerdir. Örneğin, bir arabanın markası ('Ford', 'Fiat', 'Renault') veya bir öğrencinin bölümü ('Mühendislik', 'Tıp', 'İşletme') gibi.
+3.  **İkili (Binary) Öznitelikler:** Kategorik özniteliklerin en basit halidir, sadece iki olası değeri vardır. 'Garajı var mı?' (Evet/Hayır), 'E-posta spam mi?' (Evet/Hayır) gibi. Genellikle modelin anlayabilmesi için 1 ve 0 olarak kodlanırlar.
+
+#### Öznitelik Seçimi ve Öznitelik Mühendisliği
+
+İşin en yaratıcı ve önemli kısımlarından birine geldik: **Öznitelik Mühendisliği**. Bazen elimizdeki ham veriler, yani **temel öznitelikler**, problemi çözmek için yeterli olmaz. Tıpkı bir aşçının elindeki temel malzemelerle yepyeni bir tarif yaratması gibi, biz de mevcut özniteliklerden daha anlamlı, yeni öznitelikler türetiriz.
+
+*   **Temel Öznitelikler:** Bunlar, veri setimizde bize doğrudan verilen orijinal özelliklerdir. Bu temel özniteliklerin seçiminde alanında uzman kişilerin görüşü altın değerindedir. Bir bankacı, kredi riskini tahmin ederken hangi finansal oranların önemli olduğunu en iyi bilir.
+*   **Türetilmiş Öznitelikler:** Mevcut özniteliklerden yeni ve daha güçlü bilgiler oluşturmaktır. Örneğin, bir müşterinin 'doğum tarihi' özniteliği tek başına çok anlamlı olmayabilir. Ama bu bilgiden 'yaş' özniteliğini türetirsek, modelimiz için çok daha değerli bir bilgi elde ederiz. Veya bir evin 'genişliği' ve 'uzunluğu' öznitelikleri yerine, bu ikisini çarparak 'alan' adında tek ve daha güçlü bir öznitelik oluşturabiliriz.
+*   **Etkileşim Öznitelikleri (Interaction Features):** Bazen iki öznitelik tek başlarına zayıfken, bir araya geldiklerinde özel bir etki yaratırlar. Buna **birleşik etki** de diyebiliriz. Örneğin, bir reklamın tıklanma oranını tahmin ederken, 'günün saati' ve 'kullanıcının cihazı' (mobil/masaüstü) özniteliklerini düşünelim. Belki de 'akşam saatlerinde mobil cihazdan' gösterilen reklamlar çok daha başarılıdır. İşte bu iki özniteliğin birleşiminden doğan etkiyi yakalayan yeni bir öznitelik oluşturmak, modelin başarısını katlayabilir.
+*   **Gereksiz Öznitelikler:** Bazen de bazı öznitelikler aynı bilgiyi tekrar eder. Örneğin, veri setinde hem 'doğum tarihi' hem de 'yaş' varsa, bu iki öznitelik büyük ölçüde aynı bilgiyi taşır. Bu gibi durumlarda birini modelden çıkarmak, modelin daha basit ve hızlı çalışmasını sağlayabilir.
+
+Kısacası, bir makine öğrenmesi modelinin ne kadar 'akıllı' olacağı, ona ne kadar kaliteli ve anlamlı 'bilgi' (öznitelik) verdiğimizle doğrudan ilişkilidir. Ham veriyi almakla yetinmeyip onu işlemek, zenginleştirmek ve en doğru temsilini bulmak, bu alanın hem bilimi hem de sanatıdır.
+
+#### Özniteliklerin Ölçeklendirilmesi (Feature Scaling)
+
+Şimdi gençler, makine öğrenmesi modellerimizin adil ve doğru kararlar verebilmesi için çok kritik bir konuya geldik: **Öznitelik Ölçeklendirme (Feature Scaling)**. Bu, farklı birimlerde veya çok farklı aralıklarda olan sayısal verilerimizi ortak bir dile, yani ortak bir ölçeğe getirme işlemidir.
+
+Neden bu kadar önemli olduğunu basit bir örnekle anlatalım. Bir ev fiyatı tahmin modeli kurduğumuzu düşünün. Elimizde iki temel öznitelik olsun: evin metrekaresi ve oda sayısı. Bu iki özelliğin değer aralıklarına bir bakalım:
+
+| Özellik | Örnek Değer | Değer Aralığı |
+| :--- | :---: | :---: |
+| Metrekare (m²) | 150 | ~50 - 250 |
+| Oda Sayısı | 3 | ~1 - 6 |
+
+Tabloda da gördüğünüz gibi, metrekare değerleri sayısal olarak oda sayısı değerlerinden çok daha büyüktür. Eğer bu verileri olduğu gibi, örneğin mesafe tabanlı bir algoritmaya (K-En Yakın Komşu gibi) veya gradyan inişi kullanan bir modele (Lineer Regresyon gibi) verirsek, algoritma iki ev arasındaki 'farkı' hesaplarken metrekaredeki 10 birimlik bir değişimi, oda sayısındaki 1 birimlik bir değişimden çok daha önemli sayacaktır. Model, büyük sayısal değerlerin daha fazla etkiye sahip olduğu yanılgısına kapılabilir. Bu, modelimizin oda sayısı gibi potansiyel olarak çok önemli bir özniteliğin etkisini göz ardı etmesine neden olur.
+
+İşte bu adaletsizliği ortadan kaldırmak ve her özniteliğe kendini ifade etme şansı tanımak için ölçeklendirme yaparız. Amacımız, tüm öznitelikleri benzer bir sayısal aralığa getirerek modelin her birinden adil bir şekilde öğrenmesini sağlamaktır. Bu işlemi gerçekleştirmek için kullanılan birkaç popüler yöntem vardır:
+
+##### 1. Min-Max Normalizasyonu (Normalization)
+
+Bu yöntem, adından da anlaşılacağı gibi, verileri belirli bir aralığa, genellikle 0 ile 1 arasına sıkıştırmayı hedefler. Bunu yaparken veri setindeki en küçük değeri 0'a, en büyük değeri ise 1'e karşılık gelecek şekilde dönüştürür. Aradaki diğer tüm değerler de bu yeni aralıkta orantılı olarak yerlerini alırlar.
+
+Formülü şöyledir:
+$$
+\text{Val}_{\text{yeni}} = \frac{\text{Val}_{\text{eski}} - \text{min}(\text{Val})}{\text{max}(\text{Val}) - \text{min}(\text{Val})}
+$$
+
+*   **Örnek:** Bir grup öğrencinin bir sınavdan aldığı notlar [60, 70, 80, 100] olsun.
+    *   En düşük not (min): 60
+    *   En yüksek not (max): 100
+    *   Şimdi 70 alan öğrencinin yeni notunu hesaplayalım:
+        $$
+        \frac{70 - 60}{100 - 60} = \frac{10}{40} = 0.25
+        $$
+    *   Tüm notları dönüştürdüğümüzde yeni setimiz şöyle olur: [0, 0.25, 0.5, 1]. Gördüğünüz gibi, tüm değerler artık 0 ile 1 arasında.
+
+Bu yöntem, verinin dağılım yapısını bozmaz ancak veri setindeki aykırı değerlere (outliers) karşı oldukça hassastır. Örneğin, notlar arasında bir de 300 gibi hatalı bir giriş olsaydı, diğer tüm notlar 0'a çok yakın bir aralığa sıkışırdı.
+
+##### 2. Z-Skoru Standardizasyonu (Standardization)
+
+Bu yöntem ise verileri belirli bir aralığa sıkıştırmak yerine, onları ortalaması 0 ve standart sapması 1 olan bir dağılıma dönüştürür. Yani her bir veri noktasının, veri setinin ortalamasından kaç standart sapma uzakta olduğunu ifade eder. Bu nedenle bu işleme **standartlaştırma** da denir.
+
+Formülü şöyledir:
+$$
+\text{Val}_{\text{yeni}} = \frac{\text{Val}_{\text{eski}} - \text{ortalama}(\text{Val})}{\text{standart\_sapma}(\text{Val})}
+$$
+
+*   **Örnek:** Yine aynı notları ele alalım: [60, 70, 80, 100].
+    *   Bu notların ortalaması: (60 + 70 + 80 + 100) / 4 = 77.5
+    *   Standart sapması: Yaklaşık 17.07
+    *   Şimdi 70 alan öğrencinin Z-skorunu hesaplayalım:
+        $$
+        \frac{70 - 77.5}{17.07} = \frac{-7.5}{17.07} \approx -0.44
+        $$
+    *   Bu sonuç bize, 70 notunun ortalamanın yaklaşık 0.44 standart sapma altında olduğunu söyler.
+
+Standardizasyon, Min-Max normalizasyonunun aksine aykırı değerlerden daha az etkilenir. Bu nedenle, verinizde aykırı değerler olduğundan şüpheleniyorsanız veya kullanacağınız algoritma verinin normal dağılıma yakın olmasını varsayıyorsa (örneğin, bazı lineer modeller), standardizasyon genellikle daha güvenli bir tercihtir.
+
+##### 3. Onluk Ölçekleme (Decimal Scaling)
+
+Bu, diğerlerine göre daha az kullanılan, daha basit bir yöntemdir. Temel amacı, değerleri sadece ondalık virgülünü kaydırarak -1 ile 1 arasına getirmektir. Bunu yapmak için, veri setindeki en büyük mutlak değere sahip elemanı 1'den küçük yapacak en küçük 10'un kuvvetini bulur ve tüm değerleri bu sayıya böleriz.
+
+Formülü şöyledir:
+$$
+\text{Val}_{\text{yeni}} = \frac{\text{Val}_{\text{eski}}}{10^n}
+$$
+Buradaki `n`, `max(|Val|) / 10^n < 1` koşulunu sağlayan en küçük tam sayıdır.
+
+*   **Örnek:** Elimizdeki değerler [-986, 450, 120, -50] olsun.
+    *   Bu setteki en büyük mutlak değer `|-986| = 986`'dır.
+    *   986'yı 1'den küçük yapmak için onu 1000'e (yani 10³) bölmemiz gerekir. Demek ki `n=3`.
+    *   Şimdi tüm değerleri 1000'e böleriz: [-0.986, 0.450, 0.120, -0.050].
+
+Bu yöntem oldukça basittir ancak verinin dağılımı hakkında herhangi bir bilgi kullanmadığı için genellikle diğer iki yöntem kadar etkili değildir.
+
+### Uygulama: Weka ve Python ile Öznitelik Ölçeklendirme
+
+Şimdi bu ölçeklendirme yöntemlerinin Weka ve Python gibi araçlarda nasıl uygulandığına bakalım.
+
+#### Weka'da Ölçeklendirme Örneği
+
+Weka, veri ön işleme adımlarını görsel bir arayüzle kolayca yapmanıza olanak tanır. Ölçeklendirme işlemleri için "Filter" (Filtre) adı verilen araçları kullanırız. Adım adım bir örnek yapalım.
+
+**1. Veri Setini Hazırlama ve Yükleme**
+
+Öncelikle, `notlar.arff` adında basit bir metin dosyası oluşturalım ve içine aşağıdaki veriyi yapıştıralım. Bu dosya, öğrencilerin vize ve final notlarını içeriyor.
+
+```arff
+@relation ogrenci_notlari
+
+@attribute vize numeric
+@attribute final numeric
+@attribute durum {gecti, kaldi}
+
+@data
+60,75,gecti
+45,50,kaldi
+80,90,gecti
+95,92,gecti
+30,40,kaldi
+```
+
+Şimdi Weka'yı açıp "Explorer" arayüzüne girelim. "Preprocess" sekmesindeyken "Open file..." butonuna tıklayarak bu `notlar.arff` dosyasını yükleyelim. Veri yüklendiğinde, `vize` ve `final` özniteliklerinin istatistiklerini (min, max, mean, stddev) sağ taraftaki panelde görebilirsiniz.
+
+**2. Min-Max Normalizasyonu (Normalize Filtresi)**
+
+Amacımız, `vize` ve `final` notlarını 0 ile 1 arasına sıkıştırmak.
+
+*   **Filtre Seçimi:** "Filter" bölümündeki "Choose" butonuna tıklayın.
+*   Açılan menüden `weka` -> `filters` -> `unsupervised` -> `attribute` yolunu izleyin ve `Normalize` filtresini seçin.
+*   **Uygulama:** "Apply" butonuna basın.
+
+**Sonuç:** Filtreyi uyguladıktan sonra, arayüzün sağındaki öznitelik listesinden `vize` veya `final` özniteliğini seçin. "Selected attribute" panelinde artık **Min: 0** ve **Max: 1** yazdığını göreceksiniz. Veri tablosundaki değerler de bu yeni aralığa göre güncellenmiştir.
+
+**3. Z-Skoru Standardizasyonu (Standardize Filtresi)**
+
+Şimdi aynı veriye standardizasyon uygulayalım. Önceki işlemi geri almak için "Undo" butonuna basın.
+
+*   **Filtre Seçimi:** Tekrar "Choose" butonuna tıklayın ve bu kez aynı yoldan `Standardize` filtresini seçin.
+*   **Uygulama:** "Apply" butonuna basın.
+
+**Sonuç:** Bu işlemden sonra `vize` özniteliğini tekrar seçtiğinizde, "Selected attribute" panelinde **Mean (Ortalama)** değerinin 0'a çok yakın (veya tam 0) ve **StdDev (Standart Sapma)** değerinin 1 olduğunu göreceksiniz. Veri tablosundaki değerler artık pozitif ve negatif ondalıklı sayılara dönüşmüştür; bu sayılar her bir notun ortalamadan kaç standart sapma uzakta olduğunu gösterir.
+
+Bu basit adımlarla, Weka'nın görsel arayüzünü kullanarak verilerinizi modelinize sunmadan önce kolayca ölçeklendirebilirsiniz.
+
+#### Python'da Ölçeklendirme Örneği
+
+Python'da makine öğrenmesi denildiğinde akla ilk gelen kütüphane olan `scikit-learn`, bu ölçeklendirme işlemleri için oldukça pratik ve güçlü araçlar sunar. En sık kullanılan iki yöntem için bir örnek yapalım.
+
+```python
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+
+# Örnek olarak öğrencilerin notlarını içeren bir veri seti oluşturalım
+# Bu, tek bir öznitelik (notlar) içeren bir veri setidir.
+notlar = np.array([[60], [70], [80], [100]])
+
+print("Orijinal Veri:")
+print(notlar)
+print("-" * 30)
+
+# 1. Min-Max Normalizasyonu (0-1 arasına ölçekleme)
+# MinMaxScaler nesnesini oluşturuyoruz
+min_max_scaler = MinMaxScaler()
+
+# Scaler'ı veriye 'eğitiyor' (min ve max değerlerini öğreniyor) ve veriyi dönüştürüyoruz
+min_max_notlar = min_max_scaler.fit_transform(notlar)
+
+print("Min-Max Normalizasyonu Sonucu (0-1 Arası):")
+print(min_max_notlar)
+print("-" * 30)
+
+# 2. Z-Skoru Standardizasyonu (Ortalama=0, Standart Sapma=1)
+# StandardScaler nesnesini oluşturuyoruz
+standard_scaler = StandardScaler()
+
+# Scaler'ı veriye 'eğitiyor' (ortalama ve standart sapmayı öğreniyor) ve veriyi dönüştürüyoruz
+standard_notlar = standard_scaler.fit_transform(notlar)
+
+print("Z-Skoru Standardizasyonu Sonucu:")
+print(standard_notlar)
+print("-" * 30)
+```
+
+Bu kod bloğunda, aynı veri setine iki farklı ölçeklendirme tekniğini uyguladığımızda sonuçların nasıl değiştiğini net bir şekilde görebiliriz. `scikit-learn` kütüphanesi, bu dönüşümleri sadece birkaç satır kod ile gerçekleştirmemizi sağlar. Bu, modellerimizi eğitime hazırlarken bize büyük bir esneklik ve hız kazandırır.
+
+
+### Örnek: Kredi Riski Tahmin Modeli Oluşturma
+
+Şimdi gençler, öğrendiğimiz bu teorik bilgileri somut bir probleme uygulayalım. Bir banka olduğumuzu ve bize kredi başvurusunda bulunan bir müşterinin borcunu zamanında ödeyip ödemeyeceğini, yani "kredi riskini" tahmin etmek istediğimizi düşünelim. Bu, makine öğrenmesinin finansta en sık kullanıldığı alanlardan biridir.
+
+#### 1. Adım: Problemi Anlamak ve Gerekli Bilgileri (Öznitelikleri) Belirlemek
+
+Her şeyden önce, doğru soruları sormamız gerekir: Bir kişinin kredisini geri ödeme olasılığını ne gibi faktörler etkiler? Bu noktada tek başımıza hareket etmeyiz, alanında uzman kişilerden, yani bankacılardan ve kredi analistlerinden destek alırız. Onların tecrübeleri bize hangi bilgilerin değerli olduğunu söyler.
+
+Kredi analistlerinden, geçmişte kredi kullanmış yüzlerce veya binlerce müşterinin bilgilerini alırız. Bu bilgiler, müşterinin krediyi zamanında ödeyip ödemediği bilgisiyle birlikte gelir. İşte bu 'sonucu belli olan' geçmiş veriler, bizim **etiklenmiş eğitim verimizi** oluşturur. Modelimiz, bu verilerden öğrenerek gelecekteki müşteriler için tahmin yapmayı öğrenecektir.
+
+Bu iş birliği sonucunda, modelimize girdi olarak sunacağımız bazı temel öznitelikleri belirlediğimizi varsayalım:
+*   **Müşterinin Aylık Geliri:** Kişinin borcunu ödeme kapasitesini gösteren en temel bilgilerden biri.
+*   **Yaşadığı Şehir:** Büyük şehirlerdeki yaşam maliyeti veya bölgesel ekonomik koşullar riski etkileyebilir.
+*   **Geçmiş Ödeme Performansı:** Müşterinin daha önceki borçlarını zamanında ödeyip ödemediği. Bu, gelecekteki davranışları için en güçlü ipuçlarından biridir.
+
+#### 2. Adım: Veri Tiplerini Anlamak ve Tanımlamak
+
+Modelimizi kurmadan önce elimizdeki bilgilerin ne türde olduğunu anlamamız şart. Çünkü bir bilgisayar, "İstanbul" kelimesiyle "5000 TL" sayısını aynı şekilde işleyemez.
+
+*   **Müşterinin Aylık Geliri:** Bu, sayısal bir değerdir. 5000, 15000, 25000 gibi üzerinde matematiksel işlemler yapabileceğimiz bir sayıdır. Bu tür verilere **Sayısal (Numeric)** öznitelik diyoruz.
+*   **Yaşadığı Şehir:** Bu, 'İstanbul', 'Ankara', 'İzmir' gibi belirli kategorilerden birini alan bir bilgidir. Bu kategoriler arasında doğal bir sıralama yoktur (İstanbul, Ankara'dan daha "büyük" bir sayı değildir). Bu tür verilere **Kategorik (Categorical)** öznitelik diyoruz.
+*   **Geçmiş Ödeme Performansı:** Bu sorunun cevabı genellikle basittir: "Evet, geçmişte gecikme yaşadı" veya "Hayır, yaşamadı". Sadece iki olası durumu olan bu tür verilere **İkili (Binary)** öznitelik diyoruz.
+
+#### 3. Adım: Modelin Çıktısını, Yani Hedefimizi Belirlemek
+
+Peki, modelimiz bize ne söyleyecek? Amacımız, tüm bu girdileri analiz edip sonunda tek bir karar vermektir: Bu müşteri "Yüksek Riskli" mi, yoksa "Düşük Riskli" mi? Bu, bizim modelimizin tahmin etmeye çalışacağı **hedef değişkendir**. Çıktımız, bu iki kategoriden biri olacak.
+
+#### 4. Adım: Veriyi Modelin Anlayacağı Dile Çevirmek (Dönüşüm)
+
+İşte en kritik adımlardan birine geldik. Özellikle lineer regresyon gibi matematiksel temelli modeller, kelimelerle veya kategorilerle doğrudan çalışamazlar. Onların dili sayılardır. Bu yüzden, sayısal olmayan özniteliklerimizi onlara uygun bir formata dönüştürmemiz gerekir.
+
+*   **İkili Öznitelikler:** Bu en kolayıdır. "Evet" için `1`, "Hayır" için `0` değerini kullanabiliriz. Böylece "Geçmişte gecikme yaşadı" özniteliği, model için `1` veya `0` olan sayısal bir girdiye dönüşür.
+
+*   **Kategorik Öznitelikler:** "Yaşadığı Şehir" gibi kategorik veriler biraz daha karmaşıktır. Eğer İstanbul=1, Ankara=2, İzmir=3 gibi rastgele sayılar verirsek, modelimiz bu şehirler arasında aslında var olmayan bir matematiksel ilişki (İzmir > Ankara gibi) kurmaya çalışabilir. Bu hatadan kaçınmak için **One-Hot Encoding (Tekil Etkin Kodlama)** adı verilen bir yöntem kullanırız.
+    *   Bu yöntemde, "Yaşadığı Şehir" adlı tek bir sütun yerine, her bir şehir için yeni bir ikili (binary) sütun oluştururuz: `Şehir_İstanbul_mu`, `Şehir_Ankara_mı`, `Şehir_İzmir_mi`...
+    *   Eğer müşteri İstanbul'da yaşıyorsa, bu sütunlardaki değerler şöyle olur: `[1, 0, 0]`.
+    *   Eğer Ankara'da yaşıyorsa: `[0, 1, 0]`.
+    *   Bu sayede, kategorik bilgiyi, modelin yanlış yorumlamayacağı, sadece varlık-yokluk (`1` veya `0`) belirten sayısal bir formata dönüştürmüş oluruz.
+
+*   **Sayısal Öznitelikler:** Bazen sayısal verileri de olduğu gibi kullanmak yerine dönüştürmek daha iyi sonuç verir. Örneğin, "Aylık Gelir" özniteliğini doğrudan kullanmak yerine, onu gelir gruplarına ayırabiliriz: "0-10000 TL" (Düşük), "10001-20000 TL" (Orta), "20001+ TL" (Yüksek). Bu işleme **gruplama (binning)** denir. Bu yeni kategorik özniteliği de yine One-Hot Encoding ile modelin anlayacağı `[1, 0, 0]` gibi sayısal bir formata çevirebiliriz. Bu, modelin belirli gelir aralıklarındaki risk değişimlerini daha kolay yakalamasını sağlayabilir.
+
+Tüm bu dönüşümler tamamlandığında, artık veri setimiz tamamen sayılardan oluşur ve makine öğrenmesi algoritmasını eğitmek için hazırdır. Model, bu sayısallaştırılmış verilerdeki desenleri öğrenerek, gelecekteki yeni müşteriler için isabetli risk tahminleri yapmaya çalışacaktır.
+
+
+
+
+### Model Değerlendirme: Modelimiz Gerçekten Öğrendi mi?
+
+Şimdi gençler, bir makine öğrenmesi modeli eğittiğimizi düşünelim. Modelimiz, ona verdiğimiz verileri kullanarak bir şeyler öğrendi. Peki, bu öğrenmenin kalitesini nasıl ölçeriz? Modelimizin sadece elindeki verileri ezberlemediğinden, yani yeni ve daha önce hiç görmediği durumlarda da doğru kararlar verebileceğinden nasıl emin olabiliriz?
+
+Bu durumu, bir sınava hazırlanan öğrenciye benzetebiliriz. Eğer bir öğrenci, çalışma kitabındaki soruları cevaplarıyla birlikte ezberlerse, aynı sorular sorulduğunda %100 başarılı olur. Ancak bu, konuyu gerçekten öğrendiği anlamına gelmez. Sınavda, kitaptakilerden biraz farklı ama aynı konuyu ölçen yeni sorular geldiğinde muhtemelen başarısız olacaktır. İşte bizim modelimiz de bu öğrenci gibidir. Eğer onu eğittiğimiz verilerle test edersek, bize harika sonuçlar verebilir ama bu bir yanılsamadır. Buna **ezberleme (overfitting)** diyoruz.
+
+Modelin gerçek performansını, yani genelleme yeteneğini ölçmek için elimizdeki veri setini akıllıca bölmemiz gerekir. Bir kısmını modele dersini anlatmak için (eğitim verisi), daha önce hiç görmediği bir kısmını da onu imtihan etmek için (test verisi) kullanırız. Bu bölme işlemini yapmak için kullanılan çeşitli stratejiler vardır.
+
+#### 1. Holdout (Dışarıda Tutma Yöntemi)
+
+Bu, en temel ve en basit yaklaşımdır. Elimizdeki veri setini bir defaya mahsus olmak üzere iki parçaya ayırırız: genellikle daha büyük olan parça **eğitim seti**, daha küçük olan parça ise **test seti** olarak kullanılır. Yaygın olarak kullanılan oranlar 80/20, 70/30 veya 66/34 şeklindedir. Model, eğitim seti üzerinde öğrenme işlemini gerçekleştirir. Öğrenme bittikten sonra, modelin daha önce hiç görmediği test seti üzerindeki performansı ölçülür. Bu performans, modelin gerçek dünya verileri karşısındaki başarısı hakkında bize bir fikir verir.
+
+```mermaid
+graph TD
+    subgraph "Toplam Veri Seti"
+        A[Veri 1]
+        B[Veri 2]
+        C[Veri 3]
+        D[Veri 4]
+        E[Veri 5]
+    end
+
+    subgraph "Eğitim Seti (%80)"
+        direction LR
+        A1[Veri 1]
+        B1[Veri 2]
+        C1[Veri 3]
+        D1[Veri 4]
+    end
+
+    subgraph "Test Seti (%20)"
+        E1[Veri 5]
+    end
+
+    A --> A1
+    B --> B1
+    C --> C1
+    D --> D1
+    E --> E1
+
+    A1 & B1 & C1 & D1 --> F[Model Eğitimi]
+    F --> G{Eğitilmiş Model}
+    G -- Test Et --> H((Performans Ölçümü))
+    E1 -- Daha Önce Görülmemiş Veri --> H
+```
+
+Bu yöntemin en büyük dezavantajı, bölme işleminin tamamen şansa bağlı olmasıdır. Eğer şans eseri, veri setindeki tüm "kolay" örnekler test setine, "zor" örnekler ise eğitim setine denk gelirse, modelimizin performansı olduğundan daha kötü görünebilir. Tersi durumda ise modelimiz haksız bir şekilde başarılı sayılabilir. Özellikle küçük veri setlerinde bu risk daha da artar, çünkü her bir veri noktası daha değerlidir ve modelin öğrenme sürecinden dışlanması performansı olumsuz etkileyebilir.
+
+#### 2. Üçlü Ayırma (Three-way Split)
+
+Holdout yöntemini bir adım ileri taşıyalım. Bazen modelimizi eğitirken en iyi ayarları bulmak için denemeler yapmamız gerekir. Örneğin bir karar ağacının ne kadar derine inmesi gerektiğini veya bir sinir ağında kaç katman kullanacağımızı belirlemek gibi. Bu ayarlara **hiperparametre** diyoruz.
+
+Eğer bu ayarları yaparken test setini kullanırsak, aslında test setindeki bilgi modele sızmış olur ve test setimiz artık modelin performansını tarafsız bir şekilde ölçemez. Bu durumu engellemek için veriyi üçe ayırırız:
+
+1.  **Eğitim Seti (Training Set):** Modelin temel öğrenme işlemini yaptığı, en büyük veri parçasıdır.
+2.  **Doğrulama Seti (Validation Set):** Modelin hiperparametrelerini ayarlamak (tuning) ve farklı model adayları arasından en iyisini seçmek için kullanılır. Model bu veri üzerinde eğitilmez, sadece performansı bu setle kontrol edilir.
+3.  **Test Seti (Test Set):** Bu set, tüm süreç boyunca bir kasada kilitli tutulur. En iyi model ve en iyi hiperparametreler belirlendikten sonra, son ve nihai performans ölçümü için sadece bir kez kullanılır. Bu, modelin gerçek dünya performansına dair en tarafsız tahmini verir.
+
+#### 3. Çapraz Doğrulama (Cross-Validation / K-Fold)
+
+Holdout yöntemindeki "şanssız bölünme" riskini ortadan kaldırmak için geliştirilmiş çok daha güvenilir bir yöntemdir. Fikir oldukça basittir: Veri setini tek bir defa bölmek yerine, birden çok defa farklı şekillerde bölüp test edelim ve sonuçların ortalamasını alalım.
+
+En yaygın kullanılan çapraz doğrulama tekniği **K-Katlı (K-Fold)**'dır. Süreç şöyle işler:
+
+1.  Veri seti, `K` adet eşit büyüklükte parçaya (katmana) ayrılır. Genellikle `K` için 5 veya 10 değeri tercih edilir.
+2.  Bir döngü başlatılır ve bu döngü `K` defa tekrar eder.
+3.  Her bir döngüde, katmanlardan bir tanesi **test seti** olarak seçilir, geri kalan `K-1` katman ise birleştirilerek **eğitim seti** olarak kullanılır.
+4.  Model, bu eğitim seti üzerinde eğitilir ve ayrılan test katmanı üzerinde performansı ölçülür.
+5.  Döngü tamamlandığında, elimizde `K` adet farklı performans skoru olur. Bu skorların ortalaması alınarak modelin genel performansı hakkında çok daha istikrarlı ve güvenilir bir tahmin elde edilir.
+
+```mermaid
+graph TD
+    A["K-Katlı Çapraz Doğrulama (K=5)"]
+    subgraph "Döngü 1"
+        direction LR
+        B1["Katman 1 (Test)"]:::test --- C1["Katman 2 (Eğitim)"]:::train --- D1["Katman 3 (Eğitim)"]:::train --- E1["Katman 4 (Eğitim)"]:::train --- F1["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 2"
+        direction LR
+        B2["Katman 1 (Eğitim)"]:::train --- C2["Katman 2 (Test)"]:::test --- D2["Katman 3 (Eğitim)"]:::train --- E2["Katman 4 (Eğitim)"]:::train --- F2["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 3"
+        direction LR
+        B3["Katman 1 (Eğitim)"]:::train --- C3["Katman 2 (Eğitim)"]:::train --- D3["Katman 3 (Test)"]:::test --- E3["Katman 4 (Eğitim)"]:::train --- F3["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 4"
+        direction LR
+        B4["Katman 1 (Eğitim)"]:::train --- C4["Katman 2 (Eğitim)"]:::train --- D4["Katman 3 (Eğitim)"]:::train --- E4["Katman 4 (Test)"]:::test --- F4["Katman 5 (Eğitim)"]:::train
+    end
+    subgraph "Döngü 5"
+        direction LR
+        B5["Katman 1 (Eğitim)"]:::train --- C5["Katman 2 (Eğitim)"]:::train --- D5["Katman 3 (Eğitim)"]:::train --- E5["Katman 4 (Eğitim)"]:::train --- F5["Katman 5 (Test)"]:::test
+    end
+    
+    F1 --> G["Skor 1"]
+    F2 --> H["Skor 2"]
+    F3 --> I["Skor 3"]
+    F4 --> J["Skor 4"]
+    F5 --> K["Skor 5"]
+    
+    G & H & I & J & K --> L["Final Performans = Ortalama(Skorlar)"]
+
+    classDef test fill:#ffb0a8,stroke:#333,stroke-width:1px;
+    classDef train fill:#a8c4ff,stroke:#333,stroke-width:1px;
+```
+
+Bu yöntemin getirdiği en önemli avantajlardan biri, elimizdeki verinin tamamını hem eğitim hem de test amacıyla kullanabilmemizdir. Bu, özellikle veri miktarının kısıtlı olduğu durumlarda hayati önem taşır.
+
+#### K Değerinin Seçimi: Bias ve Varyans Dengesi
+
+Çapraz doğrulama yaparken seçeceğimiz `K` değeri, modelimizin performansını ne kadar isabetli ölçtüğümüzü belirleyen kritik bir ayardır. Bu durumu, bir projenin kalitesini değerlendirmek için kurulan bir uzmanlar komitesine benzetebiliriz. `K` değeri, bu komitede kaç uzman olacağını ve her uzmanın projeyi nasıl inceleyeceğini belirler. Burada iki temel kavram devreye girer: **yanlılık (bias)** ve **varyans (variance)**.
+
+*   **Yanlılık (Bias):** Değerlendirmemiz, modelin gerçek potansiyelinden ne kadar sapıyor? Eğer komitemiz sürekli olarak projenin kalitesini olduğundan düşük tahmin ediyorsa, bu yanlı bir değerlendirmedir.
+*   **Varyans (Variance):** Değerlendirmemiz ne kadar tutarlı? Eğer komiteyi farklı uzmanlarla tekrar kursaydık, sonuç ne kadar değişirdi? Eğer sonuçlar çok fazla değişiyorsa, değerlendirmemizin varyansı yüksektir.
+
+Şimdi `K` değerinin bu dengeyi nasıl etkilediğine bakalım:
+
+##### Durum 1: `K` Değerinin Büyük Olması (Örn: K=10 veya daha fazla)
+
+Büyük bir `K` değeri seçmek, kalabalık bir uzmanlar komitesi kurmaya benzer. Örneğin, 1000 verimiz varsa ve K=10 seçersek, model her seferinde 900 veriyle eğitilir.
+
+*   **Avantajı: Düşük Yanlılık (Low Bias)**
+    *   Model, her döngüde eldeki verinin çok büyük bir kısmıyla (%90'ıyla) eğitilir. Bu, neredeyse tüm veriyi kullanarak eğiteceğimiz nihai modele çok yakın bir modeldir. Dolayısıyla, bu modelden aldığımız performans skoru, modelin gerçek potansiyeline çok yakın, yani **iyimser ve yanlılığı düşük** bir tahmini verir. Komitedeki her uzman, projenin neredeyse tamamını gördüğü için projenin kalitesi hakkında çok isabetli bir fikir verir.
+
+*   **Dezavantajı: Yüksek Varyans (High Variance)**
+    *   Her döngüde kullanılan eğitim setleri birbirine çok benzerdir (sadece %10'luk bir kısmı farklıdır). Bu yüzden eğitilen modeller de birbirinin neredeyse aynısı olur. Eğer veri setimizde tesadüfen yanıltıcı bir desen varsa, tüm modeller bu deseni öğrenir ve aynı hataya düşer. Bu durum, elde ettiğimiz ortalama performans skorunun **hassas ve değişken** olmasına neden olur. Yani, veri setimiz birazcık farklı olsaydı, elde edeceğimiz sonuç bambaşka olabilirdi. Değerlendirmemiz, elimizdeki o spesifik veri setine aşırı bağımlı hale gelir. Ayrıca, çok sayıda döngü gerektiği için hesaplama maliyeti de artar.
+
+##### Durum 2: `K` Değerinin Küçük Olması (Örn: K=2 veya K=3)
+
+Küçük bir `K` değeri seçmek, az sayıda uzmandan oluşan küçük bir komite kurmak gibidir. Örneğin, 1000 verimiz varsa ve K=2 seçersek, model her seferinde sadece 500 veriyle eğitilir.
+
+*   **Avantajı: Düşük Varyans (Low Variance)**
+    *   Her döngüde kullanılan eğitim setleri birbirinden oldukça farklıdır (birbirleriyle hiç ortak verileri yoktur). Bu sayede eğitilen modellerin bakış açıları daha çeşitli olur. Bir modelin yaptığı hatayı diğeri yapmayabilir. Sonuç olarak, bu farklı modellerden gelen performans skorlarının ortalaması, daha **tutarlı ve güvenilir** bir sonuç verir. Veri setimiz biraz farklı olsaydı bile, ortalama sonuç muhtemelen çok fazla değişmezdi.
+
+*   **Dezavantajı: Yüksek Yanlılık (High Bias)**
+    *   Anlamı:** Model, her seferinde eldeki verinin sadece küçük bir kısmıyla (örneğimizde %50'siyle) eğitilir. Daha az veriyle eğitilen bir model, genellikle daha fazla veriyle eğitilen bir modelden daha kötü performans gösterir. Bu nedenle, elde ettiğimiz performans skoru, modelin gerçek potansiyelini yansıtmayan, **kötümser ve yanlılığı yüksek** bir tahmin olur. Komitedeki uzmanlar projenin sadece yarısını gördükleri için, projenin gerçek kalitesini tam olarak anlayamaz ve genellikle olduğundan daha düşük bir puan verirler.
+
+**Sonuç: Tatlı Noktayı Bulmak**
+
+Genel kabul görmüş pratik, `K` için **5** veya **10** gibi değerler kullanmaktır. Bu değerler, yanlılık ve varyans arasında makul bir denge kurar. Hem modelin yeterli veriyle eğitilmesini sağlayarak yanlılığı düşürür, hem de döngü sayısını makul tutarak hesaplama maliyetini kontrol altında tutar ve yeterince çeşitli modellerle varyansı azaltır. Bu sayede modelimizin gerçek dünya performansı hakkında hem isabetli hem de güvenilir bir fikir edinmiş oluruz.
+
+#### 4. Tabakalı Örnekleme (Stratified Sampling)
+
+Özellikle sınıflandırma problemlerinde, hedef sınıfların veri setindeki dağılımı dengesiz olabilir. Örneğin, bir hastalığı teşhis etmeye çalıştığımız bir veri setinde, 1000 hastanın 950'si sağlıklı, sadece 50'si hasta olabilir. Eğer burada standart bir K-Fold uygularsak, şans eseri test için ayırdığımız katmanın içinde hiç hasta örneği olmayabilir. Bu durumda modelimiz, o katman için %100 başarılı gibi görünse de aslında hasta teşhisi koyma yeteneğini hiç ölçememiş oluruz.
+
+**Tabakalı K-Katlı Çapraz Doğrulama (Stratified K-Fold)** bu sorunu çözer. Veriyi katmanlara ayırırken, her bir katmanın içindeki sınıf oranlarının, orijinal veri setindeki oranlarla aynı olmasını garanti eder. Yani, her bir katmanda %95 sağlıklı, %5 hasta örneği bulunur. Bu sayede, her bir test ve eğitim adımında modelin tüm sınıfları adil bir şekilde görmesi sağlanır ve çok daha güvenilir bir performans ölçümü yapılır.
+#### Diğer Yöntemler
+
+##### Birini Dışarıda Bırak (Leave-One-Out CV)
+
+Gençler, K-Katlı Çapraz Doğrulama'nın çok özel bir durumunu düşünelim. Elimizde çok küçük bir veri seti olduğunu varsayalım, diyelim ki sadece 20 veri noktası var. Bu kadar az veriyle, modelimizi eğitmek için mümkün olan her bir veri noktasını kullanmak isteriz. İşte bu noktada "Birini Dışarıda Bırak" yöntemi devreye girer.
+
+Bu yaklaşımda, veri setindeki her bir örneği sırayla test verisi olarak ayırırız. Yani, 20 örneğimiz varsa, önce ilk örneği test için kenara koyar, kalan 19 örnekle modelimizi eğitiriz. Sonra bu tek örnek üzerinde test yaparız. Ardından ikinci örneği test için ayırır, geri kalan 19 örnekle modeli tekrar eğitiriz. Bu işlemi, veri setindeki her bir örnek test verisi olana kadar, yani tam 20 defa tekrar ederiz.
+
+Bu yöntem, K-Katlı Çapraz Doğrulama'nın `K` değerinin veri setindeki toplam örnek sayısına (`N`) eşit olduğu bir halidir. Her döngüde model, mevcut verinin neredeyse tamamıyla eğitildiği için, modelin performansı hakkındaki tahminimiz oldukça isabetli olur; yani **yanlılığı (bias) düşüktür**. Ancak, her adımda eğitilen modeller birbirine çok benzediği için (sadece bir örnekleri farklıdır), elde edilen performans tahmininin **varyansı yüksek** olabilir. En büyük dezavantajı ise, veri setindeki örnek sayısı kadar model eğitilmesi gerektiğinden, hesaplama maliyetinin çok yüksek olmasıdır. Bu nedenle sadece çok küçük veri setleri için pratik bir seçenektir.
+
+##### Bootstrap Örnekleme: Veri Setimizden Klonlar Yaratmak
+
+Şimdi de topluluk öğrenmesi gibi daha gelişmiş yöntemlerin temelini oluşturan çok zekice bir yaklaşıma bakalım: **Bootstrap**.
+
+Bir an için elinizde 10 farklı renkte bilye olan bir torba olduğunu hayal edin. Amacınız, bu torbadan yine 10 bilyelik yeni bir koleksiyon oluşturmak. Ama özel bir kuralınız var:
+
+1.  Torbadan bir bilye çekiyorsunuz (diyelim ki kırmızı geldi).
+2.  Yeni koleksiyonunuz için "kırmızı" notunu alıyorsunuz.
+3.  **İşte sihirli adım:** Kırmızı bilyeyi torbaya **geri koyuyorsunuz**.
+4.  Bu işlemi, listenizde 10 bilye olana kadar tekrarlıyorsunuz.
+
+İşlem bittiğinde elinizdeki yeni koleksiyon nasıl görünür? Belki şöyle bir şey: `[kırmızı, mavi, yeşil, mavi, sarı, kırmızı, mor, turuncu, mavi, pembe]`.
+
+Bu yeni koleksiyonda iki önemli şey fark edeceksiniz:
+*   Bazı bilyeler (örneğin mavi ve kırmızı) birden fazla kez seçildi. Yani **kopyaları** var.
+*   Bazı bilyeler ise (belki de kahverengi) şans eseri **hiç seçilmedi**.
+
+İşte bu "çek ve yerine geri koy" mantığıyla rastgele örneklem oluşturma işlemine **Bootstrap Örnekleme** diyoruz.
+
+**Peki, Bunun Makine Öğrenmesiyle Ne İlgisi Var?**
+
+Şimdi bilyeleri, veri setimizdeki satırlar (örneğin, müşteri bilgileri) olarak düşünün. 100 müşterilik bir veri setimiz varsa, bootstrap yöntemiyle yine 100 müşterilik yeni bir **eğitim seti** oluştururuz. Bu yeni set, orijinal veriden bazı müşterileri birden fazla kez içerirken, bazılarını hiç içermeyecektir.
+
+**"Bedava" Test Seti: Torba Dışı (Out-of-Bag / OOB) Örnekler**
+
+Bu yöntemin en parlak kısmı, hiç seçilmeyen verilerle ne yaptığımızdır. Bu "dışarıda kalan" örneklere **"torba dışı" (Out-of-Bag ya da OOB)** örnekler denir.
+
+Bu OOB örnekleri neden bu kadar değerli? Çünkü bootstrap ile oluşturduğumuz yeni set üzerinde bir model eğittiğimizde, o model OOB örneklerini **daha önce hiç görmemiş olur**. Bu durum, OOB setini, modelimizin performansını ölçmek için mükemmel ve tarafsız bir **test seti** haline getirir!
+
+**63/37 Kuralı**
+
+İstatistiksel olarak kanıtlanmıştır ki, bootstrap örneklemesi yapıldığında, orijinal verinin ortalama olarak yaklaşık **%63.2**'si yeni eğitim setine (en az bir kez) seçilir. Geriye kalan yaklaşık **%36.8**'lik kısım ise OOB setini, yani bizim "bedava" test setimizi oluşturur.
+
+**Bu Neden Bu Kadar Güçlü?**
+
+Bu teknik, **Random Forest** gibi güçlü algoritmaların arkasındaki motordur. Değerli verilerimizi eğitim ve test diye ikiye ayırıp veri kaybetmek yerine, bootstrap sayesinde verinin tamamını kullanabiliriz. Her bir model, farklı bir bootstrap setiyle eğitilir ve kendi OOB seti üzerinde test edilir. Bu, modelin genelleme performansını ölçmek için bize hem çok güvenilir hem de hesaplama açısından verimli bir yol sunar. Kısacası, ayrı bir test seti ayırmaya veya çapraz doğrulama yapmaya gerek kalmadan modelimizin ne kadar iyi olduğunu anlarız.
+
+
+
+# Model Performans Değerlendirme Ölçütleri
+
+## Giriş
+
+Bir makine öğrenmesi modeli geliştirdiğimizde, temel sorumuz şudur: "Bu model ne kadar iyi çalışıyor?" Bu sorunun cevabını nesnel olarak verebilmek için performans ölçütlerine başvururuz. Bu ölçütler, modelimizin tahmin yeteneğini, hatalarını ve genel gücünü sayısal olarak ifade etmemizi sağlayan birer karne notu gibidir.
+
+## Karışıklık Matrisi (Confusion Matrix)
+
+Sınıflandırma problemlerinde, model performansını analiz etmeye genellikle **Karışıklık Matrisi (Confusion Matrix)** ile başlarız. Bu tablo, modelin tahminlerinin gerçek değerlerle karşılaştırmasını basit ve anlaşılır bir formatta sunar.
+
+```
+                      Tahmin Edilen
+                 Pozitif (P)    Negatif (N)
+              ┌──────────────┬──────────────┐
+Gerçek    (P) │     TP       │      FN      │
+              ├──────────────┼──────────────┤
+          (N) │     FP       │      TN      │
+              └──────────────┴──────────────┘
+```
+
+### Temel Tanımlar
+
+*   **Gerçek Pozitif (True Positive - TP):** Modelin, pozitif bir durumu doğru bir şekilde pozitif olarak tahmin etmesi. (Örn: Hasta bir kişiye 'hasta' tanısı konulması.)
+*   **Gerçek Negatif (True Negative - TN):** Modelin, negatif bir durumu doğru bir şekilde negatif olarak tahmin etmesi. (Örn: Sağlıklı bir kişiye 'sağlıklı' tanısı konulması.)
+*   **Sahte Pozitif (False Positive - FP):** Modelin, negatif bir durumu hatalı bir şekilde pozitif olarak tahmin etmesi. Buna **Tip I Hata** da denir. (Örn: Sağlıklı bir kişiye 'hasta' tanısı konulması.)
+*   **Sahte Negatif (False Negative - FN):** Modelin, pozitif bir durumu hatalı bir şekilde negatif olarak tahmin etmesi. Buna **Tip II Hata** da denir. (Örn: Hasta bir kişiye 'sağlıklı' tanısı konulması.)
+
+### Örnek
+
+1000 kişilik bir veri setinde modelimizin performansını değerlendirelim:
+*   Gerçekte Pozitif (Hasta): 500 kişi
+*   Gerçekte Negatif (Sağlıklı): 500 kişi
+
+Modelimizin tahminleri sonucunda oluşan karışıklık matrisi:
+
+```
+              Tahmin
+           P        N      Toplam
+      ┌─────────┬─────────┬────────┐
+  P   │   350   │   150   │   500  │
+Gerçek├─────────┼─────────┼────────┤
+  N   │   250   │   250   │   500  │
+      └─────────┴─────────┴────────┘
+Toplam   600       400      1000
+```
+Bu matris, aşağıda inceleyeceğimiz birçok performans ölçütünün temelini oluşturur.
+
+## Sınıflandırma Performans Ölçütleri
+
+Karışıklık matrisinden türetilen ve modelimizin yeteneklerini farklı açılardan değerlendirmemizi sağlayan temel metrikleri inceleyelim.
+
+**1. Doğruluk (Accuracy)**
+
+En temel ve anlaşılması en kolay ölçüttür. Basitçe, "Tüm tahminlerin yüzde kaçı doğru?" sorusunu yanıtlar.
+```
+Accuracy = (TP + TN) / (Toplam Veri Sayısı)
+```
+**Örneğimizde:** `(350 + 250) / 1000 = 0,60` (%60)
+
+**Not:** Gençler, doğruluk metriği, özellikle sınıfların dengesiz dağıldığı (örneğin, 990 sağlıklı kişiye karşılık 10 hasta) veri setlerinde yanıltıcı olabilir. Düşünün ki bir model, herkese "sağlıklı" diyor. Bu model %99 doğruluk oranına sahip olabilir ama asıl aradığımız hasta kişileri bulma konusunda tamamen başarısızdır. İşte bu yüzden daha incelikli metriklere ihtiyaç duyarız.
+
+**2. Kesinlik (Precision)**
+
+Bu metrik, modelin pozitif tahminlerinin kalitesine odaklanır: "'Pozitif' olarak etiketlediklerimizin ne kadarı gerçekten pozitifti?"
+```
+Precision = TP / (TP + FP)
+```
+**Örneğimizde:** `350 / (350 + 250) = 350 / 600 ≈ 0,58`
+
+**Yorumlama:** Yüksek kesinlik, modelin bir örneğe "pozitif" dediğinde buna büyük ölçüde güvenebileceğimiz anlamına gelir. Sahte pozitiflerin (FP) maliyetinin yüksek olduğu durumlarda kritik bir metriktir. Örneğin, bir e-postanın yanlışlıkla spam olarak işaretlenmesi, önemli bir iletişimin kaçırılmasına neden olabilir. Bu senaryoda yüksek kesinlik hedefleriz.
+
+**3. Duyarlılık (Recall / Sensitivity)**
+
+Duyarlılık, pozitif sınıfı ne kadar iyi "yakalayabildiğimizi" ölçer: "Gerçekte pozitif olan vakaların yüzde kaçını tespit edebildik?"
+```
+Recall = TP / (TP + FN)
+```
+**Örneğimizde:** `350 / (350 + 150) = 350 / 500 = 0,70`
+
+**Yorumlama:** Yüksek duyarlılık, modelin pozitif vakaları atlamadığını gösterir. Sahte negatiflerin (FN) maliyetinin yüksek olduğu durumlarda hayati önem taşır. Örneğin, ciddi bir hastalığın teşhis edilememesi, bir hastanın tedavi şansını kaybetmesine yol açabilir. Bu durumda duyarlılığı maksimize etmeye çalışırız.
+
+**4. F1-Skoru (F1-Score)**
+
+Genellikle kesinlik ve duyarlılık arasında bir denge kurmamız gerekir. Biri artarken diğeri azalma eğilimindedir. F1-Skoru, bu iki metriğin harmonik ortalamasını alarak bu dengeyi tek bir sayıda özetler. Her iki metriğin de önemli olduğu durumlarda kullanılır.
+```
+F1-Score = (2 × Precision × Recall) / (Precision + Recall)
+```
+**Örneğimizde:** `(2 × 0,58 × 0,70) / (0,58 + 0,70) ≈ 0,63`
+
+**Yorumlama:** F1-Skoru, modelin hem sahte pozitiflerden kaçınma (Precision) hem de gerçek pozitifleri yakalama (Recall) yeteneklerini dengeli bir şekilde ölçer. Özellikle dengesiz veri setlerinde doğruluk (accuracy) metriğine göre çok daha güvenilir bir performans göstergesidir.
+
+**5. Kappa Katsayısı (Cohen's Kappa)**
+
+Doğruluk (Accuracy) metriği, özellikle sınıfların dengesiz dağıldığı durumlarda yanıltıcı olabileceğini konuşmuştuk. İşte bu noktada Kappa katsayısı devreye girer ve bize daha incelikli bir bakış açısı sunar. Kappa, modelimizin performansını, tamamen rastgele tahmin yapan bir modelin performansıyla karşılaştırır. Yani, "Modelimizin başarısı, şans faktörünün ne kadar ötesinde?" sorusuna cevap arar.
+
+Modelin doğruluğunun, sadece sınıf dağılımlarına bakarak rastgele tahmin yapıldığında elde edilecek doğruluktan ne kadar daha iyi olduğunu gösterir. Bu katsayı genellikle -1 ile +1 arasında bir değer alır ve bu değerin yorumlanması için genel kabul görmüş bir ölçek bulunur.
+
+| Kappa Değeri      | Yorumlama (Uyum Düzeyi) |
+| ----------------- | ----------------------- |
+| < 0               | Uyum Yok                |
+| 0.00 – 0.20       | Çok Zayıf               |
+| 0.21 – 0.40       | Zayıf                   |
+| 0.41 – 0.60       | Orta                    |
+| 0.61 – 0.80       | İyi                     |
+| 0.81 – 1.00       | Çok İyi / Mükemmel      |
+
+Peki bu değer nasıl hesaplanır? Gençler, formülün arkasındaki mantık oldukça sezgiseldir:
+
+`Kappa = (Po - Pe) / (1 - Pe)`
+
+*   **`Po` (Observed Agreement):** Bu, modelimizin gözlemlenen doğruluğudur. Yani bildiğimiz standart **Accuracy** metriğidir.
+*   **`Pe` (Expected Agreement):** Bu ise "şans eseri beklenen uyum"dur. Modelin ve gerçek etiketlerin, tamamen tesadüfen aynı fikirde olma olasılığını ifade eder. Her sınıfın gerçek ve tahmin edilen oranları dikkate alınarak hesaplanır.
+
+Şimdi bu hesaplamayı, yukarıdaki örneğimiz üzerinden adım adım yapalım.
+
+**Örneğimizdeki Karışıklık Matrisi:**
+```
+              Tahmin
+           P        N      Toplam
+      ┌─────────┬─────────┬────────┐
+  P   │   350   │   150   │   500  │
+Gerçek├─────────┼─────────┼────────┤
+  N   │   250   │   250   │   500  │
+      └─────────┴─────────┴────────┘
+Toplam   600       400      1000
+```
+
+**1. Adım: Gözlemlenen Doğruluğu (`Po`) Hesaplama**
+
+Bu, bildiğimiz standart doğruluk (accuracy) değeridir.
+`Po = (Doğru Tahminler) / (Toplam Veri) = (350 + 250) / 1000 = 0.60`
+
+**2. Adım: Şans Eseri Beklenen Uyumu (`Pe`) Hesaplama**
+
+İşte burası işin kilit noktası. Modelimiz ve gerçek etiketler, birbirlerinden tamamen habersiz, sadece genel dağılımlara bakarak etiketleme yapsalardı, ne sıklıkla tesadüfen aynı fikirde olurlardı? Bunu hesaplayalım.
+
+*   **Pozitif sınıf için şans eseri uyum:**
+    *   Gerçek etiketlerin "Pozitif" olma oranı: `500 / 1000 = 0.5`
+    *   Modelin "Pozitif" tahmin etme oranı: `600 / 1000 = 0.6`
+    *   İkisinin de şans eseri "Pozitif" demesi olasılığı: `0.5 * 0.6 = 0.30`
+
+*   **Negatif sınıf için şans eseri uyum:**
+    *   Gerçek etiketlerin "Negatif" olma oranı: `500 / 1000 = 0.5`
+    *   Modelin "Negatif" tahmin etme oranı: `400 / 1000 = 0.4`
+    *   İkisinin de şans eseri "Negatif" demesi olasılığı: `0.5 * 0.4 = 0.20`
+
+*   **Toplam şans eseri uyum (`Pe`):**
+    *   `Pe = (Pozitif için şans uyumu) + (Negatif için şans uyumu)`
+    *   `Pe = 0.30 + 0.20 = 0.50`
+
+Bu sonuç bize şunu söyler: Hiçbir şey bilmeyen, sadece genel oranlara göre rastgele etiketleme yapan bir sistem bile %50 oranında doğru tahminde bulunabilirdi.
+
+**3. Adım: Kappa Katsayısını Hesaplama**
+
+Artık `Po` ve `Pe` değerlerini bildiğimize göre, formülde yerine koyabiliriz.
+`Kappa = (Po - Pe) / (1 - Pe)`
+`Kappa = (0.60 - 0.50) / (1 - 0.50) = 0.10 / 0.50 = 0.20`
+
+**Yorumlama:** Gençler, bulduğumuz Kappa değeri 0.20. Yukarıdaki tabloya baktığımızda bu değerin "Çok Zayıf" bir uyum düzeyine işaret ettiğini görüyoruz. Yani, modelimizin %60'lık doğruluğu ilk bakışta fena görünmese de, bu başarının önemli bir kısmının şans eseri olduğu ortaya çıkıyor. Modelimizin performansı, rastgele tahminden sadece %20 daha iyidir. İşte Kappa, bize bu derinlemesine analizi yapma imkânı tanır.
+
+Formül, modelimizin gerçek doğruluğundan (`Po`) şans eseri elde edilecek doğruluğu (`Pe`) çıkarır ve bu farkı, şansın üzerinde elde edilebilecek maksimum başarıya (`1 - Pe`) oranlar. Bu sayede Kappa, modelin sadece doğru tahmin yapma oranını değil, aynı zamanda bu doğruluğun ne kadarının tesadüfi olmadığını da hesaba katar. Bu özelliği, onu özellikle tıp veya finans gibi alanlarda dengesiz veri setleri üzerinde çalışırken doğruluk metriğine göre çok daha güvenilir bir alternatif yapar.
+
+**6. Aritmetik Ortalama (Macro Avg) ve Ağırlıklı Ortalama (Weighted Avg)**
+
+Şimdi, birden fazla sınıfımız olduğunda (örneğimizdeki gibi ikili sınıflandırmanın ötesinde) metrikleri nasıl genelleyeceğimizi düşünelim. Örneğin, üç sınıfımız var: A, B ve C. Her sınıf için ayrı ayrı Precision, Recall ve F1-Skoru hesaplayabiliriz. Peki modelin genel performansı nedir?
+
+Burada devreye ortalama alma yöntemleri giriyor. Bu noktada **Aritmetik Ortalama** (Scikit-learn'deki adıyla *macro avg*) ile **Ağırlıklı Ortalama** (*weighted avg*) arasındaki farkı anlamak çok önemlidir.
+
+**Aritmetik Ortalama (Macro Average): Tüm Sınıflara Eşit Hak**
+Aritmetik ortalama, sınıfların veri setinde ne kadar bulunduğuna (örnek sayısına) hiç bakmaz. Her sınıfı eşit derecede önemli kabul eder. 
+*Örnek:* Modelimizin F1-Skorları A sınıfı için %90 (0.90), B sınıfı için %40 (0.40) ve C sınıfı için %50 (0.50) olsun. 
+`Aritmetik Ortalama = (0.90 + 0.40 + 0.50) / 3 = 0.60 (%60)`
+
+**Ağırlıklı Ortalama (Weighted Average): Çoğunluğun Sesi**
+Ağırlıklı ortalama ise her sınıfın metrik skorunu hesaplarken o sınıfın veri setindeki "ağırlığını", yani örnek sayısını (destek/support) dikkate alır. Sınıflar **dengesizse** bu hayati bir fark yaratır. 
+*Örnek:* 1000 örneklik bir veri setinde 800 tane A sınıfı, 150 tane B sınıfı ve 50 tane C sınıfı olsun. Skorlarımız yine yukarıdakiyle aynı olsun.
+`Ağırlıklı Ortalama = (0.90 * 800 + 0.40 * 150 + 0.50 * 50) / 1000`
+`Ağırlıklı Ortalama = (720 + 60 + 25) / 1000 = 0.805 (%80.5)`
+
+**Farkın Yorumu:**
+Aritmetik ortalamaya bakarsak modelin başarısı %60 gibi düşük görünüyor, çünkü azınlık sınıflarındaki (B ve C) kötü performans ortalamayı doğrudan aşağı çekiyor. Ancak ağırlıklı ortalamaya baktığımızda başarının %80.5 olduğunu görüyoruz, çünkü model, veri setinin büyük çoğunluğunu (%80'ini) oluşturan A sınıfında gayet başarılı. 
+
+Eğer sizin için azınlık sınıflarını (örneğin nadir görülen bir hastalığı) doğru tahmin etmek çoğunluk sınıfı kadar önemliyse **Aritmetik (Macro)** ortalamaya bakmalısınız. Ancak amacınız modelin genel olarak verinin bütününde ne kadar başarılı olduğunu, veri dağılımını adil bir şekilde yansıtarak görmekse **Ağırlıklı (Weighted)** ortalamayı kullanmalısınız. Scikit-learn gibi kütüphanelerin sınıflandırma raporlarında bu değerleri "macro avg" ve "weighted avg" olarak yan yana görürsünüz.
+
+## ROC Eğrisinin Kökeni ve Oluşturulması
+
+ROC eğrisinin mantığını anlamak için kökenine inmek faydalı olacaktır. Bu kavram, II. Dünya Savaşı sırasında radar operatörlerinin sinyalleri yorumlama performansını ölçmek için geliştirilmiştir. Operatörün görevi, radar ekranındaki sinyallerin bir düşman uçağı mı (pozitif durum) yoksa zararsız bir kuş sürüsü veya atmosferik bir gürültü mü (negatif durum) olduğuna karar vermektir.
+
+Operatörün karar verme "hassasiyeti" kritik bir rol oynar.
+*   **Çok hassas olursa:** En zayıf sinyali bile düşman olarak işaretler. Bu durumda hiçbir düşmanı kaçırmaz (yüksek **Gerçek Pozitif Oranı**), ancak çok sayıda yanlış alarm verir (yüksek **Sahte Pozitif Oranı**).
+*   **Az hassas olursa:** Sadece çok güçlü ve net sinyalleri düşman olarak işaretler. Bu durumda yanlış alarm sayısı çok az olur (düşük **Sahte Pozitif Oranı**), ancak bazı gerçek düşmanları gözden kaçırabilir (düşük **Gerçek Pozitif Oranı**).
+
+ROC eğrisi, operatörün (veya makine öğrenmesi modelimizin) bu hassasiyet seviyesinin tüm olası değerleri için doğru tespitler ile yanlış alarmlar arasındaki dengeyi görselleştiren bir grafiktir.
+
+Şimdi gençler, bu eğrinin nasıl ortaya çıktığını somut bir örnekle anlayalım.
+
+Hayali bir güvenlik sistemimiz olduğunu düşünün. Bu sistem, bir kişinin fotoğrafına bakarak "şüpheli" olup olmadığına karar veriyor ve 0 ile 1 arasında bir "şüphelilik skoru" üretiyor. Skor 1'e ne kadar yakınsa, sistem o kişiyi o kadar şüpheli buluyor.
+
+Bizim görevimiz, bir **karar eşiği (threshold)** belirlemek. Örneğin, "skoru 0.70'in üzerinde olan herkesi şüpheli kabul et" diyebiliriz.
+
+*   **Çok Katı Bir Kural (Yüksek Eşik, örn: 0.95):** Bu durumda sadece sistemin çok emin olduğu kişileri "şüpheli" olarak işaretleriz. Sonuç? Neredeyse hiç masum insanı yanlışlıkla etiketlemeyiz (**düşük Sahte Pozitif Oranı**), ama belki de gerçekten şüpheli olan ama skoru 0.94'te kalmış birini gözden kaçırabiliriz (**düşük Gerçek Pozitif Oranı**).
+*   **Gevşek Bir Kural (Düşük Eşik, örn: 0.20):** Bu durumda en ufak bir şüphede bile kişiyi "şüpheli" sayarız. Sonuç? Neredeyse tüm gerçek şüphelileri yakalarız (**yüksek Gerçek Pozitif Oranı**), ama bu süreçte bir sürü masum insanı da boş yere rahatsız etmiş oluruz (**yüksek Sahte Pozitif Oranı**).
+
+Gördüğünüz gibi, burada bir ödünleşim (trade-off) var. ROC eğrisi, bu karar eşiğini en katıdan en gevşeye kadar tüm olası seviyeler için denediğimizde, "doğru tespit oranımız" ile "yanlış alarm oranımız" arasındaki bu ödünleşimi görselleştiren bir haritadır.
+
+### ROC Eğrisi Nasıl Çizilir ve Yorumlanır?
+
+Peki bu haritayı teknik olarak nasıl çizeriz? Gençler, süreç oldukça mantıklıdır. Modelimizin test verileri için ürettiği olasılık skorlarını alırız ve eşik değerini 1'den 0'a doğru sistematik olarak kaydırırız. Her bir eşik değeri için iki temel oranı hesaplarız:
+
+1.  **Gerçek Pozitif Oranı (True Positive Rate - TPR):** Bu, bizim **Duyarlılık (Recall)** dediğimiz metriğin ta kendisidir. Gerçekte pozitif olan vakaların ne kadarını doğru bir şekilde yakalayabildiğimizi ölçer. Formülü: `TPR = TP / (TP + FN)`
+2.  **Sahte Pozitif Oranı (False Positive Rate - FPR):** Bu ise "yanlış alarm oranımızdır". Gerçekte negatif olan vakaların ne kadarını hatalı bir şekilde pozitif olarak etiketlediğimizi gösterir. Formülü: `FPR = FP / (FP + TN)`
+
+Grafiği oluşturma adımları şöyledir:
+*   **Başlangıç:** Eşiği 1.0'a ayarlarız. Modelimiz çok "çekingendir" ve hiçbir şeye pozitif demez. Bu yüzden hem TPR hem de FPR sıfırdır. Bu, grafiğimizin sol alt köşesindeki **(0, 0)** noktasıdır.
+*   **Ara Adımlar:** Eşiği yavaş yavaş düşürürüz. Eşik düştükçe model daha "cesur" hale gelir ve daha fazla örneğe pozitif demeye başlar. Bu süreçte hem TPR hem de FPR artar. Her eşik değeri için yeni bir (FPR, TPR) çifti hesaplar ve grafiğe bir nokta koyarız.
+*   **Bitiş:** Eşiği 0.0'a getirdiğimizde, modelimiz her şeye pozitif der. Bu durumda hem tüm pozitifleri (TPR=1) hem de tüm negatifleri (FPR=1) "yakalamış" oluruz. Bu da grafiğimizin sağ üst köşesindeki **(1, 1)** noktasıdır.
+
+Bu noktaları birleştirdiğimizde ortaya çıkan eğri, ROC eğrisidir.
+
+
+## ROC Eğrisi Animasyonu
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<a href="https://erkanozhan.github.io/machinelearning/roc_animation.html" target="_blank" style="color:#336699;font-size:22px;font-family: 'grenze', serif;">ROC Eğrisi Animasyonu için Tıklayın</a>
+
+### Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)
+
+Peki bu eğri bize ne anlatır? İdeal bir model, TPR'si 1 iken FPR'sinin 0 olduğu bir modeldir. Yani eğrinin grafiğin **sol üst köşesine** ne kadar yakınsa, modelin ayırt etme gücü o kadar iyidir.
+
+Bu genel performansı tek bir sayı ile özetlemek için **Eğrinin Altında Kalan Alan (Area Under the Curve - AUC)** değerini hesaplarız.
+*   **AUC = 1:** Mükemmel bir sınıflandırıcı. Pozitif ve negatif sınıfları hatasız bir şekilde ayırabiliyor.
+*   **AUC = 0.5:** Rastgele tahmin yapan bir model. Yazı tura atmaktan farksızdır ve grafikte (0,0)'dan (1,1)'e uzanan köşegen çizgiyle temsil edilir.
+*   **AUC < 0.5:** Rastgele tahminden daha kötü bir model.
+
+AUC, modelin farklı eşik değerleri genelindeki ayırt etme gücünü gösteren, özellikle dengesiz veri setlerinde doğruluğa göre çok daha güvenilir ve yaygın olarak kullanılan bir metriktir.
+
+
+<img src="./images/siniflandirma_dagilimi.svg" alt="Sınıflandırma Eşiği" width="100%" height="100%">
+
+*   **Grafik:** Yukarıdaki grafikte, x-ekseni **Sahte Pozitif Oranını (FPR)**, y-ekseni ise **Gerçek Pozitif Oranını (TPR)** temsil eder.
+*   **Köşegen Çizgi (Rastgele Model):** (0,0)'dan (1,1)'e uzanan kesikli çizgi, yazı tura atmakla eşdeğer, yani tamamen rastgele tahmin yapan bir modeli simgeler. Bu modelin AUC değeri 0.5'tir.
+*   **İdeal Nokta:** Sol üst köşe (0,1) noktası, mükemmel sınıflandırıcıyı temsil eder: Hiç yanlış alarm vermeden (%0 FPR) tüm gerçek pozitifleri yakalar (%100 TPR).
+*   **Model Performansı:** Bir modelin eğrisi bu sol üst köşeye ne kadar yakınsa, performansı o kadar iyidir. Grafikteki yeşil eğri, mavi eğriden daha iyi bir performansa sahiptir.
+
+
+
+
+---
+
+## Sayısal Tahmin (Regresyon) Modelleri İçin Performans Ölçütleri
+
+Sınıflandırma problemlerinde modelimizin başarısını "doğru" ya da "yanlış" gibi net etiketlerle ölçebiliyorduk. Ancak bir evin fiyatını, bir arabanın yakıt tüketimini veya yarınki hava sıcaklığını tahmin etmeye çalıştığımız regresyon problemlerinde durum farklıdır. Burada sorumuz "Doğru bildi mi?" değil, "Gerçek değere ne kadar yaklaştı?" olur. İşte bu "yakınlığı" veya tam tersi olan "hatayı" ölçmek için kullandığımız temel metrikleri inceleyeceğiz.
+
+### 1. Ortalama Mutlak Hata (Mean Absolute Error - MAE)
+
+En basit ve anlaşılması en kolay hata metriğidir. Her bir tahminin gerçek değerden ne kadar saptığını ölçer, bu sapmaların yönünü (yani tahminin yüksek mi yoksa düşük mü kaldığını) önemsemez ve tüm bu mutlak sapmaların ortalamasını alır.
+
+`MAE = (1/n) * Σ|Gerçek Değer - Tahmin Edilen Değer|`
+
+**Yorumlama:** MAE'nin sonucu, tahmin ettiğimiz değerle aynı birimdedir. Örneğin, ev fiyatlarını tahmin ediyorsak ve MAE değerimiz 25.000 TL ise bu şu anlama gelir: "Modelimizin tahminleri, gerçek ev fiyatlarından ortalama olarak 25.000 TL sapmaktadır." Bu metrik, hatanın büyüklüğünü doğrudan ve sezgisel bir şekilde ifade eder.
+
+### 2. Ortalama Karesel Hata (Mean Squared Error - MSE)
+
+MSE de hataların ortalamasını alır, ancak bunu yapmadan önce her bir hatanın karesini alır. Bu küçük matematiksel işlemin çok önemli iki sonucu vardır:
+
+1.  **Negatif değerlerden kurtulur:** Hatanın karesi alındığı için tahminin gerçek değerden düşük veya yüksek olmasının bir önemi kalmaz, tüm hatalar pozitif olur.
+2.  **Büyük hataları daha sert cezalandırır:** Bu, MSE'nin en belirgin karakteristiğidir. Örneğin, 2 birimlik bir hata `2² = 4` olarak hesaba katılırken, 10 birimlik bir hata `10² = 100` olarak katılır. Yani hata 5 kat artarken, MSE'ye olan etkisi 25 kat artar.
+
+`MSE = (1/n) * Σ(Gerçek Değer - Tahmin Edilen Değer)²`
+
+**Yorumlama:** MSE, özellikle büyük hataların çok maliyetli olduğu durumlarda (örneğin, bir mühendislik uygulamasında kritik bir parçanın dayanıklılığını tahmin etmek gibi) tercih edilir. Modelin büyük hatalar yapmasını engellemeye odaklanır. Ancak bir dezavantajı vardır: Sonucun birimi, orijinal verinin biriminin karesi olur (örneğin, TL²). Bu durum, metriğin doğrudan yorumlanmasını zorlaştırır.
+
+### 3. Kök Ortalama Karesel Hata (Root Mean Squared Error - RMSE)
+
+Gençler, RMSE, MSE'nin "birim karesi" sorununu çözmek için vardır. Basitçe, MSE değerinin karekökünün alınmasıyla hesaplanır.
+
+`RMSE = √MSE`
+
+Bu sayede, sonuç tekrar orijinal veriyle aynı birime döner (örneğin, TL²'den tekrar TL'ye). Bu da onu MAE gibi kolayca yorumlanabilir hale getirir.
+
+**Peki MAE varken neden RMSE kullanalım?** RMSE, kare alma işleminden dolayı büyük hatalara (aykırı değerlere) karşı MAE'den daha duyarlıdır. Eğer veri setinizde birkaç tane çok büyük hata varsa, RMSE değeriniz MAE değerinizden belirgin şekilde daha yüksek çıkacaktır. Bu durum, modelinizin ara sıra çok büyük hatalar yapma eğiliminde olduğuna dair size bir sinyal verir.
+
+| Metrik | Odak Noktası                               | Yorumlama Kolaylığı | Aykırı Değerlere Duyarlılığı |
+| :----- | :----------------------------------------- | :------------------ | :--------------------------- |
+| **MAE**  | Ortalama hatanın büyüklüğü                 | Çok Kolay           | Düşük                        |
+| **RMSE** | Büyük hataları cezalandırır, ortalama hata | Kolay               | Yüksek                       |
+
+### Örnek Üzerinden Hesaplama
+
+Bu üç metriğin nasıl çalıştığını basit bir ev fiyatı tahmini örneği üzerinden görelim. Modelimizin 5 ev için yaptığı tahminler ve gerçek fiyatlar aşağıdaki gibi olsun (fiyatlar bin TL cinsindendir):
+
+| Gerçek Fiyat (y) | Tahmin (ŷ) | Hata (y - ŷ) | Mutlak Hata | Karesel Hata |
+| :--------------- | :--------- | :----------- | :---------- | :----------- |
+| 250              | 260        | -10          | 10          | 100          |
+| 300              | 290        | 10           | 10          | 100          |
+| 200              | 215        | -15          | 15          | 225          |
+| 500              | 480        | 20           | 20          | 400          |
+| 420              | 450        | -30          | 30          | 900          |
+| **Toplam**       |            |              | **85**      | **1725**     |
+
+Şimdi bu tabloyu kullanarak metriklerimizi hesaplayalım:
+
+1.  **MAE Hesabı:**
+    *   `MAE = Toplam Mutlak Hata / Veri Sayısı`
+    *   `MAE = 85 / 5 = 17`
+    *   **Yorum:** Modelimiz, ev fiyatlarını ortalama **17 bin TL** hata ile tahmin etmektedir.
+
+2.  **MSE Hesabı:**
+    *   `MSE = Toplam Karesel Hata / Veri Sayısı`
+    *   `MSE = 1725 / 5 = 345`
+    *   **Yorum:** Bu değerin birimi (bin TL)² olduğu için doğrudan yorumlamak zordur.
+
+3.  **RMSE Hesabı:**
+    *   `RMSE = √MSE`
+    *   `RMSE = √345 ≈ 18.57`
+    *   **Yorum:** Modelimizin tahminleri ortalama **18.57 bin TL** sapmaktadır. Dikkat ederseniz, son satırdaki -30 bin TL'lik büyük hata, karesi alındığı için RMSE'yi MAE'den daha fazla yukarı çekmiştir. Bu, RMSE'nin büyük hatalara olan duyarlılığını gösterir.
+
+    ### 4. R-Kare (R-Squared / Belirlilik Katsayısı)
+
+    Şimdiye kadar hep hatayı, yani modelimizin ne kadar yanıldığını ölçtük. R-Kare ise madalyonun diğer yüzüne bakar ve bize modelimizin ne kadar "başarılı" olduğunu anlatır.
+
+    Şöyle düşünelim: Bir grup evin fiyatları neden birbirinden farklıdır? Çünkü metrekaresi, oda sayısı, konumu gibi özellikleri farklıdır. İşte R-Kare, bu fiyat farklılıklarının, yani verideki "değişkenliğin", yüzde kaçının bizim modelimizdeki bu özellikler tarafından açıklandığını söyler.
+
+    `R² = 1 - (SS_res / SS_tot)`
+
+    Bu formülü yorumlayalım: `SS_res`, modelimizin açıklayamadığı hata miktarını, `SS_tot` ise verideki toplam değişkenliği temsil eder. Dolayısıyla `(SS_res / SS_tot)` oranı, modelimizin toplam değişkenliğin ne kadarlık bir kısmını **açıklayamadığını** gösterir. Bu oranı 1'den çıkardığımızda ise geriye modelimizin toplam değişkenliğin yüzde kaçını **açıklayabildiği** kalır.
+
+    *   **R² = 1:** Mükemmel bir uyum. Modelimiz verideki değişkenliğin tamamını açıklayabiliyor, yani hiç hata yapmıyor (`SS_res` sıfırdır).
+    *   **R² = 0:** Modelimizin hiçbir açıklayıcı gücü yok. Modelimizin performansı, sadece tüm evlerin ortalama fiyatını tahmin etmekten daha iyi değil.
+
+    #### Örnek Üzerinden Hesaplama
+
+    Yukarıdaki ev fiyatı örneğimizi tekrar kullanalım:
+
+    | Gerçek Fiyat (y) | Tahmin (ŷ) |
+    | :--------------- | :--------- |
+    | 250              | 260        |
+    | 300              | 290        |
+    | 200              | 215        |
+    | 500              | 480        |
+    | 420              | 450        |
+
+    1.  **Ortalama Fiyatı Bulalım:**
+        *   `Ortalama (ȳ) = (250 + 300 + 200 + 500 + 420) / 5 = 334`
+
+    2.  **`SS_tot`'u Hesaplayalım (Toplam Değişkenlik):**
+        *   `SS_tot = (250-334)² + (300-334)² + (200-334)² + (500-334)² + (420-334)²`
+        *   `SS_tot = (-84)² + (-34)² + (-134)² + (166)² + (86)²`
+        *   `SS_tot = 7056 + 1156 + 17956 + 27556 + 7396 = 61120`
+
+    3.  **`SS_res`'i Belirleyelim (Modelin Hatası):**
+        *   Bu değeri bir önceki "Karesel Hata" tablosundan zaten biliyoruz: **1725**.
+
+    4.  **R-Kare'yi Hesaplayalım:**
+        *   `R² = 1 - (1725 / 61120)`
+        *   `R² ≈ 1 - 0.0282`
+        *   `R² ≈ 0.9718`
+
+    **Yorum:** R-Kare değerimiz yaklaşık 0.97. Bu şu anlama gelir: "Piyasadaki ev fiyatları arasındaki değişkenliğin %97'si, bizim modelimiz tarafından açıklanabilmektedir." Bu, modelimizin oldukça başarılı olduğunu gösterir.
+
+    ### Korelasyon Katsayısı (Correlation Coefficient - r)
+
+    Gençler, R-Kare'den bahsetmişken, onunla yakından ilişkili olan ve değişkenler arasındaki doğrusal ilişkinin yönünü ve gücünü gösteren bir başka önemli ölçüt olan **Korelasyon Katsayısı (Correlation Coefficient)**'na da değinelim. Genellikle `r` ile gösterilen bu katsayı, iki sayısal değişkenin birlikte nasıl hareket ettiğini özetler.
+
+    *   **Değer Aralığı:** Korelasyon katsayısı her zaman -1 ile +1 arasında bir değer alır.
+        *   **`R = +1`:** İki değişken arasında mükemmel pozitif doğrusal ilişki vardır. Bir değişken arttığında diğeri de aynı oranda artar.
+        *   **`R = -1`:** İki değişken arasında mükemmel negatif doğrusal ilişki vardır. Bir değişken arttığında diğeri aynı oranda azalır.
+        *   **`R = 0`:** İki değişken arasında doğrusal bir ilişki yoktur. Ancak bu, hiçbir ilişkinin olmadığı anlamına gelmez; sadece doğrusal bir ilişki olmadığını gösterir.
+        *   **`0 < R < 1`:** Pozitif doğrusal ilişki vardır. Değer 1'e yaklaştıkça ilişki güçlenir.
+        *   **`-1 < R < 0`:** Negatif doğrusal ilişki vardır. Değer -1'e yaklaştıkça ilişki güçlenir.
+
+ <img src="./images/correlation.svg" alt="İki Sınıflı Problemler için Korelasyon Tipleri" width="100%" height="100%">
+
+**R-Kare ile İlişkisi:** Basit doğrusal regresyon modellerinde (yani tek bir bağımsız değişkenin olduğu durumlarda), R-Kare değeri, korelasyon katsayısının karesine (`R²`) eşittir. Bu, R-Kare'nin her zaman pozitif olmasının nedenidir; çünkü bir sayının karesi her zaman pozitiftir. Korelasyon katsayısı bize ilişkinin yönünü (pozitif mi, negatif mi) söylerken, R-Kare ilişkinin gücünü (açıklanan değişkenlik oranını) verir.
+
+#### Örnek Hesaplama
+
+Yukarıdaki ev fiyatı örneğimizde, modelimizin tahminleri ile gerçek fiyatlar arasındaki korelasyon katsayısını hesaplayabiliriz.
+
+Modelimizin R-Kare değeri yaklaşık `0.9718` idi.
+    Bu durumda, korelasyon katsayısı `R = √R² = √0.9718 ≈ 0.9858` olacaktır.
+
+Korelasyon katsayısı `R ≈ 0.9858` değeri, modelimizin tahminleri ile gerçek ev fiyatları arasında çok güçlü ve pozitif bir doğrusal ilişki olduğunu gösterir. Yani, modelimiz yüksek bir fiyat tahmin ettiğinde, gerçek fiyatın da yüksek olma eğiliminde olduğunu; düşük bir fiyat tahmin ettiğinde ise gerçek fiyatın da düşük olma eğiliminde olduğunu anlarız. Bu, modelimizin tahminlerinin gerçek değerleri oldukça iyi takip ettiğini teyit eder.
+
+#### Düzeltilmiş R-Kare (Adjusted R-Squared)
+
+Gençler, R-Kare'nin dikkat etmemiz gereken önemli bir özelliği vardır. Modele yeni bir özellik eklediğinizde, bu özellik anlamsız bile olsa (örneğin, ev sahibinin ayakkabı numarası), R-Kare değeri neredeyse her zaman artar veya en kötü ihtimalle aynı kalır. Bu durum, bizi gereksiz yere karmaşık modeller kurmaya itebilir.
+
+İşte bu sorunu aşmak için **Düzeltilmiş R-Kare (Adjusted R-Squared)** kullanılır. Bu metrik, modele eklenen her bir özelliğin getirdiği faydayı ve eklediği karmaşıklığı hesaba katar. Eğer eklenen yeni özellik modelin açıklayıcılığına anlamlı bir katkı sağlamıyorsa, Düzeltilmiş R-Kare değeri artmaz, hatta düşebilir. Bu sayede, model karmaşıklığını da dikkate alarak daha adil bir performans değerlendirmesi yapmış oluruz.
+
+Düzeltilmiş R-Kare'nin matematiksel notasyonu şöyledir:
+$$ R_{\text{adj}}^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1} $$
+
+
+
+
+---
+### Weka ile Regresyon
+---
+
+Tıpkı sınıflandırma metriklerinde olduğu gibi, regresyon metriklerini de Weka gibi görsel araçlarla kolayca hesaplayabiliriz. Az önce öğrendiğimiz MAE, RMSE ve R-Kare gibi değerlerin Weka arayüzünde nasıl karşımıza çıktığını görelim.
+
+Weka'nın `data` klasöründe `cpu.arff` dosyasını bulabilirsiniz.
+
+Bu veri seti, bilgisayar CPU'larının çeşitli özelliklerini (saat döngüsü, önbellek boyutu vb.) kullanarak tahmini göreceli performansını (`ERP` niteliği) tahmin etmeyi amaçlar.
+
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `Open file...` ile Weka'nın kurulu olduğu dizindeki `data` klasöründen `cpu.arff` dosyasını açın.
+2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonu ile `functions` altından `LinearRegression` algoritmasını seçin. Hedef değişkenimiz sayısal olduğu için Weka, otomatik olarak bir regresyon analizi yapacaktır.
+3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) seçiliyken "Start" butonuna basın.
+4.  **Sonuçları Yorumlama:** "Classifier output" panelinde, regresyon modelimizin performansını özetleyen bir bölüm göreceksiniz:
+
+```
+=== Run information ===
+...
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+...
+
+=== Evaluation on training data ===
+
+=== Summary ===
+
+Correlation coefficient                  0.908
+Mean absolute error                2093.3451
+Root mean squared error            2935.4103
+Relative absolute error              33.911  %
+Root relative squared error          39.8851 %
+Total Number of Instances            159
+```
+
+*   **`Mean absolute error` (MAE):** Modelimizin CPU performans tahminleri, gerçek performanstan ortalama olarak yaklaşık **2093 birim** sapmaktadır.
+*   **`Correlation coefficient`:** Bu, R değeridir ve 0.908 olarak bulunmuştur. Modelimizin tahminleri ile gerçek değerler arasında çok güçlü pozitif bir ilişki olduğunu gösterir. **R-Kare (R-Squared)** değerini bulmak için bu katsayının karesini almamız yeterlidir: `(0.908)² ≈ 0.824`. Bu sonuca göre, CPU performansındaki değişkenliğin yaklaşık **%82.4'ü** modelimizdeki özellikler tarafından açıklanabilmektedir.
+
+Gördüğünüz gibi, Weka bu temel regresyon metriklerini bizim için otomatik olarak hesaplayarak modelimizin performansı hakkında hızlı ve anlaşılır bir özet sunar.
+*   **`Root mean squared error` (RMSE):** Büyük hataları daha fazla dikkate alan bu metrik ise yaklaşık **2935 birimdir**. RMSE'nin MAE'den daha yüksek olması, modelin bazı örneklerde daha büyük hatalar yaptığının bir göstergesidir.
+Bu çıktıyı yorumlayalım:
+
+## Uygulamalar
+
+Bu metrikleri hesaplamak için hem görsel arayüzlü araçlar hem de programlama kütüphaneleri yaygın olarak kullanılır.
+
+### Weka ile Değerlendirme
+
+**Weka**, kod yazmadan makine öğrenmesi modelleri oluşturup değerlendirmenizi sağlayan popüler bir görsel araçtır.
+
+1.  **Veri Setini Yükleme:** Weka "Explorer" arayüzünde, "Preprocess" sekmesinden `iris.arff` gibi hazır bir veri setini yükleyin.
+2.  **Sınıflandırıcı Seçimi:** "Classify" sekmesinde, "Choose" butonu ile `trees` altından `J48` (bir karar ağacı algoritması) seçin.
+3.  **Değerlendirme:** Test seçeneği olarak "Cross-validation" (Çapraz Doğrulama) kullanarak "Start" butonuna basın.
+4.  **Sonuçları Yorumlama:** "Classifier output" panelinde şu sonuçları göreceksiniz:
+    *   **`Correctly Classified Instances`**: **Doğruluk (Accuracy)**.
+    *   **`Detailed Accuracy By Class`** tablosu: Her sınıf için `TP Rate` (**Recall**), `Precision`, `F-Measure` (**F1-Skoru**) ve `ROC Area` (**AUC**) değerlerini içerir.
+    *   **`Confusion Matrix`**: Panelin en altında, öğrendiğimiz **Karışıklık Matrisi**'ni bulabilirsiniz.
+
+Örnek bir Weka Karışıklık Matrisi çıktısı:
+```
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 50  0  0 |  a = Iris-setosa
+  0 47  3 |  b = Iris-versicolor
+  0  1 49 |  c = Iris-virginica
+```
+Bu matris, `Iris-versicolor` sınıfından 3 örneğin hatalı bir şekilde `Iris-virginica` olarak sınıflandırıldığını açıkça gösterir.
+
+### Python (Scikit-learn) ile Değerlendirme
+
+Python'da makine öğrenmesi için en yaygın kütüphane olan **Scikit-learn**, tüm bu metrikleri hesaplamak için hazır fonksiyonlar sunar. Aşağıdaki örnek, bir modelin performansını nasıl değerlendireceğinizi gösterir. Bu kodu doğrudan bir Google Colab not defterinde çalıştırabilirsiniz.
+Python'da makine öğrenmesi için en yaygın kütüphane olan **Scikit-learn**, bu metrikleri hesaplamak için bize son derece pratik fonksiyonlar sunar. Şimdi, öğrendiğimiz teorik bilgileri bir örnek üzerinde nasıl uygulayacağımızı görelim.
+
+Aşağıdaki kod, sentetik bir veri seti oluşturur, bu veri üzerinde basit bir Lojistik Regresyon modeli eğitir ve ardından performansını, az önce öğrendiğimiz metrikler ve görsellerle kapsamlı bir şekilde analiz eder. Bu kodu doğrudan bir Google Colab not defterinde çalıştırarak sonuçları kendiniz de gözlemleyebilirsiniz.
+
+```python
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report, roc_curve, auc
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Veri Seti Oluşturma
+# Sınıfları dengesiz bir veri seti oluşturalım.
+# Örneklerin %90'ı 0. sınıfa, %10'u ise 1. sınıfa ait olacak.
+X, y = make_classification(
+    n_samples=1000,
+    n_features=2,
+    n_informative=2,
+    n_redundant=0,
+    weights=[0.9, 0.1],
+    flip_y=0,
+    random_state=42
+)
+
+# 2. Veriyi Eğitim ve Test Olarak Ayırma
+# stratify=y parametresi, eğitim ve test setlerindeki sınıf oranlarının
+# orijinal veri setindekiyle aynı kalmasını sağlar. Bu, dengesiz veri setlerinde önemlidir.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+# 3. Model Eğitimi
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 4. Tahmin Yapma
+# predict() -> Nihai sınıf etiketini (0 veya 1) tahmin eder.
+y_pred = model.predict(X_test)
+# predict_proba() -> Her sınıf için olasılıkları verir. ROC eğrisi için gereklidir.
+# [:, 1] ile sadece pozitif sınıfın (sınıf 1) olasılıklarını alıyoruz.
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+
+# 5. Performans Metriklerini Raporlama
+print("--- Sınıflandırma Raporu ---")
+# classification_report, temel metrikleri düzenli bir formatta sunar.
+print(classification_report(y_test, y_pred, target_names=['Negatif Sınıf (0)', 'Pozitif Sınıf (1)']))
+print("-" * 30)
+
+# 6. Karışıklık Matrisini Görselleştirme
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(6, 4))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Tahmin Negatif', 'Tahmin Pozitif'],
+            yticklabels=['Gerçek Negatif', 'Gerçek Pozitif'])
+plt.title('Karışıklık Matrisi')
+plt.show()
+
+# 7. ROC Eğrisini Çizme
+# roc_curve fonksiyonu, farklı eşik değerleri için FPR ve TPR'yi hesaplar.
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
+# auc fonksiyonu, bu eğrinin altında kalan alanı hesaplar.
+roc_auc = auc(fpr, tpr)
+
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC Eğrisi (AUC = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', label='Rastgele Tahmin')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('Sahte Pozitif Oranı (FPR)')
+plt.ylabel('Gerçek Pozitif Oranı (TPR)')
+plt.title('Alıcı İşletim Karakteristiği (ROC) Eğrisi')
+plt.legend(loc="lower right")
+plt.show()
+```
+
+
+Gençler, bu kod parçasının ne yaptığını daha iyi anlayalım:
+
+1.  **Veri Seti Oluşturma:** Gerçek dünya problemlerini daha iyi yansıtması için `make_classification` ile yapay bir veri seti oluşturduk. `weights=[0.9, 0.1]` parametresiyle, sınıflardan birinin diğerinden çok daha fazla örneğe sahip olduğu **dengesiz (imbalanced)** bir durum yarattık. Bu, `Accuracy` metriğinin neden tek başına yeterli olmayabileceğini göstermek için önemlidir.
+2.  **Veriyi Ayırma:** Modelimizi eğitmek ve test etmek için veriyi ikiye ayırdık. `stratify=y` parametresi, bu dengesiz sınıf dağılımının hem eğitim hem de test setlerinde korunmasını garanti eder. Böylece modelimizi adil bir şekilde değerlendirebiliriz.
+3.  **Model Eğitimi:** Basit ama güçlü bir sınıflandırma algoritması olan `LogisticRegression` modelini eğitim verileriyle (`X_train`, `y_train`) eğittik.
+4.  **Tahmin Yapma:** Eğitilen modelimizi daha önce hiç görmediği test verileri (`X_test`) üzerinde çalıştırdık. Burada iki tür tahmin yaptık: `predict()` ile modelin kesin kararını (0 veya 1) ve `predict_proba()` ile modelin bir örneğin pozitif sınıfa ait olma olasılığını aldık. Bu olasılık değeri, ROC eğrisini çizmek için kritik öneme sahiptir.
+5.  **Sınıflandırma Raporu:** `classification_report` fonksiyonu, her sınıf için Kesinlik (Precision), Duyarlılık (Recall) ve F1-Skoru değerlerini tek bir tabloda özetleyerek bize hızlı bir genel bakış sunar.
+6.  **Karışıklık Matrisi:** Daha önce gördüğümüz karışıklık matrisini `seaborn` kütüphanesiyle görselleştirdik. Bu ısı haritası, modelin ne tür hatalar yaptığını (FP veya FN) bir bakışta anlamamızı sağlar.
+7.  **ROC Eğrisi ve AUC:** Modelin pozitif sınıf için ürettiği olasılıkları (`y_pred_proba`) kullanarak, farklı karar eşikleri için Sahte Pozitif Oranı (FPR) ve Gerçek Pozitif Oranı (TPR) değerlerini hesapladık. Bu noktaları birleştirerek ROC eğrisini çizdik. Eğrinin altında kalan alan (AUC), modelin genel ayırt etme gücünün sayısal bir ölçüsüdür. AUC değeri 1'e ne kadar yakınsa, model o kadar iyidir.
+
+
+Gençler, unutmayın ki tek bir "en iyi" performans ölçütü yoktur; probleme ve hedefe "en uygun" ölçüt vardır. Bir modelin başarısını değerlendirirken, problemin bağlamını göz önünde bulundurarak birden fazla metriği birlikte analiz etmek esastır.
+
+*   Bir hastalığın teşhisinde, hiçbir vakayı atlamamak öncelikli olduğu için **Duyarlılık (Recall)** kritik olabilir.
+*   Bir spam filtresinde, önemli bir e-postayı yanlışlıkla engellememek için **Kesinlik (Precision)** daha önemli olabilir.
+*   Sınıfların dengesiz olduğu durumlarda **Doğruluk (Accuracy)** yerine **F1-Skoru** veya **AUC** gibi metriklere odaklanmak daha sağlıklı sonuçlar verir.
+
+Bu metrikler, geliştirdiğiniz modelleri anlama ve iyileştirme sürecinizde size yol gösterecek temel araçlardır.
+
+### Makine Öğrenmesi Algoritmaları ve Yazılımları: WEKA
+
+Makine öğrenmesi alanında, algoritmaları uygulamak ve veri analizleri yapmak için çeşitli yazılımlar mevcuttur. Bu yazılımlardan biri olan **WEKA (Waikato Environment for Knowledge Analysis)**, Yeni Zelanda'daki Waikato Üniversitesi tarafından geliştirilmiş, Java tabanlı, açık kaynak kodlu ve kapsamlı bir araçtır. İçerisinde sınıflandırma, kümeleme, birliktelik kuralı madenciliği gibi birçok makine öğrenmesi algoritmasını barındırır.
+
+#### WEKA'yı Başlatma ve Temel Yapılandırma
+
+WEKA'yı başlatırken, "Weka (with Console)" seçeneğini tercih etmek genellikle iyi bir uygulamadır. Konsol penceresi, programın arka planda yaptığı işlemleri ve olası uyarıları takip etmenizi sağlar. Özellikle karmaşık analizlerde veya büyük veri setleriyle çalışırken, programın kararsız hale gelip gelmediğini bu konsol üzerinden gözlemleyebilirsiniz.
+
+Büyük veri setleriyle çalışırken karşılaşılabilecek yaygın bir sorun, bellek yetersizliğidir. WEKA, varsayılan olarak belirli bir bellek miktarı ile çalışır. Eğer "bellek taşması (out of memory)" hatası alırsanız, bu miktarı artırmanız gerekebilir. Bu ayarlamayı, WEKA'nın kurulu olduğu dizindeki `Runweka.bat` ve `Runweka.ini` gibi yapılandırma dosyaları üzerinden yapabilirsiniz.
+
+WEKA'nın kendi yerel dosya uzantısı `.arff`'dir. Bu format, veri setinin yapısını (öznitelik türleri, sınıf bilgisi) ve verileri bir arada tutar.
+
+#### Veri Yükleme ve Yönetimi
+
+WEKA'nın ana arayüzü olan "Explorer" ekranı, veri setleriyle etkileşim kurduğunuz başlangıç noktasıdır. Burada, veri setinizi bir dosyadan, bir URL'den, bir veritabanından veya rastgele oluşturarak yükleyebilirsiniz. WEKA, özellikle `.arff` uzantılı dosyaları doğrudan kullanır.
+
+Eğer verileriniz `.csv` veya `.json` gibi farklı formatlardaysa ya da bir veritabanından çekilmişse, WEKA Explorer'da bu verileri yükledikten sonra "Save" butonu aracılığıyla kolayca `.arff` formatına dönüştürüp kaydedebilirsiniz.
+
+Bir `.arff` dosyasının içeriği incelendiğinde, temel olarak üç ana bölümden oluştuğu görülür:
+*   `@relation`: Veri setinin adını belirtir.
+*   `@attribute`: Her bir özniteliğin (sütun adı) adını ve türünü (örneğin, `numeric` için sayısal, `nominal` için kategorik) tanımlar. Denetimli öğrenme (supervised learning) problemlerinde, tahmin etmeye çalıştığımız hedef öznitelik (sınıf) genellikle son `@attribute` olarak belirtilir ve olası sınıf değerleri küme parantezleri içinde `{sınıf1, sınıf2, ...}` şeklinde yazılır.
+*   `@data`: Bu bölümden sonra, her satır bir veri örneğini temsil eder ve öznitelik değerleri virgülle ayrılarak sıralanır.
+
+Veritabanlarından doğrudan veri aktarımı için, ilgili JDBC (Java Database Connectivity) sürücülerinin WEKA'ya yüklenmesi gerekebilir.
+
+#### WEKA Arayüz Bölümleri ve İşlevleri
+
+Eğitim verisi WEKA'ya aktarıldıktan sonra, Explorer arayüzündeki farklı sekmeler aracılığıyla çeşitli analizler yapabilirsiniz:
+*   **Preprocess:** Veri setiniz üzerinde ön işleme adımları (eksik değer doldurma, öznitelik seçimi, veri dönüşümleri gibi) gerçekleştirmek için kullanılır. Buradaki "Filter" araçları, veriyi analiz için uygun hale getirmede önemli rol oynar.
+*   **Classify:** Sınıflandırma ve regresyon problemlerini çözmek, yani bir model eğitmek ve test etmek için kullanılır.
+*   **Cluster:** Kümeleme analizleri yapmak için tasarlanmıştır.
+*   **Associate:** Birliktelik kuralı madenciliği (örneğin, sepet analizi) gerçekleştirmek için kullanılır.
+*   **Visualize:** Veri setinizin dağılımını ve analiz sonuçlarını görselleştirmek için kullanılır.
+
+#### Sınıflandırma (Classify) Bölümü Detayları
+
+"Classify" bölümü, WEKA'da makine öğrenmesi modelleri oluşturmanın ve değerlendirmenin merkezidir. Burada, modelinizi eğitmek ve test etmek için veri setinizin nasıl kullanılacağını belirlersiniz.
+
+Model oluşturma sürecinde, "Test options" kısmında farklı stratejiler seçebilirsiniz:
+*   **Cross-validation (Çapraz Doğrulama):** Veri setini belirli sayıda katmana bölerek her katmanı sırayla test seti olarak kullanır ve daha güvenilir bir performans tahmini sağlar.
+*   **Percentage split (Yüzdeye Göre Bölme):** Veri setini belirli bir yüzde oranında eğitim ve test setlerine ayırır.
+*   **Supplied test set (Harici Test Seti):** Modelinizi, daha önce hiç görmediği ayrı bir test veri seti üzerinde değerlendirmek için kullanılır.
+
+"Choose" butonu aracılığıyla WEKA'nın zengin algoritma kütüphanesinden istediğiniz öğrenme algoritmasını seçebilirsiniz. Algoritma ve test seçenekleri belirlendikten sonra "Start" butonuna basarak model oluşturma ve değerlendirme sürecini başlatırsınız.
+
+Modelin performansı ve hata göstergeleri, "Classifier output" ekranında detaylı bir rapor halinde sunulur. Bu rapor, modelinizin ne kadar başarılı olduğunu anlamak için doğruluk (accuracy), kesinlik (precision), duyarlılık (recall), F1-skoru ve ROC eğrisi altındaki alan (AUC) gibi metrikleri içerir. Eğer ilk denemelerde istenilen başarı elde edilemezse, bu bir başarısızlık değil, bir öğrenme fırsatıdır. Bu durumda, aşağıdaki yaklaşımları gözden geçirmek faydalı olacaktır:
+*   **Veri Miktarı ve Kalitesi:** Eğitim verisi miktarını artırmak veya azaltmak, ya da veri setindeki gürültüyü (hatalı veya tutarsız verileri) temizlemek.
+*   **Öznitelik Mühendisliği:** Modelin performansını artırmak için mevcut öznitelikleri dönüştürmek, yeni öznitelikler türetmek veya alakasız öznitelikleri çıkarmak.
+*   **Algoritma Seçimi ve Ayarları:** Farklı öğrenme tekniklerini (örneğin, topluluk öğrenmesi yöntemleri) denemek veya seçilen algoritmanın hiperparametrelerini ayarlamak.
+*   **Eğitim ve Test Verisi Oranları:** Veri setinin eğitim ve test için ayrılma oranlarını değiştirmek.
+
+En iyi performansa sahip algoritma belirlendikten sonra, "Result list" bölümünden algoritma adına sağ tıklayarak "Save model" komutu ile eğitilmiş modeli kaydedebilirsiniz. Bu, modeli daha sonra başka uygulamalarda kullanmanıza olanak tanır.
+
+#### WEKA ve R Bağlantısı
+
+WEKA'nın güçlü veri işleme ve modelleme yeteneklerini, R'ın zengin istatistiksel analiz ve görselleştirme kütüphaneleriyle birleştirmek, analizlerinizi daha da derinleştirebilir. Bu bağlantıyı kurmak için aşağıdaki adımları izleyebilirsiniz:
+
+1.  **R ve WEKA Kurulumu:** Bilgisayarınızda hem R programlama dilinin hem de WEKA yazılımının kurulu olduğundan emin olun.
+Dilerseniz tüm süreci Weka geliştirilerinin anlatımıyla https://www.youtube.com/watch?v=EGwHXC3baWU adresinden uygulayabilirsiniz.
+2.  **`rJava` Paketini Yükleme:** R konsolunu açın ve `install.packages("rJava")` komutunu çalıştırarak R'ın Java ile iletişim kurmasını sağlayan bu paketi yükleyin.
+3.  **Ortam Değişkenlerini Ayarlama:** Bilgisayarınızın "Ortam Değişkenleri" (Environment Variables) ayarlarına erişin. Burada, R'ın doğru şekilde tanınması için bazı değişkenleri tanımlamanız veya düzenlemeniz gerekir:
+    *   `R.HOME`: R'ın kurulu olduğu ana dizini (sürüm numarası dahil) belirtin. Örneğin: `C:\Program Files\R\R-4.x.x`
+    *   `R_LIBS_USER`: R paketlerinin yüklendiği kullanıcı kütüphanesi dizinini belirtin. Örneğin: `C:\Users\KullanıcıAdı\Documents\R\win-library\4.x`
+    *   `PATH`: Sistem PATH değişkenine, R'ın yürütülebilir dosyasının (`R.exe`) bulunduğu dizini ekleyin. Bu, WEKA'nın R komutlarını doğrudan çağırabilmesi için önemlidir.
+4.  **WEKA R Plugin Kurulumu:** WEKA GUI Chooser ekranından "Tools" (Araçlar) menüsüne gidin ve "Package Manager" (Paket Yöneticisi) seçeneğini tıklayın. Açılan pencerede "R Plugin"i bulun ve yükleyin.
+5.  **WEKA'yı Yeniden Başlatma:** Plugin kurulumundan sonra WEKA'yı kapatıp tekrar açın. Artık WEKA GUI Chooser ekranında "R Console" adında yeni bir seçenek görmelisiniz. Bu, WEKA içinden R komutlarını çalıştırmanıza ve iki platform arasında veri alışverişi yapmanıza olanak tanır.
+
+Bu entegrasyon sayesinde, WEKA'nın kullanıcı dostu arayüzünü kullanarak hızlı modellemeler yapabilir, ardından R'ın gelişmiş istatistiksel analiz ve görselleştirme yetenekleriyle sonuçlarınızı daha detaylı inceleyebilirsiniz.
+
+
+### Uygulama: Iris Veri Seti Üzerinde Adım Adım Model Oluşturma ve Test Etme (WEKA ile)
+
+Şimdiye kadar öğrendiğimiz teorik bilgileri somut bir örnek üzerinde uygulayalım. Makine öğrenmesi dünyasının en bilinen ve sıkça kullanılan veri setlerinden biri olan **Iris veri seti** üzerinde, WEKA yazılımını kullanarak bir sınıflandırma modeli oluşturacak ve bu modeli test edeceğiz. Bu süreç, bir makine öğrenmesi projesinin temel adımlarını anlamanıza yardımcı olacaktır.
+
+Iris veri seti, üç farklı iris çiçeği türüne (Iris-setosa, Iris-versicolor, Iris-virginica) ait 150 örneği içerir. Her bir örnek için dört sayısal öznitelik (çanak yaprağı uzunluğu ve genişliği, taç yaprağı uzunluğu ve genişliği) ve çiçeğin türünü belirten bir sınıf etiketi bulunur. Bu veri seti, WEKA'nın kurulu olduğu dizindeki `data` klasöründe `iris.arff` adıyla mevcuttur.
+
+#### 1. Iris Veri Setini WEKA'ya Yükleme
+
+1.  **WEKA'yı Başlatın:** Bilgisayarınızda WEKA'yı açın ve "WEKA GUI Chooser" ekranından "Explorer" seçeneğine tıklayın.
+2.  **Veri Setini Yükleyin:** "Preprocess" (Ön İşleme) sekmesindeyken, "Open file..." (Dosya Aç) butonuna tıklayın. WEKA'nın kurulu olduğu dizindeki `data` klasörüne gidin ve `iris.arff` dosyasını seçerek yükleyin.
+3.  **Veriyi İnceleyin:** Veri seti yüklendiğinde, sağ taraftaki "Attributes" (Öznitelikler) panelinde `sepallength`, `sepalwidth`, `petallength`, `petalwidth` ve `class` özniteliklerini göreceksiniz. `class` özniteliği, modelimizin tahmin etmeye çalışacağı hedef değişkendir ve üç farklı nominal değere sahiptir: `Iris-setosa`, `Iris-versicolor`, `Iris-virginica`. Her bir özniteliğin istatistiksel özetini (minimum, maksimum, ortalama, standart sapma) ve dağılımını inceleyebilirsiniz.
+
+#### 2. Sınıflandırma Modeli Eğitimi ve Değerlendirme
+
+Şimdi, Iris veri setini kullanarak bir sınıflandırma modeli eğitecek ve performansını değerlendireceğiz.
+
+1.  **"Classify" Sekmesine Geçin:** WEKA Explorer arayüzünde "Classify" (Sınıflandır) sekmesine tıklayın.
+2.  **Sınıflandırıcı Seçimi:** "Choose" (Seç) butonuna tıklayın. Açılan menüden `trees` (ağaçlar) altındaki `J48` algoritmasını seçin. J48, karar ağacı tabanlı, anlaşılması kolay ve genellikle iyi performans gösteren bir algoritmadır.
+3.  **Test Seçeneklerini Ayarlayın:** "Test options" (Test seçenekleri) bölümünde, modelin performansını güvenilir bir şekilde ölçmek için "Cross-validation" (Çapraz Doğrulama) seçeneğinin işaretli olduğundan emin olun. Varsayılan olarak "Folds" (Katman sayısı) 10 olarak ayarlanmıştır, bu Iris veri seti için uygun bir değerdir. "Class" (Sınıf) açılır menüsünde `class` özniteliğinin seçili olduğundan emin olun; bu, modelin tahmin etmeye çalışacağı hedef değişkendir.
+4.  **Modeli Eğitin ve Değerlendirin:** "Start" (Başlat) butonuna tıklayın. WEKA, J48 algoritmasını 10 katlı çapraz doğrulama yöntemiyle eğitecek ve değerlendirecektir.
+5.  **Sonuçları Yorumlayın:** "Classifier output" (Sınıflandırıcı çıktısı) panelinde modelin performans raporunu göreceksiniz:
+    *   **`Correctly Classified Instances` (Doğru Sınıflandırılan Örnekler):** Modelin toplam örneklerin yüzde kaçını doğru sınıflandırdığını gösterir.
+    *   **`Incorrectly Classified Instances` (Yanlış Sınıflandırılan Örnekler):** Modelin hatalı sınıflandırdığı örneklerin yüzdesidir.
+    *   **`Kappa statistic` (Kappa Katsayısı):** Modelin başarısının şans faktörünün ne kadar ötesinde olduğunu gösteren bir metriktir.
+    *   **`Detailed Accuracy By Class` (Sınıf Bazında Detaylı Doğruluk):** Her bir Iris türü için ayrı ayrı `TP Rate` (Duyarlılık/Recall), `FP Rate`, `Precision` (Kesinlik), `F-Measure` (F1-Skoru) ve `ROC Area` (AUC) değerlerini gösterir. Bu tablo, modelin hangi sınıflarda daha başarılı, hangilerinde daha zayıf olduğunu anlamak için önemlidir.
+    *   **`Confusion Matrix` (Karışıklık Matrisi):** En altta yer alan bu matris, modelin hangi sınıfları birbiriyle karıştırdığını görsel olarak sunar. Örneğin, `a` Iris-setosa, `b` Iris-versicolor, `c` Iris-virginica ise, matristeki `b` satırı ve `c` sütunundaki değer, gerçekte Iris-versicolor olan kaç örneğin Iris-virginica olarak tahmin edildiğini gösterir.
+
+    Bu metrikleri dikkatlice inceleyerek modelinizin genel performansını ve her bir sınıf üzerindeki başarısını değerlendirebilirsiniz. Eğer performans tatmin edici değilse, farklı algoritmalar denemek, öznitelik mühendisliği yapmak veya algoritma parametrelerini değiştirmek gibi önceki adımlara geri dönebilirsiniz.
+
+#### 3. Eğitilmiş Modeli Kaydetme
+
+Modelinizin performansı tatmin edici olduğunda, bu modeli daha sonra kullanmak üzere kaydedebilirsiniz.
+
+1.  **Modeli Kaydedin:** "Result list" (Sonuç listesi) panelinde, az önce eğittiğiniz modelin üzerine sağ tıklayın. Açılan menüden "Save model" (Modeli Kaydet) seçeneğini seçin.
+2.  **Dosya Adı ve Konum Belirleyin:** Modeli kaydetmek istediğiniz konumu ve bir dosya adını (örneğin, `iris_j48_model.model`) belirleyerek kaydedin.
+
+#### 4. Yeni Test Verisi Hazırlama (Notepad++ ile)
+
+Şimdi, modelimizin daha önce hiç görmediği yeni Iris çiçeği örneklerini tahmin etmesini sağlayacak bir test veri seti oluşturalım. Bu, modelin genelleme yeteneğini ölçmek için önemlidir.
+
+1.  **Yeni Bir `.arff` Dosyası Oluşturun:** Notepad++ gibi bir metin düzenleyici açın.
+2.  **Başlık Bilgilerini Kopyalayın:** `iris.arff` dosyasını da Notepad++ ile açın ve `@relation` ile `@attribute` bölümlerini kopyalayarak yeni dosyanıza yapıştırın. Bu, test verinizin eğitim verisiyle aynı yapıya sahip olmasını sağlar.
+3.  **Test Verilerini Ekleyin:** `@data` başlığının altına, modelin tahmin etmesini istediğiniz yeni Iris çiçeği örneklerinin öznitelik değerlerini virgülle ayırarak yazın. Sınıf bilgisini bilmediğimiz veya modelin tahmin etmesini istediğimiz için, `class` özniteliğinin yerine bir soru işareti (`?`) koyun.
+
+    **Örnek `iris_yeni_test.arff` içeriği:**
+    ```arff
+    @relation iris-yeni-test
+
+    @attribute sepallength numeric
+    @attribute sepalwidth numeric
+    @attribute petallength numeric
+    @attribute petalwidth numeric
+    @attribute class {Iris-setosa,Iris-versicolor,Iris-virginica}
+
+    @data
+    5.1,3.5,1.4,0.2,?  % Gerçekte Iris-setosa
+    6.0,2.2,5.0,1.5,?  % Gerçekte Iris-versicolor
+    7.0,3.2,4.7,1.4,?  % Gerçekte Iris-versicolor
+    4.9,3.0,1.4,0.2,?  % Gerçekte Iris-setosa
+    6.3,3.3,6.0,2.5,?  % Gerçekte Iris-virginica
+    ```
+    (Yorum satırları (`%`) sadece sizin için, dosyaya eklemenize gerek yok.)
+
+4.  **Kaydedin:** Bu dosyayı `iris_yeni_test.arff` adıyla kaydedin.
+
+#### 5. Kaydedilmiş Modeli Kullanarak Yeni Verileri Test Etme
+
+Şimdi, kaydettiğimiz modeli kullanarak yeni oluşturduğumuz test verileri üzerindeki tahminleri görelim.
+
+**Senaryo A: WEKA Hala Açık ve Model "Result list"te Görünüyor**
+
+1.  **Test Verisini Yükleyin:** "Classify" sekmesindeyken, "Test options" bölümünde "Supplied test set" (Sağlanan test seti) seçeneğini işaretleyin. Ardından "Set..." (Ayarla) butonuna tıklayarak `iris_yeni_test.arff` dosyasını yükleyin.
+2.  **Tahmin Çıktısını Ayarlayın:** "More options" (Daha fazla seçenek) butonuna tıklayın. Açılan pencerede "Output predictions" (Tahminleri Çıkar) seçeneğini "PlainText" (Düz Metin) olarak ayarlayın. Bu, modelin her bir örnek için yaptığı tahmini WEKA'nın çıktı ekranında görmenizi sağlar.
+3.  **Modeli Yeniden Değerlendirin:** "Result list" panelinde, daha önce eğittiğiniz ve kaydettiğiniz modelin üzerine sağ tıklayın. Açılan menüden "Re-evaluate model on current test set" (Mevcut test seti üzerinde modeli yeniden değerlendir) seçeneğini seçin.
+4.  **Tahminleri İnceleyin:** "Classifier output" panelinde, modelin `iris_yeni_test.arff` dosyasındaki her bir örnek için yaptığı tahminleri göreceksiniz. Her satırda örnek numarası, gerçek sınıf (eğer varsa), tahmin edilen sınıf ve bu tahmine olan güven (olasılık) yer alacaktır.
+
+**Senaryo B: WEKA Kapatıldı ve Yeniden Açıldı**
+
+1.  **WEKA Explorer'ı Açın:** WEKA'yı başlatın ve "Explorer" seçeneğine tıklayın.
+2.  **Herhangi Bir Veri Seti Yükleyin:** "Classify" sekmesi, herhangi bir veri seti yüklenmediğinde pasif kalır. Bu yüzden, "Preprocess" sekmesinden `iris.arff` veya `iris_yeni_test.arff` gibi herhangi bir `.arff` dosyasını yükleyerek veya `Generate` butonu ilr rastgele bir sentetik veri üretip "Classify" sekmesini aktif hale getirin.
+3.  **"Classify" Sekmesine Geçin:** Artık "Classify" sekmesine tıklayabilirsiniz.
+4.  **Kaydedilmiş Modeli Yükleyin:** "Result list" panelindeki boş alana sağ tıklayın ve "Load model" (Modeli Yükle) seçeneğini seçin. Kaydettiğiniz `iris_j48_model.model` dosyasını seçerek yükleyin.
+5.  **Test Verisini Yükleyin:** "Test options" bölümünde "Supplied test set" seçeneğini işaretleyin. "Set..." butonuna tıklayarak `iris_yeni_test.arff` dosyasını yükleyin.
+6.  **Tahmin Çıktısını Ayarlayın:** "More options" butonuna tıklayın ve "Output predictions" seçeneğini "PlainText" olarak ayarlayın.
+7.  **Modeli Yeniden Değerlendirin:** "Result list" panelinde yüklediğiniz modelin üzerine sağ tıklayın ve "Re-evaluate model on current test set" seçeneğini seçin.
+8.  **Tahminleri İnceleyin:** "Classifier output" panelinde, modelin yeni test verileri üzerindeki tahminlerini göreceksiniz.
+
+Bu adımlarla, bir makine öğrenmesi modelinin nasıl eğitildiğini, değerlendirildiğini, kaydedildiğini ve yeni, daha önce hiç görmediği veriler üzerinde nasıl tahminler yapabildiğini pratik olarak deneyimlemiş oldunuz. Bu süreç, gerçek dünya problemlerini çözerken izleyeceğiniz temel yol haritasıdır.
+
+### 4. Ensemble Learning
+
+Birden fazla makine öğrenmesi modelinin bir araya getirilerek daha güçlü ve doğru tahminler yapmasını sağlayan bir tekniktir. Farklı modellerin avantajlarını birleştirerek, tek bir modelin yapamayacağı karmaşık görevleri başarabilir.
+#### Ensemble Learning Yöntemleri
+Topluluk öğrenmesi (ensemble learning) yöntemleri, "birlikten kuvvet doğar" atasözünün makine öğrenmesindeki karşılığıdır. Tek bir modelin yetersiz kalabileceği durumlarda, birden fazla modelin gücünü birleştirerek çok daha isabetli ve güvenilir sonuçlar elde etmeyi amaçlarız. Şimdi bu yaklaşımların en popüler olan üç tanesini inceleyelim.
+
+*   **Bagging (Bootstrap Aggregating):** Gençler, bu yöntemi anlamak için basit bir düşünce deneyi yapalım. Bir kavanozun içinde kaç adet bilye olduğunu tahmin etmemiz gerektiğini varsayalım. Tek bir kişinin tahminine güvenirsek, bu tahminin oldukça hatalı olma riski vardır. Bunun yerine, 10 farklı kişiden tahmin istesek ve bu tahminlerin ortalamasını alsak ne olur? Muhtemelen, bireysel tahminlerin hataları birbirini dengeleyeceği için, ortaya çıkan ortalama sonuç çok daha isabetli ve güvenilir olacaktır.
+
+    İşte Bagging, tam olarak bu mantık üzerine kuruludur. Adı, **Bootstrap Aggregating** ifadesinin kısaltmasından gelir ve bu iki kelime, yöntemin nasıl çalıştığını özetler. Temel amacı, tek bir modelin verideki küçük değişimlere aşırı tepki vererek ezber yapma eğilimini, yani **varyansını düşürmektir**. Süreç, orijinal veri setinden, yerine koyarak örnekleme (sampling with replacement) yöntemiyle çok sayıda yeni alt veri seti oluşturulmasıyla başlar. Bu, her yeni sette bazı veri noktalarının birden fazla kez yer alabileceği, bazılarının ise hiç yer almayabileceği anlamına gelir. Ardından, genellikle aynı tipte olan (homojen) temel modeller, bu alt kümelerin her biri üzerinde birbirinden bağımsız olarak, paralel bir şekilde eğitilir. Son aşamada ise bu modellerin tahminleri birleştirilir. Sınıflandırma problemlerinde nihai karar **çoğunluk oylaması (majority voting)** ile, regresyon problemlerinde ise tahminlerin **ortalaması** alınarak verilir. Bu yaklaşımın en bilinen ve başarılı uygulamalarından biri *Random Forest* (Rastgele Orman) algoritmasıdır.
+
+```mermaid
+graph TD
+    A["Orijinal Veri Seti<br/>[D1, D2, D3, D4, D5]"]
+
+    subgraph "Bootstrap Örnekleme (Yerine Koyarak Seçim)"
+        direction LR
+        B1["Örneklem 1<br/>[D1, D3, D3, D5, D1]"]
+        B2["Örneklem 2<br/>[D2, D4, D1, D5, D2]"]
+        B3["..."]
+        BN["Örneklem N<br/>[D4, D1, D5, D5, D3]"]
+    end
+
+    A --> B1
+    A --> B2
+    A --> B3
+    A --> BN
+
+    subgraph "Paralel Model Eğitimi (Bağımsız)"
+        direction LR
+        M1["Model 1<br/>(Örn: Karar Ağacı)"]
+        M2["Model 2<br/>(Örn: Karar Ağacı)"]
+        M3["..."]
+        MN["Model N<br/>(Örn: Karar Ağacı)"]
+    end
+
+    B1 --> M1
+    B2 --> M2
+    B3 --> M3
+    BN --> MN
+
+    subgraph "Tahminleri Birleştirme (Aggregation)"
+        direction LR
+        P1["Tahmin 1"]
+        P2["Tahmin 2"]
+        P3["..."]
+        PN["Tahmin N"]
+    end
+
+    M1 --> P1
+    M2 --> P2
+    M3 --> P3
+    MN --> PN
+
+    Final["Nihai Tahmin<br/>(Çoğunluk Oyu veya Ortalama)"]
+
+    P1 --> Final
+    P2 --> Final
+    P3 --> Final
+    PN --> Final
+```
+
+*   **Boosting (Güçlendirme):** Gençler, Boosting yaklaşımını, zor bir problemi sırayla çözen bir uzmanlar ekibine benzetebiliriz. İlk uzman, probleme genel bir çözüm sunar. İkinci uzman gelir, ilk uzmanın gözden kaçırdığı veya hata yaptığı noktalara odaklanır ve o kısımları düzeltmeye çalışır. Üçüncü uzman ise, ilk ikisinin hala çözemediği zorlu kısımları ele alır. Bu süreç, her yeni uzmanın bir öncekinin zayıflıklarını gidermesiyle devam eder. Sonunda, bu uzmanların sıralı ve odaklanmış çabası, tek bir uzmanın tek başına elde edebileceğinden çok daha rafine ve doğru bir sonuç ortaya çıkarır.
+
+    Bu benzetmenin teknik karşılığı şudur: Boosting, zayıf öğrenicileri (weak learners) bir araya getirerek güçlü bir öğrenici oluşturmayı hedefleyen sıralı (sequential) bir tekniktir. Temel amacı, modelin sistematik hatalarını, yani **yanlılığını (bias) azaltmaktır**. Modeller ardışık olarak eğitilir. Her yeni model, bir önceki modelin yanlış sınıflandırdığı veya yüksek hata yaptığı örneklere daha fazla **ağırlık vererek** bu hataları düzeltmeye odaklanır. Bu sayede modeller birbirine bağımlı hale gelir ve her biri, bir öncekinin eksiklerini tamamlayan bir uzman gibi davranır. Nihai tahmin, tüm modellerin performanslarına göre ağırlıklandırılmış bir oylama veya toplamıyla oluşturulur. *AdaBoost*, *Gradient Boosting Machines (GBM)* ve *XGBoost* bu yöntemin en bilinen ve güçlü uygulamalarıdır.
+
+```mermaid
+graph TD
+    A["Orijinal Veri Seti<br/>(Tüm örneklere eşit ağırlık)"] --> M1["Zayıf Model 1"]
+    
+    M1 -- "Tahminler ve Hatalar" --> W1["Veriyi Yeniden Ağırlıklandır<br/>(Yanlış tahmin edilenlere daha yüksek ağırlık ver)"]
+    
+    W1 --> M2["Zayıf Model 2<br/>(Hatalı örneklere odaklanır)"]
+    
+    M2 -- "Tahminler ve Hatalar" --> W2["..."]
+    
+    W2 --> MN["Zayıf Model N"]
+    
+    subgraph "Nihai Tahmin"
+        direction LR
+        P1["Model 1 Tahmini"]
+        P2["Model 2 Tahmini"]
+        PN["Model N Tahmini"]
+    end
+    
+    M1 --> P1
+    M2 --> P2
+    MN --> PN
+    
+    Final["Ağırlıklı Oylama/Toplam"]
+    
+    P1 --> Final
+    P2 --> Final
+    PN --> Final
+```
+
+*   **Stacking (Yığınlama):** Gençler, Stacking yöntemini, farklı alanlarda uzmanlaşmış bir danışmanlar kuruluna benzetebiliriz. Bir inşaat projesi düşünün. Mimar, statik mühendisi ve şehir plancısı, projeye kendi uzmanlık alanlarından bakarak birer rapor sunar. Bu raporları ayrı ayrı değerlendirmek yerine, tecrübeli bir proje yöneticisi bu üç farklı uzman görüşünü de birer girdi olarak alır ve bu girdileri harmanlayarak en isabetli nihai kararı verir. Proje yöneticisi, hangi uzmanın hangi konuda daha güvenilir olduğunu zamanla öğrenir ve kararlarını buna göre ağırlıklandırır.
+
+    İşte Stacking, bu proje yöneticisi gibi çalışır. Genellikle birbirinden farklı mimarilere sahip (heterojen) modellerin tahminlerini birleştirerek daha yüksek bir başarım elde etmeyi hedefler. Yapısal olarak iki seviyeden oluşur: Seviye-0'da "temel modeller" (base models) ve Seviye-1'de bir "meta-model" bulunur. Süreç şöyledir: Temel modeller (örneğin bir Destek Vektör Makinesi, bir Rastgele Orman ve bir Lojistik Regresyon modeli) orijinal veri seti üzerinde eğitilir. Ardından bu modellerin yaptığı tahminler, meta-model için yeni bir **özellik seti (feature set)** olarak kullanılır. Veri sızıntısını (data leakage) önlemek için, temel modellerin tahminleri genellikle çapraz doğrulama (cross-validation) tekniğiyle "out-of-fold" olarak, yani modelin eğitim sırasında görmediği veri parçaları üzerinden üretilir. Son olarak, bu yeni özellik setini girdi olarak alan meta-model eğitilir ve nihai sonucu üretir. Meta-modelin görevi, temel modellerin tahminlerini en optimal şekilde nasıl birleştireceğini öğrenmektir.
+
+```mermaid
+graph TD
+    A["Orijinal Veri Seti"]
+
+    subgraph "Seviye 0: Temel Modeller (Farklı Tipler)"
+        direction LR
+        M1["Temel Model A<br/>(Örn: SVM)"]
+        M2["Temel Model B<br/>(Örn: Random Forest)"]
+        M3["Temel Model C<br/>(Örn: Lojistik Regresyon)"]
+    end
+
+    A --> M1
+    A --> M2
+    A --> M3
+
+    subgraph "Yeni Özellik Seti Oluşturma"
+        direction LR
+        P1["Tahminler A"]
+        P2["Tahminler B"]
+        P3["Tahminler C"]
+    end
+
+    M1 --> P1
+    M2 --> P2
+    M3 --> P3
+
+    YeniVeri["Yeni Özellik Seti<br/>[Tahmin A, Tahmin B, Tahmin C]"]
+
+    P1 & P2 & P3 --> YeniVer
+
+    subgraph "Seviye 1: Meta Model"
+        Meta["Meta-Model<br/>(Örn: XGBoost)"]
+    end
+
+    YeniVeri --> Meta
+
+    Final["Nihai Tahmin"]
+
+    Meta --> Final
+```
+
+### Topluluk Öğrenmesine Genel Bir Bakış
+
+Gençler, makine öğrenmesinde bazen en iyi sonucu tek bir dahi modelden değil, birçok modelin kolektif bilgeliğinden alırız. Topluluk öğrenmesi (ensemble learning), tam olarak bu fikre dayanır: Tek bir uzmanın görüşüne güvenmek yerine, bir uzmanlar komitesi oluşturup onların ortak kararına başvurmak. Bu yaklaşım, genellikle tek bir modelin tek başına ulaşabileceğinden daha isabetli, kararlı ve güvenilir sonuçlar üretir.
+
+Temelde, farklı modellerin yaptığı hataların da farklı olacağı varsayımından yola çıkarız. Bir modelin gözden kaçırdığı bir detayı, bir diğeri yakalayabilir. Bu yöntemleri üç ana strateji altında toplayabiliriz:
+
+1.  **Bagging (Paralel Takım Çalışması):** Bu yaklaşımda, aynı veri setinin biraz değiştirilmiş farklı versiyonları üzerinde, birbirinden bağımsız olarak birden çok model eğitiriz. Tıpkı bir anket çalışmasında aynı soruları farklı gruplara sormak gibi. Her model kendi "görüşünü" (tahminini) oluşturur ve en sonunda bu görüşleri bir araya getiririz. Sınıflandırma probleminde en çok oyu alan sınıf, regresyonda ise tahminlerin ortalaması nihai karar olur. Bu yöntemin temel amacı, bir modelin verideki küçük değişimlere aşırı tepki verip ezber yapmasını (overfitting) engellemek, yani **varyansı düşürmektir**. En popüler örneği *Random Forest*'tır.
+
+2.  **Boosting (Sıralı Uzmanlık):** Bu stratejide modellerimiz bir ekip gibi sıralı çalışır. İlk model, problemi çözmek için genel bir deneme yapar. İkinci model, ilk modelin özellikle zorlandığı veya hata yaptığı örneklere odaklanarak bu hataları düzeltmeye çalışır. Her yeni gelen model, bir öncekinin zayıflıklarını gidermek üzere eğitilir. Bu, zayıf modellerden oluşan bir zincirin, sonunda çok güçlü bir karar mekanizmasına dönüşmesini sağlar. Boosting'in temel hedefi, modelin sistematik hatalarını azaltmak, yani **yanlılığı (bias) düşürmektir**. *AdaBoost* ve *Gradient Boosting* bu yaklaşımın en bilinenleridir.
+
+3.  **Stacking (Hiyerarşik Karar Verme):** Bu en gelişmiş yöntemlerden biridir. Farklı türdeki uzman modellerin (örneğin bir sinir ağı, bir karar ağacı ve bir destek vektör makinesi) tahminlerini alırız. Ancak bu tahminleri doğrudan oylamak yerine, onları yeni bir veri seti olarak kabul eder ve bu veri seti üzerinde ikinci seviye bir "meta-model" eğitiriz. Bu meta-modelin görevi, hangi temel modelin ne zaman daha güvenilir olduğunu öğrenmek ve bu bilgiyi kullanarak en isabetli nihai kararı vermektir. Bu sayede, farklı algoritmaların kendilerine özgü güçlü yönlerini akıllıca birleştirmiş oluruz.
+
+Özetle, topluluk yöntemleri, "birlikten kuvvet doğar" ilkesini makine öğrenmesine uygulayarak modellerimizin genelleme yeteneğini artırır ve daha sağlam tahminler yapmamızı sağlar.
+
+
+### Weka ve Python'da Topluluk Öğrenmesi Algoritmaları
+
+Makine öğrenmesi algoritmalarını uygulamak için farklı araçlar ve programlama dilleri kullanabiliriz. Bu bölümde, topluluk öğrenmesi yöntemlerini hem görsel bir arayüz sunan Weka'da hem de esnek bir programlama dili olan Python'da nasıl uygulayabileceğimize değinelim.
+
+#### Weka'da Topluluk Öğrenmesi
+
+Weka, makine öğrenmesi algoritmalarını görsel bir arayüz üzerinden kolayca uygulayabileceğiniz, özellikle başlangıç seviyesindeki kullanıcılar ve hızlı denemeler yapmak isteyenler için oldukça kullanışlı bir yazılımdır. Topluluk öğrenmesi yöntemlerini Weka'da uygulamak da oldukça basittir.
+
+Weka'da "Classify" (Sınıflandır) sekmesine gittiğinizde, "Choose" (Seç) butonuna tıklayarak farklı algoritmaları görebilirsiniz. Topluluk öğrenmesi algoritmaları genellikle "meta" başlığı altında yer alır. Burada, daha önce bahsettiğimiz yöntemlerin Weka'daki karşılıklarını bulabilirsiniz:
+
+*   **Bagging:** Weka'da doğrudan `Bagging` adıyla bulabileceğiniz bu algoritma, seçtiğiniz temel bir öğreniciyi (örneğin bir karar ağacı olan J48'i) veri setinin farklı bootstrap örnekleri üzerinde eğitir ve sonuçları birleştirir. Kaç tane temel öğrenici kullanacağınızı (`numIterations`) ve hangi temel öğreniciyi (`classifier`) kullanacağınızı ayarlayabilirsiniz.
+*   **AdaBoostM1:** Boosting yönteminin bir uygulaması olan `AdaBoostM1`, yine bir temel öğreniciyi (genellikle zayıf bir öğrenici, örneğin `DecisionStump` gibi basit bir karar ağacı) ardışık olarak eğitir. Her adımda, önceki modelin yanlış sınıflandırdığı örneklere daha fazla odaklanarak hataları düzeltmeye çalışır.
+*   **Stacking:** Weka'da `Stacking` algoritması, birden fazla temel öğrenicinin (base learners) tahminlerini alarak, bu tahminleri yeni bir veri seti gibi kullanır ve bu yeni veri seti üzerinde bir "meta-öğrenici" (meta-learner) eğitir. Böylece farklı modellerin güçlü yönlerini birleştirerek daha iyi bir nihai tahmin elde etmeyi hedefler.
+
+Weka'nın görsel arayüzü sayesinde, bu algoritmaların nasıl çalıştığını ve farklı parametrelerin sonuçları nasıl etkilediğini deneyerek kolayca gözlemleyebilirsiniz.
+
+#### Python'da Topluluk Öğrenmesi
+
+Python, makine öğrenmesi uygulamaları için en popüler dillerden biridir ve özellikle `scikit-learn` kütüphanesi sayesinde topluluk öğrenmesi algoritmalarını kodla uygulamak oldukça güçlü ve esnektir.
+
+`scikit-learn` kütüphanesinde, daha önce ele aldığımız topluluk öğrenmesi yöntemlerinin çoğu hazır olarak bulunur:
+
+*   **Bagging:**
+    *   `BaggingClassifier` (sınıflandırma için) ve `BaggingRegressor` (regresyon için) sınıflarını kullanarak kendi Bagging modellerinizi oluşturabilirsiniz. Bu sınıflar, `base_estimator` (temel öğrenici) ve `n_estimators` (kaç tane temel model kullanılacağı) gibi parametrelerle özelleştirilebilir. Örneğin, birçok karar ağacını bir araya getirerek bir Bagging modeli kurabilirsiniz.
+    *   **Random Forest (Rastgele Orman):** Bagging'in özel ve çok başarılı bir türüdür. `RandomForestClassifier` ve `RandomForestRegressor` sınıfları, temel öğrenici olarak karar ağaçlarını kullanır ve her ağacı eğitirken hem veri örneklemesi yapar hem de özelliklerin rastgele bir alt kümesini seçer. Bu "rastgelelik", modellerin birbirinden daha bağımsız olmasını sağlayarak performansı artırır.
+
+*   **Boosting:**
+    *   `AdaBoostClassifier` ve `AdaBoostRegressor`: Weka'daki `AdaBoostM1`'e benzer şekilde çalışır. Genellikle `DecisionTreeClassifier(max_depth=1)` gibi zayıf bir temel öğrenici ile kullanılır.
+    *   `GradientBoostingClassifier` ve `GradientBoostingRegressor`: Bu algoritmalar, bir önceki modelin hatalarını (rezidüellerini) düzeltmek için yeni modelleri ardışık olarak eğitir. Daha karmaşık ve genellikle daha yüksek performanslı bir Boosting yöntemidir.
+    *   **XGBoost, LightGBM, CatBoost:** Bunlar, `scikit-learn`'in dışında, ancak Python ekosisteminde yaygın olarak kullanılan ve Gradient Boosting'in optimize edilmiş, yüksek performanslı uygulamalarıdır. Özellikle büyük veri setleri ve karmaşık problemler için tercih edilirler.
+
+*   **Stacking:**
+    *   `StackingClassifier` ve `StackingRegressor`: Bu sınıflar, farklı temel modellerin (örneğin, bir Lojistik Regresyon, bir Destek Vektör Makinesi ve bir Rastgele Orman) tahminlerini birleştirerek, bu tahminler üzerinde eğitilen bir "final_estimator" (meta-model) ile nihai sonucu üretir. Bu sayede farklı algoritmaların güçlü yönlerini bir araya getirme esnekliği sunar.
+
+Python'da kod yazarak, bu algoritmaların her bir adımını daha detaylı kontrol edebilir, farklı parametre kombinasyonlarını deneyebilir ve modellerinizi kendi özel ihtiyaçlarınıza göre uyarlayabilirsiniz. Bu, özellikle daha derinlemesine analizler ve özelleştirilmiş çözümler geliştirmek istediğinizde büyük avantaj sağlar.
+
+### Uygulama: Iris Veri Seti Üzerinde Topluluk Öğrenmesi (Weka ve Python)
+
+Şimdi gençler, topluluk öğrenmesinin gücünü kendi gözlerimizle göreceğimiz bir uygulama yapalım. Daha önceki bölümde tek bir J48 karar ağacı modeliyle sınıflandırdığımız meşhur Iris veri setini bu kez bir uzmanlar komitesine, yani topluluk öğrenmesi yöntemlerine emanet edeceğiz. Amacımız, Bagging, Boosting ve Stacking gibi farklı takım çalışması stratejilerinin, tek bir modelin performansını aşıp aşamadığını görmek.
+
+#### Weka ile Topluluk Öğrenmesi Uygulaması
+
+Weka'nın görsel arayüzü, bu güçlü yöntemlerin arkasındaki mantığı anlamak için harika bir başlangıç noktasıdır.
+
+**Adım 1: Referans Noktamızı Belirleyelim (Tek J48 Modeli)**
+
+Karşılaştırma yapabilmek için önce tek bir modelin başarısını hatırlamamız gerekiyor. Önceki uygulamamızda `iris.arff` veri setini yükleyip, `Classify` sekmesinde `trees` altından `J48` algoritmasını 10 katlı çapraz doğrulama ile çalıştırdığımızda yaklaşık **%96** gibi bir doğruluk oranı elde etmiştik. Bu bizim referans noktamız olacak.
+
+**Adım 2: Bagging Uygulaması**
+
+Bagging, birbirinden bağımsız çalışan birçok J48 ağacı oluşturup onların ortak kararına başvuracak.
+
+1.  **Algoritma Seçimi:** `Classify` sekmesinde "Choose" butonuna tıklayın. Bu kez `meta` klasörünün altındaki `Bagging` seçeneğini seçin.
+2.  **Yapılandırma:** `Bagging` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresi, toplulukta kullanılacak temel model türünü belirtir. Varsayılan olarak `REPTree` seçilidir. Bunu, referans noktamızla tutarlı bir karşılaştırma yapabilmek için `J48` olarak değiştirin.
+    *   `numIterations` parametresi, toplulukta kaç adet model oluşturulacağını belirtir. Varsayılan değer olan 10'u şimdilik değiştirmeyelim. Bu, 10 farklı J48 ağacının eğitileceği anlamına gelir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Sonuçları incelediğinizde, doğruluk oranının muhtemelen tek J48 modeline göre bir miktar arttığını veya en azından daha kararlı bir sonuç verdiğini göreceksiniz. Bagging, tek bir ağacın verideki küçük değişimlere aşırı tepki vererek ezber yapma riskini (varyansı) azalttığı için genellikle daha güvenilir sonuçlar üretir.
+
+**Adım 3: Boosting (AdaBoostM1) Uygulaması**
+
+Boosting, modelleri sırayla eğiterek her birinin bir öncekinin hatalarından ders almasını sağlar.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `AdaBoostM1` yolunu izleyin.
+2.  **Yapılandırma:** `AdaBoostM1` ayarlarına girdiğinizde, `classifier` olarak `DecisionStump` (Karar Kütüğü) seçili olduğunu göreceksiniz. Bu, sadece tek bir soru soran, çok basit bir karar ağacıdır ve "zayıf öğrenici" tanımına mükemmel bir örnektir. Boosting, bu tür zayıf ama hızlı modelleri bir araya getirerek güçlendirmekte çok başarılıdır. Bu ayarı değiştirmeyelim.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. AdaBoost, bu basit `DecisionStump`'ları ardışık olarak eğiterek, özellikle sınıflandırılması zor olan Iris çiçeklerine odaklanacak ve sonunda oldukça yüksek bir doğruluk oranı elde edecektir. Bu, birçok zayıf modelin, hataları düzelterek nasıl güçlü bir modele dönüşebileceğinin harika bir örneğidir.
+
+**Adım 4: Stacking Uygulaması**
+
+Stacking, farklı türdeki modellerin uzmanlıklarını birleştiren daha gelişmiş bir yöntemdir.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Stacking` seçeneğini seçin.
+2.  **Yapılandırma:** Ayarlar penceresi biraz daha karmaşıktır:
+    *   `baseLearners` (Temel Öğreniciler): Bunlar, ilk seviyede tahmin yapacak olan uzmanlarımızdır. Listeye birden fazla model ekleyebilirsiniz. Örneğin, bir `J48` karar ağacı ve bir `NaiveBayes` sınıflandırıcısını temel öğreniciler olarak belirleyelim.
+    *   `metaClassifier` (Meta Sınıflandırıcı): Bu, temel öğrenicilerin tahminlerini girdi olarak alıp nihai kararı verecek olan "proje yöneticisi" modeldir. Meta model olarak genellikle `Logistic` gibi daha basit bir model seçmek iyi bir başlangıçtır.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Stacking, J48'in ve NaiveBayes'in tahminlerini akıllıca birleştirerek bir sonuç üretir. Bu yöntem, temel modellerin birbirlerinin zayıf yönlerini telafi etme potansiyeli taşıdığı için çok yüksek performanslar elde edebilir.
+
+#### Python (Scikit-learn) ile Topluluk Öğrenmesi Uygulaması
+
+Şimdi aynı işlemleri Python'un güçlü `scikit-learn` kütüphanesi ile nasıl yapacağımıza bakalım. Kod yazmak, bize süreç üzerinde çok daha fazla kontrol ve esneklik sağlar.
+
+Aşağıdaki kod bloğu, Iris veri setini yükler, tek bir karar ağacı ile referans performansını ölçer ve ardından Bagging (Random Forest), Boosting (Gradient Boosting) ve Stacking yöntemlerini uygulayarak sonuçları karşılaştırır.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Temel ve Topluluk Modelleri
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, StackingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+# 1. Veri Setini Yükleme ve Hazırlama
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Veriyi %70 eğitim, %30 test olarak ayıralım
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
+
+print("--- Iris Veri Seti ile Topluluk Öğrenmesi Karşılaştırması ---")
+
+# 2. Referans Model: Tek bir Karar Ağacı
+# Modelimizi oluşturalım (max_depth=3 ile ağacın çok karmaşık olmasını engelliyoruz)
+tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+tree_model.fit(X_train, y_train)
+tree_pred = tree_model.predict(X_test)
+tree_accuracy = accuracy_score(y_test, tree_pred)
+print(f"1. Tek Karar Ağacı Doğruluğu: {tree_accuracy:.4f}")
+
+# 3. Bagging Yöntemi: Random Forest (Rastgele Orman)
+# 100 adet karar ağacından oluşan bir orman kuralım
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
+rf_pred = rf_model.predict(X_test)
+rf_accuracy = accuracy_score(y_test, rf_pred)
+print(f"2. Random Forest (Bagging) Doğruluğu: {rf_accuracy:.4f}")
+
+# 4. Boosting Yöntemi: Gradient Boosting
+# Ardışık olarak 100 zayıf model eğitelim
+gb_model = GradientBoostingClassifier(n_estimators=100, random_state=42)
+gb_model.fit(X_train, y_train)
+gb_pred = gb_model.predict(X_test)
+gb_accuracy = accuracy_score(y_test, gb_pred)
+print(f"3. Gradient Boosting Doğruluğu: {gb_accuracy:.4f}")
+
+# 5. Stacking Yöntemi
+# Seviye-0: Temel modellerimizi tanımlayalım
+base_estimators = [
+    ('svc', SVC(probability=True, random_state=42)),
+    ('rf', RandomForestClassifier(n_estimators=50, random_state=42))
+]
+
+# Seviye-1: Meta modelimizi tanımlayalım
+# Bu model, temel modellerin tahminlerini birleştirmeyi öğrenecek
+meta_model = LogisticRegression()
+
+# Stacking modelini oluşturalım
+stacking_model = StackingClassifier(estimators=base_estimators, final_estimator=meta_model, cv=5)
+stacking_model.fit(X_train, y_train)
+stacking_pred = stacking_model.predict(X_test)
+stacking_accuracy = accuracy_score(y_test, stacking_pred)
+print(f"4. Stacking Doğruluğu: {stacking_accuracy:.4f}")
+print("-" * 60)
+```
+
+**Kodu Yorumlayalım:**
+
+Gençler, bu kodda öncelikle tek bir karar ağacını eğitip yaklaşık %95.5 doğrulukla referans noktamızı belirledik. Ardından:
+*   **Random Forest (Bagging):** 100 farklı karar ağacını, veri setinin rastgele alt kümeleri üzerinde eğitip sonuçlarını birleştirdik. Sonucun, tek bir ağaca göre genellikle daha iyi veya en azından eşit olduğunu görürüz.
+*   **Gradient Boosting:** 100 adet zayıf modeli ardışık olarak, birbirinin hatalarını düzeltecek şekilde eğittik. Bu yöntem de genellikle tek bir modelden daha yüksek performans gösterir.
+*   **Stacking:** İki güçlü modeli (bir Destek Vektör Makinesi ve bir Rastgele Orman) temel öğrenici olarak kullandık. Bu modellerin yaptığı tahminleri, bir Lojistik Regresyon modeline "yeni veri" olarak sunduk ve nihai kararı bu meta-modelin vermesini sağladık.
+
+Bu uygulama, topluluk öğrenmesi yöntemlerinin tek bir modelin sınırlarını nasıl aşabileceğini ve daha sağlam, güvenilir ve genellikle daha doğru tahminler üretebileceğini somut bir şekilde göstermektedir. Unutmayın, en iyi yöntemi seçmek, elinizdeki problemin doğasına ve verinin yapısına bağlıdır; bu yüzden farklı yaklaşımları denemek, makine öğrenmesi sürecinin önemli bir parçasıdır.
+
+Regresyon Uygulaması için benzer adımları izleyebilir ve `RandomForestRegressor`, `GradientBoostingRegressor` ve `StackingRegressor` sınıflarını kullanabilirsiniz.
+
+### Uygulama: Regresyon Problemlerinde Topluluk Öğrenmesi (WEKA ve Python ile)
+
+Şimdi de topluluk öğrenmesi yöntemlerini, sayısal bir değeri tahmin etmeye çalıştığımız regresyon problemlerinde nasıl uygulayacağımızı görelim. Amacımız, tek bir regresyon modelinin performansını, birden fazla modelin bir araya gelerek nasıl iyileştirebileceğini gözlemlemektir.
+
+#### WEKA ile Regresyon Topluluk Öğrenmesi Uygulaması
+
+Weka'nın `cpu.arff` veri seti, bilgisayar CPU'larının çeşitli özelliklerine göre tahmini göreceli performansını (`ERP` niteliği) tahmin etmeye yönelik bir regresyon problemidir. Bu veri setini kullanarak topluluk öğrenmesi yöntemlerini uygulayalım.
+
+**Adım 1: Veri Setini Yükleme**
+
+1.  **WEKA'yı Başlatın:** WEKA GUI Chooser ekranından "Explorer" seçeneğine tıklayın.
+2.  **Veri Setini Yükleyin:** "Preprocess" sekmesindeyken "Open file..." butonuna tıklayın ve Weka'nın kurulu olduğu dizindeki `data` klasöründen `cpu.arff` dosyasını seçerek yükleyin.
+3.  **Hedef Değişkeni Belirleyin:** Sağ taraftaki "Attributes" panelinde `ERP` özniteliğini seçin. Bu, tahmin etmeye çalışacağımız hedef değişkendir.
+
+**Adım 2: Referans Model (Tek bir Regresyon Ağacı - M5P)**
+
+Topluluk modellerinin performansını karşılaştırmak için önce tek bir regresyon ağacının performansını ölçelim. Weka'da regresyon ağaçları için `M5P` algoritması kullanılır.
+
+1.  **"Classify" Sekmesine Geçin:** "Classify" sekmesine tıklayın.
+2.  **Algoritma Seçimi:** "Choose" butonuna tıklayın. Açılan menüden `trees` altındaki `M5P` algoritmasını seçin.
+3.  **Test Seçenekleri:** "Test options" bölümünde "Cross-validation" seçeneğinin işaretli olduğundan ve "Folds" değerinin 10 olduğundan emin olun. "Class" açılır menüsünde `ERP` özniteliğinin seçili olduğundan emin olun.
+4.  **Modeli Eğitin ve Değerlendirin:** "Start" butonuna basın.
+5.  **Sonuçları Not Alın:** "Classifier output" panelinde `Mean absolute error` (MAE), `Root mean squared error` (RMSE) ve `Correlation coefficient` (R-Kare için karesini alacağız) değerlerini not alın. Bu değerler, tek bir M5P modelinin referans performansını oluşturacaktır.
+
+**Adım 3: Bagging Uygulaması (M5P ile)**
+
+Şimdi, birçok M5P ağacını bir araya getirerek Bagging yöntemini uygulayalım.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Bagging` seçeneğini seçin.
+2.  **Yapılandırma:** `Bagging` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresini `trees.M5P` olarak değiştirin.
+    *   `numIterations` (oluşturulacak model sayısı) varsayılan 10 olarak kalabilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Sonuçları (MAE, RMSE, R-Kare) referans M5P modeliyle karşılaştırın. Bagging'in genellikle varyansı azaltarak daha kararlı ve potansiyel olarak daha iyi sonuçlar verdiğini gözlemleyebilirsiniz.
+
+**Adım 4: Boosting Uygulaması (AdditiveRegression ile M5P)**
+
+Weka'da regresyon için Boosting yöntemlerinden biri `AdditiveRegression`'dır. Bu, zayıf öğrenicileri ardışık olarak eğiterek hataları düzeltmeye odaklanır.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `AdditiveRegression` seçeneğini seçin.
+2.  **Yapılandırma:** `AdditiveRegression` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `classifier` parametresini `trees.M5P` olarak değiştirin. (Daha zayıf bir öğrenici olan `DecisionStump` da denenebilir, ancak M5P ile de iyi sonuçlar alınabilir.)
+    *   `numIterations` (oluşturulacak model sayısı) varsayılan 10 olarak kalabilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Boosting'in, özellikle modelin sistematik hatalarını (yanlılığını) azaltarak performansı nasıl artırdığını gözlemleyin.
+
+**Adım 5: Stacking Uygulaması (LinearRegression ve M5P ile)**
+
+Stacking, farklı regresyon modellerinin tahminlerini birleştirerek daha güçlü bir meta-model oluşturur.
+
+1.  **Algoritma Seçimi:** "Choose" -> `meta` -> `Stacking` seçeneğini seçin.
+2.  **Yapılandırma:** `Stacking` ayarlarına girdiğinizde:
+    *   `baseLearners` (Temel Öğreniciler): Listeye iki farklı regresyon modeli ekleyelim. Örneğin, `functions.LinearRegression` ve `trees.M5P`.
+    *   `metaClassifier` (Meta Sınıflandırıcı): Temel modellerin tahminlerini birleştirecek olan modeldir. Genellikle basit bir regresyon modeli (örneğin `functions.LinearRegression`) tercih edilir.
+3.  **Çalıştırma ve Yorumlama:** "Start" butonuna basın. Stacking'in, farklı modellerin güçlü yönlerini birleştirerek nasıl daha iyi bir tahmin performansı sunduğunu gözlemleyin.
+
+#### Python (Scikit-learn) ile Regresyon Topluluk Öğrenmesi Uygulaması
+
+Python'da `scikit-learn` kütüphanesi, regresyon için topluluk öğrenmesi algoritmalarını uygulamak için güçlü ve esnek araçlar sunar. Bu örnekte, `load_diabetes` veri setini kullanarak Bagging (Random Forest), Boosting (Gradient Boosting) ve Stacking yöntemlerini uygulayacağız.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+# Temel ve Topluluk Regresyon Modelleri
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, StackingRegressor
+from sklearn.linear_model import LinearRegression, Ridge
+
+# 1. Veri Setini Yükleme ve Hazırlama
+diabetes = load_diabetes()
+X, y = diabetes.data, diabetes.target
+
+# Veriyi %70 eğitim, %30 test olarak ayıralım
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+print("--- Diyabet Veri Seti ile Regresyon Topluluk Öğrenmesi Karşılaştırması ---")
+
+# Yardımcı fonksiyon: Model performansını raporlamak için
+def evaluate_regression_model(model, X_test, y_test, model_name):
+    y_pred = model.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred)
+    # RMSE'yi hesaplamak için mean_squared_error'da squared=False kullanılır
+    rmse = mean_squared_error(y_test, y_pred, squared=False)
+    r2 = r2_score(y_test, y_pred)
+    print(f"\n{model_name} Performansı:")
+    print(f"  Ortalama Mutlak Hata (MAE): {mae:.2f}")
+    print(f"  Kök Ortalama Karesel Hata (RMSE): {rmse:.2f}")
+    print(f"  R-Kare (R²): {r2:.2f}")
+
+# 2. Referans Model: Tek bir Karar Ağacı Regresyonu
+tree_model = DecisionTreeRegressor(max_depth=5, random_state=42)
+tree_model.fit(X_train, y_train)
+evaluate_regression_model(tree_model, X_test, y_test, "1. Tek Karar Ağacı")
+
+# 3. Bagging Yöntemi: Random Forest Regresyonu
+rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
+evaluate_regression_model(rf_model, X_test, y_test, "2. Random Forest (Bagging)")
+
+# 4. Boosting Yöntemi: Gradient Boosting Regresyonu
+gb_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
+gb_model.fit(X_train, y_train)
+evaluate_regression_model(gb_model, X_test, y_test, "3. Gradient Boosting")
+
+# 5. Stacking Yöntemi
+# Seviye-0: Temel regresyon modellerimizi tanımlayalım
+base_estimators = [
+    ('lr', LinearRegression()),
+    ('dtr', DecisionTreeRegressor(max_depth=5, random_state=42)),
+    ('ridge', Ridge(random_state=42))
+]
+
+# Seviye-1: Meta modelimizi tanımlayalım (temel modellerin tahminlerini birleştirecek)
+meta_model = LinearRegression()
+
+# Stacking regresyon modelini oluşturalım
+stacking_model = StackingRegressor(estimators=base_estimators, final_estimator=meta_model, cv=5)
+stacking_model.fit(X_train, y_train)
+evaluate_regression_model(stacking_model, X_test, y_test, "4. Stacking Regresyon")
+print("\n" + "-" * 60)
+```
+
+**Kodu Yorumlayalım:**
+
+Bu Python kodunda, diyabet veri setini kullanarak regresyon problemi için topluluk öğrenmesi yöntemlerini uyguladık.
+
+1.  **Veri Seti ve Ayırma:** `load_diabetes` ile bir regresyon veri seti yükledik ve eğitim/test setlerine ayırdık.
+2.  **Referans Model:** Tek bir `DecisionTreeRegressor` eğiterek başlangıç performansımızı belirledik.
+3.  **Random Forest (Bagging):** `RandomForestRegressor` ile 100 adet karar ağacını paralel olarak eğitip tahminlerini ortalamasını aldık. Bu, tek bir ağacın aşırı öğrenme (overfitting) eğilimini azaltarak daha genellenebilir sonuçlar üretir.
+4.  **Gradient Boosting (Boosting):** `GradientBoostingRegressor` ile 100 adet zayıf regresyon ağacını ardışık olarak eğiterek, her birinin bir öncekinin hatalarını düzeltmesini sağladık. Bu yöntem, modelin sistematik hatalarını azaltmada etkilidir.
+5.  **Stacking Regresyon:** `LinearRegression`, `DecisionTreeRegressor` ve `Ridge` gibi farklı temel regresyon modellerinin tahminlerini bir araya getirdik. Bu tahminleri yeni özellikler olarak kullanarak bir `LinearRegression` meta-modelini eğittik. Stacking, farklı algoritmaların güçlü yönlerini birleştirerek genellikle en iyi performansı sunma potansiyeline sahiptir.
+
+Her bir modelin MAE, RMSE ve R-kare metriklerini raporlayarak performanslarını karşılaştırdık. Genellikle topluluk öğrenmesi modellerinin, tek bir temel modele göre daha düşük hata oranları (MAE, RMSE) ve daha yüksek açıklayıcılık (R-kare) değerleri sunduğunu gözlemleyeceksiniz. Bu, topluluk öğrenmesinin regresyon problemlerinde de tahmin doğruluğunu artırmak için ne kadar etkili bir yöntem olduğunu göstermektedir.
+
+
+### Destek Vektör Makineleri (Support Vector Machines - SVM)
+
+Gençler, şimdi sınıflandırma problemlerine farklı ve oldukça güçlü bir açıdan yaklaşan bir algoritmayı inceleyeceğiz: Destek Vektör Makineleri, ya da kısaca SVM.
+
+#### 1. Temel Fikir: En Geniş Yolu Bulmak
+
+Diyelim ki elimizde iki farklı gruba ait veri noktaları var ve amacımız bu iki grubu birbirinden ayıran bir çizgi çekmek. Lojistik regresyon gibi algoritmalar bu işi yapabilen bir çizgi bulur. Ancak genellikle bu işi yapabilecek sonsuz sayıda farklı çizgi vardır. Peki, bu çizgilerden hangisi en iyisidir?
+
+SVM, bu soruya çok net bir cevap verir: İki sınıfa da en uzak olan, yani aradaki "güvenlik marjını" en geniş tutan çizgi en iyisidir.
+
+Bu durumu, iki farklı köyün arazisini ayıran bir yol yapmaya benzetebiliriz. En güvenli yol, her iki köyün en yakın evine de eşit ve maksimum uzaklıkta olan yoldur. Bu yol, gelecekte köylerin sınırlarında olabilecek küçük oynamalardan en az etkilenecek olan yoldur. İşte SVM de bu en geniş "yolu" veya "marjı" bulmaya çalışır.
+
+Bu süreçte üç temel kavram öne çıkar:
+
+*   **Hiperdüzlem (Hyperplane):** Bu, bizim ayırıcı çizgimizdir. İki boyutta bu bir doğrudur, üç boyutta bir düzlemdir. Daha yüksek boyutlarda ise adına "hiperdüzlem" deriz.
+*   **Destek Vektörleri (Support Vectors):** Yolun kenarına en yakın olan, yani marjın sınırlarını belirleyen veri noktalarıdır. Algoritmanın adını da bu noktalardan alır. Bütün veri seti içinden sadece bu noktalar önemlidir; diğer noktaları kaldırsanız bile hiperdüzlemin yeri değişmez.
+*   **Marj (Margin):** Hiperdüzlem ile destek vektörleri arasındaki toplam mesafedir. SVM'nin temel amacı bu marjı maksimize etmektir.
+
+```mermaid
+graph TD
+    subgraph "SVM Konsepti"
+        A[Veri Noktaları] --> B{En Geniş Marjı Bul};
+        B --> C[Hiperdüzlemi Belirle];
+        C --> D[Sınıflandırma Yap];
+        E[Destek Vektörleri] -.-> C;
+    end
+```
+
+<svg width="500" height="350" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sınıf A noktaları -->
+    <circle cx="100" cy="100" r="6" fill="#4285F4"/>
+    <circle cx="150" cy="150" r="6" fill="#4285F4"/>
+    <circle cx="120" cy="200" r="6" fill="#4285F4"/>
+    <!-- Sınıf B noktaları -->
+    <circle cx="350" cy="150" r="6" fill="#DB4437"/>
+    <circle cx="400" cy="200" r="6" fill="#DB4437"/>
+    <circle cx="380" cy="250" r="6" fill="#DB4437"/>
+    <!-- Destek Vektörleri -->
+    <circle cx="200" cy="220" r="8" fill="#4285F4" stroke="black" stroke-width="2"/>
+    <circle cx="300" cy="120" r="8" fill="#DB4437" stroke="black" stroke-width="2"/>
+    <!-- Hiperdüzlem -->
+    <line x1="50" y1="320" x2="450" y2="50" stroke="black" stroke-width="3"/>
+    <!-- Marj Çizgileri -->
+    <line x1="95" y1="340" x2="495" y2="70" stroke="black" stroke-width="1" stroke-dasharray="5,5"/>
+    <line x1="5" y1="300" x2="405" y2="30" stroke="black" stroke-width="1" stroke-dasharray="5,5"/>
+    <!-- Etiketler -->
+    <text x="220" y="40" font-size="14" font-weight="bold">Hiperdüzlem</text>
+    <text x="350" y="90" font-size="14" fill="#DB4437">Destek Vektörü</text>
+    <text x="80" y="240" font-size="14" fill="#4285F4">Destek Vektörü</text>
+    <text x="250" y="200" font-size="14" transform="rotate(-35 250,200)">Maksimum Marj</text>
+</svg>
+
+Matematiksel olarak ifade etmek gerekirse, hiperdüzlemin denklemi `w·x + b = 0`'dır. Marjın sınırları ise `w·x + b = 1` ve `w·x + b = -1` denklemleriyle tanımlanır. SVM'nin optimizasyon problemi, `yᵢ(w·xᵢ + b) ≥ 1` koşulunu sağlarken, marjı (`2/||w||`) maksimize etmek, yani `||w||²`'yi minimize etmektir.
+
+#### 2. Gerçek Dünya Problemleri: Yumuşak Marj ve Çekirdek Sihri
+
+Teoride her şey güzel, peki ya veriler iç içe geçmişse ve tek bir doğruyla mükemmel bir şekilde ayrılamıyorsa? Gerçek dünya verileri nadiren bu kadar temizdir. İşte burada SVM'nin iki güçlü özelliği devreye girer.
+
+**a) Yumuşak Marj (Soft Margin)**
+
+Bazen en iyi ayrımı yapabilmek için birkaç veri noktasını feda etmek, yani yanlış sınıflandırılmasına izin vermek daha mantıklıdır. Buna **yumuşak marj** yaklaşımı denir. Modelin, aykırı değerlere (outliers) karşı daha dayanıklı olmasını ve daha iyi genelleme yapmasını sağlar.
+
+Bu tolerans seviyesini `C` adını verdiğimiz bir hiperparametre ile kontrol ederiz:
+*   **Yüksek `C` değeri:** Modelin hatalara karşı toleransı çok düşüktür. Her noktayı doğru sınıflandırmaya çalışır, bu da daha dar bir marja ve potansiyel olarak ezberlemeye (overfitting) yol açabilir.
+*   **Düşük `C` değeri:** Model hatalara karşı daha toleranslıdır. Daha geniş bir marj bulmaya odaklanır, bu da genellikle daha iyi bir genelleme yeteneği demektir.
+
+**b) Çekirdek Yöntemi (The Kernel Trick)**
+
+Peki ya verilerimiz dairesel bir şekilde dağılmışsa? Bu durumda doğrusal bir çizgi işe yaramaz.
+
+<svg width="500" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- 2D Görünüm -->
+    <g>
+        <text x="100" y="20" font-size="14" font-weight="bold">2D Uzay (Ayrılamaz)</text>
+        <circle cx="125" cy="125" r="80" fill="none" stroke="#DB4437" stroke-width="2"/>
+        <circle cx="125" cy="125" r="30" fill="none" stroke="#4285F4" stroke-width="2"/>
+        <circle cx="125" cy="95" r="5" fill="#4285F4"/>
+        <circle cx="125" cy="155" r="5" fill="#4285F4"/>
+        <circle cx="95" cy="125" r="5" fill="#4285F4"/>
+        <circle cx="155" cy="125" r="5" fill="#4285F4"/>
+        <circle cx="125" cy="45" r="5" fill="#DB4437"/>
+        <circle cx="125" cy="205" r="5" fill="#DB4437"/>
+        <circle cx="45" cy="125" r="5" fill="#DB4437"/>
+        <circle cx="205" cy="125" r="5" fill="#DB4437"/>
+    </g>
+    <!-- Ok -->
+    <line x1="240" y1="125" x2="280" y2="125" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker></defs>
+    <text x="245" y="115" font-size="12">Çekirdek</text>
+    <text x="245" y="145" font-size="12">Dönüşümü</text>
+    <!-- 3D Görünüm -->
+    <g>
+        <text x="350" y="20" font-size="14" font-weight="bold">3D Uzay (Ayrılabilir)</text>
+        <ellipse cx="375" cy="180" rx="100" ry="30" fill="#DB4437" opacity="0.2"/>
+        <ellipse cx="375" cy="80" rx="40" ry="15" fill="#4285F4" opacity="0.2"/>
+        <line x1="275" y1="130" x2="475" y2="130" stroke="black" stroke-width="2" stroke-dasharray="4,4"/>
+        <text x="400" y="120" font-size="12">Ayırıcı Düzlem</text>
+    </g>
+</svg>
+
+SVM'nin buradaki çözümü dahiyanedir. Veriyi, doğrusal olarak ayrılabileceği daha yüksek boyutlu bir uzaya taşır. Yukarıdaki örnekte, iki boyutlu dairesel veriyi üçüncü bir boyuta taşıdığımızda, bir düzlemle kolayca ayrılabildiğini görürüz.
+
+Bu taşıma işlemi hesaplama açısından çok maliyetli olabilir. **Çekirdek Yöntemi (Kernel Trick)**, bu dönüşümü gerçekten yapmadan, sanki yapmışız gibi sonuçları hesaplamamızı sağlayan matematiksel bir kısayoldur. Bu sayede SVM, çok karmaşık ve doğrusal olmayan karar sınırları çizebilir.
+
+*   **Lineer Çekirdek:** Standart, doğrusal SVM.
+*   **Polinomsal Çekirdek:** Eğrisel sınırlar oluşturur.
+*   **RBF (Radial Basis Function) Çekirdeği:** En yaygın kullanılan ve en esnek olanıdır. Veri noktalarının birbirine olan yakınlığına göre karmaşık sınırlar çizebilir.
+#### 3. Uygulama: Weka ve Python ile SVM
+
+Gençler, şimdi bu teorik bilgileri somut birer uygulamaya dönüştürelim. Hem görsel bir arayüz sunan Weka ile hem de kodlama esnekliği sağlayan Python ile SVM modelini nasıl eğiteceğimizi göreceğiz.
+
+##### Weka ile SVM (SMO) Uygulaması
+
+Weka'da SVM algoritması, onu çözen optimizasyon yönteminin adıyla, yani **SMO (Sequential Minimal Optimization)** olarak karşımıza çıkar. Adım adım bir sınıflandırma problemi çözelim.
+
+1.  **Veri Setini Yükleme:** Weka Explorer arayüzünü açın. "Preprocess" sekmesinden, Weka'nın kendi `data` klasöründe bulunan `iris.arff` veri setini yükleyin.
+2.  **Algoritma Seçimi:** "Classify" sekmesine geçin. "Choose" butonuna tıklayın ve açılan menüden `functions` klasörünün altındaki `SMO` algoritmasını seçin.
+3.  **Parametreleri İnceleme:** `SMO` yazısının üzerine tıklayarak ayarlar penceresini açalım. Burada, daha önce teorisini öğrendiğimiz iki kritik parametre bizi karşılar:
+    *   **`C`:** Bu, bizim yumuşak marj (soft margin) toleransımızı belirleyen parametredir. Değeri ne kadar yüksek olursa, modelin eğitim verisindeki hatalara toleransı o kadar az olur.
+    *   **`kernel`:** Bu, çekirdek yöntemini seçtiğimiz yerdir. Varsayılan olarak `PolyKernel` (Polinomsal Çekirdek) seçilidir. Buraya tıklayarak `RBFKernel` gibi daha esnek bir çekirdeği de seçebiliriz. `RBFKernel`, genellikle birçok problem türü için güçlü bir başlangıç noktasıdır.
+4.  **Modeli Eğitme ve Değerlendirme:** Test seçeneği olarak "Cross-validation" seçiliyken "Start" butonuna basın. "Classifier output" panelinde, modelin doğruluk oranı ve karışıklık matrisi gibi performans metriklerini göreceksiniz. Farklı `C` değerleri ve çekirdek türleri deneyerek sonuçların nasıl değiştiğini gözlemleyebilirsiniz.
+
+##### Python (Scikit-learn) ile SVM Uygulaması
+
+Şimdi aynı işlemi bir de Python'un en yaygın makine öğrenmesi kütüphanesi olan `scikit-learn` ile yapalım. Kod yazmak, bize süreç üzerinde daha fazla kontrol imkanı tanır. Burada SVM sınıflandırıcısı `SVC` (Support Vector Classifier) adıyla bulunur.
+
+```python
+# Gerekli kütüphaneleri içe aktaralım
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# 1. Veri Setini Yükleme
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# 2. Veriyi Eğitim ve Test Olarak Ayırma
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 3. SVM Modelini Oluşturma ve Eğitme
+# kernel='rbf': Doğrusal olmayan problemler için RBF çekirdeğini kullanıyoruz.
+# C=1.0: Yumuşak marj için regularizasyon parametresi.
+# gamma='auto': RBF çekirdeğinin bir parametresi.
+model = SVC(kernel='rbf', C=1.0, gamma='auto')
+
+# Modeli eğitim verileriyle eğitiyoruz
+model.fit(X_train, y_train)
+
+# 4. Tahmin Yapma ve Performansı Değerlendirme
+y_pred = model.predict(X_test)
+
+# Modelin doğruluğunu hesaplıyoruz
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"SVM Modelinin Doğruluk Oranı: {accuracy:.4f}")
+```
+
+Bu kod bloğunda, Iris veri setini yükledikten sonra bir `SVC` nesnesi oluşturduk. Modelin en önemli parametrelerini burada belirttik:
+*   `kernel`: Verimizin doğrusal olarak ayrılamayacağını varsayarak en yaygın seçeneklerden biri olan `'rbf'`yi seçtik. Eğer problemimiz basit olsaydı `'linear'` seçebilirdik.
+*   `C`: Hatalara karşı ne kadar katı olacağımızı belirleyen parametremiz. Bu değeri artırmak, modelin eğitim verisine daha sıkı uymasına, azaltmak ise daha genel bir sınır bulmasına neden olur.
+*   `gamma`: RBF çekirdeğine özgü bir parametredir ve tek bir eğitim örneğinin etki alanının ne kadar geniş olacağını kontrol eder.
+
+Modeli eğittikten sonra test verisi üzerindeki doğruluğunu hesapladık. Bu parametrelerle oynayarak SVM'nin ne kadar esnek ve güçlü bir model olduğunu kendiniz de test edebilirsiniz.
+
+Özetle, SVM marj maksimizasyonu temel fikri üzerine kurulu, yumuşak marj ve çekirdek yöntemleri sayesinde hem doğrusal hem de karmaşık, doğrusal olmayan problemlerde oldukça başarılı sonuçlar veren, zarif ve güçlü bir sınıflandırma algoritmasıdır.
+
+### Kümeleme (Clustering)
+
+Gençler, şimdi makine öğrenmesinin denetimsiz (unsupervised) olarak adlandırılan alanına bir giriş yapıyoruz. Burada elimizde, modelimize yol gösterecek "doğru cevaplar" yani etiketler bulunmaz. Amacımız, verinin kendi içindeki doğal yapısını, gizli grupları ve desenleri ortaya çıkarmaktır. Bu alanın en temel ve yaygın kullanılan tekniği kümelemedir.
+
+Kümelemenin temel amacı, veri noktalarını birbirine benzer özelliklere sahip gruplara ayırmaktır. Bir küme içindeki veri noktaları birbirine çok benzerken, farklı kümelerdeki veri noktaları birbirinden olabildiğince farklı olmalıdır. Şimdi bu işi yapan bazı popüler algoritmaları ve çalışma mantıklarını inceleyelim.
+
+#### K-Ortalamalar Kümelemesi (K-Means Clustering)
+
+K-Means, en bilinen ve sezgisel kümeleme algoritmalarından biridir. Adındaki "K", veri setini kaç adet kümeye ayırmak istediğimizi belirttiğimiz bir parametredir.
+
+**Çalışma Mantığı**
+
+Süreci, $K$ adet grup lideri seçip, herkesin kendisine en yakın liderin grubuna katıldığı bir organize olma sürecine benzetebiliriz. Liderler, grupları oluştuktan sonra grubun tam ortasına geçerek pozisyonlarını günceller ve bu süreç, gruplar stabil hale gelene kadar devam eder.
+
+1.  **Başlangıç:** İlk olarak, veri setini kaç kümeye ($K$) ayıracağımıza karar veririz. Ardından, veri uzayında rastgele $K$ adet nokta **küme merkezi (centroid)** olarak belirlenir.
+2.  **Atama Adımı:** Her bir veri noktası, kendisine en yakın olan küme merkezine atanır. Bu yakınlık genellikle Öklid mesafesi ile ölçülür. Bu adımın sonunda, $K$ adet başlangıç kümesi oluşmuş olur.
+3.  **Güncelleme Adımı:** Her kümenin yeni merkezi, o kümeye atanmış tüm noktaların geometrik ortalaması alınarak yeniden hesaplanır. Yani her küme merkezi, temsil ettiği grubun tam ortasına kaydırılır.
+4.  **Tekrarlama:** Atama ve Güncelleme adımları, küme merkezlerinin yeri artık kayda değer bir şekilde değişmeyene veya önceden belirlenmiş bir tekrar sayısına ulaşılana kadar tekrarlanır. Algoritma durduğunda, son oluşan gruplar bizim kümelerimizdir.
+
+K-Means'in temel optimizasyon hedefi, küme içi hata kareleri toplamını (Sum of Squared Errors - SSE), yani her bir noktanın kendi küme merkezine olan uzaklıklarının kareleri toplamını minimize etmektir.
+
+<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Adım 1 -->
+    <g>
+        <text x="50" y="20" font-size="14" font-weight="bold">1. Rastgele Merkezler</text>
+        <circle cx="100" cy="100" r="4" fill="gray"/>
+        <circle cx="50" cy="150" r="4" fill="gray"/>
+        <circle cx="150" cy="120" r="4" fill="gray"/>
+        <circle cx="80" cy="200" r="4" fill="gray"/>
+        <circle cx="120" cy="50" r="4" fill="gray"/>
+        <!-- Merkezler -->
+        <rect x="70" y="80" width="10" height="10" fill="red"/>
+        <rect x="130" y="160" width="10" height="10" fill="blue"/>
+    </g>
+    <!-- Adım 2 -->
+    <g>
+        <text x="250" y="20" font-size="14" font-weight="bold">2. Atama Adımı</text>
+        <circle cx="300" cy="100" r="4" fill="red"/>
+        <circle cx="250" cy="150" r="4" fill="blue"/>
+        <circle cx="350" cy="120" r="4" fill="red"/>
+        <circle cx="280" cy="200" r="4" fill="blue"/>
+        <circle cx="320" cy="50" r="4" fill="red"/>
+        <!-- Merkezler -->
+        <rect x="270" y="80" width="10" height="10" fill="red"/>
+        <rect x="330" y="160" width="10" height="10" fill="blue"/>
+    </g>
+    <!-- Adım 3 -->
+    <g>
+        <text x="450" y="20" font-size="14" font-weight="bold">3. Güncelleme Adımı</text>
+        <circle cx="500" cy="100" r="4" fill="red"/>
+        <circle cx="450" cy="150" r="4" fill="blue"/>
+        <circle cx="550" cy="120"r="4" fill="red"/>
+        <circle cx="480" cy="200" r="4" fill="blue"/>
+        <circle cx="520" cy="50" r="4" fill="red"/>
+        <!-- Yeni Merkezler -->
+        <rect x="515" y="88" width="10" height="10" fill="red" stroke="black"/>
+        <rect x="463" y="173" width="10" height="10" fill="blue" stroke="black"/>
+        <line x1="470" y1="80" x2="515" y2="88" stroke="red" stroke-dasharray="2,2"/>
+        <line x1="530" y1="160" x2="463" y2="173" stroke="blue" stroke-dasharray="2,2"/>
+    </g>
+</svg>
+
+**Optimal K Değerini Bulmak**
+
+K-Means'in en zorlayıcı yanlarından biri, en başta $K$ değerini doğru belirlemektir. Bunun için yaygın olarak kullanılan yöntemlerden biri **Dirsek Metodu (Elbow Method)**'dur.
+Farklı $K$ değerleri (örneğin $K=1$'den $K=10$'a kadar) için algoritmayı çalıştırır ve her seferinde küme içi hata kareleri toplamını (SSE) hesaplarız. Bu değerleri bir grafiğe döktüğümüzde, genellikle SSE değerinin hızla düştüğü ve ardından düşüş hızının yavaşladığı bir nokta görülür. Grafikteki bu bükülme noktası, bir kolun dirseğine benzediği için "dirsek noktası" olarak adlandırılır ve genellikle optimal $K$ değeri için iyi bir adaydır.
+
+#### Hiyerarşik Kümeleme (Hierarchical Clustering)
+
+Hiyerarşik kümeleme, K-Means gibi önceden bir küme sayısı belirlememizi gerektirmeyen, farklı bir yaklaşım sunar. Veri noktaları arasında bir hiyerarşi veya "ağaç yapısı" oluşturur. İki temel türü vardır:
+
+1.  **Birleştirici (Agglomerative):** "Aşağıdan yukarıya" bir yaklaşımdır. Başlangıçta her veri noktası kendi başına bir küme olarak kabul edilir. Ardından, her adımda birbirine en yakın olan iki küme birleştirilir. Bu süreç, en sonunda tüm noktalar tek bir büyük küme altında toplanana kadar devam eder.
+2.  **Bölücü (Divisive):** "Yukarıdan aşağıya" bir yaklaşımdır. Başlangıçta tüm veri noktaları tek bir kümededir. Her adımda, küme daha küçük parçalara bölünür. Bu, daha az kullanılan bir yöntemdir.
+
+Birleştirici yaklaşımın sonucu, **dendrogram** adı verilen bir ağaç diyagramı ile görselleştirilir. Bu diyagram, hangi kümelerin hangi "uzaklık" seviyesinde birleştiğini gösterir. Dendrograma bakarak, ağacı belirli bir seviyeden "kesebilir" ve istediğimiz sayıda küme elde edebiliriz.
+
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+    <text x="150" y="20" font-size="14" font-weight="bold">Dendrogram</text>
+    <!-- Veri Noktaları -->
+    <text x="45" y="280">A</text>
+    <line x1="50" y1="270" x2="50" y2="250" stroke="black"/>
+    <text x="95" y="280">B</text>
+    <line x1="100" y1="270" x2="100" y2="250" stroke="black"/>
+    <text x="195" y="280">C</text>
+    <line x1="200" y1="270" x2="200" y2="200" stroke="black"/>
+    <text x="295" y="280">D</text>
+    <line x1="300" y1="270" x2="300" y2="150" stroke="black"/>
+    <text x="345" y="280">E</text>
+    <line x1="350" y1="270" x2="350" y2="150" stroke="black"/>
+    <!-- Birleşmeler -->
+    <line x1="50" y1="250" x2="100" y2="250" stroke="black"/>
+    <line x1="75" y1="250" x2="75" y2="200" stroke="black"/>
+    <line x1="75" y1="200" x2="200" y2="200" stroke="black"/>
+    <line x1="137.5" y1="200" x2="137.5" y2="100" stroke="black"/>
+    <line x1="300" y1="150" x2="350" y2="150" stroke="black"/>
+    <line x1="325" y1="150" x2="325" y2="100" stroke="black"/>
+    <line x1="137.5" y1="100" x2="325" y2="100" stroke="black"/>
+    <!-- Uzaklık Ekseni -->
+    <line x1="20" y1="270" x2="20" y2="50" stroke="black" marker-start="url(#arrow-up)" marker-end="url(#arrow-up)"/>
+    <text x="0" y="40">Uzaklık</text>
+    <defs><marker id="arrow-up" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 5 L 5 0 L 10 5" fill="none" stroke="black"/></marker></defs>
+</svg>
+
+#### DBSCAN (Yoğunluk Tabanlı Kümeleme)
+
+K-Means gibi algoritmalar, küresel (yuvarlak) şekilli kümeleri bulmada başarılıdır. Peki ya kümelerimiz iç içe geçmiş halkalar veya muz gibi garip şekillere sahipse? İşte bu noktada DBSCAN (Density-Based Spatial Clustering of Applications with Noise) devreye girer.
+
+DBSCAN, küme merkezleri yerine veri noktalarının **yoğunluğuna** odaklanır. Kümeleri, "yoğun bölgelerin" birbirine bağlı olduğu alanlar olarak tanımlar. Bu yaklaşım ona iki önemli avantaj sağlar:
+1.  İstediği şekilde (keyfi şekilli) kümeler bulabilir.
+2.  Herhangi bir kümeye ait olmayan noktaları **gürültü (noise)** veya **aykırı değer (outlier)** olarak etiketleyebilir.
+
+**Çalışma Mantığı**
+
+Algoritma iki temel parametreye dayanır:
+*   **`epsilon (ε)`:** Bir noktanın komşuluğunu tanımlayan yarıçap.
+*   **`minPts`:** Bir noktanın "yoğun" bir bölgede sayılması için `ε` yarıçapı içinde bulunması gereken minimum komşu sayısı.
+
+Bu parametrelere göre, veri noktaları üç kategoriye ayrılır:
+*   **Çekirdek Nokta (Core Point):** `ε` yarıçapı içinde en az `minPts` kadar komşusu olan bir nokta.
+*   **Sınır Noktası (Border Point):** Kendisi bir çekirdek nokta değil, ancak bir çekirdek noktanın komşuluğu içinde yer alan bir nokta.
+*   **Gürültü Noktası (Noise Point):** Ne çekirdek ne de sınır noktası olan, seyrek bir bölgedeki bir nokta.
+
+DBSCAN, rastgele bir noktadan başlar. Eğer bu nokta bir çekirdek noktaysa, ondan yeni bir küme başlatır ve `ε` komşuluğundaki tüm erişilebilir noktaları (hem çekirdek hem de sınır noktalarını) bu kümeye ekler. Bu süreç, küme daha fazla genişleyemeyene kadar devam eder.
+
+---
+### Uygulama: Weka ile Kümeleme Analizi
+
+Şimdi, bu kümeleme algoritmalarından birini Weka'nın görsel arayüzünü kullanarak pratik bir örnek üzerinde uygulayalım. Bu uygulama için yine `iris.arff` veri setini kullanacağız. Amacımız, çiçeğin türünü bilmeden, sadece yaprak ölçümlerine bakarak Weka'nın bu çiçekleri doğal gruplarına ayırıp ayıramayacağını görmek.
+
+1.  **Veri Setini Yükleme:** Weka Explorer'ı açın ve "Preprocess" sekmesinden `iris.arff` dosyasını yükleyin.
+2.  **"Cluster" Sekmesine Geçiş:** Veri yüklendikten sonra, üst menüden "Cluster" sekmesine tıklayın.
+3.  **Algoritma Seçimi:** "Choose" butonuna tıklayarak kümeleme algoritmaları listesini açın. Buradan `SimpleKMeans`'i seçelim.
+4.  **Parametreleri Ayarlama:** `SimpleKMeans` yazısının üzerine tıklayarak ayarlar penceresini açın.
+    *   `numClusters`: Bu, K-Means'in K değeridir. Iris veri setinde üç farklı çiçek türü olduğunu bildiğimiz için bu değeri `3` olarak ayarlayalım.
+    *   Diğer parametreleri şimdilik varsayılan değerlerinde bırakıp "OK" butonuna tıklayın.
+5.  **Analizi Başlatma:** "Cluster mode" bölümünde, varsayılan olarak "Use training set" seçilidir. Bu, tüm veri seti üzerinde kümeleme yapılacağı anlamına gelir. "Start" butonuna basarak analizi başlatın.
+6.  **Sonuçları Yorumlama:** "Clusterer output" panelinde analizin sonuçları gösterilir:
+    *   **Clustered Instances:** Hangi kümede kaç adet örnek olduğunu gösterir. İdeal bir durumda, her kümede yaklaşık 50 örnek görmeyi bekleriz.
+    *   **Cluster centroids:** Her bir kümenin merkez noktasının öznitelik değerlerini gösterir. Bu, her bir kümenin "ortalama" çiçeğini tanımlar.
+    *   Eğer "Cluster mode" olarak "Classes to clusters evaluation" seçeneğini seçip analizi tekrar çalıştırırsanız, Weka, bulduğu kümeleri gerçek sınıf etiketleriyle (`class` özniteliği) karşılaştırır. Bu, kümelemenin ne kadar başarılı olduğunu anlamak için çok faydalıdır. "Incorrectly clustered instances" satırı, kümelerin gerçek sınıflarla ne kadar uyuşmadığını gösterir.
+7.  **Sonuçları Görselleştirme:** En ilginç kısımlardan biri de sonuçları görselleştirmektir. "Result list" panelinde az önce yaptığınız analizin üzerine sağ tıklayın ve "Visualize cluster assignments" seçeneğini seçin.
+    *   Açılan pencerede, veri noktalarının bir grafiğini göreceksiniz. Eksenleri farklı öznitelikler arasında değiştirerek verinin dağılımını inceleyebilirsiniz.
+    *   `Color` açılır menüsünden `Cluster` seçeneğini seçtiğinizde, her bir nokta ait olduğu kümeye göre renklendirilir. Bu, Weka'nın bulduğu grupları net bir şekilde görmenizi sağlar.
+
+Bu basit uygulama ile, etiketlenmemiş verilerdeki gizli yapıları bulmak için kümeleme algoritmalarının nasıl kullanılabileceğini pratik olarak görmüş olduk.
+
+
+***
+
+# Weka ile Iris Veri Seti Üzerinde Değerlendirmeli-Kümeleme Analizi
+
+
+## Veri Seti Tanıtımı
+
+Kullanacağımız **Iris veri seti**, 150 adet süsen çiçeğinin ölçümlerinden oluşur. Bu veri setinde üç farklı çiçek türü vardır: *Setosa*, *Versicolor* ve *Virginica*. Her bir çiçek için dört özellik ölçülmüştür:
+1.  Çanak yaprak uzunluğu (Sepal Length)
+2.  Çanak yaprak genişliği (Sepal Width)
+3.  Taç yaprak uzunluğu (Petal Length)
+4.  Taç yaprak genişliği (Petal Width)
+
+Bizim amacımız, bilgisayara bu çiçeklerin türünü (etiketini) söylemeden, sadece yaprak ölçülerine bakarak bu 150 çiçeği 3 farklı gruba ayırmasını istemektir. Bakalım yaprak boyutlarına bakarak doğru türleri bir araya getirebilecek mi?
+
+### Weka Üzerinde Uygulama Adımları
+
+1.  **Weka'yı Açın:** "Explorer" butonuna tıklayarak ana ekranı açıyoruz.
+2.  **Veriyi Yükleyin:** `Preprocess` sekmesinden `Open file...` diyerek Weka'nın kurulu olduğu klasördeki `data` klasöründen `iris.arff` dosyasını seçiyoruz.
+3.  **Kümeleme Sekmesine Geçin:** Yukarıdaki sekmelerden `Cluster` kısmına geliyoruz.
+4.  **Algoritma Seçimi:** `Choose` butonuna basıp `SimpleKMeans` algoritmasını seçiyoruz. Bu algoritma, verileri belirlediğimiz sayıda merkeze (K) göre gruplar.
+5.  **Parametre Ayarı:** Seçtiğimiz algoritmanın üzerine tıklayarak ayarlarını açıyoruz. `numClusters` değerini **3** yapıyoruz. Çünkü doğada 3 farklı Iris türü olduğunu biliyoruz ve bilgisayarın bunları bulmasını istiyoruz.
+6.  **Analiz Modu:** Sol taraftaki "Cluster mode" seçeneklerinden `Classes to clusters evaluation` seçeneğini işaretliyoruz. Bu seçenek, algoritmanın oluşturduğu kümeler ile gerçek çiçek türlerini karşılaştırmamızı sağlar.
+7.  **Başlat:** `Start` butonuna basıyoruz.
+
+Çıktı ekranında "Cluster 0", "Cluster 1" ve "Cluster 2" diye gruplar göreceksiniz. Eğer bir grupta çoğunlukla aynı tür çiçekler varsa, algoritma başarılı olmuş demektir. Genellikle Setosa türü diğerlerinden çok farklı yaprak ölçülerine sahip olduğu için kolayca ayrılırken, diğer iki türün birbirine karıştığını görebilirsiniz.
+
+---
+
+### Çıktıların Analizi
+
+Weka'nın "Result list" ekranında karşımıza çıkan verileri şu şekilde okumalıyız:
+
+#### 1. Merkez Noktaları (Final Cluster Centroids)
+Çıktıda her kümenin "Centroid" değerlerini görürsünüz.
+
+```text
+Attribute      Full Data   Cluster 0   Cluster 1   Cluster 2
+               (150.0)     (50.0)      (61.0)      (39.0)
+=========================================================
+sepallength    5.8433      5.006       5.9016      6.8538
+sepalwidth     3.0573      3.428       2.7484      3.0769
+petallength    3.758       1.462       4.3934      5.7423
+petalwidth     1.1993      0.246       1.4344      2.0718
+```
+
+Bu tablo bize şunu anlatır:
+*   **Cluster 0:** Petal length (1.462) ve Petal width (0.246) ortalamaları çok düşüktür. Bu biyolojik olarak *Iris Setosa* türüne karşılık gelir.
+*   **Cluster 2:** En büyük yaprak ölçülerine (Petal length: 5.74) sahiptir. Bu da genellikle *Iris Virginica* türüdür.
+
+#### 2. Sınıflandırma Matrisi (Confusion Matrix)
+Algoritmanın başarısını en net göreceğimiz yer burasıdır.
+
+```text
+Clustered Instances
+
+0      50 ( 33%)
+1      61 ( 41%)
+2      39 ( 26%)
+
+Class attribute: class
+Classes to Clusters:
+
+  0  1  2  <-- assigned to cluster
+ 50  0  0 | Iris-setosa
+  0 47  3 | Iris-versicolor
+  0 14 36 | Iris-virginica
+```
+
+Gençler, bu tabloyu okumak analizin en kritik noktasıdır:
+*   **Satır 1:** 50 tane *Iris-setosa* çiçeğinin tamamı (50 tanesi) "Cluster 0"a atanmış. Hata oranı %0. Bu, Setosa'nın diğerlerinden çok net ayrıldığını gösterir.
+*   **Satır 2:** 50 tane *Iris-versicolor* çiçeğinin 47 tanesi doğru kümeye (Cluster 1) gitmiş, ancak 3 tanesi yanlışlıkla Cluster 2'ye (Virginica grubuna) dahil edilmiş.
+*   **Satır 3:** 50 tane *Iris-virginica* çiçeğinin sadece 36'sı kendi grubunda (Cluster 2) kalabilmiş, 14 tanesi Cluster 1'e kaymış.
+
+**Sonuç:** Toplamda 150 çiçekten 17 tanesi yanlış kümelenmiştir (3 + 14). Hata oranı yaklaşık %11.3'tür. Versicolor ve Virginica türlerinin birbirine karışmasının nedeni, bu iki türün yaprak boyutlarının birbirine çok yakın olması ve veri uzayında iç içe geçmiş bir dağılım sergilemesidir.
+
+Bu analizde gördüğümüz üzere, denetimsiz öğrenme (unsupervised learning) algoritmaları, etiketleri bilmeseler dahi verinin geometrik yakınlıklarını kullanarak başarılı ayrımlar yapabilmektedir. Ancak verilerin doğası gereği (birbirine çok benzeyen türler gibi) her zaman %100 ayrım mümkün olmayabilir. Analist olarak görevimiz, bu hata paylarını yorumlamak ve algoritmanın neden bu hataları yaptığını verinin yapısına bakarak açıklamaktır.
+
+Analiz raporunun son satırlarına indiğinizde, yapılan kümelemenin başarısını ve matematiksel tutarlılığını gösteren şu iki kritik satırı göreceksiniz. Bunları nasıl yorumlamanız gerektiğini inceleyelim.
+
+### 1. Hatalı Kümelenmiş Örnekler (Incorrectly Clustered Instances)
+
+Weka çıktısında şu satırı arayın:
+
+```text
+Incorrectly clustered instances : 17.0  11.3333 %
+```
+
+Burası az önce "Confusion Matrix" (Karışıklık Matrisi) tablosunda elle saydığımız hatanın bilgisayar tarafından hesaplanmış halidir.
+*   **17.0:** Toplamda kaç çiçeğin yanlış gruba atandığını gösterir (3 tane Versicolor + 14 tane Virginica).
+*   **%11.3333:** Bu da toplam veri sayısına (150) oranla hata yüzdesidir.
+
+Gençler, bu oran bize algoritmanın dışsal geçerliliğini, yani gerçek etiketlerle ne kadar uyuştuğunu söyler. Ancak gerçek hayatta her zaman elimizde etiketler (çiçek türleri) olmayabilir. O zaman neye bakacağız? İşte o zaman aşağıdaki matematiksel terim devreye girer.
+
+### 2. Küme İçi Kareler Toplamı (Within Cluster Sum of Squared Errors)
+
+Çıktıda şu ifadeyi göreceksiniz:
+
+```text
+Within cluster sum of squared errors: 6.998114004826762
+```
+
+Bu değer, "Classes to clusters evaluation" seçeneğini seçmeseniz bile, kümeleme işlemlerinde her zaman karşınıza çıkar ve modelin **içsel tutarlılığını** ölçer.
+
+Bunu şöyle düşünün: Bir küme oluşturduğumuzda, o kümedeki elemanların birbirine (ve küme merkezine) ne kadar yakın olduğunu bilmek isteriz.
+*   Eğer bu sayı **çok yüksekse**: Küme elemanları merkezden çok uzağa saçılmış demektir. Yani küme gevşektir, elemanlar birbirine çok benzemiyordur.
+*   Eğer bu sayı **düşükse**: Elemanlar merkezin etrafında sıkı sıkıya toplanmıştır. Küme homojendir, yani başarılı bir gruplama yapılmıştır.
+
+K-Means algoritmasının asıl matematiksel amacı, bu hata karesi toplamını (Error Sum of Squares) mümkün olduğunca **küçültmektir**.
+
+Özetle; **Incorrectly clustered instances** bize "Doğru bildin mi?" sorusunun cevabını verirken, **Sum of squared errors** bize "Yaptığın gruplama ne kadar sıkı ve derli toplu?" sorusunun cevabını verir. Analizlerinizde bu iki değeri raporlamanız, çalışmanızın güvenilirliği açısından şarttır.
+
+***
+# Boyut Azaltma (Dimensionality Reduction) ve Temel Bileşen Analizi (PCA)
+
+Gençler, veri bilimiyle uğraşırken sıklıkla düştüğümüz bir tuzak vardır: "Veri ne kadar bolsa, sonuç o kadar iyidir." Ancak gerçek dünyada işler böyle yürümez. Yüzlerce, hatta binlerce öznitelikle (feature) karşılaştığımızda "Boyut Belası" (Curse of Dimensionality) dediğimiz bir fenomenle yüzleşiriz. Boyut sayısı arttıkça veri uzayda seyrekleşir, uzaklık ve benzerlik ölçümleri anlamsızlaşmaya başlar ve modelimiz, verinin genel yapısını öğrenmek yerine onu ezberlemeye (overfitting) başlar.
+
+İşte burada devreye **Boyut Azaltma (Dimensionality Reduction)** girer. Bunu yapmamızın iki temel sebebi vardır. Birincisi verimliliktir; hesaplama maliyetini düşürmek ve depolama alanından tasarruf etmek isteriz. İkincisi ve daha önemlisi model performansıdır; gürültüyü (noise) ayıklayarak modelin sadece "sinyale" (signal) odaklanmasını sağlarız.
+
+Boyut azaltmayı iki yolla yaparız: Ya eldeki özniteliklerden en iyilerini seçeriz (**Özellik Seçimi (Feature Selection)**) ya da eldeki öznitelikleri matematiksel bir potada eritip, veriyi daha iyi temsil eden daha az sayıda yeni öznitelik üretiriz (**Özellik Çıkarımı (Feature Extraction)**). Bugün odaklanacağımız Temel Bileşen Analizi (PCA), bu ikinci grubun en güçlü temsilcisidir.
+
+***
+
+### Temel Bileşen Analizi (Principal Component Analysis - PCA)
+
+PCA, doğrusal bir özellik çıkarımı tekniğidir. Temel amacı şudur: Birbiriyle ilişkili (korelasyonlu) çok sayıdaki değişkeni alıp, bunları aralarında ilişki olmayan (korelasyonsuz) ve verideki değişimi (varyansı) en iyi açıklayan daha az sayıda "yeni" değişkene dönüştürmek. Bu yeni değişkenlere **Temel Bileşenler** diyoruz.
+
+Bunu zihninizde canlandırmak için bir fotoğrafçıyı düşünün. Elinde karmaşık, 3 boyutlu bir nesne var ve bu nesneyi en iyi anlatacak tek bir kare fotoğraf (2 boyut) çekmek istiyor. Fotoğrafçı, nesnenin en çok detayını gösteren, gölgede en az bilgi bırakan açıyı arar. PCA’nın yaptığı da matematiksel olarak tam budur; verinin "en iyi fotoğrafını çekecek" açıyı bulmaktır.
+
+Süreç şöyle işler:
+1.  **Birinci Temel Bileşen (PC1):** Verideki en büyük değişimin (varyansın) olduğu yönü bulur. Veri noktaları en çok hangi doğrultuda yayılıyor? İşte bu bizim ilk yeni eksenimizdir.
+2.  **İkinci Temel Bileşen (PC2):** Geriye kalan değişimin en büyük olduğu yönü bulur. Ancak çok önemli bir kural vardır: Bu yeni yön, ilk yöne dik (ortogonal) olmak zorundadır. Böylece PC1'in taşıdığı bilgiyi tekrar etmemiş oluruz.
+
+Bu işlem orijinal öznitelik sayısı kadar devam edebilir ancak biz genellikle toplam bilginin büyük kısmını (örneğin %95'ini) açıklayan ilk birkaç bileşeni alır, gerisini gürültü kabul edip atarız.
+
+Aşağıdaki grafik, iki boyutlu bir verinin (X1 ve X2) nasıl yeni eksenlere (PC1 ve PC2) taşındığını özetlemektedir:
+
+<svg width="500" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Orijinal Eksenler ve Veri -->
+    <text x="50" y="20" font-family="sans-serif" font-size="12">Orijinal Veri</text>
+    <line x1="50" y1="230" x2="200" y2="230" stroke="black" marker-end="url(#arrow-h)"/>
+    <text x="205" y="235" font-family="sans-serif" font-size="10">X1</text>
+    <line x1="50" y1="230" x2="50" y2="80" stroke="black" marker-end="url(#arrow-v)"/>
+    <text x="40" y="70" font-family="sans-serif" font-size="10">X2</text>
+    <circle cx="80" cy="200" r="3" fill="gray"/>
+    <circle cx="90" cy="180" r="3" fill="gray"/>
+    <circle cx="100" cy="190" r="3" fill="gray"/>
+    <circle cx="110" cy="160" r="3" fill="gray"/>
+    <circle cx="120" cy="170" r="3" fill="gray"/>
+    <circle cx="130" cy="140" r="3" fill="gray"/>
+    <circle cx="140" cy="150" r="3" fill="gray"/>
+    <circle cx="150" cy="120" r="3" fill="gray"/>
+    <!-- PCA Eksenleri -->
+    <text x="300" y="20" font-family="sans-serif" font-size="12">Temel Bileşenler</text>
+    <line x1="325" y1="205" x2="475" y2="105" stroke="red" stroke-width="2" marker-end="url(#arrow-h)"/>
+    <text x="480" y="105" fill="red" font-weight="bold" font-family="sans-serif" font-size="10">PC1</text>
+    <line x1="360" y1="120" x2="460" y2="220" stroke="blue" stroke-width="2" marker-end="url(#arrow-v)"/>
+    <text x="460" y="230" fill="blue" font-weight="bold" font-family="sans-serif" font-size="10">PC2</text>
+    <circle cx="330" cy="200" r="3" fill="gray"/>
+    <circle cx="340" cy="180" r="3" fill="gray"/>
+    <circle cx="350" cy="190" r="3" fill="gray"/>
+    <circle cx="360" cy="160" r="3" fill="gray"/>
+    <circle cx="370" cy="170" r="3" fill="gray"/>
+    <circle cx="380" cy="140" r="3" fill="gray"/>
+    <circle cx="390" cy="150" r="3" fill="gray"/>
+    <circle cx="400" cy="120" r="3" fill="gray"/>
+    <defs>
+        <marker id="arrow-h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker>
+        <marker id="arrow-v" viewBox="0 0 10 10" refX="5" refY="2" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 10 L 5 0 L 10 10 z" /></marker>
+    </defs>
+</svg>
+
+Özetle PCA, veriyi yeni bir koordinat sistemine taşır. Bu yeni sistemde eksenler, verinin en çok yayıldığı (yani en çok bilginin olduğu) yönlere göre hizalanır.
+
+***
+
+### Uygulama: Weka ile PCA Analizi
+
+Teoriyi anlamak güzeldir ancak mühendislik uygulamada gizlidir. Gelin, Iris veri setindeki dört boyutu (çanak ve taç yaprakların eni/boyu), bilgi kaybı yaşamadan nasıl azaltabileceğimizi Weka üzerinde görelim.
+
+Buradaki hipotezimiz şudur: Veri setindeki öznitelik sayısını azaltsak bile, sınıflandırma başarımız düşmemeli.
+
+**1. Adım: Referans Noktası (Baseline) Oluşturma**
+Önce hiçbir işlem yapmadan elimizdeki ham veriyle ne kadar başarılıyız, bunu görmeliyiz.
+*   Weka'da `iris.arff` dosyasını yükleyin.
+*   **Classify** sekmesinde `trees` -> `J48` algoritmasını seçin.
+*   Modeli çalıştırdığınızda (Cross-validation ile) doğruluk oranının yaklaşık **%96** olduğunu göreceksiniz. Bu bizim referansımız.
+
+**2. Adım: PCA ile Boyut İndirgeme**
+Şimdi verinin "özünü" çıkaralım.
+*   **Preprocess** sekmesine dönün.
+*   **Filter** kısmından `weka` -> `filters` -> `unsupervised` -> `attribute` -> `PrincipalComponents` yolunu izleyin.
+*   Filtre ayarlarına (yazının üzerine tıklayarak) girin. Burada `varianceCovered` parametresi kritiktir. Varsayılan olarak **0.95** gelir. Bu, "Bana verinin %95'ini açıklayan en az sayıda değişkeni ver" demektir.
+*   **Apply** dediğinizde, 4 özniteliğin silinip yerine sadece 2 yeni özniteliğin (`PrincipalComponent_1` ve `2`) geldiğini göreceksiniz. Weka analiz etti ve "Senin 4 sütununda yatan bilginin %95'i aslında bu 2 sütunda gizli" dedi. Bu işlemden önce standardizasyon (Z-Score gibi, içinde negatif değer oalbilir. Max ve Min noktaları veriye göre değişir) veya normalizasyon (Negatif değer olmaz, 0-1 aralığına indirgenir) yapılması tavsiye edilir.
+
+**3. Adım: Sonuçların Karşılaştırılması**
+Yeni, 2 sütunlu veri setiyle tekrar **Classify** sekmesine gidip aynı J48 modelini çalıştırın.
+*   Sonuç yine **%94-96** bandında çıkacaktır.
+
+**Yorum:**
+Gençler, buradaki ders şudur: Öznitelik sayısını yarıya indirdik (4'ten 2'ye), ancak başarı oranımız artmadı, tam tersine düştü. Bu demektir ki, o atılan 2 boyutluk bilgi aslında gereksiz detaylardan veya tekrarlardan ibaret değilmiş. Daha az veriyle, daha hızlı ve aynı başarıda çalışan bir model elde etmek için PCA bu veri setinde işe yaramadı. Ohalde çantamızdaki 2. seçeneği kullanalım.
+
+***
+
+### Uygulama: Python (Scikit-learn) ile Mühendislik Yaklaşımı
+
+Aynı işlemi Python ortamında, kodun mutfağında nasıl yaparız? Burada dikkat etmeniz gereken çok kritik bir "ön işlem" adımı var.
+
+PCA varyansa (değişime) bakar. Eğer bir sütundaki sayılar 1 ile 10 arasındayken, diğer sütunda 1000 ile 5000 arasındaysa, PCA büyük sayıların olduğu sütunu "daha önemli" zanneder. Bu bir hatadır. Bu yüzden PCA uygulamadan önce veriyi mutlaka **Standartlaştırmalıyız** (Ortalama=0, Standart Sapma=1).
+
+```python
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# 1. Veri Yükleme
+iris = load_iris()
+X = iris.data
+y = iris.target
+target_names = iris.target_names
+
+# 2. Kritik Adım: Standartlaştırma
+# Ölçek farklarını ortadan kaldırmazsak PCA hatalı çalışır.
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 3. PCA Uygulaması
+# n_components=2: Veriyi 4 boyuttan 2 boyuta indirmek istiyoruz.
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+# 4. Ne Kadar Bilgi Korundu?
+# explained_variance_ratio_ bize her bileşenin taşıdığı bilgi oranını verir.
+print(f"Bileşenlerin Açıkladığı Varyans: {pca.explained_variance_ratio_}")
+print(f"Toplam Korunan Bilgi: {sum(pca.explained_variance_ratio_):.2f}")
+
+# 5. Görselleştirme
+plt.figure(figsize=(8, 6))
+colors = ['navy', 'turquoise', 'darkorange']
+
+for color, i, target_name in zip(colors, [0, 1, 2], target_names):
+    plt.scatter(X_pca[y == i, 0], X_pca[y == i, 1], color=color, alpha=.8, lw=2,
+                label=target_name)
+
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+plt.title('PCA ile Iris Veri Setinin 2 Boyuta İndirgenmesi')
+plt.xlabel('Birinci Temel Bileşen (PC1)')
+plt.ylabel('İkinci Temel Bileşen (PC2)')
+plt.show()
+```
+
+Kodun çıktısını incelediğinizde, ilk bileşenin bilginin %73'ünü, ikincisinin %23'ünü taşıdığını göreceksiniz. Toplamda %96'lık bir bilgi korunumu var. Grafiğe baktığınızda ise, 4 boyutlu karmaşık bir yapının 2 boyutta ne kadar net ayrıştığını, çiçek türlerinin kümeler halinde nasıl toplandığını görebilirsiniz.
+
+Unutmayın; PCA doğrusal bir yöntemdir. Eğer verinizde çok karmaşık, eğrisel ilişkiler varsa (bir İsviçre rulosu şekli gibi), PCA yetersiz kalabilir. O zaman t-SNE veya UMAP gibi doğrusal olmayan yöntemlere başvurmamız gerekir. Ancak çoğu mühendislik probleminde PCA, veri setini temizlemek ve sadeleştirmek için ilk ve en sağlam durağımızdır.
+
+### Weka'da Öznitelik Seçimi: "Select Attributes" Sekmesi
+
+Gençler, az önce PCA ile veriyi nasıl "dönüştürerek" (transformation) boyut azalttığımızı inceledik. Orada eski değişkenleri karıştırıp yeni değişkenler ürettik. Şimdi ise metodolojik olarak farklı bir yaklaşıma geçiyoruz: **Öznitelik Seçimi (Feature Selection).**
+
+Buradaki felsefemiz, elimizdeki değişkenleri değiştirmek değil, onları bir elekten geçirmektir. "Hangi sütun benim işime yarıyor, hangisi sadece kalabalık yapıyor?" sorusuna yanıt arayacağız. Weka'da bu işlemi **"Select Attributes"** sekmesi üzerinden yönetiriz. Bu sekme, veri madenciliği sürecinin en kritik kararlarının verildiği kokpitlerden biridir.
+
+Bu panelde bilmeniz gereken iki temel mekanizma vardır. Bunlar birbiriyle uyumlu çalışmak zorundadır:
+
+1.  **Attribute Evaluator (Öznitelik Değerlendirici):** Bu, jüridir. Özniteliklere not verir. "Bu özellik sınıfı tahmin etmede ne kadar başarılı?" sorusunu matematiksel olarak yanıtlar (Örn: Bilgi Kazancı, Korelasyon).
+2.  **Search Method (Arama Yöntemi):** Bu ise izcidir. Öznitelik uzayında nasıl dolaşacağımızı belirler. Hepsini tek tek mi puanlayacağız (Ranker), yoksa ikili-üçlü gruplar halinde mi deneyeceğiz (BestFirst)?
+
+Iris veri seti üzerinde bu mekanizmayı iki farklı senaryo ile çalıştıralım.
+
+---
+
+#### Senaryo 1: Öznitelikleri Tek Tek Puanlama (Ranking)
+
+Bu yaklaşımda her özniteliği tek başına sahneye çıkarırız ve performansına göre bir sıralama yaparız.
+
+**Adım 1: Algoritma Seçimi**
+Weka'da "Select Attributes" sekmesine gelin. **Attribute Evaluator** kısmından `InfoGainAttributeEval` (Bilgi Kazancı) algoritmasını seçin.
+*   **Mantığı:** Bu algoritma Entropi kavramına dayanır. "Ben sadece bu özniteliği bilirsem, çiçeğin türünü tahmin etme belirsizliğim ne kadar azalır?" diye sorar.
+*   Bu seçimi yaptığınızda Weka size bir uyarı verecektir: "Bu değerlendirici ile `Ranker` arama yöntemini kullanmalısın." Bunu onaylayın. `Ranker`, öznitelikleri en yüksek puandan en düşüğe doğru dizer.
+
+**Adım 2: Modu Belirleme**
+Sonuçların güvenilir olması için **Attribute Selection Mode** kısmından `Cross-validation` (Çapraz Doğrulama) seçeneğini işaretleyin. Bu, sonucun verinin sadece belli bir kısmına göre değil, geneline göre tutarlı olmasını sağlar.
+
+**Adım 3: Analiz ve Çıktı**
+Start tuşuna bastığınızda, sağ taraftaki ekranda şöyle bir tablo göreceksiniz:
+
+```text
+Ranked attributes:
+ 1.418  3 petallength
+ 1.378  4 petalwidth
+ 0.698  1 sepallength
+ 0.363  2 sepalwidth
+```
+
+
+Tablo bize net bir hiyerarşi sunuyor.
+1.  `petallength` (1.418 puan) ve `petalwidth` (1.378 puan) çok yüksek bilgi taşıyor. Bu ikisi, problemi çözmek için neredeyse yeterli.
+2.  `sepalwidth` (0.363 puan) ise oldukça zayıf kalmış.
+
+Buradan çıkaracağımız ders şudur: Eğer hesaplama maliyetimiz yüksekse veya modelimiz çok karmaşıksa, `sepalwidth` sütununu veritabanımızdan silebiliriz. Bu bilgi kaybı bize zarar vermez, aksine modeli gürültüden arındırır.
+
+---
+
+#### Senaryo 2: En İyi Alt Kümeyi Seçme (Subset Selection)
+
+Gençler, bazen en iyi oyuncuları bir araya getirmek en iyi takımı kurmak demek değildir. Oyuncuların birbirleriyle uyumu da önemlidir. İlk senaryoda bireysel yeteneklere baktık. Şimdi ise "Hangi grup birlikte daha iyi çalışır?" sorusuna yanıt arayacağız.
+
+**Adım 1: Algoritma Seçimi**
+Bu sefer **Attribute Evaluator** kısmından `CfsSubsetEval` (Correlation-based Feature Selection) seçeneğini işaretleyin.
+*   **Mantığı:** Bu algoritma şu prensibi savunur: "İyi bir alt kümedeki öznitelikler, sınıf (hedef) ile yüksek korelasyonlu olmalı, ancak birbirleriyle düşük korelasyonlu olmalıdır." Yani aynı bilgiyi tekrar eden iki özelliği istemiyoruz.
+
+**Adım 2: Arama Yöntemi**
+Weka otomatik olarak **Search Method** kısmını `BestFirst` veya `GreedyStepwise` olarak değiştirecektir.
+*   `BestFirst`: Farklı öznitelik kombinasyonlarını (örneğin 1 ile 3, 2 ile 4 gibi) deneyerek en iyi grubu bulmaya çalışır. Hepsini tek tek puanlamaz, takımları yarıştırır.
+
+**Adım 3: Analiz ve Çıktı**
+Start'a bastığınızda çıktı ekranında sayısal bir sıralama yerine şunu görürsünüz:
+
+```text
+Selected attributes: 3,4 : 2
+                     petallength
+                     petalwidth
+```
+
+**Mühendislik Yorumu:**
+Bakın, algoritma `sepallength` ve `sepalwidth` özelliklerini tamamen eledi. Bize dedi ki: "Iris türlerini ayırmak istiyorsan sadece `petallength` ve `petalwidth` özelliklerini kullanman yeterli. Diğerlerini gruba dahil etme, onlar sadece kalabalık yapıyor."
+
+### Genel Değerlendirme
+
+Gördüğünüz gibi, PCA ile veriyi matematiksel uzayda bükerek boyut azaltmıştık. "Select Attributes" sekmesinde ise verinin orijinal yapısını bozmadan, sadece "işe yaramayanları" tespit edip ayıkladık.
+
+Bir veri bilimci olarak projenize başladığınızda, elinizdeki yüzlerce sütunu doğrudan modele sokmak yerine, önce bu sekmede bir ön analiz yapmanız gerekir. Hangi değişkenlerin probleminizle gerçekten ilişkili olduğunu görmek, kuracağınız modelin başarısını doğrudan etkileyecek en stratejik adımdır.
+
+***
+## Uygulama:
+Bu uygulama neredeyse tüm konuları içine alan bir uygulamadır. Bu uygulamayı yapabiliyorsanız önemli bir iş yaptınız. 
+Github sitesinde erkanozhan\DataMining repository'de Data klasöründe ```insanlar.csv``` dosyasını indirin. Weka da açın. ```AddCluster``` Filtresi ile k-means algoritmasına göre 3 kümeye ayırın. ```Classify``` sekmesinden en iyi sınıflandırma başarısını veren (Kappa değeri yüksek olan) algoritmayı tespit edin. Daha sonra ```Feature Selection``` sekmesinden boyut indirgenimi yappmaya çalışın ve sonuçlarrı paylaşın.  
+
+***
+
+## Maliyete Duyarlı Öğrenme (Cost-Sensitive Learning)
+
+Gençler, şimdiye kadar modellerimizi eğitirken genellikle tek bir hedefe odaklandık: Mümkün olduğunca çok doğru tahminde bulunmak, yani doğruluk oranını (accuracy) maksimize etmek. Ancak gerçek dünyadaki problemlerde her hata aynı ağırlıkta değildir ve her yanlışın bedeli eşit ödenmez.
+
+Bir tıp doktorunun, hasta bir kişiye yanlışlıkla "sağlıklısın" demesi (yanlış negatif - false negative) ile sağlıklı bir kişiye "emin olmak için bir test daha yapalım" demesi (yanlış pozitif - false positive) arasındaki farkı düşünelim. İlk hata, bir hastanın tedavi edilememesine ve hastalığın ilerlemesine yol açabilirken, ikincisi en fazla zaman ve kaynak israfına neden olur. İşte bu "hata maliyeti" fikrini, makine öğrenmesi modelimize öğretebiliriz. Bu durumda amacımız artık sadece hata sayısını değil, toplam hata maliyetini minimize etmektir.
+
+Bu bağlamda, standart sınıflandırma algoritmalarının temel varsayımı, tüm hataların eşit maliyete sahip olduğudur. Yani algoritma için bir kanser vakasını kaçırmakla, spam olmayan bir e-postayı spam kutusuna düşürmek matematiksel olarak aynı "ceza" puanına sahiptir. Oysa pratikte, özellikle dengesiz veri setlerinde (imbalanced datasets) bu yaklaşım ciddi sorunlar doğurur. Nadir görülen ancak kritik öneme sahip bir sınıfı (örneğin kredi kartı dolandırıcılığı veya üretim hattındaki hatalı parça) tespit etmek, çoğunluk sınıfını doğru bilmekten çok daha kıymetlidir.
+
+Bu asimetrik durumu yönetebilmek için **Maliyet Matrisi (Cost Matrix)** kavramı devreye girer. Standart bir karışıklık matrisinde (confusion matrix) sadece sayıları görürüz. Maliyet matrisinde ise bu durumların her birine atanan ağırlıklar veya cezalar yer alır.
+
+Matematiksel olarak ifade edildiğinde, klasik bir makine öğrenmesi algoritması genellikle şu hata fonksiyonunu minimize etmeye çalışır:
+
+$$ Error = \sum_{i=1}^{N} I(y_i \neq \hat{y}_i) $$
+
+Burada $I$, gösterge fonksiyonudur ve tahmin $(\hat{y}_i)$ gerçek değere $(y_i)$ eşit değilse 1, eşitse 0 değerini alır. Görüldüğü üzere, her hatanın ağırlığı 1'dir.
+
+Maliyete duyarlı öğrenmede ise bu fonksiyonu, her bir hatanın getirdiği maliyeti ($C$) içerecek şekilde genişletiriz. Toplam maliyeti ($Cost_{total}$) minimize etmeyi hedefleriz:
+
+$$ Cost_{total} = \sum_{i=1}^{N} C(y_i, \hat{y}_i) \times I(y_i \neq \hat{y}_i) $$
+
+Burada $C(y_i, \hat{y}_i)$, gerçek sınıf $y_i$ iken $\hat{y}_i$ tahminini yapmanın maliyetidir. Örneğin, bir bankacılık uygulamasında, batık bir krediyi "sağlam" olarak tahmin etmenin maliyeti ($C_{FN}$), sağlam bir krediyi "riskli" olarak tahmin edip müşteriyi kaçırmanın maliyetinden ($C_{FP}$) çok daha yüksek belirlenmelidir. Yani $C_{FN} \gg C_{FP}$ eşitsizliği sisteme tanıtılmalıdır.
+
+Bu yaklaşımı uygulamanın temel olarak üç farklı yolu bulunmaktadır:
+
+1.  **Veri Seviyesinde Müdahale (Data-level Approaches):** Algoritmayı değiştirmeden önce veri setini manipüle etme yöntemidir. Maliyeti yüksek olan sınıfın (genellikle azınlık sınıfı) örnekleri, maliyet oranına göre çoğaltılabilir (oversampling) veya maliyeti düşük olan sınıfın örnekleri azaltılabilir (undersampling). Böylece model, maliyetli sınıfı daha sık görerek ona daha fazla önem atfeder.
+2.  **Algoritma Seviyesinde Müdahale (Algorithm-level Approaches):** Bu yöntemde, öğrenme algoritmasının iç yapısı değiştirilir. Örneğin, bir Karar Ağacı (Decision Tree) veya Random Forest algoritmasında, düğümlerin bölünme kriterleri (Gini veya Entropi) hesaplanırken sadece sınıf dağılımı değil, aynı zamanda hatalı sınıflandırmanın maliyeti de denkleme dahil edilir. Benzer şekilde, Destek Vektör Makineleri (SVM) veya Sinir Ağları eğitilirken, kayıp fonksiyonuna (loss function) sınıflara özgü ağırlıklar ($w$) eklenir:
+    $$ Loss = - \sum_{i=1}^{N} w_{y_i} \log(\hat{y}_i) $$
+    Bu formülde $w_{y_i}$, o sınıfın hata maliyetiyle orantılı bir katsayıdır.
+3.  **Karar Eşiğinin Ayarlanması (Threshold Moving):** Birçok sınıflandırma algoritması (örneğin Lojistik Regresyon), çıktı olarak bir olasılık değeri üretir. Standart yaklaşımda 0.5 eşik değeri kullanılır. Ancak maliyete duyarlı bir yaklaşımda, maliyeti yüksek olan sınıfı yakalamak için bu eşik değeri optimize edilir. Örneğin, "dolandırıcılık" ihtimali %20 bile olsa, maliyeti çok yüksek olduğu için o işlemi "şüpheli" olarak işaretlemek, toplam maliyeti düşürecek bir strateji olabilir.
+
+Sonuç olarak, bir modelin başarısını değerlendirirken sadece "ne kadar bildiğine" değil, "yanıldığında ne kadar kaybettirdiğine" odaklanmak, gerçek hayat problemlerinin çözümünde mühendislik açısından daha olgun ve sürdürülebilir bir bakış açısı sağlar. Özellikle riskin ve maliyetin yüksek olduğu alanlarda, maliyete duyarlı öğrenme tekniklerinin kullanılması bir tercih değil, bir zorunluluktur.
+
+### Weka da Experimenter Bölümü...
+Makine öğrenmesi modeli geliştirilirken verinin cross-validation veya yüzdelik olarak dağılımı sırasında bir rastgelelik sayısı vardır bu rastgelelik sayısının literatürdeki adı seed ya da random states bu da yer analizlerde sabit tutulursa farklı makinelerde farklı dağılımlar ortaya çıkmaz ve dolayısıyla algoritmaların ve çalışmaların bilimsel olarak karşılaştırılması rahatlıkla yapılabilir bu değer değiştirdikçe sürekli algoritmaların performans metrikleri değişeceğinden özellikle deneme sayısına dikkat etmek gerekir ne kadar eksper venter bölümüne girilerek istenilen bir algoritmanın defalarca SEED edilerek ortalaması alınabilir ve standart sapmasına ulaşılabilir.
+
+#### Weka ile Cost-Sensitive Learning Uygulaması
+
+Gençler, teorik altyapısını kurduğumuz maliyete duyarlı öğrenme yaklaşımının Weka platformundaki karşılığı `CostSensitiveClassifier` algoritmasıdır. Bu algoritma, literatürde "meta-sınıflandırıcı" (meta-classifier) olarak adlandırılan bir yapıya sahiptir. Yani, kendi başına bir karar mekanizması üretmekten ziyade, J48 veya Naive Bayes gibi temel bir sınıflandırıcıyı sarmalayarak (wrapping), ona maliyet bilinci kazandıran üst düzey bir yönetim katmanı işlevi görür. Bu sürecin pratikte nasıl işlediğini anlamak adına, Weka kütüphanesinde yer alan `credit-g.arff` veri seti uygun bir örnektir. Bu veri seti, bankacılık sektöründeki kredi başvurularının risk analizini içermektedir ve temel problem, müşterilerin "iyi" (good) veya "kötü" (bad) olarak sınıflandırılmasıdır.
+
+Buradaki asimetrik maliyet yapısı şöyledir: Kötü bir müşteriye yanlışlıkla kredi vermek (finansal kayıp/yanlış pozitif), iyi bir müşteriyi yanlışlıkla reddetmekten (potansiyel kâr kaybı/yanlış negatif) banka için çok daha maliyetlidir. Uygulama adımları şu şekilde gerçekleştirilir:
+
+**1. Veri Seti ve Algoritma Seçimi:**
+Weka Explorer arayüzünde `credit-g.arff` veri seti yüklendikten sonra, `Classify` sekmesi altında `meta` grubundan `CostSensitiveClassifier` seçilir. Bu meta-sınıflandırıcının ayarları içerisinden, temel sınıflandırıcı (`classifier`) olarak karar ağacı tabanlı `J48` algoritması belirlenebilir.
+
+**2. Maliyet Matrisinin (Cost Matrix) Tanımlanması:**
+Bu sürecin en kritik matematiksel adımı **Maliyet Matrisi**'nin tanımlanmasıdır. Bu matris, modelin optimizasyon sürecinde kullanacağı ceza katsayılarını barındırır. Standart bir 2-sınıflı problem için maliyet matrisi $C$, şu şekilde ifade edilebilir:
+
+$$ C = \begin{bmatrix} C_{0,0} & C_{0,1} \\ C_{1,0} & C_{1,1} \end{bmatrix} $$
+
+Burada satırlar **gerçek sınıfları**, sütunlar ise **tahmin edilen sınıfları** temsil eder. Kredi risk analizi örneğimizde, "bad" sınıfını (kötü müşteri) gözden kaçırıp ona "good" demenin maliyetini artırmak istiyoruz. Diyelim ki bu hatanın bedeli, diğer hatalardan 10 kat daha fazla olsun. Bu durumda matris konfigürasyonu şu şekilde düzenlenmelidir:
+
+```text
+ Sınıflar: good, bad
+      0     1
+ 0  [0.0   1.0]   <-- Gerçek: Good, Tahmin: Bad (Maliyet: 1)
+ 1  [10.0  0.0]   <-- Gerçek: Bad,  Tahmin: Good (Maliyet: 10 - Kritik Hata)
+```
+
+Matrisin sol alt köşesindeki $[1,0]$ hücresine atanan 10 değeri, algoritmayla şu matematiksel kısıtı paylaşır: "Gerçekte kötü olan bir müşteriyi iyi olarak sınıflandırmanın cezası 10 birimdir." Bu, algoritmayı eğitim sürecinde bu hatayı yapmaktan kaçınmaya zorlar.
+
+**3. Modelin Eğitilmesi ve Değerlendirilmesi:**
+Model eğitildiğinde, elde edilen sonuçların değerlendirilmesi standart doğruluk (accuracy) metriğinden ziyade **Karışıklık Matrisi (Confusion Matrix)** üzerinden yapılmalıdır. Burada gözlemleyeceğiniz durum şudur: Model, maliyeti 10 birim olan hatayı minimize etmek için karar sınırlarını (decision boundaries) daha muhafazakar hale getirmiştir. Bu durum, genel doğruluk oranında bir miktar düşüşe neden olsa bile, maliyetli hataların sayısı azaldığı için toplam maliyet düşmüş olur. Mühendislikte hedefimiz en yüksek doğruluğa ulaşmak değil, problemi en düşük toplam maliyetle çözmektir.
+
+Weka, bu maliyet bilincini modele entegre etmek için iki temel matematiksel strateji sunar:
+
+*   **Yeniden Ağırlıklandırma (Reweighting):** Eğitim veri setindeki örneklerin ağırlıkları değiştirilir. Hatası pahalı olan sınıfa (örneğin "bad") ait örnekler, eğitim sırasında yapay olarak çoğaltılmış gibi işlem görür ve modelin bu sınıfa matematiksel olarak daha fazla önem atfetmesi sağlanır.
+*   **Beklenen Maliyeti Minimize Etme (Minimize Expected Cost):** Sınıflandırma aşamasında, model her bir sınıf için olasılık değerleri üretir. Son karar verilirken, en yüksek olasılığa sahip sınıf yerine, beklenen maliyeti ($Expected Cost$) en düşük olan sınıf seçilir.
+
+Bu yöntemler, özellikle tıp, finans ve siber güvenlik gibi bir hatanın sonuçlarının diğerinden çok daha ağır olduğu alanlarda, modellerin daha güvenilir ve amaca yönelik kararlar vermesini sağlar.
+
+## Python ile Maliyete Duyarlı Sınıflandırma Örneği
+
+Aşağıdaki Python kodu, `scikit-learn` kütüphanesini kullanarak maliyete duyarlı sınıflandırmanın adımlarını göstermektedir. Önce standart bir modelin performansını ve maliyetini hesaplayacak, ardından maliyet bilincine sahip iki farklı yaklaşımla (sınıf ağırlıklandırma ve karar eşiği optimizasyonu) karşılaştıracağız.
+
+```python
+# -*- coding: utf-8 -*-
+# Maliyet duyarlı sınıflandırmanın uçtan uca bir örneği.
+
+import numpy as np
+# Sayısal işlemler için temel kütüphane.
+
+from sklearn.datasets import make_classification
+# Dengesiz bir sınıflandırma veri seti oluşturmak için.
+
+from sklearn.model_selection import train_test_split
+# Veriyi eğitim ve test setlerine ayırmak için.
+
+from sklearn.linear_model import LogisticRegression
+# Sınıflandırma için kullanılacak Lojistik Regresyon modeli.
+
+from sklearn.metrics import confusion_matrix, classification_report
+# Model performansını ölçmek için karışıklık matrisi ve raporlama.
+
+# ===== 0) Tekrarlanabilirlik için rastgelelik kontrolü =====
+rng = np.random.RandomState(42)
+
+# ===== 1) Dengesiz Veri Seti Oluşturma =====
+X, y = make_classification(
+    n_samples=4000,         # Toplam örnek sayısı.
+    n_features=20,          # Öznitelik sayısı.
+    n_informative=4,        # Bilgi taşıyan (anlamlı) öznitelik sayısı.
+    n_redundant=2,          # Başka özniteliklerden türetilmiş öznitelik sayısı.
+    n_clusters_per_class=1, # Her sınıf için küme sayısı.
+    weights=[0.95, 0.05],   # Sınıf 0 (%95) ve Sınıf 1 (%5) oranı, belirgin bir dengesizlik oluşturur.
+    flip_y=0.01,            # Etiketlerdeki gürültü oranı.
+    class_sep=1.0,          # Sınıflar arası ayrımın zorluk derecesi.
+    random_state=rng
+)
+
+# ===== 2) Veriyi Eğitim ve Test Setlerine Ayırma =====
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.30,  # Verinin %30'u test için ayrılır.
+    stratify=y,      # Sınıf oranları hem eğitim hem de test setinde korunur.
+    random_state=rng
+)
+
+# ===== 3) Hata Maliyetlerinin Tanımlanması =====
+# Gerçekte negatif olan bir örneği pozitif tahmin etmenin maliyeti.
+C_FP = 1.0
+# Gerçekte pozitif olan bir örneği negatif tahmin etmenin maliyeti (daha pahalı).
+C_FN = 10.0
+
+# ===== 4) Baseline Model: Standart Lojistik Regresyon =====
+baseline_clf = LogisticRegression(solver="lbfgs", max_iter=1000, random_state=rng)
+baseline_clf.fit(X_train, y_train)
+y_pred_baseline = baseline_clf.predict(X_test)
+
+cm_base = confusion_matrix(y_test, y_pred_baseline, labels=[0, 1])
+TN_b, FP_b, FN_b, TP_b = cm_base.ravel()
+
+total_cost_b = FP_b * C_FP + FN_b * C_FN
+
+print("=== Baseline (Maliyetsiz) Lojistik Regresyon ===")
+print("Karışıklık Matrisi:\n", cm_base)
+print(f"Gerçek Negatif (TN): {TN_b}, Sahte Pozitif (FP): {FP_b}")
+print(f"Sahte Negatif (FN): {FN_b}, Gerçek Pozitif (TP): {TP_b}")
+print(f"Toplam Maliyet (FP*{C_FP} + FN*{C_FN}): {total_cost_b:.1f}\n")
+print("Sınıflandırma Raporu:")
+print(classification_report(y_test, y_pred_baseline, target_names=["negatif(0)", "pozitif(1)"]))
+
+# ===== 5) Yaklaşım 1: Sınıf Ağırlıklandırma (Class Weighting) =====
+# 'balanced' modu, sınıf ağırlıklarını örnek sayısıyla ters orantılı olarak ayarlar.
+# Alternatif olarak, class_weight={0: 1, 1: 10} gibi manuel bir atama da yapılabilir.
+cost_clf = LogisticRegression(
+    solver="lbfgs",
+    max_iter=1000,
+    class_weight="balanced",
+    random_state=rng
+)
+cost_clf.fit(X_train, y_train)
+y_pred_cost = cost_clf.predict(X_test)
+
+cm_cost = confusion_matrix(y_test, y_pred_cost, labels=[0, 1])
+TN_c, FP_c, FN_c, TP_c = cm_cost.ravel()
+
+total_cost_c = FP_c * C_FP + FN_c * C_FN
+
+print("\n=== Maliyete Duyarlı (class_weight='balanced') Lojistik Regresyon ===")
+print("Karışıklık Matrisi:\n", cm_cost)
+print(f"Gerçek Negatif (TN): {TN_c}, Sahte Pozitif (FP): {FP_c}")
+print(f"Sahte Negatif (FN): {FN_c}, Gerçek Pozitif (TP): {TP_c}")
+print(f"Toplam Maliyet (FP*{C_FP} + FN*{C_FN}): {total_cost_c:.1f}\n")
+print("Sınıflandırma Raporu:")
+print(classification_report(y_test, y_pred_cost, target_names=["negatif(0)", "pozitif(1)"]))
+
+# ===== 6) Yaklaşım 2: Karar Eşiği Optimizasyonu (Threshold Tuning) =====
+# Modelin tahmin olasılıklarını al (pozitif sınıf için).
+y_proba = cost_clf.predict_proba(X_test)[:, 1]
+
+def calculate_cost(y_true, y_pred):
+    """Verilen tahminler için toplam maliyeti hesaplar."""
+    cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
+    TN, FP, FN, TP = cm.ravel()
+    return FP * C_FP + FN * C_FN
+
+# Farklı eşik değerleri için maliyetleri hesapla.
+thresholds = np.linspace(0.05, 0.95, 19)
+costs = [calculate_cost(y_test, (y_proba >= t).astype(int)) for t in thresholds]
+
+# En düşük maliyeti veren eşiği bul.
+best_t_idx = np.argmin(costs)
+best_t, best_cost = thresholds[best_t_idx], costs[best_t_idx]
+
+print("\n=== Karar Eşiği Optimizasyonu (Maliyete Göre) ===")
+for t, c in zip(thresholds, costs):
+    print(f"Eşik={t:.2f} → Toplam Maliyet={c:.1f}")
+print(f"\nEn iyi eşik: {best_t:.2f} (Toplam Maliyet={best_cost:.1f})")
+
+# ===== 7) Optimal Eşiğe Göre Nihai Performans =====
+y_best_pred = (y_proba >= best_t).astype(int)
+cm_best = confusion_matrix(y_test, y_best_pred, labels=[0, 1])
+TN_o, FP_o, FN_o, TP_o = cm_best.ravel()
+total_cost_o = FP_o * C_FP + FN_o * C_FN
+
+print("\n=== Optimal Eşik ile Performans ===")
+print("Karışıklık Matrisi:\n", cm_best)
+print(f"Gerçek Negatif (TN): {TN_o}, Sahte Pozitif (FP): {FP_o}")
+print(f"Sahte Negatif (FN): {FN_o}, Gerçek Pozitif (TP): {TP_o}")
+print(f"Toplam Maliyet (FP*{C_FP} + FN*{C_FN}): {total_cost_o:.1f}\n")
+print("Sınıflandırma Raporu (Optimal Eşik):")
+print(classification_report(y_test, y_best_pred, target_names=["negatif(0)", "pozitif(1)"]))
+
+# ===== 8) Sonuçların Karşılaştırılması =====
+print("\n=== Özet Karşılaştırma ===")
+print(f"Baseline Toplam Maliyet:       {total_cost_b:.1f}")
+print(f"Sınıf Ağırlıklandırma Maliyeti: {total_cost_c:.1f}")
+print(f"Optimal Eşik Maliyeti:         {total_cost_o:.1f}")
+```
+***
+# **Weka KnowledgeFlow: Mimari Analiz ve İleri Seviye Uygulamalı Sınıflandırma Metodolojileri**
+## 
+
+Weka platformu, kullanıcılarına veri ile etkileşim kurmaları için "Explorer" (Kaşif), "Experimenter" (Deneyci), "Workbench" (Çalışma Alanı) ve "Simple CLI" (Basit Komut Satırı) gibi çeşitli arayüzler sunmaktadır. Ancak, karmaşık veri işleme süreçlerini modüler bir "boru hattı" (pipeline) mantığıyla tasarlamak, büyük veri setlerini bellek kısıtlamalarına takılmadan işlemek ve özellikle akan veri (streaming data) üzerinde dinamik modeller geliştirmek isteyen uzmanlar için **KnowledgeFlow** (Bilgi Akışı) arayüzü en kritik ve yetenekli ortamı teşkil etmektedir.4
+
+KnowledgeFlow, geleneksel "hepsini yükle ve işle" mantığının ötesine geçerek, veri kaynağından başlayıp ön işleme, modelleme, değerlendirme ve görselleştirme adımlarının birbirine bağlı "Bean" adı verilen bileşenler üzerinden aktığı bir veri akışı modelini benimser.4 Bu rapor, okuyucuya J48 karar ağacı algoritması ile yapılan statik bir sınıflandırma analizinden, NaiveBayesUpdateable ile gerçekleştirilen dinamik veri akışı analizine kadar uzanan geniş bir yetkinlik seti kazandırmayı hedeflemektedir.
+
+## **2\. Weka KnowledgeFlow Mimarisi ve Veri Akış Paradigması**
+
+### **2.1. Veri Akışı (Data-Flow) Programlama Modeli**
+
+Geleneksel prosedürel programlamada, işlemler belirli bir komut sırasını takip ederken, veri akışı programlama modelinde (data-flow programming), işlemin yürütülmesi verinin mevcudiyetine bağlıdır. KnowledgeFlow, bu paradigmayı görsel bir programlama ortamına taşıyarak, veri madenciliği süreçlerinin birer yönlü graf (directed graph) olarak temsil edilmesini sağlar. Bu yapıda düğümler (nodes) işlem birimlerini (filtreler, sınıflandırıcılar), kenarlar (edges) ise verinin akış yolunu temsil eder.4
+
+KnowledgeFlow'un mimarisi, Java Beans teknolojisi üzerine kuruludur. Her bir bileşen (örneğin bir ArffLoader veya J48 sınıflandırıcısı), belirli olayları (events) dinleyen ve tetikleyen bağımsız birer nesnedir. Bu olay tabanlı yapı, sistemin asenkron çalışmasına olanak tanır. Bir veri yükleyici veriyi okuduğunda bir dataSet olayı üretir; bu olay, kendisine abone olan (bağlı olan) bir sonraki bileşen tarafından yakalanır ve işleme alınır. Bu mekanizma, Weka'nın diğer arayüzlerinden farklı olarak, birden fazla işlemin paralel olarak yürütülmesine (multi-threading) imkan tanır. Örneğin, bir çapraz doğrulama (cross-validation) işleminde, farklı veri katmanları (folds) üzerindeki eğitim süreçleri farklı işlemci çekirdeklerinde aynı anda gerçekleşebilir.6
+
+### **2.2. Explorer ve KnowledgeFlow**
+
+Weka ekosisteminde en sık kullanılan iki arayüz Explorer ve KnowledgeFlow'dur. Her ne kadar aynı temel algoritmaları kullansalar da, çalışma prensipleri ve kullanım senaryoları açısından köklü farklılıklar gösterirler.
+
+| Özellik | Weka Explorer | Weka KnowledgeFlow |
+| :---- | :---- | :---- |
+| **Veri İşleme Modu** | Sadece Toplu (Batch) İşlem. Verinin tamamı belleğe yüklenir. | Hem Toplu (Batch) hem de Artımlı (Incremental) İşlem. Veri parça parça işlenebilir. |
+| **Bellek Yönetimi** | Büyük veri setlerinde RAM yetersizliği (Out of Memory) riski yüksektir. | Akış modu sayesinde bellek verimli kullanılır, çok büyük veri setleri işlenebilir. |
+| **Süreç Tasarımı** | Sekmeler arası manuel geçiş gerektirir. Doğrusal bir akış vardır. | Sürükle-bırak yöntemiyle görsel akış diyagramları tasarlanır. Dallanan ve paralel akışlar mümkündür. |
+| **Otomasyon** | İşlemleri tekrarlamak için manuel müdahale gerekir. | Tasarlanan akışlar .kf veya .kfml formatında kaydedilip tekrar kullanılabilir. |
+| **Çoklu Model Karşılaştırma** | Modeller sırayla eğitilir ve sonuçlar liste halinde sunulur. | Birden fazla model (örneğin J48 ve Random Forest) paralel bağlanarak aynı grafik üzerinde (ROC eğrileri) karşılaştırılabilir. |
+
+2
+
+Explorer arayüzü, verinin ön işlenmesi (Preprocess) sekmesinde yapılan değişikliklerin tüm veri setine anında uygulandığı ve bir sonraki adıma (Classify) bu değiştirilmiş halin aktarıldığı "durum tabanlı" bir yaklaşıma sahiptir. Buna karşın KnowledgeFlow, her bileşenin kendi girdisini ve çıktısını yönettiği daha esnek bir yapı sunar. Bir veri kaynağından çıkan veri, iki farklı filtreye gönderilip, iki farklı işlenmiş veri seti olarak paralel analizlere tabi tutulabilir.10
+
+### **2.3. Bileşen (Bean) Kategorileri ve İşlevleri**
+
+KnowledgeFlow arayüzü, kullanıcıya sunduğu araçları işlevlerine göre kategorize etmiştir. Bu kategoriler, bir veri madenciliği projesinin yaşam döngüsünü (CRISP-DM gibi) yansıtır.
+
+#### **2.3.1. DataSources (Veri Kaynakları)**
+
+Veri madenciliği sürecinin başlangıç noktasıdır. KnowledgeFlow, veriyi yerel dosya sisteminden, web URL'lerinden veya veritabanlarından okuyabilir.
+
+* **ArffLoader:** Weka'nın standart veri formatı olan ARFF dosyalarını okur. ARFF (Attribute-Relation File Format), verinin yapısını (öznitelik tipleri, isimleri) ve veri örneklerini içeren metin tabanlı bir formattır.1  
+* **CsvLoader:** Virgülle ayrılmış değerler (CSV) dosyalarını okur.  
+* **DatabaseLoader:** JDBC üzerinden SQL veritabanlarına bağlanarak veri çeker.
+
+#### **2.3.2. DataSinks (Veri Havuzları)**
+
+İşlenmiş verinin veya model çıktılarının kaydedildiği bileşenlerdir.
+
+* **ArffSaver:** Veriyi ARFF formatında diske yazar.  
+* **SerializedInstancesSaver:** Veriyi Java'nın serileştirilmiş nesne formatında kaydeder, bu yöntem büyük verilerde daha hızlı okuma/yazma sağlar.7
+
+#### **2.3.3. Filters (Filtreler)**
+
+Veri ön işleme adımlarının gerçekleştirildiği bileşenlerdir. Weka'da filtreler "Denetimli" (Supervised) ve "Denetimsiz" (Unsupervised) olarak ikiye ayrılır. Ayrıca "Attribute" (Sütun) ve "Instance" (Satır) tabanlı filtreler de mevcuttur.
+
+* **Discretize:** Sayısal verileri kategorik aralıklara dönüştürür.  
+* **Normalize:** Sayısal verileri belirli bir aralığa (genellikle 0-1) ölçekler.  
+* **Remove:** İstenmeyen öznitelikleri veri setinden çıkarır.1
+
+#### **2.3.4. Classifiers (Sınıflandırıcılar)**
+
+Veriden öğrenme işlemini gerçekleştiren algoritmalardır. KnowledgeFlow'da tüm Weka sınıflandırıcıları mevcuttur.
+
+* **J48:** C4.5 karar ağacı algoritmasının Weka implementasyonudur. Bilgi kazancı (Information Gain) metriğini kullanarak ağaç oluşturur.4  
+* **NaiveBayes:** Bayes teoremine dayanan olasılıksal bir sınıflandırıcıdır.  
+* **RandomForest:** Birden fazla karar ağacının oylama usulüyle çalıştığı topluluk (ensemble) öğrenme yöntemidir.10
+
+#### **2.3.5. Evaluation (Değerlendirme)**
+
+Modellerin başarısını ölçmek için kullanılan bileşenlerdir.
+
+* **ClassAssigner:** Veri setindeki hangi sütunun "hedef sınıf" (class attribute) olduğunu belirler.4  
+* **CrossValidationFoldMaker:** Veriyi eğitim ve test setlerine (katmanlara) ayırarak çapraz doğrulama sürecini yönetir.4  
+* **ClassifierPerformanceEvaluator:** Sınıflandırıcının tahminlerini gerçek değerlerle karşılaştırarak başarı metriklerini (Doğruluk, F-Ölçütü, ROC Alanı vb.) hesaplar.4
+
+#### **2.3.6. Visualization (Görselleştirme)**
+
+Sonuçların insan tarafından okunabilir formata dönüştürüldüğü bileşenlerdir.
+
+* **TextViewer:** Metin tabanlı sonuçları (karışıklık matrisi, model özeti) gösterir.  
+* **GraphViewer:** Ağaç tabanlı modellerin veya grafiksel modellerin görsel yapısını sergiler.  
+* **StripChart:** Akan veri (streaming data) analizinde model performansının zaman içindeki değişimini canlı grafik olarak çizer.6  
+* **ModelPerformanceChart:** ROC eğrileri, Hassasiyet-Duyarlılık (Recall-Precision) eğrileri gibi eşik değeri analizlerini görselleştirir.10
+
+## **3\. Uygulama 1: J48 Karar Ağacı ile Toplu (Batch) Sınıflandırma**
+
+Bu bölümde, teorik temelleri verilen KnowledgeFlow bileşenlerini kullanarak, uçtan uca bir sınıflandırma projesinin nasıl gerçekleştirileceği en ince detayına kadar anlatılacaktır. Senaryomuzda, literatürde sıkça kullanılan ve Weka kurulumuyla birlikte gelen "weather.nominal.arff" veya "iris.arff" veri seti kullanılacaktır. Amaç, J48 karar ağacı algoritmasını kullanarak, verideki örüntüleri öğrenmek ve modelin başarısını 10-katlı çapraz doğrulama ile test etmektir.
+
+### **Adım 1: Arayüzün Hazırlanması ve Veri Yükleme**
+
+1. Başlatma: Weka GUI Chooser penceresinden KnowledgeFlow butonuna tıklanır. Açılan pencerede sol tarafta bileşen paleti, sağ tarafta ise tasarım tuvali (canvas) bulunur.  
+2. Veri Kaynağı Seçimi: Sol paneldeki DataSources sekmesine tıklanır. Buradan ArffLoader bileşeni seçilir. Fare imleci tuval üzerine getirildiğinde şekli değişir; tıklanarak bileşen tuvale bırakılır.  
+3. Dosya Seçimi: Tuvale yerleştirilen ArffLoader simgesi üzerine sağ tıklanır (Mac OS'ta Ctrl+Click). Açılan bağlam menüsünden Configure (Yapılandır) seçeneği seçilir. Dosya gezgini penceresi açılır. Weka'nın kurulu olduğu dizindeki data klasörüne gidilerek weather.nominal.arff (veya iris.arff) dosyası seçilir.  
+   * Teknik Detay: ArffLoader, dosyayı hemen belleğe yüklemez. Sadece dosya yolunu ve temel meta veriyi (başlık bilgisi) okur. Veri akışı başladığında yükleme gerçekleşecektir. Bu, "Lazy Loading" (Tembel Yükleme) prensibidir.4
+
+### **Adım 2: Sınıf Özniteliğinin Atanması (Class Assignment)**
+
+Weka, varsayılan olarak veri setinin son sütununu "sınıf" (hedef değişken) olarak kabul eder. Ancak, karmaşık akışlarda veya farklı veri setlerinde bu varsayıma güvenmek hatalı olabilir. ClassAssigner bileşeni ile bu atama açıkça yapılır.
+
+1. Bileşen Ekleme: Evaluation sekmesinden ClassAssigner bileşeni seçilip tuvale, ArffLoader'ın sağına yerleştirilir.  
+2. Bağlantı Kurma (Connection): ArffLoader üzerine sağ tıklanır ve Connections menüsü altından dataSet seçeneği işaretlenir. Bu seçim, verinin bir "toplu veri seti" (batch dataset) olarak aktarılacağını belirtir. Ardından fare ile ArffLoader'dan ClassAssigner'a doğru sürükleme yapılarak bağlantı çizgisi (kırmızı renkli) oluşturulur.  
+3. Yapılandırma: ClassAssigner üzerine sağ tıklanıp Configure seçilir. "Class attribute" açılır menüsünden sınıflandırma hedefi olan sütun (örneğin "play" veya "class") seçilir. Genellikle "Last" (Sonuncu) seçeneği bırakılır.4
+
+### **Adım 3: Çapraz Doğrulama (Cross-Validation) Stratejisi**
+
+Modelin güvenilirliğini ölçmek için, veriyi eğitim ve test olarak ayıran bir mekanizmaya ihtiyaç vardır. CrossValidationFoldMaker bu işlemi otomatikleştirir.
+
+1. Bileşen Ekleme: Evaluation sekmesinden CrossValidationFoldMaker bileşeni eklenir.  
+2. Bağlantı: ClassAssigner bileşeni, dataSet bağlantı tipi ile CrossValidationFoldMaker bileşenine bağlanır.  
+3. Parametre Ayarı: CrossValidationFoldMaker yapılandırmasında (Configure), "Folds" değeri standart olarak 10 gelir. Bu, verinin 10 eşit parçaya bölüneceğini, her seferinde 9 parçanın eğitim, 1 parçanın test için kullanılacağını ve bu işlemin 10 kez tekrarlanacağını ifade eder. "Seed" değeri (varsayılan 1), verinin karıştırılmasındaki rastgeleliği kontrol eder. Tekrarlanabilir sonuçlar için bu değer sabit tutulmalıdır.13
+
+### **Adım 4: J48 Karar Ağacı Modelinin Entegrasyonu**
+
+Bu aşamada, veriyi modelleyecek olan asıl algoritma devreye girer.
+
+1. Sınıflandırıcı Seçimi: Classifiers sekmesi altında, trees (ağaçlar) klasörü genişletilir ve J48 bileşeni seçilerek tuvale yerleştirilir.  
+   * 48, Ross Quinlan'ın C4.5 algoritmasının Java implementasyonudur. Veriyi, bilgi kazancını (Information Gain) maksimize edecek şekilde öznitelikler üzerinden böler. Bu süreçte entropi hesabı kullanılır:
+
+    $$Entropy(S) = -\sum_{i=1}^{c} p_i \log_2 p_i$$
+
+     Burada $p\_i$, $S$ veri setindeki $i$. sınıfın olasılığıdır. J48, hem kategorik hem de sayısal verileri işleyebilir ve aşırı öğrenmeyi (overfitting) önlemek için budama (pruning) mekanizmalarına sahiptir.12  
+2. Çift Yönlü Bağlantı (Kritik): Çapraz doğrulama mekanizması gereği, CrossValidationFoldMaker hem eğitim hem de test verisi üretir. Bu nedenle J48'e iki ayrı bağlantı yapılmalıdır:  
+   * CrossValidationFoldMaker \-\> sağ tık \-\> trainingSet \-\> J48'e bağla.  
+   * CrossValidationFoldMaker \-\> sağ tık \-\> testSet \-\> J48'e bağla.  
+   * Bu çift bağlantı, J48'in her döngüde önce eğitim verisini alıp modeli kurmasını, hemen ardından test verisini alıp tahmin üretmesini sağlar.4
+
+### **Adım 5: Performans Değerlendirmesi ve Sonuçların Toplanması**
+
+Sınıflandırıcının ürettiği tahminlerin doğruluğunu hesaplamak için bir değerlendirici (evaluator) gerekir.
+
+1. Değerlendirici Ekleme: Evaluation sekmesinden ClassifierPerformanceEvaluator bileşeni eklenir.  
+2. Bağlantı: J48 bileşeni üzerine sağ tıklanır. Burada bağlantı tipi olarak batchClassifier seçilmelidir. Bu, J48'in toplu eğitim modunda çalıştığını ve üretilen modelin/tahminlerin bir paket olarak değerlendiriciye gönderileceğini belirtir. J48 \-\> batchClassifier \-\> ClassifierPerformanceEvaluator bağlantısı kurulur.4
+
+### **Adım 6: Görselleştirme ve Sonuç Analizi**
+
+Sonuçları insan tarafından okunabilir formata çevirmek için görselleştirme araçları kullanılır.
+
+1. Metin Görüntüleyici (TextViewer):  
+   * Visualization sekmesinden TextViewer eklenir.  
+   * ClassifierPerformanceEvaluator \-\> text \-\> TextViewer bağlantısı yapılır. Bu bağlantı, doğruluk oranı, karışıklık matrisi (confusion matrix), kappa istatistiği gibi sayısal özetleri taşır.4  
+2. Grafik Görüntüleyici (GraphViewer):  
+   * J48 bir ağaç yapısı ürettiği için, bu yapıyı görselleştirmek mümkündür.  
+   * Visualization sekmesinden GraphViewer eklenir.  
+   * J48 \-\> graph \-\> GraphViewer bağlantısı yapılır. Dikkat: Bu bağlantı ClassifierPerformanceEvaluator üzerinden değil, doğrudan J48 üzerinden alınır, çünkü görselleştirilecek olan şey modelin kendisidir, performans metrikleri değildir.15
+
+### **Adım 7: Akışın Çalıştırılması ve Yorumlanması**
+
+1. Başlatma: Tasarım tamamlandıktan sonra, akışı başlatmak için araç çubuğundaki "Play" (Oynat) butonuna basılır veya en baştaki ArffLoader üzerine sağ tıklanıp Start loading denilir.  
+2. İzleme: KnowledgeFlow arayüzünün altındaki "Status" (Durum) çubuğunda işlemlerin ilerleyişi ("Loading...", "Building model...", "Finished") takip edilir. Bileşenler çalışırken üzerlerinde animasyonlar görülebilir veya "x1" gibi işlem sayaçları belirebilir.  
+3. Sonuçları İnceleme:  
+   * TextViewer üzerine sağ tıklanıp Show results seçilir. Açılan pencerede Summary (Özet) sekmesi altında "Correctly Classified Instances" (Doğru Sınıflandırılmış Örnekler) yüzdesi ve Confusion Matrix incelenir. Karışıklık matrisinde köşegen üzerindeki değerler doğru tahminleri, diğerleri hataları gösterir.12  
+   * GraphViewer üzerine sağ tıklanıp Show results seçilir. Burada J48 tarafından oluşturulan karar ağacı görsel olarak sunulur. Dallanmalar, verinin hangi özniteliklere göre ayrıldığını (örneğin; "outlook \= sunny") gösterir.
+
+   
+
+---
+
+## **Çoklu Model Karşılaştırma ve ROC Analizi**
+
+Şimdi kurduğumuz temel J48 akışını alıp, KnowledgeFlow’un esnek mimarisini kullanarak analizi bir üst seviyeye taşıyacağız. Amacımız, J48 karar ağacının yanına popüler bir topluluk (ensemble) öğrenme algoritması olan **RandomForest**'ı eklemek ve her iki modelin performansını tek bir Grafiksel Performans Çizimi üzerinde karşılaştırmaktır.
+
+## 
+
+### **ROC Eğrileri ve AUC Metriği**
+
+Bir sınıflandırıcının eşik değerine (threshold) bağlı olarak değişen performansını görselleştirmek için **ROC (Receiver Operating Characteristic) Eğrisi** kullanılır.
+
+* **Eğri:** Yatay eksen Yanlış Pozitif Oranı'nı (False Positive Rate \- Özgüllük Tersi) ve dikey eksen Doğru Pozitif Oranı'nı (True Positive Rate \- Hassasiyet) gösterir.  
+* **AUC (Area Under Curve):** Eğrinin altında kalan alandır. Bu alan ne kadar büyükse (1'e ne kadar yakınsa), modelin performansı o kadar iyidir ve tahmin yeteneği o kadar yüksektir. İki modeli aynı grafikte çizerek, hangi modelin daha geniş bir AUC alanına sahip olduğunu anında görebiliriz.
+
+
+## **İkinci Modeli Ekleme ve Karşılaştırma**
+
+Daha önce kurduğunuz **CrossValidationFoldMaker** bileşenini başlangıç noktası olarak alıyoruz. Unutmayın, KnowledgeFlow'da bir kaynaktan çıkan veri, birden fazla hedefe paralel olarak akabilir.
+
+### **Adım 4.1: İkinci Sınıflandırıcıyı (RandomForest) Ekleme**
+
+1. **Bileşen Ekleme:** Sol paneldeki **Classifiers** sekmesinden `trees` klasörünü genişletin ve **RandomForest** bileşenini seçerek tuvalinize J48'in yanına yerleştirin.  
+2. **Paralel Bağlantı:** `CrossValidationFoldMaker`, hem J48 hem de RandomForest için veri kaynağımız olacak:  
+   * `CrossValidationFoldMaker` üzerine sağ tıklayın, **trainingSet** bağlantı tipini seçin ve `RandomForest` üzerine sürükleyerek bağlantıyı kurun.  
+   * Aynı şekilde, `CrossValidationFoldMaker` üzerine tekrar sağ tıklayın, bu sefer **testSet** bağlantı tipini seçin ve `RandomForest` üzerine sürükleyerek ikinci bağlantıyı kurun.
+
+### **Adım 4.2: İkinci Bir Değerlendirici Ekleme**
+
+Her modelin tahmin çıktısını bağımsız olarak işlemesi için yeni bir değerlendiriciye ihtiyacımız var.
+
+1. **Bileşen Ekleme:** **Evaluation** sekmesinden bir adet daha **ClassifierPerformanceEvaluator** ekleyin.  
+2. **Bağlantı:** `RandomForest` bileşeni üzerine sağ tıklayın, **batchClassifier** bağlantı tipini seçin ve yeni eklediğiniz `ClassifierPerformanceEvaluator`'a bağlayın.
+
+### **Adım 4.3: Model Performans Grafiğini (ModelPerformanceChart) Hazırlama**
+
+Bu bileşen, iki modelin sonuçlarını tek bir grafikte birleştirecek olan ana araçtır.
+
+1. **Bileşen Ekleme:** **Visualization** sekmesinden **ModelPerformanceChart** bileşenini tuvale ekleyin.  
+2. **Performans Verisi Bağlantısı (Kritik Nokta):** İki farklı performans değerlendiricisinden çıkan veriyi bu tek grafik bileşeninde birleştireceğiz.  
+   * İlk `ClassifierPerformanceEvaluator` (J48'e bağlı olan) üzerine sağ tıklayın ve **thresholdData** bağlantı tipini seçerek `ModelPerformanceChart`'a bağlayın.  
+   * İkinci `ClassifierPerformanceEvaluator` (RandomForest'a bağlı olan) üzerine sağ tıklayın ve yine **thresholdData** bağlantı tipini seçerek aynı `ModelPerformanceChart`'a bağlayın.  
+   * **Unutmayın:** `thresholdData` bağlantısı, ROC eğrilerinin çizilmesi için gereken hassasiyet (TP) ve özgüllük (FP) oranlarına ait eşik (threshold) verilerini taşır.
+
+### **Adım 4.4: Sınıf Değeri Seçimi**
+
+ROC analizi, hangi sınıfın ("Pozitif Sınıf") tahmin edilmeye çalışıldığına odaklanarak yapılır.
+
+1. **Bileşen Ekleme:** **Evaluation** sekmesinden **ClassValuePicker** bileşenini ekleyin.  
+2. **Konum:** Bu bileşeni **ClassAssigner** ile **CrossValidationFoldMaker** arasına yerleştirin. `ClassAssigner`'dan gelen `dataSet` bağlantısını kesip önce `ClassValuePicker`'a, oradan çıkan `dataSet` bağlantısını da `CrossValidationFoldMaker`'a bağlayın.  
+3. **Yapılandırma:** `ClassValuePicker`'ı yapılandırın ve "Positive Class" olarak analiz etmek istediğiniz sınıf etiketini (örneğin, hava durumu veri setinde `play=yes` gibi) seçin.
+
+### **Akışı Çalıştırma ve Sonuçları Yorumlama**
+
+Şimdi gençler, tasarladığımız bu veri akışını çalıştırarak, modellerimizin performansını karşılaştırma aşamasına geldik.
+
+1.  **Akışın Başlatılması:** Tasarım tuvalinin üzerindeki "Play" düğmesine tıkladığınızda veya ArffLoader bileşenine sağ tıklayıp "Start loading" seçeneğini seçtiğinizde, Weka tanımlanan adımları sırayla işleyecektir. Bu süreçte, veri önce ArffLoader'dan ClassAssigner'a, oradan da CrossValidationFoldMaker'a aktarılır. CrossValidationFoldMaker, veriyi belirlenen katmanlara (örneğin 10 katmana) ayırır. Her bir katman, sırayla test seti olarak kullanılırken, kalan diğer dokuz katman eğitim seti olarak işlev görür. Her bir döngüde, hem J48 karar ağacı hem de RandomForest algoritması, bu eğitim seti üzerinde **paralel olarak** eğitilir ve ardından aynı test seti üzerinde tahminler üretir. Bu paralel yürütme, Weka KnowledgeFlow'un sunduğu önemli bir avantajdır.
+
+2.  **Görsel Sonuçların İncelenmesi:** Akış tamamlandığında, `ModelPerformanceChart` bileşenine sağ tıklayıp "Show Chart" seçeneğini seçin. Karşınıza, iki farklı sınıflandırıcıya ait **ROC eğrilerinin** tek bir grafik üzerinde üst üste bindirilmiş olduğu bir pencere gelecektir. Her bir eğri, farklı bir modelin performansını temsil eder ve genellikle farklı renklerle gösterilir. Bu görselleştirme, modellerin tahmin yeteneklerini bütüncül bir bakış açısıyla karşılaştırmamızı sağlar.
+
+3.  **ROC Eğrilerini Yorumlama:** Bu grafik, bir sınıflandırıcının eşik değerine bağlı olarak pozitif ve negatif sınıfları ne kadar iyi ayırabildiğini gösteren kritik bir araçtır.
+    *   Yatay eksen **Sahte Pozitif Oranını (False Positive Rate - FPR)**, dikey eksen ise **Gerçek Pozitif Oranını (True Positive Rate - TPR)** temsil eder. FPR, gerçekte negatif olan örneklerden yanlışlıkla pozitif olarak tahmin edilenlerin oranıdır. TPR ise, gerçekte pozitif olan örneklerden doğru bir şekilde pozitif olarak tahmin edilenlerin oranıdır (bu aynı zamanda Duyarlılık veya Recall olarak da bilinir).
+    *   Grafiğin sol alt köşesi **(0,0)**, modelin hiçbir şeye pozitif demediği durumu; sağ üst köşesi **(1,1)** ise modelin her şeye pozitif dediği durumu gösterir. İdeal bir model, hiçbir yanlış pozitif yapmadan tüm gerçek pozitifleri yakalamayı hedefler, yani eğrisi grafiğin **sol üst köşesine (0,1)** en yakın olan modeldir.
+    *   Her bir eğrinin altında kalan alana **AUC (Area Under the Curve)** değeri denir. AUC değeri, modelin genel ayırt etme gücünü tek bir sayı ile özetler.
+        *   **AUC = 1.0** mükemmel bir modeldir; sınıfları hatasız ayırır.
+        *   **AUC = 0.5** rastgele tahmin yapan bir modeldir (tıpkı yazı tura atmak gibi); grafikte (0,0)'dan (1,1)'e uzanan köşegen çizgiyle temsil edilir.
+        *   **AUC < 0.5** ise modelin rastgele tahminden bile kötü olduğunu, yani tahminlerinin tersinin daha isabetli olabileceğini gösterir.
+    *   Karşılaştırdığınız modeller arasında, eğrisi sol üst köşeye daha yakın olan ve altında kalan **AUC değeri daha yüksek olan model, genel olarak daha başarılı kabul edilecektir.** Bu grafik, modellerin performansını sadece tek bir doğruluk değeriyle değil, tüm olası karar eşik değerleri üzerinden değerlendiren, somut ve kapsamlı bir görsel kanıt sunar. Bu sayede, hangi modelin belirli bir sınıflandırma problemi için daha güvenilir tahminler yapma potansiyeline sahip olduğunu net bir şekilde anlayabiliriz.
+
+## **5\. Uygulama 2: Artımlı (Incremental) Öğrenme ve Akan Veri Analizi**
+
+Veri madenciliğinin modern uygulamalarında (IoT, finansal işlemler, web logları), veri statik bir dosya olarak değil, sürekli bir akış (stream) olarak gelir. Bu durumda, tüm veriyi bekleyip eğitmek imkansızdır. KnowledgeFlow, bu senaryo için **Artımlı Öğrenme** desteği sunar.
+
+### **5.1. Artımlı Öğrenme Teorisi ve UpdateableClassifier Arayüzü**
+
+Artımlı öğrenmede, model her yeni gelen veri örneği (instance) ile kendini günceller. Weka'da bir algoritmanın artımlı çalışabilmesi için UpdateableClassifier arayüzünü implemente etmesi gerekir. Bu algoritmalar, tüm veri setini hafızada tutmak yerine, sadece gerekli istatistikleri (örneğin Naive Bayes için olasılık tablolarını) güncellerler.4
+
+Öne çıkan artımlı algoritmalar:
+
+* **NaiveBayesUpdateable:** Her yeni örnekle olasılık tablolarını günceller.  
+* **IBk (K-Nearest Neighbors):** "Window size" parametresi ile son *n* örneği hafızada tutarak çalışır.  
+* **HoeffdingTree (VFDT):** Çok yüksek hızlı veri akışları için tasarlanmış, her örneği sadece bir kez okuyarak ağaç oluşturan gelişmiş bir karar ağacıdır.21
+
+### **5.2. Artımlı Akış Kurulumu**
+
+Artımlı öğrenme akışı, toplu öğrenme akışından yapısal olarak farklıdır. Veri "dataset" olarak değil, "instance" olarak akar.
+
+1. **Veri Kaynağı:** ArffLoader eklenir ve dosya seçilir. Ancak bu sefer bağlantı tipi olarak **instance** seçilir. Bu, verinin satır satır akacağını belirtir.  
+2. **Artımlı Sınıflandırıcı:** **Classifiers \-\> bayes** altından **NaiveBayesUpdateable** seçilir. ArffLoader'dan gelen instance bağlantısı bu bileşene bağlanır.  
+3. **Artımlı Değerlendirici:** Toplu değerlendirici yerine **IncrementalClassifierEvaluator** (Evaluation sekmesi) kullanılır. Sınıflandırıcıdan bu bileşene **incrementalClassifier** bağlantısı yapılır. Bu değerlendirici, "Prequential Evaluation" (Test-then-Train) yöntemini kullanır; yani model önce gelen örneği tahmin etmeye çalışır (test), sonra o örneğin gerçek etiketini kullanarak kendini günceller (eğitim).7  
+4. **Canlı İzleme (StripChart):** Performansın zaman içindeki değişimini görmek için **StripChart** (Visualization sekmesi) kullanılır. Değerlendiriciden StripChart'a **chart** bağlantısı yapılır.  
+   * *Yapılandırma:* StripChart üzerinde sağ tıklanıp "Show chart" denildiğinde boş bir grafik penceresi açılır. Akış başladığında, bu grafik üzerinde doğruluk (accuracy) ve hata (RMSE) değerleri hareketli bir çizgi olarak (EKG cihazı gibi) akmaya başlar. X ekseni zamanı/örnek sayısını, Y ekseni performansı gösterir.
+
+## **6\. Veri Sızıntısı (Data Leakage) - Modelin Sınav Sorularını Önceden Görmesi**
+
+Gençler, makine öğrenmesi projelerinde karşılaştığımız en sinsi ve bir o kadar da tehlikeli hatalardan biri **Veri Sızıntısı (Data Leakage)**'dır. Bunu şöyle düşünebilirsiniz: Bir öğrenciden bir sınavı geçmesini istiyoruz. Ona tüm konuları öğretiyoruz, örnek sorular çözdürüyoruz (eğitim verisi). Sonra da onu daha önce hiç görmediği sorularla sınava sokuyoruz (test verisi). İşte bu, modelimizin genelleme yeteneğini, yani gerçek hayatta ne kadar başarılı olacağını ölçmemizin adil yoludur.
+
+Peki ya öğrencimiz, sınav sorularının bir kısmını veya en azından soruların nasıl hazırlanacağına dair ipuçlarını sınavdan önce bir şekilde öğrenirse? Mesela, sınavdaki soruların zorluk derecesinin veya ortalamasının ne olacağını bilirse... İşte o zaman, sınavdan aldığı yüksek not, onun konuyu gerçekten anladığı anlamına gelmez; sadece "kopya çektiği" anlamına gelir.
+
+Makine öğrenmesinde de durum aynen böyledir. Modelimizin, gelecekte karşılaşacağı verilere (test verisi) dair herhangi bir bilgiyi, daha eğitim aşamasında veya ön işleme sırasında görmesi durumuna **veri sızıntısı** diyoruz. Bu sızıntı, modelinizin performans metriklerini yapay olarak şişirir, size olduğundan çok daha iyiymiş gibi gösterir. Sonra modeli gerçek dünyaya saldığınızda, acı gerçekle yüzleşirsiniz: Modeliniz aslında o kadar da iyi değilmiş, çünkü "sınav sorularını ezberlemiş".
+
+**KnowledgeFlow** gibi görsel akış araçlarını kullanırken bu sızıntı riskini göz ardı etmemek, bir mühendisin olmazsa olmazıdır. Şöyle ki:
+
+KnowledgeFlow kullanırken en sık yapılan hatalardan biri, ön işleme (filtreleme) adımlarının yanlış konumlandırılmasıdır. Eğer bir `Normalize` (verileri belirli bir aralığa sıkıştırma) veya `Discretize` (sayısal verileri kategorik aralıklara dönüştürme) filtresi, `CrossValidationFoldMaker`'dan *önce* uygulanırsa, tüm veri seti (hem eğitim hem de test verisi dahil) kullanılarak bu istatistikler (minimum, maksimum, ortalama gibi) hesaplanır. İşte bu durum, test verisinin özelliklerinin (o sınav sorularının ortalaması gibi) modele önceden sızmasına ve "Veri Sızıntısı"na (Data Leakage) yol açar. Bu da sonuçların olduğundan daha iyi görünmesine neden olur (`optimistic bias`).
+
+**Peki doğrusu ne olmalı?** Doğru yaklaşım, ön işleme filtrelerini `CrossValidationFoldMaker`'dan *sonra* yerleştirmektir. Ya da Weka'nın `FilteredClassifier` meta-sınıflandırıcısını kullanmaktır. Bu sayede, filtrelerin parametreleri (normalizasyon için min/max değerleri veya diskretizasyon için aralık sınırları) sadece eğitim verisinden öğrenilir ve bu öğrenilen kurallar daha sonra, tamamen yabancı olduğu test verisine uygulanır. Bu, modelimizin gerçekten "öğrenme" yeteneğini ölçmenin tek adil yoludur. Aksi takdirde, elde ettiğimiz yüksek başarı oranları sadece bir yanılsamadan ibaret kalır. Unutmayalım ki, bir modelin gerçek gücü, yeni ve bilinmeyen verilerle karşılaştığında ortaya çıkar, ezberledikleriyle değil.
+
+
+
+## **7\. Sonuç**
+
+Weka KnowledgeFlow, makine öğrenmesi süreçlerini yönetmek için esnek, güçlü ve görsel bir ortam sunar. Bu raporda detaylandırılan mimari yapı ve uygulama senaryoları, KnowledgeFlow'un sadece basit bir sürükle-bırak aracı olmadığını, karmaşık veri bilimi problemlerini çözmek için gerekli teorik derinliğe ve teknik kapasiteye sahip olduğunu göstermektedir. Özellikle artımlı öğrenme yeteneği, KnowledgeFlow'u statik veri analizi yapan Explorer arayüzünden ayırarak, büyük veri ve gerçek zamanlı analitik dünyasına bağlayan bir köprü görevi görür. Araştırmacılar, burada sunulan J48 ve NaiveBayesUpdateable örneklerini temel alarak, kendi veri setleri üzerinde çok daha karmaşık (örneğin; meta-sınıflandırıcılar, özellik seçimi entegrasyonu, maliyet duyarlı öğrenme) akışlar tasarlayabilirler.
+
+# Optimizasyon ve Hiperparametre Ayarlama
+
+---
+
+## Model Neden Öğrenir?
+
+Bir makine öğrenmesi modeli eğitilirken aslında şu soru cevaplanır: Elimdeki veriye en uygun matematiksel ifade nedir?
+
+Bu soruya cevap aramak için bir **maliyet fonksiyonu (Cost Function)** tanımlanır. Maliyet fonksiyonu, modelin tahminleri ile gerçek değerler arasındaki farkı ölçer. Fark büyükse maliyet yüksek, fark küçükse maliyet düşüktür.
+
+Eğitim süreci, bu maliyeti mümkün olduğunca düşürmeye çalışır. Matematiksel olarak bu işleme **optimizasyon** denir. Latince *optimus* kelimesinden gelir; "en iyi" anlamındadır.
+
+Optimizasyonun en yaygın yöntemi **Gradient Descent (Gradyan İnişi)**'dir. Gradient kelimesi "eğim" demektir. Algoritma, maliyet fonksiyonunun eğimine bakarak hangi yöne giderse maliyetin düşeceğini hesaplar ve o yönde adım atar.
+
+Bir dağda gözleri kapalı en alçak noktaya inmeye çalıştığınızı düşünün. Ayağınızın altındaki zeminin eğimine bakarsınız; eğim aşağı doğruysa o yöne adım atarsınız. Gradient Descent tam olarak bunu yapar.
+
+---
+
+## Öğrenmek ile Ezberlemek Arasındaki Fark
+
+Bir model eğitim verisinde çok iyi performans gösterebilir. Hata oranı düşer, tahminler tutarlıdır. Ancak aynı model yeni bir veri gördüğünde başarısız olabilir.
+
+Bu durumun sebebi şudur: Model veriyi öğrenmek yerine ezberlemiştir.
+
+Makine öğrenmesinde asıl hedef, modelin daha önce görmediği verilerde de tutarlı tahmin yapabilmesidir. Bu yeteneğe **Generalization (Genelleme)** denir. Latince *generalis* kelimesinden türemiştir; "genele ait olan" anlamına gelir.
+
+İki uç durum vardır:
+
+**Underfitting (Eksik Öğrenme):** Model veriden yeterince öğrenememiştir. Hem eğitim verisinde hem test verisinde performansı düşüktür. Bir öğrencinin konuyu hiç çalışmadan sınava girmesi gibidir.
+
+**Overfitting (Aşırı Öğrenme):** Model eğitim verisini ezberlemiştir. Eğitim verisinde mükemmel performans gösterir ama yeni veride başarısız olur. Bir öğrencinin sadece geçmiş sınav sorularını ezberleyip, farklı soru geldiğinde şaşırması gibidir.
+
+Her iki durum da optimizasyonla ilgilidir. İlkinde optimizasyon yetersiz kalmıştır, ikincisinde gereğinden fazla ileri gitmiştir.
+
+---
+
+## Regularization: Modeli Dizginlemek
+
+Overfitting'i önlemenin yollarından biri, modele bir kısıtlama koymaktır. Bu kısıtlamaya **Regularization (Düzenlileştirme)** denir. Latince *regularis* kelimesinden gelir; "kurala uygun hale getirmek" anlamındadır.
+
+Regularization, maliyet fonksiyonuna ek bir terim ekler. Bu terim, model parametrelerinin çok büyümesini cezalandırır.
+
+### L2 Regularization (Ridge)
+
+Maliyet fonksiyonuna eklenen terim:
+
+$$\lambda \sum \theta^2$$
+
+Burada $\theta$ model parametrelerini, $\lambda$ ise cezanın şiddetini belirleyen katsayıyı temsil eder.
+
+L2 regularization parametreleri küçültür ama sıfırlamaz. Sonuç olarak model daha yumuşak, daha az karmaşık bir yapıya kavuşur.
+
+### L1 Regularization (Lasso)
+
+Maliyet fonksiyonuna eklenen terim:
+
+$$\lambda \sum |\theta|$$
+
+L1 regularization bazı parametreleri tamamen sıfıra indirir. Bu sayede model otomatik olarak özellik seçimi yapar; gereksiz değişkenler devre dışı kalır.
+
+Fark şöyle özetlenebilir: L2 tüm kalemleri biraz kısar, L1 bazı kalemleri tamamen siler.
+
+Regularization uygulandığında Gradient Descent güncellemesi şu hale gelir:
+
+$$\theta_{t+1} = \theta_t - \eta \left( \nabla J(\theta) + \lambda \theta \right)$$
+
+Artık her adımda iki kuvvet dengelenir: Hatayı azaltmaya çalışan kuvvet ve parametreleri küçük tutmaya çalışan kuvvet.
+
+---
+
+## Early Stopping: Zamanında Durmak
+
+Bazen en iyi çözüm matematiksel formüllerden değil, gözlemden gelir.
+
+Model eğitilirken iki metrik takip edilir:
+- Eğitim hatası
+- Doğrulama hatası
+
+Eğitim hatası genellikle sürekli düşer. Ancak doğrulama hatası bir noktadan sonra düşmeyi bırakır, hatta yükselmeye başlar. İşte o nokta, modelin ezberlemaya başladığı andır.
+
+**Early Stopping (Erken Durdurma)** bu noktada eğitimi sonlandırır. Mantık basittir: Daha fazla çalışmak her zaman daha iyi sonuç vermez.
+
+Bu yöntem özellikle **Neural Networks (Yapay Sinir Ağları)** gibi çok sayıda parametre içeren modellerde etkilidir.
+
+---
+
+## Learning Rate: Adım Büyüklüğünü Ayarlamak
+
+Gradient Descent'te her adımda ne kadar ilerleneceğini **Learning Rate (Öğrenme Oranı)** belirler. Genellikle $\eta$ (eta) ile gösterilir.
+
+Learning rate çok büyükse model hedefi atlar, etrafında salınır durur. Çok küçükse öğrenme aşırı yavaşlar, belki hiç sonuca ulaşamaz.
+
+**Learning Rate Scheduling (Öğrenme Oranı Zamanlaması)** bu soruna çözüm sunar. Eğitimin başında büyük adımlar atılır, ilerledikçe adımlar küçülür.
+
+Yeni bir şehre taşındığınızda önce hızlı keşif yaparsınız, sonra detaylara inersiniz. Learning rate scheduling aynı mantıkla çalışır.
+
+Yaygın stratejiler:
+- **Step Decay:** Belirli aralıklarla learning rate sabit oranda düşürülür
+- **Exponential Decay:** Her adımda üstel olarak azalır
+- **Adaptive Methods:** Adam gibi algoritmalar learning rate'i otomatik ayarlar
+
+---
+
+## Feature Scaling: Ölçeklendirme
+
+Gradient Descent mesafeye duyarlıdır. Bir özellik 0-1 aralığında, diğeri 0-10000 aralığındaysa optimizasyon dengesiz çalışır. Büyük ölçekli özellik gradyanı domine eder.
+
+Bu sorunu çözmek için **Feature Scaling (Özellik Ölçeklendirme)** uygulanır.
+
+**Standardization (Standardizasyon):** Verinin ortalaması 0, standart sapması 1 yapılır.
+
+$$z = \frac{x - \mu}{\sigma}$$
+
+**Normalization (Normalizasyon):** Veri belirli bir aralığa (genellikle 0-1) sıkıştırılır.
+
+$$x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}}$$
+
+Ölçeklendirme yapılmadan çalıştırılan bir Gradient Descent, bir ayağı uzun diğeri kısa iki bacakla yürümeye benzer.
+
+---
+
+## Parametre ve Hiperparametre Ayrımı
+
+Model eğitilirken iki farklı parametre türü vardır. Bu ayrımı anlamak kritiktir.
+
+**Model Parametreleri (Parameters):** Eğitim sırasında veriden öğrenilen değerlerdir. Regresyon katsayıları, sinir ağı ağırlıkları bu gruba girer. Bunlara doğrudan müdahale edilmez; optimizasyon algoritması bulur.
+
+**Hiperparametreler (Hyperparameters):** Eğitime başlamadan önce belirlenen ayarlardır. Modelin nasıl öğreneceğini tanımlar. Learning rate, epoch sayısı, batch size, regularization katsayısı bu gruba dahildir.
+
+"Hyper" ön eki Yunanca'dan gelir; "üstünde, ötesinde" anlamındadır. Hiperparametreler, parametrelerin nasıl öğrenileceğini belirleyen üst düzey ayarlardır.
+
+Peki hiperparametreler nasıl seçilir? Learning rate için 0.01 mi yoksa 0.001 mi daha uygundur? Bu sorunun kesin cevabı yoktur. Denemek gerekir.
+
+---
+
+## Grid Search: Sistematik Arama
+
+Hiperparametre seçimini rastgele yapmak yerine sistematik bir arama yapmak daha güvenilirdir. **Grid Search (Izgara Araması)** tüm olası kombinasyonları deneyerek en iyi sonucu veren yapılandırmayı bulur.
+
+"Grid" kelimesi ızgara demektir. İki parametreyi aynı anda aradığınızda ortaya bir koordinat düzlemi çıkar.
+
+Örnek olarak iki hiperparametre düşünelim:
+- Learning Rate ($\eta$): 0.001, 0.01, 0.1
+- Regularization ($\lambda$): 0.1, 0.5
+
+Toplam kombinasyon sayısı: $3 \times 2 = 6$
+
+```
+              λ = 0.1      λ = 0.5
+           ┌───────────┬───────────┐
+η = 0.001  │  Deney 1  │  Deney 2  │
+           ├───────────┼───────────┤
+η = 0.01   │  Deney 3  │  Deney 4  │
+           ├───────────┼───────────┤
+η = 0.1    │  Deney 5  │  Deney 6  │
+           └───────────┴───────────┘
+```
+
+Her hücre ayrı bir eğitim ve doğrulama sürecini temsil eder. Hesaplama maliyeti yüksektir ancak "tahmin ederek ayar yapma" yerine ölçüme dayalı seçim yapılmış olur.
+
+---
+
+## WEKA'da Hiperparametre Optimizasyonu
+
+WEKA'da varsayılan ayarlarla çalışmak mümkündür ancak bilimsel bir çalışmada bu genellikle yeterli olmaz. Parametre araması için **Meta-Classifiers (Üst Sınıflandırıcılar)** kullanılır.
+
+Bu amaçla kullanılan temel araç **CVParameterSelection**'dır. CV, **Cross-Validation (Çapraz Doğrulama)** kısaltmasıdır.
+
+### Uygulama Adımları
+
+1. Explorer sekmesinde veri seti açılır (örneğin `diabetes.arff`)
+
+2. Classify sekmesine geçilir
+
+3. Choose → meta → CVParameterSelection seçilir
+
+4. Ayar penceresinde iki alan önemlidir:
+   - **classifier:** Optimize edilecek algoritma (örneğin functions → SGD)
+   - **CVParameters:** Arama uzayı tanımı
+
+WEKA'da parametre tarama sözdizimi:
+
+```
+parametre_adı alt_sınır üst_sınır adım_sayısı
+```
+
+Örnek:
+
+```
+L 0.001 0.1 5
+```
+
+Bu ifade, L parametresinin (learning rate) 0.001 ile 0.1 arasında 5 farklı değerle denenmesini söyler.
+
+5. Start tuşuna basıldığında WEKA tüm kombinasyonları dener ve en iyi sonucu raporlar
+
+Çıktıda şu tür bir ifade görülür:
+
+```
+Best Value (L): 0.01
+```
+
+---
+
+## R ile Grid Search
+
+R'da **caret** paketi Grid Search için kapsamlı bir altyapı sunar.
+
+```r
+library(caret)
+
+# Veri yükleme
+data(PimaIndiansDiabetes, package = "mlbench")
+veri <- PimaIndiansDiabetes
+
+# Çapraz doğrulama ayarları
+kontrol <- trainControl(
+  method = "cv",
+  number = 5,
+  verboseIter = TRUE
+)
+
+# Parametre ızgarası
+parametre_grid <- expand.grid(
+  alpha = c(0, 0.5, 1),           # 0: Ridge, 1: Lasso
+  lambda = c(0.001, 0.01, 0.1)
+)
+
+# Grid Search ile model eğitimi
+model <- train(
+  diabetes ~ .,
+  data = veri,
+  method = "glmnet",
+  trControl = kontrol,
+  tuneGrid = parametre_grid,
+  preProcess = c("center", "scale")
+)
+
+# Sonuçlar
+print(model)
+print(model$bestTune)
+```
+
+Bu kod Elastic Net modelini farklı alpha ve lambda kombinasyonlarıyla dener. `alpha = 0` Ridge, `alpha = 1` Lasso, aradaki değerler ise ikisinin karışımı olan Elastic Net'i verir.
+
+---
+
+## Python ile Grid Search
+
+Python'da **scikit-learn** kütüphanesinin `GridSearchCV` sınıfı kullanılır.
+
+```python
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import SGDRegressor
+from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+# Veri yükleme
+X, y = load_diabetes(return_X_y=True)
+
+# Pipeline oluşturma
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('sgd', SGDRegressor(max_iter=5000, tol=1e-3))
+])
+
+# Parametre ızgarası
+param_grid = {
+    'sgd__alpha': [0.0001, 0.001, 0.01, 0.1],
+    'sgd__learning_rate': ['constant', 'optimal', 'invscaling'],
+    'sgd__eta0': [0.01, 0.1]
+}
+
+# Grid Search
+grid_search = GridSearchCV(
+    pipeline,
+    param_grid,
+    cv=5,
+    scoring='neg_mean_squared_error'
+)
+
+grid_search.fit(X, y)
+
+print("En iyi parametreler:", grid_search.best_params_)
+print("En iyi skor:", grid_search.best_score_)
+```
+
+Toplam eğitim sayısı: $4 \times 3 \times 2 \times 5 = 120$
+
+Parametre sayısı arttıkça kombinasyon sayısı üstel olarak büyür. Bu duruma literatürde **Curse of Dimensionality (Boyut Laneti)** denir.
+
+---
+
+## Random Search: Rastgele Arama
+
+Parametre uzayı çok genişlediğinde Grid Search pratik olmaktan çıkar. **Random Search (Rastgele Arama)** bu durumda tercih edilir.
+
+Tüm noktalar denenmez; belirlenen dağılımlardan rastgele örnekler seçilir. Yeterli sayıda deneme yapıldığında iyi çözümlere ulaşma olasılığı yüksektir ve hesaplama maliyeti düşer.
+
+Araştırmalar göstermiştir ki parametre uzayı geniş olduğunda Random Search, Grid Search'ten daha verimli sonuçlar üretebilir. Çünkü Grid Search parametrelerin eşit aralıklı noktalarını denerken, Random Search tüm uzayı daha geniş biçimde örnekler.
+
+R'da `caret` paketinde:
+
+```r
+kontrol <- trainControl(
+  method = "cv",
+  number = 5,
+  search = "random"
+)
+
+model <- train(
+  diabetes ~ .,
+  data = veri,
+  method = "glmnet",
+  trControl = kontrol,
+  tuneLength = 20  # 20 rastgele kombinasyon
+)
+```
+
+Python'da `RandomizedSearchCV`:
+
+```python
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import uniform, loguniform
+
+param_distributions = {
+    'sgd__alpha': loguniform(1e-5, 1e-1),
+    'sgd__eta0': uniform(0.001, 0.1)
+}
+
+random_search = RandomizedSearchCV(
+    pipeline,
+    param_distributions,
+    n_iter=50,
+    cv=5,
+    scoring='neg_mean_squared_error'
+)
+```
+
+---
+
+## Nested Cross-Validation: Güvenilir Değerlendirme
+
+Grid Search kullanıldığında sık yapılan bir hata vardır: Aynı veri üzerinde hem hiperparametre seçimi yapılır hem de performans raporlanır. Bu durum iyimser sonuçlar üretir çünkü model dolaylı olarak test verisini görmüş olur.
+
+**Nested Cross-Validation (İç İçe Çapraz Doğrulama)** bu sorunu çözer. Temel fikir basittir: Hiperparametre seçimi ile model değerlendirmesi birbirinden ayrılır.
+
+Yapı iki döngüden oluşur:
+
+**Dış Döngü (Outer Loop):** Modelin genelleme performansını ölçer. Veri k katmana bölünür; her iterasyonda bir katman test için ayrılır.
+
+**İç Döngü (Inner Loop):** Hiperparametre optimizasyonunu yürütür. Eğitim verisi üzerinde Grid Search yapılır.
+<img src="./images/nested_cv.svg" alt="Nested Cross-Validation Süreci">
+```
+
+Bu yapı 10 kez tekrarlandığında 10 farklı test sonucu elde edilir. Her biri bağımsız hiperparametre optimizasyonu ile desteklenir. Raporlanan performans, hiperparametre seçiminin etkisinden arındırılmış olur.
+
+### R ile Nested Cross-Validation
+
+```r
+library(caret)
+library(mlbench)
+
+data(PimaIndiansDiabetes)
+veri <- PimaIndiansDiabetes
+
+# Dış döngü için katmanlar
+set.seed(42)
+dis_katmanlar <- createFolds(veri$diabetes, k = 10, returnTrain = FALSE)
+
+# Sonuçları saklayacak vektör
+dis_sonuclar <- numeric(10)
+
+for (i in 1:10) {
+  # Dış döngü: eğitim ve test ayrımı
+  test_indeks <- dis_katmanlar[[i]]
+  egitim_veri <- veri[-test_indeks, ]
+  test_veri <- veri[test_indeks, ]
+  
+  # İç döngü: Grid Search
+  ic_kontrol <- trainControl(method = "cv", number = 5)
+  
+  parametre_grid <- expand.grid(
+    alpha = c(0, 0.5, 1),
+    lambda = c(0.001, 0.01, 0.1)
+  )
+  
+  model <- train(
+    diabetes ~ .,
+    data = egitim_veri,
+    method = "glmnet",
+    trControl = ic_kontrol,
+    tuneGrid = parametre_grid,
+    preProcess = c("center", "scale")
+  )
+  
+  # Dış döngüde test
+  tahmin <- predict(model, test_veri)
+  dis_sonuclar[i] <- mean(tahmin == test_veri$diabetes)
+}
+
+cat("Ortalama Doğruluk:", mean(dis_sonuclar), "\n")
+cat("Standart Sapma:", sd(dis_sonuclar), "\n")
+```
+
+### Python ile Nested Cross-Validation
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+import numpy as np
+
+# Veri yükleme
+X, y = load_breast_cancer(return_X_y=True)
+
+# Pipeline
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('clf', LogisticRegression(max_iter=1000))
+])
+
+# İç döngü için Grid Search
+param_grid = {
+    'clf__C': [0.01, 0.1, 1, 10],
+    'clf__penalty': ['l1', 'l2'],
+    'clf__solver': ['saga']
+}
+
+ic_cv = GridSearchCV(
+    pipeline,
+    param_grid,
+    cv=5,
+    scoring='accuracy'
+)
+
+# Dış döngü
+dis_skorlar = cross_val_score(ic_cv, X, y, cv=10, scoring='accuracy')
+
+print(f"Ortalama Doğruluk: {dis_skorlar.mean():.4f}")
+print(f"Standart Sapma: {dis_skorlar.std():.4f}")
+```
+
+---
+
+## WEKA Experimenter: İstatistiksel Karşılaştırma
+
+Explorer ekranında tek tek algoritma çalıştırmak fikir verir. Ancak şu soru cevapsız kalır: Gözlenen fark gerçekten anlamlı mı?
+
+WEKA'nın **Experimenter** modülü bu soruya cevap arar. Tüm algoritmaları aynı veri bölünmeleri üzerinde çalıştırır ve sonuçları istatistiksel testlerle karşılaştırır.
+
+### Experimenter Kullanımı
+
+1. WEKA ana ekranından Experimenter seçilir
+
+2. Setup sekmesinde:
+   - New ile yeni deney oluşturulur
+   - Add new → Veri setleri eklenir
+   - Add new → Algoritmalar eklenir
+
+3. Run sekmesinde Start ile deney başlatılır
+
+4. Analyse sekmesinde:
+   - Experiment yüklenir
+   - Test base olarak referans algoritma seçilir
+   - Perform test ile istatistiksel karşılaştırma yapılır
+
+Sonuç tablosunda görülen işaretler:
+- `v` : İstatistiksel olarak anlamlı şekilde daha iyi
+- `*` : İstatistiksel olarak anlamlı şekilde daha kötü
+- Boş : Anlamlı fark yok
+
+Varsayılan olarak **Corrected Paired t-test** kullanılır. Bu test, iki algoritma arasındaki farkın rastlantısal olup olmadığını değerlendirir.
+
+---
+
+## Sonuçların Raporlanması
+
+Akademik bir çalışmada sonuçların nasıl ifade edildiği de önemlidir.
+
+Sadece "en iyi parametreler şunlardır" demek yeterli değildir. Parametrelerin hangi aralıkta, hangi doğrulama stratejisiyle ve hangi ölçütle arandığı açıkça belirtilmelidir.
+
+Örnek ifade:
+
+> "Model performansını artırmak amacıyla öğrenme oranı ve düzenlileştirme katsayısı, beş katlı çapraz doğrulama kullanılarak Grid Search yöntemiyle taranmıştır. En iyi performans, η = 0.01 ve λ = 0.001 değerleri ile elde edilmiştir."
+
+Nested Cross-Validation kullanıldıysa bu ayrıca vurgulanmalıdır:
+
+> "Hiperparametre seçiminin genelleme performansını etkilememesi amacıyla iç içe çapraz doğrulama uygulanmıştır. İç döngüde Grid Search ile en iyi parametreler belirlenmiş, dış döngüde model performansı değerlendirilmiştir. On katlı dış döngü sonucunda ortalama doğruluk %76.3 ± 4.2 olarak hesaplanmıştır."
+
+İstatistiksel karşılaştırma yapıldıysa:
+
+> "Random Forest algoritması, Lojistik Regresyon'a kıyasla daha yüksek ortalama doğruluk elde etmiştir (sırasıyla %82.1 ve %76.3). Bu fark, düzeltilmiş eşleştirilmiş t-testi sonucunda p < 0.05 düzeyinde istatistiksel olarak anlamlı bulunmuştur."
+
+Fark anlamlı değilse:
+
+> "İki algoritma arasında gözlenen performans farkı istatistiksel olarak anlamlı bulunmamıştır (p = 0.23)."
+
+---
+
+## Özet: Optimizasyon ve Hiperparametre Ayarlama
+
+| Kavram | Tanım | Pratik Çıkarım |
+|--------|-------|----------------|
+| **Generalization** | Modelin görülmemiş veride tutarlı tahmin yapabilmesi | Asıl hedef, eğitim verisinde değil yeni veride başarıdır |
+| **Overfitting** | Modelin eğitim verisini ezberlemesi, test verisinde başarısızlığı | Eğitim hatası düşerken test hatası yükselirse uyarısıdır |
+| **Underfitting** | Modelin ne eğitim ne de test verisinde yeterli öğrenememesi | Model kapasitesi artırılmalı veya daha fazla eğitim gerekir |
+| **Regularization (L1/L2)** | Parametreleri kısıtlayarak karmaşıklığı kontrol etme | Overfitting'i önler, daha stabil modeller oluşturur |
+| **Early Stopping** | Doğrulama hatası yükselmeye başlayınca eğitimi durdurma | Eğitim süresi kısalır, kaynaklar tasarruf edilir |
+| **Learning Rate (η)** | Gradient Descent'te her adımdaki ilerleme miktarı | Çok büyük: hedeftir atar; çok küçük: yavaş konverj |
+| **Feature Scaling** | Özellikleri aynı ölçeğe getirme (standardizasyon/normalizasyon) | Gradient Descent verimliliğini artırır, yakınsama hızlanır |
+| **Hiperparametre** | Eğitim öncesi belirlenen, veriden öğrenilmeyen model ayarları | Manuel seçim yerine sistematik arama yapılmalıdır |
+| **Grid Search** | Tüm parametre kombinasyonlarını sistematik deneme | Kesin sonuç verir ancak hesaplama maliyeti yüksektir |
+| **Random Search** | Parametre uzayından rastgele örnekler seçme | Geniş uzaylarda Grid Search'ten daha verimlidir |
+| **Nested Cross-Validation** | Hiperparametre seçimi ile model değerlendirmesinin ayrılması | Güvenilir, tarafsız performans raporu sağlar |
+| **Corrected Paired t-test** | İstatistiksel olarak anlamlı fark tespit etme | Gözlenen farkın gerçekten anlamlı olup olmadığını kontrol eder |
+
+### Temel İlkeler
+
+1. **Veriye Dayalı Karar Verin:** Sezgiye güvenmek yerine Grid Search veya Random Search kullanın
+2. **Test Verisini Koruyun:** Veri sızıntısını engellemek için ön işleme adımlarını çapraz doğrulamadan sonra yapın
+3. **İstatistik Kullanın:** Nested Cross-Validation ile güvenilir sonuçlar alın, t-test ile karşılaştırma yapın
+4. **Basitlikten Başlayın:** Karmaşık modeller değil, basit modeller ile başlayıp gerekirse geliştirin
+5. **Rapor Edin:** Kullanılan parametreleri, arama stratejisini ve istatistiksel testleri açıkça belirtin
+
+### Uygulamada Sıkça Yapılan Hatalar
+
+❌ **Yanlış:** Hiperparametreleri veya özellikleri tamamen veri setine göre optimize etmek
+✅ **Doğru:** Nested CV ile hiperparametre seçimi ve performans değerlendirmesini ayırmak
+
+❌ **Yanlış:** Sadece eğitim verisinde doğruluk raporlamak
+✅ **Doğru:** Test verisinde veya çapraz doğrulama ile genelleme performansını rapor etmek
+
+❌ **Yanlış:** Ön işleme filtrelerini tüm veri üzerinde uyguladıktan sonra çapraz doğrulama yapmak
+✅ **Doğru:** Filtrelemeleri çapraz doğrulamadaki her katmanda bağımsız olarak uygulamak
+
+Gençler, optimizasyon sadece bir maliyet fonksiyonunu minimize etmek değildir. Bu işlemin **hangi koşullar altında** yapılacağına karar vermektir. En iyi model, teorik olarak kusursuz olan değil; **eldeki zaman ve kaynaklar içinde en tutarlı, en genellenebilir sonucu veren modeldir**. Bilimsel araştırmada bu tutarlılığı ve tarafsızlığı kanıtlamak, raporların en önemli kısmıdır.
+
+
+
+
+#### **Alıntılanan çalışmalar**
+
+1. Weka \- Quick Guide \- Tutorials Point, erişim tarihi Aralık 10, 2025, [https://www.tutorialspoint.com/weka/weka\_quick\_guide.htm](https://www.tutorialspoint.com/weka/weka_quick_guide.htm)  
+2. What is the Weka Machine Learning Workbench \- MachineLearningMastery.com, erişim tarihi Aralık 10, 2025, [https://machinelearningmastery.com/what-is-the-weka-machine-learning-workbench/](https://machinelearningmastery.com/what-is-the-weka-machine-learning-workbench/)  
+3. Data Mining in WEKA | Baeldung on Computer Science, erişim tarihi Aralık 10, 2025, [https://www.baeldung.com/cs/weka-data-mining](https://www.baeldung.com/cs/weka-data-mining)  
+4. Weka KnowledgeFlow \- LIACS, erişim tarihi Aralık 10, 2025, [https://liacs.leidenuniv.nl/\~kokjn/DM/knowledge.htm](https://liacs.leidenuniv.nl/~kokjn/DM/knowledge.htm)  
+5. Start working with WEKA tool kit and understand the features of WEKA tool kit such as Explorer, Experimenter, Knowledge flow, Workbench, and Simple CLI \- Study Glance, erişim tarihi Aralık 10, 2025, [https://studyglance.in/labprograms/dmdisplay.php?url1=dm/wekaintroduction.html\&title=Start%20working%20with%20WEKA%20tool%20kit%20and%20understand%20the%20features%20of%20WEKA%20tool%20kit%20such%20as%20Explorer,%20Experimenter,%20Knowledge%20flow,%20Workbench,%20and%20Simple%20CLI](https://studyglance.in/labprograms/dmdisplay.php?url1=dm/wekaintroduction.html&title=Start+working+with+WEKA+tool+kit+and+understand+the+features+of+WEKA+tool+kit+such+as+Explorer,+Experimenter,+Knowledge+flow,+Workbench,+and+Simple+CLI)  
+6. wekadocs/manual/knowledgeflow.tex · dev-3-7-10 \- GitLab, erişim tarihi Aralık 10, 2025, [https://git.cms.waikato.ac.nz/weka/weka/-/blob/dev-3-7-10/wekadocs/manual/knowledgeflow.tex?ref\_type=tags](https://git.cms.waikato.ac.nz/weka/weka/-/blob/dev-3-7-10/wekadocs/manual/knowledgeflow.tex?ref_type=tags)  
+7. WEKA KnowledgeFlow Tutorial for Version 3-5-6 \- Huihoo, erişim tarihi Aralık 10, 2025, [https://docs.huihoo.com/weka/KnowledgeFlowTutorial-3.5.6.pdf](https://docs.huihoo.com/weka/KnowledgeFlowTutorial-3.5.6.pdf)  
+8. Weka \- differences between Explorer and Experimenter outcomes \- Stack Overflow, erişim tarihi Aralık 10, 2025, [https://stackoverflow.com/questions/12495877/weka-differences-between-explorer-and-experimenter-outcomes](https://stackoverflow.com/questions/12495877/weka-differences-between-explorer-and-experimenter-outcomes)  
+9. The WEKA Knowledge Flow user interface. | Download Scientific Diagram \- ResearchGate, erişim tarihi Aralık 10, 2025, [https://www.researchgate.net/figure/The-WEKA-Knowledge-Flow-user-interface\_fig2\_215990408](https://www.researchgate.net/figure/The-WEKA-Knowledge-Flow-user-interface_fig2_215990408)  
+10. KnowledgeFlow \- Weka Wiki, erişim tarihi Aralık 10, 2025, [https://waikato.github.io/weka-wiki/plotting\_multiple\_roc\_curves/](https://waikato.github.io/weka-wiki/plotting_multiple_roc_curves/)  
+11. wekadocs/README\_KnowledgeFlow · stable-3-4-19 · WEKA / weka \- GitLab, erişim tarihi Aralık 10, 2025, [https://git.cms.waikato.ac.nz/weka/weka/-/blob/stable-3-4-19/wekadocs/README\_KnowledgeFlow](https://git.cms.waikato.ac.nz/weka/weka/-/blob/stable-3-4-19/wekadocs/README_KnowledgeFlow)  
+12. How to Run Your First Classifier in Weka \- MachineLearningMastery.com, erişim tarihi Aralık 10, 2025, [https://machinelearningmastery.com/how-to-run-your-first-classifier-in-weka/](https://machinelearningmastery.com/how-to-run-your-first-classifier-in-weka/)  
+13. CrossValidationFoldMaker, erişim tarihi Aralık 10, 2025, [https://weka.sourceforge.io/doc.dev/weka/knowledgeflow/steps/CrossValidationFoldMaker.html](https://weka.sourceforge.io/doc.dev/weka/knowledgeflow/steps/CrossValidationFoldMaker.html)  
+14. Plotting error rate for incremental classifier \- Weka Wiki, erişim tarihi Aralık 10, 2025, [https://waikato.github.io/weka-wiki/visualization/plotting\_error\_rate\_for\_incremental\_classifier/](https://waikato.github.io/weka-wiki/visualization/plotting_error_rate_for_incremental_classifier/)  
+15. WEEK\[1\] | PDF | Applied Mathematics \- Scribd, erişim tarihi Aralık 10, 2025, [https://www.scribd.com/document/936783666/WEEK-1](https://www.scribd.com/document/936783666/WEEK-1)  
+16. \[1305.7331\] Alternating Decision trees for early diagnosis of dengue fever \- ar5iv \- arXiv, erişim tarihi Aralık 10, 2025, [https://ar5iv.labs.arxiv.org/html/1305.7331](https://ar5iv.labs.arxiv.org/html/1305.7331)  
+17. WEKA: The Knowledge Flow Interface | PPTX \- Slideshare, erişim tarihi Aralık 10, 2025, [https://www.slideshare.net/slideshow/weka-the-knowledge-flow-interface/3067546](https://www.slideshare.net/slideshow/weka-the-knowledge-flow-interface/3067546)  
+18. Waikato Environment for Knowledge Analysis Performing Classification Experiments Prof. Pietro Ducange, erişim tarihi Aralık 10, 2025, [https://docenti.ing.unipi.it/p.ducange/esercitazioniBI/6\_Weka\_experiments.pdf](https://docenti.ing.unipi.it/p.ducange/esercitazioniBI/6_Weka_experiments.pdf)  
+19. Knowledge Flow Application in Weka \- YouTube, erişim tarihi Aralık 10, 2025, [https://www.youtube.com/watch?v=fnQJauAe88A](https://www.youtube.com/watch?v=fnQJauAe88A)  
+20. WEKA: Evaluation. Knowledge flow, erişim tarihi Aralık 10, 2025, [http://csci.viu.ca/\~barskym/teaching/DM2012/labs/Lab4\_ROC\_weka.pdf](http://csci.viu.ca/~barskym/teaching/DM2012/labs/Lab4_ROC_weka.pdf)  
+21. Incremental classifiers in Weka \- FutureLearn, erişim tarihi Aralık 10, 2025, [https://www.futurelearn.com/info/courses/advanced-data-mining-with-weka/0/steps/29464](https://www.futurelearn.com/info/courses/advanced-data-mining-with-weka/0/steps/29464)  
+22. StripChart (weka-dev 3.9.6 API) \- SciJava Javadoc, erişim tarihi Aralık 10, 2025, [https://javadoc.scijava.org/Weka/weka/knowledgeflow/steps/StripChart.html](https://javadoc.scijava.org/Weka/weka/knowledgeflow/steps/StripChart.html)

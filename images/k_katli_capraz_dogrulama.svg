@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" role="img" aria-label="5 katlı çapraz doğrulama">
+<title>K-katlı çapraz doğrulama (K = 5)</title>
+<rect width="720" height="330" rx="12" fill="#fff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<text x="360" y="30" font-size="16" font-weight="bold" text-anchor="middle">K-Katlı Çapraz Doğrulama (K = 5)</text>
+<g font-size="13">
+<text x="20" y="75">Döngü 1</text><text x="20" y="120">Döngü 2</text><text x="20" y="165">Döngü 3</text><text x="20" y="210">Döngü 4</text><text x="20" y="255">Döngü 5</text></g>
+<g stroke="#fff" stroke-width="3">
+<rect x="90" y="55" width="100" height="32" fill="#f87171"/><rect x="190" y="55" width="100" height="32" fill="#93c5fd"/><rect x="290" y="55" width="100" height="32" fill="#93c5fd"/><rect x="390" y="55" width="100" height="32" fill="#93c5fd"/><rect x="490" y="55" width="100" height="32" fill="#93c5fd"/>
+<rect x="90" y="100" width="100" height="32" fill="#93c5fd"/><rect x="190" y="100" width="100" height="32" fill="#f87171"/><rect x="290" y="100" width="100" height="32" fill="#93c5fd"/><rect x="390" y="100" width="100" height="32" fill="#93c5fd"/><rect x="490" y="100" width="100" height="32" fill="#93c5fd"/>
+<rect x="90" y="145" width="100" height="32" fill="#93c5fd"/><rect x="190" y="145" width="100" height="32" fill="#93c5fd"/><rect x="290" y="145" width="100" height="32" fill="#f87171"/><rect x="390" y="145" width="100" height="32" fill="#93c5fd"/><rect x="490" y="145" width="100" height="32" fill="#93c5fd"/>
+<rect x="90" y="190" width="100" height="32" fill="#93c5fd"/><rect x="190" y="190" width="100" height="32" fill="#93c5fd"/><rect x="290" y="190" width="100" height="32" fill="#93c5fd"/><rect x="390" y="190" width="100" height="32" fill="#f87171"/><rect x="490" y="190" width="100" height="32" fill="#93c5fd"/>
+<rect x="90" y="235" width="100" height="32" fill="#93c5fd"/><rect x="190" y="235" width="100" height="32" fill="#93c5fd"/><rect x="290" y="235" width="100" height="32" fill="#93c5fd"/><rect x="390" y="235" width="100" height="32" fill="#93c5fd"/><rect x="490" y="235" width="100" height="32" fill="#f87171"/></g>
+<g font-size="13" text-anchor="middle"><text x="140" y="76">Test</text><text x="240" y="121">Test</text><text x="340" y="166">Test</text><text x="440" y="211">Test</text><text x="540" y="256">Test</text></g>
+<g font-size="13"><text x="605" y="76">→ Skor₁</text><text x="605" y="121">→ Skor₂</text><text x="605" y="166">→ Skor₃</text><text x="605" y="211">→ Skor₄</text><text x="605" y="256">→ Skor₅</text></g>
+<rect x="90" y="288" width="18" height="14" fill="#93c5fd"/><text x="114" y="300" font-size="12.5">Eğitim katmanı</text>
+<rect x="230" y="288" width="18" height="14" fill="#f87171"/><text x="254" y="300" font-size="12.5">Test katmanı</text>
+<text x="370" y="300" font-size="12.5" font-weight="bold">Sonuç = ortalama(Skor₁…Skor₅) ± std</text>
+<text x="360" y="320" font-size="11.5" fill="#64748b" text-anchor="middle">Her örnek tam olarak bir kez test, K−1 kez eğitim için kullanılır.</text>
+</g></svg>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K-Means Kümeleme Animasyonu</title>
+<style>
+  :root { --primary:#2563eb; --success:#16a34a; --danger:#dc2626; --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Tahoma,Arial,sans-serif; background:var(--bg); color:var(--text); padding:15px; line-height:1.55; }
+  .header { text-align:center; padding:15px; margin-bottom:18px; border-radius:10px; color:#fff; background:linear-gradient(135deg,var(--success),#0891b2); }
+  .header h1 { font-size:23px; } .header p { font-size:13px; opacity:.95; }
+  .grid { max-width:1250px; margin:0 auto; display:grid; grid-template-columns:3fr 2fr; gap:18px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
+  .card h2 { font-size:16px; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--border); }
+  canvas { width:100%; height:auto; border:1px solid var(--border); border-radius:8px; background:#fff; }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:10px 0; }
+  button { border:none; border-radius:7px; padding:9px 16px; font-weight:600; cursor:pointer; color:#fff; background:var(--primary); }
+  button.gray { background:var(--muted); } button.green { background:var(--success); }
+  select, input { padding:5px; border-radius:6px; border:1px solid var(--border); }
+  .phase { font-size:15px; font-weight:700; padding:10px; border-radius:8px; background:#f1f5f9; margin:10px 0; min-height:44px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .stat { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; }
+  .stat b { display:block; font-size:18px; } .stat span { font-size:12px; color:var(--muted); }
+  ol, ul { padding-left:20px; font-size:14px; } li { margin:5px 0; }
+  #sseCanvas { margin-top:10px; }
+  @media (max-width:900px){ .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>K-Means Kümeleme: Adım Adım</h1>
+  <p>Atama ve güncelleme adımlarını tek tek izleyin. Farklı başlangıçların farklı sonuçlara götürebildiğini görün.</p>
+</div>
+<div class="grid">
+  <div class="card">
+    <h2>Veri uzayı</h2>
+    <canvas id="alan" width="720" height="480"></canvas>
+    <div class="controls">
+      <label>K = <select id="K"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
+      <label>Başlangıç: <select id="init"><option value="rastgele">Rastgele noktalar</option><option value="pp">k-means++</option></select></label>
+      <label>Gerçek grup sayısı: <select id="G"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+    </div>
+    <div class="controls">
+      <button id="yeniVeri" class="gray">🎲 Yeni veri</button>
+      <button id="basla">↺ Merkezleri yeniden seç</button>
+      <button id="adim" class="green">▶ Sonraki adım</button>
+      <button id="oto">⏩ Otomatik</button>
+    </div>
+    <div class="phase" id="faz">Başlamak için "Sonraki adım"a basın.</div>
+  </div>
+  <div class="card">
+    <h2>Durum</h2>
+    <div class="stats">
+      <div class="stat"><b id="sIter">0</b><span>İterasyon</span></div>
+      <div class="stat"><b id="sSSE">-</b><span>SSE (WCSS)</span></div>
+      <div class="stat"><b id="sDurum">-</b><span>Durum</span></div>
+    </div>
+    <canvas id="sseCanvas" width="460" height="200"></canvas>
+    <h2 style="margin-top:14px">Algoritma</h2>
+    <ol>
+      <li><b>Başlangıç:</b> K adet merkez (✕) seçilir.</li>
+      <li><b>Atama:</b> Her nokta en yakın merkezin rengini alır (Öklid mesafesi).</li>
+      <li><b>Güncelleme:</b> Her merkez, kendi noktalarının ortalamasına taşınır.</li>
+      <li>2–3 tekrarlanır; hiçbir nokta küme değiştirmezse durur.</li>
+    </ol>
+    <ul>
+      <li>SSE = Σ ‖x − μ<sub>k</sub>‖² her adımda <b>azalır ya da aynı kalır</b>.</li>
+      <li>Rastgele başlangıç bazen <b>kötü bir yerel minimumda</b> takılır; k-means++ merkezleri birbirinden uzak seçerek bu riski azaltır.</li>
+      <li>Pratikte algoritma birkaç kez (sklearn: <code>n_init=10</code>) çalıştırılıp en düşük SSE seçilir.</li>
+    </ul>
+  </div>
+</div>
+<script>
+const RENK = ['#2563eb', '#ea580c', '#16a34a', '#7c3aed', '#db2777', '#0891b2'];
+const W = 720, H = 480;
+const c = document.getElementById('alan').getContext('2d');
+const cs = document.getElementById('sseCanvas').getContext('2d');
+let P = [], M = [], etiket = [], iter = 0, faz = 'bas', sseGecmis = [], otoZ = null;
+
+function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+function yeniVeri() {                                  // G adet Gauss bulutu üret
+  const G = +document.getElementById('G').value; P = [];
+  for (let g = 0; g < G; g++) {
+    const cx = 90 + Math.random() * (W - 180), cy = 80 + Math.random() * (H - 160);
+    for (let i = 0; i < 45; i++) P.push([cx + gauss() * 38, cy + gauss() * 38]);
+  }
+  merkezSec();
+}
+const d2 = (a, b) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2;
+function merkezSec() {
+  const K = +document.getElementById('K').value, tip = document.getElementById('init').value;
+  M = [];
+  if (tip === 'rastgele') {                            // Rastgele K veri noktası
+    const idx = [...P.keys()].sort(() => Math.random() - 0.5).slice(0, K);
+    M = idx.map(i => [...P[i]]);
+  } else {                                             // k-means++: uzaklığın karesiyle orantılı olasılık
+    M.push([...P[Math.floor(Math.random() * P.length)]]);
+    while (M.length < K) {
+      const D = P.map(p => Math.min(...M.map(m => d2(p, m))));
+      let r = Math.random() * D.reduce((a, b) => a + b), i = 0;
+      while ((r -= D[i]) > 0) i++;
+      M.push([...P[i]]);
+    }
+  }
+  etiket = P.map(() => -1); iter = 0; faz = 'ata'; sseGecmis = [];
+  yaz('Merkezler seçildi. Sonraki adım: <b>ATAMA</b> (her nokta en yakın merkeze).'); ciz();
+}
+function sse() { return P.reduce((s, p, i) => s + (etiket[i] >= 0 ? d2(p, M[etiket[i]]) : 0), 0) / 1000; }
+function adim() {
+  if (faz === 'ata') {
+    let degisen = 0;
+    P.forEach((p, i) => {
+      let en = 0; M.forEach((m, k) => { if (d2(p, m) < d2(p, M[en])) en = k; });
+      if (en !== etiket[i]) degisen++; etiket[i] = en;
+    });
+    iter++; sseGecmis.push(sse());
+    if (degisen === 0 && iter > 1) { faz = 'bitti'; yaz('✓ Hiçbir nokta küme değiştirmedi → algoritma <b>yakınsadı</b>.'); document.getElementById('sDurum').textContent = 'Bitti'; otoDur(); }
+    else { faz = 'guncelle'; yaz(`ATAMA tamamlandı: ${degisen} nokta küme değiştirdi. Sonraki: <b>GÜNCELLEME</b> (merkez → ortalama).`); }
+  } else if (faz === 'guncelle') {
+    M = M.map((m, k) => {
+      const uye = P.filter((_, i) => etiket[i] === k);
+      return uye.length ? [uye.reduce((s, p) => s + p[0], 0) / uye.length, uye.reduce((s, p) => s + p[1], 0) / uye.length] : m;
+    });
+    sseGecmis.push(sse()); faz = 'ata';
+    yaz('GÜNCELLEME tamamlandı: merkezler kendi noktalarının ortalamasına taşındı. Sonraki: <b>ATAMA</b>.');
+  }
+  ciz();
+}
+function yaz(s) { document.getElementById('faz').innerHTML = s; if (faz !== 'bitti') document.getElementById('sDurum').textContent = 'Devam'; }
+function ciz() {
+  c.clearRect(0, 0, W, H);
+  P.forEach((p, i) => { c.fillStyle = etiket[i] < 0 ? '#94a3b8' : RENK[etiket[i]]; c.beginPath(); c.arc(p[0], p[1], 4.5, 0, 2 * Math.PI); c.fill(); });
+  M.forEach((m, k) => {
+    c.lineWidth = 7; c.strokeStyle = '#1e293b'; kr(m); c.lineWidth = 4; c.strokeStyle = RENK[k]; kr(m);
+  });
+  document.getElementById('sIter').textContent = iter;
+  document.getElementById('sSSE').textContent = sseGecmis.length ? sseGecmis[sseGecmis.length - 1].toFixed(1) : '-';
+  // SSE grafiği
+  cs.clearRect(0, 0, 460, 200); cs.strokeStyle = '#1e293b'; cs.lineWidth = 1.2; cs.beginPath(); cs.moveTo(40, 10); cs.lineTo(40, 170); cs.lineTo(450, 170); cs.stroke();
+  cs.fillStyle = '#64748b'; cs.font = '11px Segoe UI'; cs.fillText('SSE', 6, 20); cs.fillText('adım', 420, 190);
+  if (sseGecmis.length) {
+    const mx = Math.max(...sseGecmis), mn = Math.min(...sseGecmis) * 0.9, n = Math.max(10, sseGecmis.length);
+    cs.strokeStyle = '#16a34a'; cs.lineWidth = 2.2; cs.beginPath();
+    sseGecmis.forEach((v, i) => { const x = 40 + (i + 1) / n * 400, y = 170 - (v - mn) / (mx - mn + 1e-9) * 150; i ? cs.lineTo(x, y) : cs.moveTo(x, y); });
+    cs.stroke();
+  }
+}
+function kr(m) { c.beginPath(); c.moveTo(m[0] - 9, m[1] - 9); c.lineTo(m[0] + 9, m[1] + 9); c.moveTo(m[0] - 9, m[1] + 9); c.lineTo(m[0] + 9, m[1] - 9); c.stroke(); }
+function otoDur() { clearInterval(otoZ); otoZ = null; document.getElementById('oto').textContent = '⏩ Otomatik'; }
+document.getElementById('adim').onclick = adim;
+document.getElementById('basla').onclick = merkezSec;
+document.getElementById('yeniVeri').onclick = yeniVeri;
+document.getElementById('K').onchange = merkezSec;
+document.getElementById('init').onchange = merkezSec;
+document.getElementById('G').onchange = yeniVeri;
+document.getElementById('oto').onclick = () => {
+  if (otoZ) return otoDur();
+  if (faz === 'bitti') merkezSec();
+  document.getElementById('oto').textContent = '⏸ Durdur';
+  otoZ = setInterval(() => { if (faz === 'bitti') otoDur(); else adim(); }, 700);
+};
+yeniVeri();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="380" viewBox="0 0 900 380" role="img" aria-label="Gradyan inişi ve öğrenme oranının etkisi">
+<title>Gradyan inişi ve öğrenme oranının etkisi</title>
+<defs><marker id="ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1e293b"/></marker><marker id="okm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="okt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker></defs>
+<rect x="0" y="0" width="900" height="380" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<text x="160.0" y="45.0" font-size="15" text-anchor="middle" fill="#16a34a" font-weight="bold" >Küçük α: yavaş ama emin</text>
+<line x1="40" y1="300" x2="290" y2="300" stroke="#1e293b" stroke-width="1.6" />
+<line x1="40" y1="300" x2="40" y2="60" stroke="#1e293b" stroke-width="1.6" />
+<path d="M40.0,85.9 L42.4,94.5 L44.8,102.8 L47.3,111.1 L49.7,119.1 L52.1,127.0 L54.5,134.7 L57.0,142.2 L59.4,149.5 L61.8,156.7 L64.2,163.7 L66.7,170.5 L69.1,177.1 L71.5,183.6 L73.9,189.9 L76.4,196.0 L78.8,201.9 L81.2,207.7 L83.6,213.3 L86.1,218.7 L88.5,224.0 L90.9,229.0 L93.3,233.9 L95.8,238.6 L98.2,243.2 L100.6,247.5 L103.0,251.7 L105.5,255.8 L107.9,259.6 L110.3,263.3 L112.7,266.8 L115.2,270.1 L117.6,273.2 L120.0,276.2 L122.4,279.0 L124.8,281.6 L127.3,284.1 L129.7,286.3 L132.1,288.4 L134.5,290.4 L137.0,292.1 L139.4,293.7 L141.8,295.1 L144.2,296.3 L146.7,297.4 L149.1,298.2 L151.5,298.9 L153.9,299.5 L156.4,299.8 L158.8,300.0 L161.2,300.0 L163.6,299.8 L166.1,299.5 L168.5,298.9 L170.9,298.2 L173.3,297.4 L175.8,296.3 L178.2,295.1 L180.6,293.7 L183.0,292.1 L185.5,290.4 L187.9,288.4 L190.3,286.3 L192.7,284.1 L195.2,281.6 L197.6,279.0 L200.0,276.2 L202.4,273.2 L204.8,270.1 L207.3,266.8 L209.7,263.3 L212.1,259.6 L214.5,255.8 L217.0,251.7 L219.4,247.5 L221.8,243.2 L224.2,238.6 L226.7,233.9 L229.1,229.0 L231.5,224.0 L233.9,218.7 L236.4,213.3 L238.8,207.7 L241.2,201.9 L243.6,196.0 L246.1,189.9 L248.5,183.6 L250.9,177.1 L253.3,170.5 L255.8,163.7 L258.2,156.7 L260.6,149.5 L263.0,142.2 L265.5,134.7 L267.9,127.0 L270.3,119.1 L272.7,111.1 L275.2,102.8 L277.6,94.5 L280.0,85.9" fill="none" stroke="#64748b" stroke-width="2"  stroke-linejoin="round"/>
+<text x="160.0" y="325.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >θ (parametre)</text>
+<text x="48.0" y="68.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >J(θ)</text>
+<line x1="257.5" y1="158.7" x2="240.0" y2="205.0" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="240.0" y1="205.0" x2="225.6" y2="236.1" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="225.6" y1="236.1" x2="213.8" y2="257.0" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="213.8" y1="257.0" x2="204.1" y2="271.1" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="204.1" y1="271.1" x2="196.1" y2="280.6" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="196.1" y1="280.6" x2="189.6" y2="286.9" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="189.6" y1="286.9" x2="184.3" y2="291.2" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="184.3" y1="291.2" x2="179.9" y2="294.1" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="179.9" y1="294.1" x2="176.3" y2="296.0" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="176.3" y1="296.0" x2="173.4" y2="297.3" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="173.4" y1="297.3" x2="171.0" y2="298.2" stroke="#16a34a" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<circle cx="257.5" cy="158.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="240.0" cy="205.0" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="225.6" cy="236.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="213.8" cy="257.0" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="204.1" cy="271.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="196.1" cy="280.6" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="189.6" cy="286.9" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="184.3" cy="291.2" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="179.9" cy="294.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="176.3" cy="296.0" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="173.4" cy="297.3" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="171.0" cy="298.2" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="160.0" cy="300.0" r="4" fill="#1e293b" stroke="white" stroke-width="1.2" />
+<text x="160.0" y="290.0" font-size="11" text-anchor="middle" fill="#64748b" font-weight="normal" >minimum</text>
+<text x="450.0" y="45.0" font-size="15" text-anchor="middle" fill="#2563eb" font-weight="bold" >Uygun α: hızlı yakınsama</text>
+<line x1="330" y1="300" x2="580" y2="300" stroke="#1e293b" stroke-width="1.6" />
+<line x1="330" y1="300" x2="330" y2="60" stroke="#1e293b" stroke-width="1.6" />
+<path d="M330.0,85.9 L332.4,94.5 L334.8,102.8 L337.3,111.1 L339.7,119.1 L342.1,127.0 L344.5,134.7 L347.0,142.2 L349.4,149.5 L351.8,156.7 L354.2,163.7 L356.7,170.5 L359.1,177.1 L361.5,183.6 L363.9,189.9 L366.4,196.0 L368.8,201.9 L371.2,207.7 L373.6,213.3 L376.1,218.7 L378.5,224.0 L380.9,229.0 L383.3,233.9 L385.8,238.6 L388.2,243.2 L390.6,247.5 L393.0,251.7 L395.5,255.8 L397.9,259.6 L400.3,263.3 L402.7,266.8 L405.2,270.1 L407.6,273.2 L410.0,276.2 L412.4,279.0 L414.8,281.6 L417.3,284.1 L419.7,286.3 L422.1,288.4 L424.5,290.4 L427.0,292.1 L429.4,293.7 L431.8,295.1 L434.2,296.3 L436.7,297.4 L439.1,298.2 L441.5,298.9 L443.9,299.5 L446.4,299.8 L448.8,300.0 L451.2,300.0 L453.6,299.8 L456.1,299.5 L458.5,298.9 L460.9,298.2 L463.3,297.4 L465.8,296.3 L468.2,295.1 L470.6,293.7 L473.0,292.1 L475.5,290.4 L477.9,288.4 L480.3,286.3 L482.7,284.1 L485.2,281.6 L487.6,279.0 L490.0,276.2 L492.4,273.2 L494.8,270.1 L497.3,266.8 L499.7,263.3 L502.1,259.6 L504.5,255.8 L507.0,251.7 L509.4,247.5 L511.8,243.2 L514.2,238.6 L516.7,233.9 L519.1,229.0 L521.5,224.0 L523.9,218.7 L526.4,213.3 L528.8,207.7 L531.2,201.9 L533.6,196.0 L536.1,189.9 L538.5,183.6 L540.9,177.1 L543.3,170.5 L545.8,163.7 L548.2,156.7 L550.6,149.5 L553.0,142.2 L555.5,134.7 L557.9,127.0 L560.3,119.1 L562.7,111.1 L565.2,102.8 L567.6,94.5 L570.0,85.9" fill="none" stroke="#64748b" stroke-width="2"  stroke-linejoin="round"/>
+<text x="450.0" y="325.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >θ (parametre)</text>
+<text x="338.0" y="68.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >J(θ)</text>
+<line x1="547.5" y1="158.7" x2="493.9" y2="271.4" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="493.9" y1="271.4" x2="469.7" y2="294.2" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="469.7" y1="294.2" x2="458.9" y2="298.8" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="458.9" y1="298.8" x2="454.0" y2="299.8" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="454.0" y1="299.8" x2="451.8" y2="300.0" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="451.8" y1="300.0" x2="450.8" y2="300.0" stroke="#2563eb" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<circle cx="547.5" cy="158.7" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="493.9" cy="271.4" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="469.7" cy="294.2" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="458.9" cy="298.8" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="454.0" cy="299.8" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="451.8" cy="300.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="450.8" cy="300.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="450.0" cy="300.0" r="4" fill="#1e293b" stroke="white" stroke-width="1.2" />
+<text x="450.0" y="290.0" font-size="11" text-anchor="middle" fill="#64748b" font-weight="normal" >minimum</text>
+<text x="740.0" y="45.0" font-size="15" text-anchor="middle" fill="#dc2626" font-weight="bold" >Çok büyük α: ıraksama</text>
+<line x1="620" y1="300" x2="870" y2="300" stroke="#1e293b" stroke-width="1.6" />
+<line x1="620" y1="300" x2="620" y2="60" stroke="#1e293b" stroke-width="1.6" />
+<path d="M620.0,85.9 L622.4,94.5 L624.8,102.8 L627.3,111.1 L629.7,119.1 L632.1,127.0 L634.5,134.7 L637.0,142.2 L639.4,149.5 L641.8,156.7 L644.2,163.7 L646.7,170.5 L649.1,177.1 L651.5,183.6 L653.9,189.9 L656.4,196.0 L658.8,201.9 L661.2,207.7 L663.6,213.3 L666.1,218.7 L668.5,224.0 L670.9,229.0 L673.3,233.9 L675.8,238.6 L678.2,243.2 L680.6,247.5 L683.0,251.7 L685.5,255.8 L687.9,259.6 L690.3,263.3 L692.7,266.8 L695.2,270.1 L697.6,273.2 L700.0,276.2 L702.4,279.0 L704.8,281.6 L707.3,284.1 L709.7,286.3 L712.1,288.4 L714.5,290.4 L717.0,292.1 L719.4,293.7 L721.8,295.1 L724.2,296.3 L726.7,297.4 L729.1,298.2 L731.5,298.9 L733.9,299.5 L736.4,299.8 L738.8,300.0 L741.2,300.0 L743.6,299.8 L746.1,299.5 L748.5,298.9 L750.9,298.2 L753.3,297.4 L755.8,296.3 L758.2,295.1 L760.6,293.7 L763.0,292.1 L765.5,290.4 L767.9,288.4 L770.3,286.3 L772.7,284.1 L775.2,281.6 L777.6,279.0 L780.0,276.2 L782.4,273.2 L784.8,270.1 L787.3,266.8 L789.7,263.3 L792.1,259.6 L794.5,255.8 L797.0,251.7 L799.4,247.5 L801.8,243.2 L804.2,238.6 L806.7,233.9 L809.1,229.0 L811.5,224.0 L813.9,218.7 L816.4,213.3 L818.8,207.7 L821.2,201.9 L823.6,196.0 L826.1,189.9 L828.5,183.6 L830.9,177.1 L833.3,170.5 L835.8,163.7 L838.2,156.7 L840.6,149.5 L843.0,142.2 L845.5,134.7 L847.9,127.0 L850.3,119.1 L852.7,111.1 L855.2,102.8 L857.6,94.5 L860.0,85.9" fill="none" stroke="#64748b" stroke-width="2"  stroke-linejoin="round"/>
+<text x="740.0" y="325.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >θ (parametre)</text>
+<text x="628.0" y="68.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >J(θ)</text>
+<line x1="762.5" y1="292.5" x2="709.6" y2="286.3" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="709.6" y1="286.3" x2="781.0" y2="275.0" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="781.0" y1="275.0" x2="684.6" y2="254.4" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="684.6" y1="254.4" x2="814.7" y2="217.0" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<line x1="814.7" y1="217.0" x2="639.1" y2="148.7" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)" opacity="0.9"/>
+<circle cx="762.5" cy="292.5" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="709.6" cy="286.3" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="781.0" cy="275.0" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="684.6" cy="254.4" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="814.7" cy="217.0" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="639.1" cy="148.7" r="4.5" fill="#dc2626" stroke="white" stroke-width="1.2" />
+<circle cx="740.0" cy="300.0" r="4" fill="#1e293b" stroke="white" stroke-width="1.2" />
+<text x="740.0" y="290.0" font-size="11" text-anchor="middle" fill="#64748b" font-weight="normal" >minimum</text>
+<text x="450.0" y="355.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" >Her adım: θ ← θ − α · ∂J/∂θ   (eğimin tersi yönünde, α kadar büyüklükte adım)</text>
+</g>
+</svg>

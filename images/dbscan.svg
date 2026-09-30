@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="420" viewBox="0 0 620 420" role="img" aria-label="DBSCAN: çekirdek, sınır ve gürültü noktaları">
+<title>DBSCAN: çekirdek, sınır ve gürültü noktaları</title>
+<defs><marker id="ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1e293b"/></marker><marker id="okm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="okt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker></defs>
+<rect x="0" y="0" width="620" height="420" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<text x="310.0" y="30.0" font-size="17" text-anchor="middle" fill="#1e293b" font-weight="bold" >DBSCAN (ε yarıçapı, minPts = 3)</text>
+<circle cx="319.8" cy="259.5" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="314.2" cy="235.5" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="304.4" cy="213.0" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="290.8" cy="192.9" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="273.8" cy="175.9" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="254.2" cy="162.6" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="232.5" cy="153.4" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="209.7" cy="148.8" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="186.3" cy="148.8" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="163.5" cy="153.4" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="141.8" cy="162.6" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="122.2" cy="175.9" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="105.2" cy="192.9" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="91.6" cy="213.0" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="81.8" cy="235.5" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="76.2" cy="259.5" r="42.0" fill="#2563eb" fill-opacity="0.05" stroke="#2563eb" stroke-opacity="0.25"/>
+<circle cx="455.6" cy="240.9" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="478.0" cy="219.1" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="438.8" cy="213.6" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="466.8" cy="262.7" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="494.8" cy="246.4" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="450.0" cy="279.1" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="483.6" cy="191.8" r="42.0" fill="#16a34a" fill-opacity="0.05" stroke="#16a34a" stroke-opacity="0.25"/>
+<circle cx="319.8" cy="259.5" r="6.5" fill="white" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="314.2" cy="235.5" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="304.4" cy="213.0" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="290.8" cy="192.9" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="273.8" cy="175.9" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="254.2" cy="162.6" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="232.5" cy="153.4" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="209.7" cy="148.8" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="186.3" cy="148.8" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="163.5" cy="153.4" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="141.8" cy="162.6" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="122.2" cy="175.9" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="105.2" cy="192.9" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="91.6" cy="213.0" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="81.8" cy="235.5" r="6.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="76.2" cy="259.5" r="6.5" fill="white" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="455.6" cy="240.9" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="478.0" cy="219.1" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="438.8" cy="213.6" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="466.8" cy="262.7" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="494.8" cy="246.4" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="450.0" cy="279.1" r="6.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="483.6" cy="191.8" r="6.5" fill="white" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="525.6" cy="268.2" r="42.0" fill="none" stroke="#ea580c" stroke-dasharray="4 3"/>
+<circle cx="525.6" cy="268.2" r="6.5" fill="white" stroke="#16a34a" stroke-width="2.5"/>
+<text x="343.6" y="88.7" font-size="18" text-anchor="middle" fill="#dc2626" font-weight="bold">✕</text>
+<text x="562.0" y="105.1" font-size="18" text-anchor="middle" fill="#dc2626" font-weight="bold">✕</text>
+<text x="52.4" y="88.7" font-size="18" text-anchor="middle" fill="#dc2626" font-weight="bold">✕</text>
+<line x1="186.3" y1="148.8" x2="228.3" y2="148.8" stroke="#1e293b" stroke-width="1.5"/><text x="207.3" y="142.8" font-size="15" text-anchor="middle" fill="#1e293b" font-weight="bold" >ε</text>
+<text x="198.0" y="330.9" font-size="13" text-anchor="middle" fill="#2563eb" font-weight="bold" >Küme 1 (keyfi şekil: hilal)</text>
+<text x="472.4" y="320.0" font-size="13" text-anchor="middle" fill="#16a34a" font-weight="bold" >Küme 2</text>
+<circle cx="60" cy="385" r="6.5" fill="#2563eb"/><text x="72.0" y="390.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >Çekirdek nokta (ε içinde ≥ minPts komşu)</text>
+<circle cx="340" cy="385" r="6.5" fill="white" stroke="#16a34a" stroke-width="2.5"/><text x="352.0" y="390.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >Sınır nokta</text>
+<text x="460.0" y="391.0" font-size="16" text-anchor="middle" fill="#dc2626" font-weight="bold" >✕</text>
+<text x="472.0" y="390.0" font-size="12" text-anchor="start" fill="#1e293b" font-weight="normal" >Gürültü (aykırı)</text>
+<text x="310.0" y="408.0" font-size="12" text-anchor="middle" fill="#64748b" font-weight="normal" >Küme sayısı önceden verilmez; yoğun bölgeler birbirine bağlanarak kümeler oluşur.</text>
+</g>
+</svg>

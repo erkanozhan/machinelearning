@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400" role="img" aria-label="Dirsek yöntemi: Iris veri setinde K ile SSE">
+<title>Dirsek yöntemi: Iris veri setinde K ile SSE</title>
+<defs><marker id="ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1e293b"/></marker><marker id="okm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="okt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker></defs>
+<rect x="0" y="0" width="600" height="400" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<text x="300.0" y="30.0" font-size="17" text-anchor="middle" fill="#1e293b" font-weight="bold" >Dirsek Yöntemi (Iris, 0–1 normalize)</text>
+<line x1="80" y1="310" x2="550" y2="310" stroke="#1e293b" stroke-width="1.6" marker-end="url(#ok)"/>
+<line x1="80" y1="310" x2="80" y2="40" stroke="#1e293b" stroke-width="1.6" marker-end="url(#ok)"/>
+<text x="310.0" y="348.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" >K (küme sayısı)</text>
+<text x="38.0" y="180.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" transform="rotate(-90 38 180.0)">SSE (küme içi kareler toplamı)</text>
+<line x1="108.8" y1="310" x2="108.8" y2="315" stroke="#1e293b"/><text x="108.8" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >1</text>
+<line x1="166.2" y1="310" x2="166.2" y2="315" stroke="#1e293b"/><text x="166.2" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >2</text>
+<line x1="223.8" y1="310" x2="223.8" y2="315" stroke="#1e293b"/><text x="223.8" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >3</text>
+<line x1="281.2" y1="310" x2="281.2" y2="315" stroke="#1e293b"/><text x="281.2" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >4</text>
+<line x1="338.8" y1="310" x2="338.8" y2="315" stroke="#1e293b"/><text x="338.8" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >5</text>
+<line x1="396.2" y1="310" x2="396.2" y2="315" stroke="#1e293b"/><text x="396.2" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >6</text>
+<line x1="453.8" y1="310" x2="453.8" y2="315" stroke="#1e293b"/><text x="453.8" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >7</text>
+<line x1="511.2" y1="310" x2="511.2" y2="315" stroke="#1e293b"/><text x="511.2" y="330.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >8</text>
+<line x1="75" y1="310.0" x2="80" y2="310.0" stroke="#1e293b"/><text x="71.0" y="314.0" font-size="12" text-anchor="end" fill="#1e293b" font-weight="normal" >0</text>
+<line x1="75" y1="252.2" x2="80" y2="252.2" stroke="#1e293b"/><text x="71.0" y="256.2" font-size="12" text-anchor="end" fill="#1e293b" font-weight="normal" >10</text>
+<line x1="75" y1="194.4" x2="80" y2="194.4" stroke="#1e293b"/><text x="71.0" y="198.4" font-size="12" text-anchor="end" fill="#1e293b" font-weight="normal" >20</text>
+<line x1="75" y1="136.7" x2="80" y2="136.7" stroke="#1e293b"/><text x="71.0" y="140.7" font-size="12" text-anchor="end" fill="#1e293b" font-weight="normal" >30</text>
+<line x1="75" y1="78.9" x2="80" y2="78.9" stroke="#1e293b"/><text x="71.0" y="82.9" font-size="12" text-anchor="end" fill="#1e293b" font-weight="normal" >40</text>
+<path d="M108.8,72.2 L166.2,239.9 L223.8,269.7 L281.2,278.1 L338.8,283.5 L396.2,287.0 L453.8,289.9 L511.2,291.7" fill="none" stroke="#2563eb" stroke-width="2.8"  stroke-linejoin="round"/>
+<circle cx="108.8" cy="72.2" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="166.2" cy="239.9" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="223.8" cy="269.7" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="281.2" cy="278.1" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="338.8" cy="283.5" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="396.2" cy="287.0" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="453.8" cy="289.9" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="511.2" cy="291.7" r="5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="223.8" cy="269.7" r="16" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="283.8" y1="209.7" x2="237.8" y2="257.7" stroke="#dc2626" stroke-width="1.8" marker-end="url(#ok)"/>
+<text x="287.8" y="203.7" font-size="13" text-anchor="start" fill="#dc2626" font-weight="bold" >Dirsek: K ≈ 3 (bundan sonra kazanç azalıyor)</text>
+<text x="300.0" y="385.0" font-size="12" text-anchor="middle" fill="#64748b" font-weight="normal" >SSE, K arttıkça HER ZAMAN azalır; önemli olan düşüşün yavaşladığı kırılma noktasıdır.</text>
+</g>
+</svg>

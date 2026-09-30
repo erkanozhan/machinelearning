@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" role="img" aria-label="Hiyerarşik kümeleme dendrogramı">
+<title>Dendrogram</title>
+<defs><marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1e293b"/></marker></defs>
+<rect width="560" height="360" rx="12" fill="#fff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<text x="280" y="30" font-size="16" font-weight="bold" text-anchor="middle">Dendrogram (Birleştirici Hiyerarşik Kümeleme)</text>
+<line x1="70" y1="300" x2="70" y2="50" stroke="#1e293b" stroke-width="1.6" marker-end="url(#o)"/>
+<text x="40" y="180" font-size="13" text-anchor="middle" transform="rotate(-90 40 180)">Birleşme uzaklığı</text>
+<g font-size="11" text-anchor="end"><text x="64" y="304">0</text><text x="64" y="254">1</text><text x="64" y="204">2</text><text x="64" y="154">3</text><text x="64" y="104">4</text><text x="64" y="54">5</text></g>
+<g stroke="#2563eb" stroke-width="2.5" fill="none">
+<path d="M130,300 V250 H200 V300"/><path d="M165,250 V150 H270 V300"/></g>
+<g stroke="#16a34a" stroke-width="2.5" fill="none"><path d="M360,300 V225 H440 V300"/></g>
+<path d="M217,150 V70 H400 V225" stroke="#64748b" stroke-width="2.5" fill="none"/>
+<line x1="80" y1="115" x2="500" y2="115" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="500" y="108" font-size="12" fill="#dc2626" text-anchor="end" font-weight="bold">Buradan kes → 2 küme</text>
+<g font-size="14" text-anchor="middle" font-weight="bold"><text x="130" y="322">A</text><text x="200" y="322">B</text><text x="270" y="322">C</text><text x="360" y="322">D</text><text x="440" y="322">E</text></g>
+<text x="280" y="346" font-size="11.5" fill="#64748b" text-anchor="middle">A–B (1.0) ve D–E (1.5) önce birleşir; kesme yüksekliği küme sayısını belirler.</text>
+</g></svg>

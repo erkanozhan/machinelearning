@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="380" viewBox="0 0 960 380" role="img" aria-label="K-Means algoritmasının adımları">
+<title>K-Means algoritmasının adımları</title>
+<defs><marker id="ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1e293b"/></marker><marker id="okm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="okt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker></defs>
+<rect x="0" y="0" width="960" height="380" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+<g font-family="Segoe UI, Arial, Helvetica, sans-serif" fill="#1e293b">
+<rect x="20" y="60" width="210" height="230" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="125.0" y="42.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="bold" >1. Rastgele K=3 merkez</text>
+<circle cx="71.7" cy="214.5" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="59.8" cy="209.1" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="83.4" cy="206.2" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="90.7" cy="205.4" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="76.4" cy="171.5" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="84.4" cy="211.4" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="73.2" cy="191.0" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="105.8" cy="206.8" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="72.2" cy="182.0" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="151.9" cy="129.4" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="179.2" cy="112.4" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="167.0" cy="110.7" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="122.0" cy="103.8" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="150.8" cy="156.2" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="169.9" cy="110.1" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="158.8" cy="144.6" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="166.0" cy="124.7" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="187.2" cy="109.1" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="176.7" cy="199.6" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="171.1" cy="235.6" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="182.2" cy="208.9" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="171.0" cy="233.1" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="177.2" cy="263.4" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="183.7" cy="210.5" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="151.1" cy="218.1" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<circle cx="160.5" cy="205.8" r="4.5" fill="#64748b" stroke="white" stroke-width="1.2" />
+<path d="M39.0,135.9 L57.0,153.9 M39.0,153.9 L57.0,135.9" stroke="#1e293b" stroke-width="6"/><path d="M40.0,136.9 L56.0,152.9 M40.0,152.9 L56.0,136.9" stroke="#2563eb" stroke-width="3.5"/>
+<path d="M128.6,249.2 L146.6,267.2 M128.6,267.2 L146.6,249.2" stroke="#1e293b" stroke-width="6"/><path d="M129.6,250.2 L145.6,266.2 M129.6,266.2 L145.6,250.2" stroke="#ea580c" stroke-width="3.5"/>
+<path d="M201.4,79.3 L219.4,97.3 M201.4,97.3 L219.4,79.3" stroke="#1e293b" stroke-width="6"/><path d="M202.4,80.3 L218.4,96.3 M202.4,96.3 L218.4,80.3" stroke="#16a34a" stroke-width="3.5"/>
+<rect x="255" y="60" width="210" height="230" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="360.0" y="42.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="bold" >2. Atama: en yakın merkez</text>
+<circle cx="306.7" cy="214.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="294.8" cy="209.1" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="318.4" cy="206.2" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="325.7" cy="205.4" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="311.4" cy="171.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="319.4" cy="211.4" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="308.2" cy="191.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="340.8" cy="206.8" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="307.2" cy="182.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="386.9" cy="129.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="414.2" cy="112.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="402.0" cy="110.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="357.0" cy="103.8" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="385.8" cy="156.2" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="404.9" cy="110.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="393.8" cy="144.6" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="401.0" cy="124.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="422.2" cy="109.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="411.7" cy="199.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="406.1" cy="235.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="417.2" cy="208.9" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="406.0" cy="233.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="412.2" cy="263.4" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="418.7" cy="210.5" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="386.1" cy="218.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="395.5" cy="205.8" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<path d="M274.0,135.9 L292.0,153.9 M274.0,153.9 L292.0,135.9" stroke="#1e293b" stroke-width="6"/><path d="M275.0,136.9 L291.0,152.9 M275.0,152.9 L291.0,136.9" stroke="#2563eb" stroke-width="3.5"/>
+<path d="M363.6,249.2 L381.6,267.2 M363.6,267.2 L381.6,249.2" stroke="#1e293b" stroke-width="6"/><path d="M364.6,250.2 L380.6,266.2 M364.6,266.2 L380.6,250.2" stroke="#ea580c" stroke-width="3.5"/>
+<path d="M436.4,79.3 L454.4,97.3 M436.4,97.3 L454.4,79.3" stroke="#1e293b" stroke-width="6"/><path d="M437.4,80.3 L453.4,96.3 M437.4,96.3 L453.4,80.3" stroke="#16a34a" stroke-width="3.5"/>
+<rect x="490" y="60" width="210" height="230" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="595.0" y="42.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="bold" >3. Güncelleme: merkez → ortalama</text>
+<circle cx="541.7" cy="214.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="529.8" cy="209.1" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="553.4" cy="206.2" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="560.7" cy="205.4" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="546.4" cy="171.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="554.4" cy="211.4" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="543.2" cy="191.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="575.8" cy="206.8" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="542.2" cy="182.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="621.9" cy="129.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="649.2" cy="112.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="637.0" cy="110.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="592.0" cy="103.8" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="620.8" cy="156.2" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="639.9" cy="110.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="628.8" cy="144.6" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="636.0" cy="124.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="657.2" cy="109.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="646.7" cy="199.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="641.1" cy="235.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="652.2" cy="208.9" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="641.0" cy="233.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="647.2" cy="263.4" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="653.7" cy="210.5" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="621.1" cy="218.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="630.5" cy="205.8" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<line x1="518.0" y1="144.9" x2="550.4" y2="186.2" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ok)"/>
+<line x1="607.6" y1="258.2" x2="627.0" y2="218.7" stroke="#ea580c" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ok)"/>
+<line x1="680.4" y1="88.3" x2="636.4" y2="124.6" stroke="#16a34a" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ok)"/>
+<path d="M541.4,177.2 L559.4,195.2 M541.4,195.2 L559.4,177.2" stroke="#1e293b" stroke-width="6"/><path d="M542.4,178.2 L558.4,194.2 M542.4,194.2 L558.4,178.2" stroke="#2563eb" stroke-width="3.5"/>
+<path d="M618.0,209.7 L636.0,227.7 M618.0,227.7 L636.0,209.7" stroke="#1e293b" stroke-width="6"/><path d="M619.0,210.7 L635.0,226.7 M619.0,226.7 L635.0,210.7" stroke="#ea580c" stroke-width="3.5"/>
+<path d="M627.4,115.6 L645.4,133.6 M627.4,133.6 L645.4,115.6" stroke="#1e293b" stroke-width="6"/><path d="M628.4,116.6 L644.4,132.6 M628.4,132.6 L644.4,116.6" stroke="#16a34a" stroke-width="3.5"/>
+<rect x="725" y="60" width="210" height="230" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="830.0" y="42.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="bold" >4. Tekrar → yakınsama</text>
+<circle cx="776.7" cy="214.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="764.8" cy="209.1" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="788.4" cy="206.2" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="795.7" cy="205.4" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="781.4" cy="171.5" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="789.4" cy="211.4" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="778.2" cy="191.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="810.8" cy="206.8" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="777.2" cy="182.0" r="4.5" fill="#2563eb" stroke="white" stroke-width="1.2" />
+<circle cx="856.9" cy="129.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="884.2" cy="112.4" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="872.0" cy="110.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="827.0" cy="103.8" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="855.8" cy="156.2" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="874.9" cy="110.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="863.8" cy="144.6" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="871.0" cy="124.7" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="892.2" cy="109.1" r="4.5" fill="#16a34a" stroke="white" stroke-width="1.2" />
+<circle cx="881.7" cy="199.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="876.1" cy="235.6" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="887.2" cy="208.9" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="876.0" cy="233.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="882.2" cy="263.4" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="888.7" cy="210.5" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="856.1" cy="218.1" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<circle cx="865.5" cy="205.8" r="4.5" fill="#ea580c" stroke="white" stroke-width="1.2" />
+<path d="M775.7,190.8 L793.7,208.8 M775.7,208.8 L793.7,190.8" stroke="#1e293b" stroke-width="6"/><path d="M776.7,191.8 L792.7,207.8 M776.7,207.8 L792.7,191.8" stroke="#2563eb" stroke-width="3.5"/>
+<path d="M867.7,212.9 L885.7,230.9 M867.7,230.9 L885.7,212.9" stroke="#1e293b" stroke-width="6"/><path d="M868.7,213.9 L884.7,229.9 M868.7,229.9 L884.7,213.9" stroke="#ea580c" stroke-width="3.5"/>
+<path d="M857.4,113.3 L875.4,131.3 M857.4,131.3 L875.4,113.3" stroke="#1e293b" stroke-width="6"/><path d="M858.4,114.3 L874.4,130.3 M858.4,130.3 L874.4,114.3" stroke="#16a34a" stroke-width="3.5"/>
+<text x="480.0" y="330.0" font-size="13" text-anchor="middle" fill="#64748b" font-weight="normal" >✕ = küme merkezi (centroid)   ●  = veri noktası (rengi atandığı kümeyi gösterir)</text>
+<text x="480.0" y="355.0" font-size="13" text-anchor="middle" fill="#64748b" font-weight="normal" >2. ve 3. adımlar merkezler yer değiştirmeyene kadar tekrarlanır. Amaç: SSE = Σ ‖x − μ‖² değerini küçültmek.</text>
+</g>
+</svg>
