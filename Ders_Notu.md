@@ -2282,13 +2282,13 @@ $$
 | **Güven (confidence)** | | $X$ alındığında $Y$'nin de alınma olasılığı: $P(Y \mid X)$ |
 | **Kaldıraç (lift)** | | $X$'in varlığı $Y$'nin olasılığını kaç kat artırıyor? **> 1:** pozitif ilişki · **= 1:** bağımsız · **< 1:** birbirini dışlıyor |
 
-**Örnek: $\lbrace$çay$\rbrace \Rightarrow \lbrace$süt$\rbrace$**
+**Örnek: {çay} ⇒ {süt}**
 - destek(çay) = 3/8 = 0.375 (sepet 3, 5, 6)
 - destek(çay ∪ süt) = 3/8 = 0.375 (üç sepette de süt var)
 - güven = 0.375 / 0.375 = **1.00** → çay alan herkes süt de almış.
 - destek(süt) = 6/8 = 0.75 → lift = 1.00 / 0.75 = **1.33** → çay alanların süt alma olasılığı genel ortalamanın 1.33 katı.
 
-**Örnek: $\lbrace$ekmek$\rbrace \Rightarrow \lbrace$süt$\rbrace$:** güven = 0.500 / 0.750 = 0.667 ama lift = 0.667 / 0.75 = **0.89 < 1**. Güven yüksek görünse de ekmek almak süt alma olasılığını **artırmıyor** (süt zaten çok popüler). **Sadece güvene bakmak yanıltıcıdır; lift'e de bakılmalıdır.**
+**Örnek: {ekmek} ⇒ {süt}:** güven = 0.500 / 0.750 = 0.667 ama lift = 0.667 / 0.75 = **0.89 < 1**. Güven yüksek görünse de ekmek almak süt alma olasılığını **artırmıyor** (süt zaten çok popüler). **Sadece güvene bakmak yanıltıcıdır; lift'e de bakılmalıdır.**
 
 ### 18.3 Apriori Algoritması
 
@@ -2306,11 +2306,11 @@ En yüksek lift'li kurallar:
 
 | Kural | Destek | Güven | Lift |
 | :--- | :---: | :---: | :---: |
-| $\lbrace$çay$\rbrace \Rightarrow \lbrace$süt, tereyağı$\rbrace$ | 0.250 | 0.667 | **1.78** |
-| $\lbrace$süt, tereyağı$\rbrace \Rightarrow \lbrace$çay$\rbrace$ | 0.250 | 0.667 | **1.78** |
-| $\lbrace$yumurta$\rbrace \Rightarrow \lbrace$ekmek$\rbrace$ | 0.250 | 1.000 | 1.33 |
-| $\lbrace$çay$\rbrace \Rightarrow \lbrace$süt$\rbrace$ | 0.375 | 1.000 | 1.33 |
-| $\lbrace$ekmek$\rbrace \Rightarrow \lbrace$süt$\rbrace$ | 0.500 | 0.667 | 0.89 |
+| {çay} ⇒ {süt, tereyağı} | 0.250 | 0.667 | **1.78** |
+| {süt, tereyağı} ⇒ {çay} | 0.250 | 0.667 | **1.78** |
+| {yumurta} ⇒ {ekmek} | 0.250 | 1.000 | 1.33 |
+| {çay} ⇒ {süt} | 0.375 | 1.000 | 1.33 |
+| {ekmek} ⇒ {süt} | 0.500 | 0.667 | 0.89 |
 
 **Kod:** Ek kütüphane gerektirmeyen Apriori kodu: [`codes/python/11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py) (hazır kütüphane: `pip install mlxtend`)
 
