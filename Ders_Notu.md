@@ -6,14 +6,16 @@
 
 ## Bu Notu Nasıl Okumalısınız?
 
-| İşaret | Anlamı |
-| :---: | :--- |
-| 🟢 | **Temel** kavram. İlk okumada mutlaka anlaşılmalı. |
-| 🎓 | **İleri seviye / derinleşme.** İlk okumada atlanabilir; konuyu pekiştirmek isteyenler için. Çoğu, tıklayınca açılan kutucukların içindedir. |
-| 💡 | İpucu, sezgi veya günlük hayattan benzetme. |
-| ⚠️ | Sık yapılan hata veya dikkat edilmesi gereken nokta. |
-| 🧪 | Uygulama (WEKA veya Python). |
-| 🎬 | Etkileşimli animasyon (tarayıcıda açılır). |
+Notta bazı kısımlar şu etiketlerle işaretlenmiştir:
+
+| Etiket | Anlamı |
+| :--- | :--- |
+| **(İleri Seviye)** / **Derinleşme** | İlk okumada atlanabilir; konuyu pekiştirmek isteyenler için. Çoğu, tıklayınca açılan kutucukların içindedir. |
+| **İpucu** | Sezgi veya günlük hayattan benzetme. |
+| **Dikkat** | Sık yapılan hata veya dikkat edilmesi gereken nokta. |
+| **Uygulama** | WEKA veya Python ile yapılacak çalışma. |
+| **Animasyon** | Tarayıcıda açılan etkileşimli animasyon. |
+| **Kod** | `codes/` klasöründeki ilgili kod dosyası. |
 
 **Formüller hakkında:** Her önemli formülün altında, formüldeki sembollerin **nasıl okunduğunu** ve **ne anlama geldiğini** gösteren bir tablo bulunur. Tüm semboller ayrıca [Ek A: Sembol Sözlüğü](#ekA) bölümünde toplanmıştır.
 
@@ -23,7 +25,7 @@
 pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphaneleri
 ```
 
-> 💡 Bilgisayarınıza hiçbir şey kurmadan [Google Colab](https://colab.research.google.com) üzerinde de tüm Python kodlarını çalıştırabilirsiniz.
+> **İpucu:** Bilgisayarınıza hiçbir şey kurmadan [Google Colab](https://colab.research.google.com) üzerinde de tüm Python kodlarını çalıştırabilirsiniz.
 
 ---
 
@@ -62,7 +64,7 @@ pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphanele
 
 ## 1. Temel Kavramlar
 
-### 1.1 Yapay Zekâ, Makine Öğrenmesi ve Derin Öğrenme 🟢
+### 1.1 Yapay Zekâ, Makine Öğrenmesi ve Derin Öğrenme
 
 **Yapay Zekâ (Artificial Intelligence – AI)**, normalde insan zekâsı gerektiren işleri (görme, anlama, karar verme, planlama…) bilgisayarların yapabilmesini amaçlayan bilim dalının en genel adıdır. İnsanların **bilgi, deneyim ve uzmanlığını** bilgisayarlara aktarmanın yollarını inceler.
 
@@ -72,10 +74,10 @@ pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphanele
 
 <p align="center"><img src="./images/yz_ml_dl.svg" alt="Yapay zekâ, makine öğrenmesi, yapay sinir ağları ve derin öğrenme iç içe kümeler" width="600"></p>
 
-> 🎓 **Tanım (Tom Mitchell, 1997):** "Bir bilgisayar programı, **T** görevindeki başarısı **P** ölçütüyle ölçüldüğünde, **E** deneyimiyle artıyorsa, o program E deneyiminden öğreniyor demektir."
+> **Tanım (Tom Mitchell, 1997):** "Bir bilgisayar programı, **T** görevindeki başarısı **P** ölçütüyle ölçüldüğünde, **E** deneyimiyle artıyorsa, o program E deneyiminden öğreniyor demektir."
 > Örneğin bir spam filtresi için: **T** = e-postaları spam/normal diye ayırmak, **P** = doğru sınıflandırılan e-postaların oranı, **E** = kullanıcının daha önce "spam" diye işaretlediği e-postalar.
 
-### 1.2 Klasik Programlama ile Makine Öğrenmesinin Farkı 🟢
+### 1.2 Klasik Programlama ile Makine Öğrenmesinin Farkı
 
 Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle işler. Klasik programlamada, bir problemi çözmek için gereken kuralları **programcı** bu dile çevirir. Makine öğrenmesinde ise bilgisayara **veri ve doğru cevaplar** verilir, kuralları **öğrenme algoritması** kendisi çıkarır.
 
@@ -83,7 +85,7 @@ Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle i
 
 Bu yaklaşımın en büyük **avantajı**, kuralları açıkça yazmanın çok zor veya imkânsız olduğu problemlerde (bir fotoğrafta kedi olup olmadığını anlamak, bir sesin kime ait olduğunu bulmak gibi) insan uzmanlığının **veri aracılığıyla** bilgisayara aktarılabilmesidir.
 
-### 1.3 Veri, Enformasyon ve Bilgi 🟢
+### 1.3 Veri, Enformasyon ve Bilgi
 
 **Datum** Latince kökenli bir kelimedir ve "verilen şey" anlamına gelir. İngilizcedeki **data** kelimesi bunun çoğuludur: tek bir ölçüm *datum*, ölçümlerin bütünü *data*dır.
 
@@ -100,9 +102,9 @@ Veri, işlendikçe değer kazanır. Bu süreç literatürde **DIKW hiyerarşisi*
 | **Bilgi (Knowledge)** | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, **işe yarar** örüntü ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
 | **Bilgelik (Wisdom)** | Bilgiye dayanarak doğru eylemi seçmek. | Sistemin önerisine göre ebeveynin doğru müdahaleyi yapması. |
 
-> 💡 Makine öğrenmesinin asıl işi, **veriden bilgiye (knowledge)** giden yolu otomatikleştirmektir. **Veri madenciliği (data mining)** terimi de tam olarak bu süreci anlatır.
+> **İpucu:** Makine öğrenmesinin asıl işi, **veriden bilgiye (knowledge)** giden yolu otomatikleştirmektir. **Veri madenciliği (data mining)** terimi de tam olarak bu süreci anlatır.
 
-### 1.4 Makine Öğrenmesiyle İlişkili Disiplinler 🟢
+### 1.4 Makine Öğrenmesiyle İlişkili Disiplinler
 
 Makine öğrenmesi tek başına bir ada değildir. Temelini **istatistik** ve **matematik** (özellikle lineer cebir, olasılık ve optimizasyon) oluşturur; uygulaması **bilgisayar bilimleri** ve **mühendislik** gerektirir.
 
@@ -127,15 +129,15 @@ graph LR
     A["Girdi<br/>(ör. e-posta metni)"] --> B["ML Modeli"] --> C["Çıktı<br/>(ör. spam / normal)"]
 ```
 
-### 1.5 Model Nedir? Öğrenme Nedir? 🟢
+### 1.5 Model Nedir? Öğrenme Nedir?
 
 **Model**, girdiye bakarak çıktıyı tahmin eden, veriden öğrenilmiş **matematiksel bir fonksiyon** veya **kural kümesidir**. Bir doğru denklemi ($y = \theta_0 + \theta_1 x$), bir karar ağacı ya da milyonlarca parametreli bir sinir ağı birer modeldir.
 
 Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**parametreleri**) veriye bakarak, tahmin hatasını en aza indirecek şekilde ayarlama sürecidir. Bu sürece **eğitim (training)** denir. İyi eğitilmiş bir model, daha önce **hiç görmediği** verilere de doğru tahminler yapabilir; bu yeteneğe **genelleme (generalization)** denir.
 
-> ⚠️ Modellerin ürettiği sonuçlar **kesin değil, olasılıksaldır**. "Bu e-posta %97 olasılıkla spam" demek, bazen yanılacağımızı da kabul etmek demektir.
+> **Dikkat:** Modellerin ürettiği sonuçlar **kesin değil, olasılıksaldır**. "Bu e-posta %97 olasılıkla spam" demek, bazen yanılacağımızı da kabul etmek demektir.
 
-### 1.6 Avantajlar ve Dezavantajlar 🟢
+### 1.6 Avantajlar ve Dezavantajlar
 
 ```mermaid
 graph TD
@@ -165,7 +167,7 @@ graph TD
 
 <a id="b2"></a>
 
-## 2. Bir Makine Öğrenmesi Projesinin Adımları 🟢
+## 2. Bir Makine Öğrenmesi Projesinin Adımları
 
 Bir makine öğrenmesi projesi, tıpkı bilimsel bir araştırma gibi birbirini izleyen aşamalardan oluşur. Endüstride en yaygın kullanılan çerçeve **CRISP-DM**'dir (Cross-Industry Standard Process for Data Mining). Süreç **döngüseldir**: sonuçlar yeterli değilse önceki adımlara geri dönülür.
 
@@ -228,7 +230,7 @@ Model bir uygulamaya (web servisi, mobil uygulama, masaüstü program) entegre e
 
 <a id="b3"></a>
 
-## 3. Öğrenme Türleri 🟢
+## 3. Öğrenme Türleri
 
 Bilgisayarların veriden nasıl öğrendiğine göre makine öğrenmesi yöntemleri üç ana gruba ayrılır:
 
@@ -269,13 +271,13 @@ Etiketlemek çoğu zaman pahalıdır (bir radyoloğun binlerce görüntüyü tek
 
 Bir köpeği eğitirken doğru davranışta ödül (mama), yanlış davranışta ödülsüzlük uygularız. Pekiştirmeli öğrenmede de bir **ajan (agent)**, bir **ortamda (environment)** eylemler yapar ve karşılığında **ödül (reward)** veya ceza alır. Hiç kimse ona doğru cevabı söylemez; ajan **deneme-yanılma** ile uzun vadede toplam ödülü en büyük yapan davranış biçimini (**politika**) öğrenir. Satranç ve Go oynayan yapay zekâlar, robot kontrolü ve otonom sürüşün bazı bileşenleri bu yaklaşımı kullanır.
 
-> 🎓 Bu derste ağırlıklı olarak **denetimli** ve **denetimsiz** öğrenme yöntemleri işlenmektedir. Pekiştirmeli öğrenme, genellikle ayrı bir ileri seviye dersin konusudur.
+> **İleri seviye:** Bu derste ağırlıklı olarak **denetimli** ve **denetimsiz** öğrenme yöntemleri işlenmektedir. Pekiştirmeli öğrenme, genellikle ayrı bir ileri seviye dersin konusudur.
 
 ---
 
 <a id="b4"></a>
 
-## 4. Araçlar: WEKA ve Python 🟢
+## 4. Araçlar: WEKA ve Python
 
 Bu derste iki araç birlikte kullanılır:
 
@@ -361,7 +363,7 @@ olasilik = model.predict_proba(X_test)             # 5) (Varsa) sınıf olasıl�
 
 Ön işleme araçları da benzer biçimde çalışır: `fit` (istatistikleri öğren), `transform` (dönüştür), `fit_transform` (ikisi birden).
 
-> ⚠️ **Altın kural:** `fit` her zaman **yalnızca eğitim verisiyle** yapılır. Test verisine sadece `transform` / `predict` uygulanır. Bu kuralın neden bu kadar önemli olduğu [Bölüm 22](#b22)'de anlatılıyor.
+> **Altın kural:** `fit` her zaman **yalnızca eğitim verisiyle** yapılır. Test verisine sadece `transform` / `predict` uygulanır. Bu kuralın neden bu kadar önemli olduğu [Bölüm 22](#b22)'de anlatılıyor.
 
 ---
 
@@ -369,7 +371,7 @@ olasilik = model.predict_proba(X_test)             # 5) (Varsa) sınıf olasıl�
 
 ## 5. Veri ve Öznitelikler
 
-### 5.1 Veri Setinin Dili 🟢
+### 5.1 Veri Setinin Dili
 
 Makine öğrenmesinde veri genellikle bir **tablo** olarak düşünülür:
 
@@ -401,9 +403,9 @@ $$
 | $n$ (bazen $m$) | "en" | Örnek (satır) sayısı |
 | $d$ (bazen $p$ veya $n$) | "de" | Öznitelik (sütun) sayısı |
 
-> ⚠️ **Öznitelik** ile **parametre** farklı şeylerdir. Öznitelik, veride bulunan bir girdidir (evin metrekaresi). **Parametre** ise modelin içinde, eğitim sırasında öğrenilen bir sayıdır (metrekarenin fiyata etkisini gösteren katsayı, $\theta$). Kaynaklarda bazen karıştırılır; biz bu ayrımı koruyacağız.
+> **Öznitelik** ile **parametre** farklı şeylerdir. Öznitelik, veride bulunan bir girdidir (evin metrekaresi). **Parametre** ise modelin içinde, eğitim sırasında öğrenilen bir sayıdır (metrekarenin fiyata etkisini gösteren katsayı, $\theta$). Kaynaklarda bazen karıştırılır; biz bu ayrımı koruyacağız.
 
-### 5.2 Temel İstatistikler 🟢
+### 5.2 Temel İstatistikler
 
 Veriyi tanımak için ilk bakılan değerler bunlardır. WEKA'da **Preprocess** sekmesinde bir öznitelik seçildiğinde sağ panelde otomatik görünürler.
 
@@ -436,9 +438,9 @@ $$
 - Kitle std: $\sigma=\sqrt{875/4} \approx 14.79$ · Örneklem std: $s=\sqrt{875/3} \approx 17.08$
 - Medyan: $(70+80)/2 = 75$
 
-> ⚠️ **Hangi standart sapma?** `numpy.std()` ve scikit-learn'ün `StandardScaler`'ı **$n$'e böler** (14.79). Excel `STDEV`, pandas `.std()` ve WEKA **$n-1$'e böler** (17.08). Aynı veride farklı araçların küçük farklı sonuçlar vermesinin sık bir nedeni budur.
+> **Hangi standart sapma?** `numpy.std()` ve scikit-learn'ün `StandardScaler`'ı **$n$'e böler** (14.79). Excel `STDEV`, pandas `.std()` ve WEKA **$n-1$'e böler** (17.08). Aynı veride farklı araçların küçük farklı sonuçlar vermesinin sık bir nedeni budur.
 
-### 5.3 Öznitelik Türleri 🟢
+### 5.3 Öznitelik Türleri
 
 | Tür | Açıklama | Örnek | İzin verilen işlemler |
 | :--- | :--- | :--- | :--- |
@@ -448,11 +450,11 @@ $$
 | **Aralık (interval)** | Sayısal, **gerçek sıfır noktası yok** | Sıcaklık (°C), takvim yılı | Toplama/çıkarma |
 | **Oran (ratio)** | Sayısal, **gerçek sıfır var** | Boy, gelir, yaş, kilo | Tüm aritmetik işlemler (100 kg, 50 kg'ın iki katıdır) |
 
-> 💡 Pratikte bu beş tür iki büyük gruba indirgenir: **sayısal (numeric)** ve **kategorik (nominal)**. WEKA'daki `numeric` ve `{...}` tanımları bu ayrımdır.
+> **İpucu:** Pratikte bu beş tür iki büyük gruba indirgenir: **sayısal (numeric)** ve **kategorik (nominal)**. WEKA'daki `numeric` ve `{...}` tanımları bu ayrımdır.
 
 Sayısal öznitelikler ayrıca **sürekli** (boy: 1.753 m) veya **kesikli** (çocuk sayısı: 2) olabilir.
 
-### 5.4 Öznitelik Seçimi ve Öznitelik Mühendisliği 🟢
+### 5.4 Öznitelik Seçimi ve Öznitelik Mühendisliği
 
 Bir doktorun doğru teşhis için ateşe, tansiyona ve tahlil sonuçlarına bakması gibi, model de tahmin yaparken özniteliklere bakar. **Doğru öznitelikleri seçmek**, bir dedektifin doğru ipuçlarını izlemesine benzer: Ev fiyatını tahmin ederken metrekare çok önemlidir, kapının rengi ise muhtemelen önemsizdir. Alakasız öznitelikler modeli yanıltabilir.
 
@@ -463,7 +465,7 @@ Bir doktorun doğru teşhis için ateşe, tansiyona ve tahlil sonuçlarına bakm
 
 Kısacası, bir modelin ne kadar "akıllı" olacağı ona verdiğimiz bilginin kalitesiyle doğrudan ilişkilidir. Ham veriyi zenginleştirmek ve en iyi temsilini bulmak bu işin hem bilimi hem sanatıdır. Otomatik öznitelik seçimi yöntemleri [Bölüm 19](#b19)'dadır.
 
-### 5.5 Eksik Veri ve Aykırı Değerler 🟢
+### 5.5 Eksik Veri ve Aykırı Değerler
 
 **Eksik veri (missing values)** – WEKA'da `?` ile, Python'da `NaN` ile gösterilir.
 
@@ -479,7 +481,7 @@ WEKA'da: `filters → unsupervised → attribute → ReplaceMissingValues` (say�
 
 **Aykırı değer (outlier)** – Diğerlerinden çok farklı değer. Bir ölçüm hatası da (yaş = 250) olabilir, gerçek ama nadir bir durum da (çok yüksek gelirli bir müşteri). Yaygın bir kural, **IQR kuralıdır**: $Q_1 - 1.5\cdot IQR$ altındaki veya $Q_3 + 1.5\cdot IQR$ üstündeki değerler şüphelidir. Aykırı değeri silmeden önce **neden** oluştuğunu anlamak gerekir. WEKA'da `InterquartileRange` filtresi bu kuralı uygular.
 
-### 5.6 Kategorik Verinin Sayıya Dönüştürülmesi 🟢
+### 5.6 Kategorik Verinin Sayıya Dönüştürülmesi
 
 Lineer regresyon, SVM, sinir ağları gibi matematiksel modeller yalnızca **sayılarla** çalışır. Bu yüzden kategorik öznitelikleri dönüştürmemiz gerekir.
 
@@ -506,7 +508,7 @@ print(pd.get_dummies(df, columns=["sehir"], dtype=int))     # Her şehir için 0
 
 **Gruplama (binning / discretization):** Sayısal bir özniteliği aralıklara bölmek. *Örnek:* Gelir → "Düşük (0–10 000)", "Orta (10 001–20 000)", "Yüksek (20 001+)". Bazı algoritmalar (ör. klasik Naive Bayes, Apriori) kategorik veri ister; ayrıca gruplama, belirli aralıklardaki davranış değişimini yakalamaya yardımcı olabilir. WEKA'da: `Discretize` filtresi.
 
-### 5.7 Uygulama Senaryosu: Kredi Riski Tahmini 🧪
+### 5.7 Uygulama Senaryosu: Kredi Riski Tahmini
 
 Bir bankada, kredi başvurusu yapan müşterinin borcunu zamanında ödeyip ödemeyeceğini ("kredi riski") tahmin etmek istiyoruz.
 
@@ -519,9 +521,9 @@ Bir bankada, kredi başvurusu yapan müşterinin borcunu zamanında ödeyip öde
 4. **Dönüştürmek:** Gecikme → 0/1; şehir → one-hot; gelir → ölçekleme veya gruplama.
 5. **Modellemek ve değerlendirmek:** Sonraki bölümlerde göreceğimiz algoritmalarla.
 
-> ⚠️ **Etik not:** Kredi, işe alım, sağlık gibi insanları doğrudan etkileyen kararlarda cinsiyet, etnik köken gibi korunan özellikler (veya onların dolaylı temsilcileri, ör. posta kodu) ayrımcılığa yol açabilir. Modelin **adil** olup olmadığı ayrıca denetlenmelidir.
+> **Etik not:** Kredi, işe alım, sağlık gibi insanları doğrudan etkileyen kararlarda cinsiyet, etnik köken gibi korunan özellikler (veya onların dolaylı temsilcileri, ör. posta kodu) ayrımcılığa yol açabilir. Modelin **adil** olup olmadığı ayrıca denetlenmelidir.
 
-### 5.8 Özniteliklerin Ölçeklendirilmesi (Feature Scaling) 🟢
+### 5.8 Özniteliklerin Ölçeklendirilmesi (Feature Scaling)
 
 Bir ev fiyatı modeli düşünelim:
 
@@ -532,7 +534,7 @@ Bir ev fiyatı modeli düşünelim:
 
 İki evin "ne kadar farklı" olduğunu ölçen **mesafe tabanlı** bir algoritma (k-NN, K-Means, SVM) metrekaredeki 10 birimlik farkı, oda sayısındaki 1 birimlik farktan çok daha önemli sayar. **Gradyan inişi** kullanan modeller (lineer/lojistik regresyon, sinir ağları) ise ölçek farkı yüzünden çok yavaş öğrenir. Ölçekleme, tüm özniteliklere **adil söz hakkı** tanımak için yapılır.
 
-> 💡 **Hangi modeller ölçeklemeye duyarlı?** k-NN, K-Means, SVM, PCA, lineer/lojistik regresyon (özellikle düzenlileştirme varsa), sinir ağları → **Evet.** Karar ağaçları, Random Forest, gradyan artırma ağaçları, Naive Bayes → **Genellikle hayır.**
+> **Hangi modeller ölçeklemeye duyarlı?** k-NN, K-Means, SVM, PCA, lineer/lojistik regresyon (özellikle düzenlileştirme varsa), sinir ağları → **Evet.** Karar ağaçları, Random Forest, gradyan artırma ağaçları, Naive Bayes → **Genellikle hayır.**
 
 #### a) Min-Max Normalizasyonu
 
@@ -550,7 +552,7 @@ $$
 
 **Örnek:** $[60, 70, 80, 100]$ → min = 60, max = 100. 70 için: $\frac{70-60}{100-60} = 0.25$. Sonuç: $[0,\ 0.25,\ 0.5,\ 1]$.
 
-⚠️ **Aykırı değerlere çok duyarlıdır.** Veriye hatalı bir 300 eklenirse diğer tüm notlar $[0, 0.17]$ aralığına sıkışır.
+**Aykırı değerlere çok duyarlıdır.** Veriye hatalı bir 300 eklenirse diğer tüm notlar $[0, 0.17]$ aralığına sıkışır.
 
 #### b) Z-Skoru Standardizasyonu
 
@@ -570,7 +572,7 @@ $$
 
 Standardizasyon değerleri sabit bir aralığa sıkıştırmaz. Bu yüzden tek bir aykırı değer diğerlerini Min-Max kadar ezmez. Ancak ortalama ve standart sapma da aykırı değerlerden etkilendiği için **tam olarak dayanıklı değildir**. Normal dağılıma yakın veride ve SVM, lojistik regresyon, PCA gibi yöntemlerde genellikle ilk tercihtir.
 
-#### c) Dayanıklı Ölçekleme (Robust Scaling) 🎓
+#### c) Dayanıklı Ölçekleme (Robust Scaling) (İleri Seviye)
 
 Aykırı değerlere karşı gerçekten dayanıklı olan yöntem **medyan** ve **IQR** kullanır:
 
@@ -598,18 +600,18 @@ $$
 | Z-skoru | $[-0.69,\ -0.58,\ -0.47,\ -0.25,\ 1.98]$ | Ortalama bozuldu |
 | Robust | $[-0.67,\ -0.33,\ 0,\ 0.67,\ 7.33]$ | Normal notlar makul aralıkta kaldı; aykırı değer net biçimde göze çarpıyor |
 
-> ⚠️ **En önemli kural:** $x_{\min}$, $x_{\max}$, $\mu$, $\sigma$ gibi değerler **yalnızca eğitim verisinden** hesaplanır ve test verisine **aynı değerlerle** uygulanır. Tüm veriyle hesaplarsanız test verisinin bilgisi modele sızar ([Bölüm 22](#b22)).
+> **En önemli kural:** $x_{\min}$, $x_{\max}$, $\mu$, $\sigma$ gibi değerler **yalnızca eğitim verisinden** hesaplanır ve test verisine **aynı değerlerle** uygulanır. Tüm veriyle hesaplarsanız test verisinin bilgisi modele sızar ([Bölüm 22](#b22)).
 
-#### 🧪 WEKA'da Ölçeklendirme
+#### WEKA'da Ölçeklendirme
 
 1. [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff) dosyasını indirin. **Explorer → Preprocess → Open file…** ile açın. Bir özniteliğe tıklayınca sağ panelde Minimum, Maximum, Mean, StdDev değerleri görünür.
 2. **Min-Max:** Filter → **Choose** → `weka → filters → unsupervised → attribute → Normalize` → **Apply**. `vize` seçildiğinde Minimum = 0, Maximum = 1 olur. (`scale` ve `translation` parametreleriyle farklı aralıklar da seçilebilir, ör. $[-1, 1]$.)
 3. **Undo** ile geri alın.
 4. **Z-skoru:** Aynı yoldan `Standardize` → **Apply**. Mean ≈ 0, StdDev = 1 olur.
 
-> ⚠️ Preprocess sekmesinde uygulanan filtre **tüm veriye** uygulanır. Sadece veriyi incelemek için sorun değildir; ancak ardından çapraz doğrulama yapılacaksa doğru yol filtreyi `FilteredClassifier` içine koymaktır ([Bölüm 22](#b22)).
+> **Dikkat:** Preprocess sekmesinde uygulanan filtre **tüm veriye** uygulanır. Sadece veriyi incelemek için sorun değildir; ancak ardından çapraz doğrulama yapılacaksa doğru yol filtreyi `FilteredClassifier` içine koymaktır ([Bölüm 22](#b22)).
 
-#### 🧪 Python'da Ölçeklendirme
+#### Python'da Ölçeklendirme
 
 ```python
 import numpy as np                                          # Sayısal diziler
@@ -621,9 +623,9 @@ print(MinMaxScaler().fit_transform(notlar).ravel())        # [0.   0.25 0.5  1. 
 print(StandardScaler().fit_transform(notlar).ravel())      # [-1.183 -0.507  0.169  1.521]
 ```
 
-➡️ Tüm yöntemler, aykırı değer deneyi ve eğitim/test ayrımıyla doğru kullanım: [`codes/python/01_istatistik_ve_olceklendirme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/01_istatistik_ve_olceklendirme.py)
+**Kod:** Tüm yöntemler, aykırı değer deneyi ve eğitim/test ayrımıyla doğru kullanım: [`codes/python/01_istatistik_ve_olceklendirme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/01_istatistik_ve_olceklendirme.py)
 
-### 5.9 Mesafe (Uzaklık) Ölçüleri 🟢
+### 5.9 Mesafe (Uzaklık) Ölçüleri
 
 k-NN, K-Means, hiyerarşik kümeleme ve DBSCAN gibi yöntemler iki örneğin **ne kadar benzer** olduğunu bir mesafe ölçüsüyle belirler. $\mathbf{a} = (a_1,\dots,a_d)$ ve $\mathbf{b} = (b_1,\dots,b_d)$ iki örnek olsun:
 
@@ -640,7 +642,7 @@ $$
 
 **Örnek:** $\mathbf{a}=(1, 2)$, $\mathbf{b}=(4, 6)$ → Öklid: $\sqrt{3^2+4^2}=5$ (kuş uçuşu) · Manhattan: $3+4=7$ (şehir blokları boyunca yürüyerek).
 
-> 🎓 **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
+> **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
 
 ---
 
@@ -666,11 +668,11 @@ $$
 | $\theta_0$ | "teta sıfır" | **Kesişim (intercept):** $x = 0$ iken tahmin; doğrunun $y$ eksenini kestiği nokta |
 | $\theta_1$ | "teta bir" | **Eğim (slope):** $x$ bir birim artınca $\hat{y}$'deki değişim; ilişkinin yönü ve gücü |
 
-> 💡 Bazı kaynaklarda aynı denklem $y = \beta_0 + \beta_1 x$ (istatistik) veya $y = w x + b$ (makine öğrenmesi, $w$: ağırlık, $b$: bias) olarak yazılır. Hepsi aynı şeydir.
+> **İpucu:** Bazı kaynaklarda aynı denklem $y = \beta_0 + \beta_1 x$ (istatistik) veya $y = w x + b$ (makine öğrenmesi, $w$: ağırlık, $b$: bias) olarak yazılır. Hepsi aynı şeydir.
 
 **Öğrenme**, eldeki verilere en iyi uyan $\theta_0$ ve $\theta_1$ değerlerini bulmaktır. Peki "en iyi uyan" ne demek?
 
-### 6.2 Maliyet Fonksiyonu: "En İyi Doğru" Ne Demek? 🟢
+### 6.2 Maliyet Fonksiyonu: "En İyi Doğru" Ne Demek?
 
 Her veri noktası için gerçek değer ile tahmin arasındaki farka **artık (residual)** veya **hata** denir: $e_i = y_i - \hat{y}_i$. En iyi doğru, bu hataların **karelerinin toplamını** en küçük yapan doğrudur. Bu yönteme **En Küçük Kareler (Ordinary Least Squares – OLS)** denir.
 
@@ -685,9 +687,9 @@ $$
 | $\left(\hat{y}_i - y_i\right)^2$ | — | $i$. örneğin hata karesi |
 | $\frac{1}{2m}$ | "bir bölü iki em" | Ortalama almak için $\frac{1}{m}$; $\frac{1}{2}$ ise türev alınca sadeleşsin diye eklenir (sonucu değiştirmez) |
 
-> 💡 **Neden kare?** (1) Pozitif ve negatif hatalar birbirini götürmesin. (2) Büyük hatalar daha çok cezalandırılsın. (3) Kare fonksiyonun türevi kolay alınır ve tek bir minimumu vardır.
+> **Neden kare?** (1) Pozitif ve negatif hatalar birbirini götürmesin. (2) Büyük hatalar daha çok cezalandırılsın. (3) Kare fonksiyonun türevi kolay alınır ve tek bir minimumu vardır.
 
-### 6.3 Kapalı Form Çözüm ve Elle Örnek 🟢
+### 6.3 Kapalı Form Çözüm ve Elle Örnek
 
 Basit lineer regresyonda $J$'yi en küçük yapan değerler doğrudan hesaplanabilir:
 
@@ -718,11 +720,11 @@ $\theta_1 = 68 / 10 = 6.8$ ve $\theta_0 = 65 - 6.8 \times 3 = 44.6$ → **Model:
 
 <p align="center"><img src="./images/lineer_regresyon.svg" alt="Çalışma süresi ve sınav notu verisine uyan regresyon doğrusu ve artıklar" width="620"></p>
 
-### 6.4 Gradyan İnişi (Gradient Descent) 🟢
+### 6.4 Gradyan İnişi (Gradient Descent)
 
 Kapalı form çözüm her zaman mümkün veya pratik değildir (çok büyük veri, milyonlarca öznitelik, doğrusal olmayan modeller). Bu durumda **gradyan inişi** kullanılır: Parametrelere rastgele bir başlangıç değeri verilir, sonra maliyet fonksiyonunun **eğimine (türevine)** bakılarak maliyeti azaltan yönde küçük adımlar atılır.
 
-> 💡 Sisli bir dağda gözleriniz bağlı, vadiye inmeye çalışıyorsunuz. Ayağınızla zeminin eğimini hissedip **aşağı eğimli** yöne küçük bir adım atarsınız ve bunu tekrarlarsınız. Gradyan inişi tam olarak budur.
+> **İpucu:** Sisli bir dağda gözleriniz bağlı, vadiye inmeye çalışıyorsunuz. Ayağınızla zeminin eğimini hissedip **aşağı eğimli** yöne küçük bir adım atarsınız ve bunu tekrarlarsınız. Gradyan inişi tam olarak budur.
 
 **Güncelleme kuralı** (her iki parametre **aynı anda** güncellenir):
 
@@ -751,11 +753,11 @@ $$
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | $J$ | 325.5 | 102.7 | 26.8 | 1.40 | $2.6\times10^{30}$ (**ıraksadı!**) |
 
-> 🎬 **Animasyon:** Öğrenme oranını kendiniz değiştirip doğrunun ve maliyetin adım adım nasıl değiştiğini izleyin → [Gradyan İnişi Animasyonu](https://erkanozhan.github.io/machinelearning/animation/gradyan_inisi_animasyonu.html)
+> **Animasyon:** Öğrenme oranını kendiniz değiştirip doğrunun ve maliyetin adım adım nasıl değiştiğini izleyin → [Gradyan İnişi Animasyonu](https://erkanozhan.github.io/machinelearning/animation/gradyan_inisi_animasyonu.html)
 >
-> ➡️ Kod: kapalı form, sıfırdan gradyan inişi ve scikit-learn karşılaştırması: [`codes/python/02_lineer_regresyon.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/02_lineer_regresyon.py)
+> **Kod:** kapalı form, sıfırdan gradyan inişi ve scikit-learn karşılaştırması: [`codes/python/02_lineer_regresyon.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/02_lineer_regresyon.py)
 
-### 6.5 Çoklu Lineer Regresyon 🟢
+### 6.5 Çoklu Lineer Regresyon
 
 Ev fiyatını sadece metrekare değil; oda sayısı, bina yaşı, semt gibi birçok faktör etkiler:
 
@@ -772,7 +774,7 @@ $$
 Tek öznitelikte model bir **doğru**, iki öznitelikte bir **düzlem**, daha fazlasında ise bir **hiperdüzlemdir**. Model "lineer" olarak adlandırılır çünkü **parametrelere göre** doğrusaldır: her öznitelik bir katsayıyla çarpılıp toplanır.
 
 <details>
-<summary>🎓 <b>Derinleşme: Matris gösterimi ve normal denklem</b></summary>
+<summary><b>Derinleşme (İleri Seviye): Matris gösterimi ve normal denklem</b></summary>
 
 Her örneğe sabit terim için $x_0 = 1$ eklenirse model vektörlerle yazılır: $\hat{y} = \boldsymbol{\theta}^{T}\mathbf{x}$. Tüm veri için $\hat{\mathbf{y}} = X\boldsymbol{\theta}$ olur. Maliyeti sıfıra eşitleyerek bulunan kapalı form çözüme **normal denklem** denir:
 
@@ -790,7 +792,7 @@ Normal denklem $d$ küçükken çok hızlıdır. $d$ büyüdükçe $(X^TX)^{-1}$
 
 </details>
 
-### 6.6 Doğrusal Olmayan İlişkiler: Öznitelik Dönüşümü 🟢
+### 6.6 Doğrusal Olmayan İlişkiler: Öznitelik Dönüşümü
 
 Lineer modeller şaşırtıcı derecede esnektir. İlişki eğrisel olsa bile yeni öznitelikler türetip modeli **parametrelere göre doğrusal** tutabiliriz:
 
@@ -800,11 +802,11 @@ $$
 
 Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönüşümler veri setine yeni sütunlar olarak eklenebilir. Buna **polinom regresyon** veya **temel fonksiyon genişletmesi** denir. Ancak derece arttıkça model veriyi ezberleyebilir ([Bölüm 13.1](#b13)).
 
-### 6.7 Varsayımlar, Avantajlar ve Sınırlılıklar 🟢
+### 6.7 Varsayımlar, Avantajlar ve Sınırlılıklar
 
 **Avantajlar:** Teorisi çok iyi bilinir; hızlıdır; katsayılar doğrudan yorumlanabilir ("hangi faktör sonucu ne kadar etkiliyor?"); yüz binlerce öznitelikle bile kolayca eğitilir; çoğu problemde güçlü bir **başlangıç modeli (baseline)** sunar.
 
-**Sınırlılıklar ve varsayımlar** 🎓:
+**Sınırlılıklar ve varsayımlar** (İleri Seviye):
 1. **Doğrusallık:** Girdi ile çıktı arasındaki ilişki (dönüşümlerden sonra) doğrusal olmalı.
 2. **Hataların bağımsızlığı:** Bir örneğin hatası diğerini etkilememeli (zaman serilerinde bu sıkça ihlal edilir).
 3. **Sabit varyans (homoskedastisite):** Hataların yayılımı tüm $x$ değerlerinde benzer olmalı.
@@ -812,7 +814,7 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 5. **Çoklu doğrusallık olmamalı:** Öznitelikler birbirine çok bağımlıysa katsayılar kararsızlaşır ve yorumlanamaz hâle gelir.
 6. **Aykırı değerlere duyarlılık:** Hatanın karesi alındığı için tek bir aşırı değer doğruyu kendine doğru çekebilir.
 
-> 🧪 **WEKA:** Classify → `functions → LinearRegression`. Hedef sayısal olduğunda WEKA otomatik olarak regresyon yapar. `cpu.arff` üzerindeki uygulama ve çıktının yorumu [Bölüm 14.3](#b14)'tedir.
+> **WEKA:** Classify → `functions → LinearRegression`. Hedef sayısal olduğunda WEKA otomatik olarak regresyon yapar. `cpu.arff` üzerindeki uygulama ve çıktının yorumu [Bölüm 14.3](#b14)'tedir.
 
 ---
 
@@ -820,11 +822,11 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 
 ## 7. Lojistik Regresyon
 
-### 7.1 Neden Doğrusal Regresyon Sınıflandırma İçin Uygun Değil? 🟢
+### 7.1 Neden Doğrusal Regresyon Sınıflandırma İçin Uygun Değil?
 
 "Öğrenci geçer mi (1) kalır mı (0)?" gibi bir soruda lineer regresyon 1.4 veya −0.3 gibi, olasılık olarak yorumlanamayacak değerler üretir. Bize **0 ile 1 arasında** kalan, "geçme olasılığı" gibi okunabilecek bir çıktı gerekir.
 
-### 7.2 Sigmoid Fonksiyonu 🟢
+### 7.2 Sigmoid Fonksiyonu
 
 **Lojistik regresyon**, adında "regresyon" geçse de bir **sınıflandırma** algoritmasıdır. Lineer bir kombinasyonu **sigmoid (lojistik) fonksiyonundan** geçirir:
 
@@ -849,9 +851,9 @@ $$
 - 3 saat: $z = 0.5$ → $\sigma(0.5) \approx 0.62$ → **geçer**
 - Karar sınırı: $z = 0 \Rightarrow x = 4/1.5 \approx 2.67$ saat.
 
-> 💡 **Eşik 0.5 olmak zorunda değildir.** Hasta birini kaçırmak çok pahalıysa eşik 0.2'ye düşürülebilir ([Bölüm 20](#b20)).
+> **Eşik 0.5 olmak zorunda değildir.** Hasta birini kaçırmak çok pahalıysa eşik 0.2'ye düşürülebilir ([Bölüm 20](#b20)).
 
-### 7.3 Log-Loss (Çapraz Entropi) Maliyet Fonksiyonu 🎓
+### 7.3 Log-Loss (Çapraz Entropi) Maliyet Fonksiyonu (İleri Seviye)
 
 Lojistik regresyonda karesel hata yerine **log-loss** (ikili çapraz entropi) kullanılır:
 
@@ -869,7 +871,7 @@ $$
 
 **Çok sınıflı durum:** Sınıf sayısı ikiden fazlaysa ya her sınıf için ayrı bir "bu sınıf / diğerleri" modeli kurulur (**one-vs-rest**) ya da sigmoidin genellemesi olan **softmax** kullanılır.
 
-🧪 **WEKA:** `functions → Logistic` · **Python:** `sklearn.linear_model.LogisticRegression`. Iris verisinde 10 katlı çapraz doğrulamayla doğruluk ≈ **0.953**. Model her çiçek için olasılık da verir (ör. setosa = 0.985, versicolor = 0.015, virginica = 0.000). ➡️ [`codes/python/03_siniflandirma_algoritmalari.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/03_siniflandirma_algoritmalari.py)
+**WEKA:** `functions → Logistic` · **Python:** `sklearn.linear_model.LogisticRegression`. Iris verisinde 10 katlı çapraz doğrulamayla doğruluk ≈ **0.953**. Model her çiçek için olasılık da verir (ör. setosa = 0.985, versicolor = 0.015, virginica = 0.000). **Kod:** [`codes/python/03_siniflandirma_algoritmalari.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/03_siniflandirma_algoritmalari.py)
 
 ---
 
@@ -877,7 +879,7 @@ $$
 
 ## 8. k-En Yakın Komşu (k-Nearest Neighbors, k-NN)
 
-### 8.1 Temel Fikir 🟢
+### 8.1 Temel Fikir
 
 "Bana arkadaşını söyle, sana kim olduğunu söyleyeyim." k-NN, yeni bir örneği sınıflandırmak için eğitim verisindeki **en yakın k komşusuna** bakar ve **çoğunluk oyuna** göre karar verir.
 
@@ -890,7 +892,7 @@ $$
 
 Şekilde aynı nokta, $k = 3$ için **daire (A)**, $k = 7$ için **kare (B)** sınıfına atanıyor. Yani **$k$ seçimi sonucu doğrudan değiştirir.**
 
-### 8.2 k Değerinin Seçimi 🟢
+### 8.2 k Değerinin Seçimi
 
 | Küçük $k$ (ör. 1) | Büyük $k$ (ör. 101) |
 | :--- | :--- |
@@ -903,15 +905,15 @@ Iris verisinde (standartlaştırılmış, 10 katlı çapraz doğrulama) ölçül
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | Doğruluk | 0.940 | 0.947 | **0.960** | **0.960** | 0.860 | 0.660 |
 
-> 💡 İki sınıflı problemlerde beraberliği önlemek için $k$ **tek sayı** seçilir. En iyi $k$ çapraz doğrulama ile bulunur ([Bölüm 21](#b21)). Yakın komşulara daha çok ağırlık vermek (örneğin $1/d$ ile) de sık kullanılan bir iyileştirmedir.
+> **İpucu:** İki sınıflı problemlerde beraberliği önlemek için $k$ **tek sayı** seçilir. En iyi $k$ çapraz doğrulama ile bulunur ([Bölüm 21](#b21)). Yakın komşulara daha çok ağırlık vermek (örneğin $1/d$ ile) de sık kullanılan bir iyileştirmedir.
 
-### 8.3 Özellikler 🟢
+### 8.3 Özellikler
 
 - **Tembel öğrenici (lazy learner):** Eğitim aşamasında hiçbir şey öğrenmez, sadece veriyi saklar. Tüm iş tahmin anında yapılır. Bu yüzden eğitimi anlıktır ama büyük veride **tahmin yavaştır**.
 - **Ölçekleme şarttır** ([Bölüm 5.8](#b5)): Aksi hâlde büyük değerli öznitelik mesafeyi tek başına belirler.
-- 🎓 **Boyut laneti (curse of dimensionality):** Öznitelik sayısı çok arttığında tüm noktalar birbirine neredeyse eşit uzaklıkta hâle gelir ve "en yakın komşu" kavramı anlamını yitirir. Bu nedenle k-NN'den önce öznitelik seçimi veya boyut azaltma faydalıdır ([Bölüm 19](#b19)).
+- **Boyut laneti (curse of dimensionality):** Öznitelik sayısı çok arttığında tüm noktalar birbirine neredeyse eşit uzaklıkta hâle gelir ve "en yakın komşu" kavramı anlamını yitirir. Bu nedenle k-NN'den önce öznitelik seçimi veya boyut azaltma faydalıdır ([Bölüm 19](#b19)).
 
-🧪 **WEKA:** `lazy → IBk` (`KNN` parametresi = $k$; `distanceWeighting` ile ağırlıklandırma; `crossValidate=True` ile en iyi $k$'yı otomatik arar). **Python:** `KNeighborsClassifier(n_neighbors=5)`.
+**WEKA:** `lazy → IBk` (`KNN` parametresi = $k$; `distanceWeighting` ile ağırlıklandırma; `crossValidate=True` ile en iyi $k$'yı otomatik arar). **Python:** `KNeighborsClassifier(n_neighbors=5)`.
 
 ---
 
@@ -919,7 +921,7 @@ Iris verisinde (standartlaştırılmış, 10 katlı çapraz doğrulama) ölçül
 
 ## 9. Naive Bayes
 
-### 9.1 Bayes Teoremi 🟢
+### 9.1 Bayes Teoremi
 
 Naive Bayes, olasılık teorisine dayanan, hızlı ve şaşırtıcı derecede etkili bir sınıflandırıcıdır. Temeli **Bayes teoremidir**:
 
@@ -936,7 +938,7 @@ $$
 | $P(C)$ | "ce'nin olasılığı" | **Önsel (prior) olasılık:** Veri görmeden önce sınıfın genel sıklığı |
 | $P(\mathbf{x})$ | "iks'in olasılığı" | **Kanıt (evidence):** Tüm sınıflar için aynı olduğundan karşılaştırmada ihmal edilebilir |
 
-### 9.2 "Naive" (Saf) Varsayım 🟢
+### 9.2 "Naive" (Saf) Varsayım
 
 $P(\mathbf{x} \mid C)$'yi doğrudan tahmin etmek için her öznitelik kombinasyonundan bol örnek gerekir; bu pratikte imkânsızdır. Naive Bayes, **sınıf bilindiğinde özniteliklerin birbirinden bağımsız olduğunu** varsayar. Böylece olasılık, tek tek özniteliklerin olasılıklarının **çarpımına** dönüşür:
 
@@ -951,7 +953,7 @@ $$
 
 Bu varsayım gerçekte nadiren doğrudur (hava sıcaklığı ile nem bağımsız değildir). Buna rağmen model sınıflar arasında **doğru sıralamayı** çoğu zaman bulduğu için pratikte iyi çalışır. Özellikle **metin sınıflandırmada** (spam filtresi) çok başarılıdır.
 
-### 9.3 Elle Çözülmüş Örnek: Tenis Oynanır mı? 🟢
+### 9.3 Elle Çözülmüş Örnek: Tenis Oynanır mı?
 
 WEKA ile gelen `weather.nominal.arff` verisi (14 gün; 9 "yes", 5 "no"). Yeni gün: **outlook = sunny, temperature = cool, humidity = high, windy = true.**
 
@@ -971,15 +973,15 @@ $$
 
 Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx 0.795$. **Tahmin: oynanmaz (no), %79.5 olasılıkla.**
 
-➡️ Aynı hesabı hiçbir kütüphane kullanmadan yapan kod: [`codes/python/04_entropi_ve_naive_bayes_elle.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/04_entropi_ve_naive_bayes_elle.py)
+**Kod:** Aynı hesabı hiçbir kütüphane kullanmadan yapan kod: [`codes/python/04_entropi_ve_naive_bayes_elle.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/04_entropi_ve_naive_bayes_elle.py)
 
-### 9.4 Sıfır Frekans Sorunu ve Sayısal Öznitelikler 🎓
+### 9.4 Sıfır Frekans Sorunu ve Sayısal Öznitelikler (İleri Seviye)
 
 - **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + k}$ ($k$: özniteliğin farklı değer sayısı). WEKA bunu otomatik yapar.
 - **Sayısal öznitelikler:** Her sınıfta özniteliğin **normal (Gauss) dağıldığı** varsayılır ve olasılık yoğunluğu $\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ ile hesaplanır (Gaussian Naive Bayes). WEKA'da alternatif olarak `useKernelEstimator` veya `useSupervisedDiscretization` seçilebilir.
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
 
-🧪 **WEKA:** `bayes → NaiveBayes`. `NaiveBayesUpdateable` sürümü veriyi satır satır öğrenebilir ([Bölüm 23](#b23)). **Python:** `GaussianNB` (sayısal), `MultinomialNB` (kelime sayıları), `CategoricalNB` (kategorik). Iris'te 10 katlı CV doğruluğu ≈ **0.953**.
+**WEKA:** `bayes → NaiveBayes`. `NaiveBayesUpdateable` sürümü veriyi satır satır öğrenebilir ([Bölüm 23](#b23)). **Python:** `GaussianNB` (sayısal), `MultinomialNB` (kelime sayıları), `CategoricalNB` (kategorik). Iris'te 10 katlı CV doğruluğu ≈ **0.953**.
 
 ---
 
@@ -987,7 +989,7 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 
 ## 10. Karar Ağaçları
 
-### 10.1 Temel Fikir 🟢
+### 10.1 Temel Fikir
 
 Karar ağacı, veriyi bir dizi **evet/hayır sorusuyla** parçalara ayıran, insanın düşünme biçimine çok yakın bir modeldir. Bir doktorun "Ateşi 38'in üstünde mi? → Evet → Öksürüğü var mı? → …" şeklinde ilerlemesi gibi.
 
@@ -1000,7 +1002,7 @@ Karar ağacı, veriyi bir dizi **evet/hayır sorusuyla** parçalara ayıran, ins
 
 Ağaç kökten yaprağa her yol bir **EĞER–İSE kuralıdır**: *"EĞER outlook = sunny VE humidity = high İSE play = no."* Bu yüzden karar ağaçları **açıklanabilir** modellerin başında gelir.
 
-### 10.2 Hangi Soruyu Önce Sormalı? Entropi ve Bilgi Kazancı 🟢
+### 10.2 Hangi Soruyu Önce Sormalı? Entropi ve Bilgi Kazancı
 
 Ağaç kurulurken her adımda, veriyi **en saf (homojen)** alt gruplara ayıran öznitelik seçilir. Saflığı ölçmek için **entropi** kullanılır:
 
@@ -1050,7 +1052,7 @@ En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem 
 <p align="center"><img src="./images/entropi_gini.svg" alt="Pozitif sınıf oranına göre entropi ve Gini safsızlığı eğrileri" width="580"></p>
 
 <details>
-<summary>🎓 <b>Derinleşme: Kazanç oranı, Gini ve sayısal öznitelikler</b></summary>
+<summary><b>Derinleşme (İleri Seviye): Kazanç oranı, Gini ve sayısal öznitelikler</b></summary>
 
 - **Kazanç Oranı (Gain Ratio):** Bilgi kazancı, çok sayıda farklı değeri olan özniteliklere (ör. müşteri numarası) haksız avantaj sağlar; her müşteri ayrı bir dal olur ve entropi sıfırlanır ama model hiçbir şey öğrenmemiştir. C4.5 algoritması (WEKA'da **J48**) bu yüzden kazancı bölmenin kendi entropisine böler:
   $GainRatio(S,A) = \frac{IG(S,A)}{SplitInfo(S,A)}$, $SplitInfo(S,A) = -\sum_v \frac{\lvert S_v\rvert}{\lvert S\rvert}\log_2\frac{\lvert S_v\rvert}{\lvert S\rvert}$
@@ -1060,7 +1062,7 @@ En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem 
 
 </details>
 
-### 10.3 Aşırı Öğrenme ve Budama (Pruning) 🟢
+### 10.3 Aşırı Öğrenme ve Budama (Pruning)
 
 Sınırsız büyüyen bir ağaç, her eğitim örneği için ayrı bir yaprak oluşturup veriyi **ezberleyebilir** (eğitim doğruluğu %100, test doğruluğu düşük). Bunu önlemek için:
 - **Ön budama (pre-pruning):** Ağacı erken durdur. Örneğin maksimum derinlik (`max_depth`), bir yapraktaki minimum örnek sayısı (WEKA: `minNumObj`, varsayılan 2).
@@ -1083,7 +1085,7 @@ Sınırsız büyüyen bir ağaç, her eğitim örneği için ayrı bir yaprak ol
 
 Öznitelik önemleri: petal length 0.69, petal width 0.31, sepal ölçüleri **0**. Ağaç, sepal ölçülerini hiç kullanmadı. Bu durum [Bölüm 19](#b19)'daki öznitelik seçimi sonuçlarıyla da tutarlıdır.
 
-### 10.4 Avantajlar ve Dezavantajlar 🟢
+### 10.4 Avantajlar ve Dezavantajlar
 
 | Avantajlar | Dezavantajlar |
 | :--- | :--- |
@@ -1094,7 +1096,7 @@ Sınırsız büyüyen bir ağaç, her eğitim örneği için ayrı bir yaprak ol
 
 Tek ağacın kararsızlığı, **Random Forest** ve **Gradient Boosting** gibi güçlü topluluk yöntemlerinin çıkış noktasıdır ([Bölüm 16](#b16)).
 
-🧪 **WEKA:** `trees → J48`. Sonucu görsel olarak görmek için Result list'te sağ tık → **Visualize tree**. **Python:** `DecisionTreeClassifier(criterion="entropy")`, kuralları yazdırmak için `export_text`.
+**WEKA:** `trees → J48`. Sonucu görsel olarak görmek için Result list'te sağ tık → **Visualize tree**. **Python:** `DecisionTreeClassifier(criterion="entropy")`, kuralları yazdırmak için `export_text`.
 
 ---
 
@@ -1102,7 +1104,7 @@ Tek ağacın kararsızlığı, **Random Forest** ve **Gradient Boosting** gibi g
 
 ## 11. Destek Vektör Makineleri (Support Vector Machines – SVM)
 
-### 11.1 Temel Fikir: En Geniş Yolu Bulmak 🟢
+### 11.1 Temel Fikir: En Geniş Yolu Bulmak
 
 İki sınıfı ayıran bir çizgi çekmek istiyoruz. Veri doğrusal olarak ayrılabiliyorsa, bu işi yapan **sonsuz sayıda** çizgi vardır. Hangisi en iyisidir?
 
@@ -1114,7 +1116,7 @@ SVM'nin cevabı: **İki sınıfa da en uzak olan**, yani aradaki "güvenlik şer
 - **Destek vektörleri (support vectors):** Marjın kenarında duran, sınıra en yakın örnekler. Sınırı **yalnızca bunlar** belirler; diğer noktalar silinse bile hiperdüzlem değişmez. Algoritmanın adı buradan gelir.
 - **Marj (margin):** İki sınıfın en yakın noktaları arasındaki şeridin genişliği.
 
-### 11.2 Matematiksel Formülasyon 🎓
+### 11.2 Matematiksel Formülasyon (İleri Seviye)
 
 Hiperdüzlem $\mathbf{w}\cdot\mathbf{x} + b = 0$ ile tanımlanır. Sınıf etiketleri $y_i \in \lbrace -1, +1 \rbrace$ olsun. Marj sınırları $\mathbf{w}\cdot\mathbf{x}+b = \pm 1$ doğrularıdır ve aralarındaki uzaklık $\frac{2}{\lVert\mathbf{w}\rVert}$'dir. Marjı en büyük yapmak, $\lVert\mathbf{w}\rVert$'yi en küçük yapmakla aynı şeydir:
 
@@ -1130,7 +1132,7 @@ $$
 | $\lVert\mathbf{w}\rVert$ | "dabılyu'nun normu" | Vektörün uzunluğu: $\sqrt{\sum_j w_j^2}$ |
 | $y_i(\mathbf{w}\cdot\mathbf{x}_i+b) \ge 1$ | — | Her örnek kendi tarafında ve marjın dışında kalmalı |
 
-### 11.3 Yumuşak Marj ve C Parametresi 🟢
+### 11.3 Yumuşak Marj ve C Parametresi
 
 Gerçek veride sınıflar genellikle iç içe geçer; hiçbir doğru onları kusursuz ayıramaz. **Yumuşak marj (soft margin)** yaklaşımında bazı örneklerin marjın içine düşmesine veya yanlış tarafta kalmasına izin verilir, ama her ihlal cezalandırılır:
 
@@ -1151,7 +1153,7 @@ $$
 
 İç içe geçmiş iki sınıflı bir veride ölçülen değerler: $C = 0.01$ → 72 destek vektörü, marj 4.22; $C = 1$ → 45 destek vektörü, marj 2.53. ([`codes/python/09_svm.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/09_svm.py))
 
-### 11.4 Çekirdek Hilesi (Kernel Trick) 🟢
+### 11.4 Çekirdek Hilesi (Kernel Trick)
 
 Veri doğrusal olarak hiç ayrılamıyorsa ne olur? SVM'nin buradaki çözümü zekicedir: Veriyi, doğrusal olarak **ayrılabileceği daha yüksek boyutlu bir uzaya** taşımak.
 
@@ -1175,9 +1177,9 @@ Bu dönüşümü açıkça yapmak çok pahalı olabilir (boyut sonsuza bile çı
 
 **Deney:** İç içe iki halka biçimindeki veride 5 katlı CV doğruluğu: **lineer çekirdek 0.56** (yazı-turadan biraz iyi), **RBF çekirdek 1.00**.
 
-> ⚠️ SVM mesafeye dayandığı için **öznitelikler mutlaka ölçeklenmelidir**. WEKA'nın SMO'su bunu varsayılan olarak yapar (`filterType = Normalize`). scikit-learn'de ise ölçeklemeyi sizin eklemeniz gerekir.
+> **Dikkat:** SVM mesafeye dayandığı için **öznitelikler mutlaka ölçeklenmelidir**. WEKA'nın SMO'su bunu varsayılan olarak yapar (`filterType = Normalize`). scikit-learn'de ise ölçeklemeyi sizin eklemeniz gerekir.
 
-### 11.5 Uygulama 🧪
+### 11.5 Uygulama
 
 **WEKA (SMO):** WEKA'da SVM, çözümünde kullanılan *Sequential Minimal Optimization* algoritmasının adıyla **SMO** olarak geçer.
 1. Explorer'da `iris.arff` dosyasını yükleyin.
@@ -1204,7 +1206,7 @@ print(cross_val_score(model, X, y, cv=5).mean())               # ≈ 0.96 (5 kat
 
 $C$ ve $\gamma$'nın en iyi değerleri **Grid Search** ile bulunur ([Bölüm 21](#b21)); Iris'te bulunan en iyi değerler $C = 10$, $\gamma = 0.01$'dir.
 
-> 🎓 **Çok sınıflı SVM:** SVM doğası gereği ikili bir sınıflandırıcıdır. Çok sınıflı problemlerde her sınıf çifti için ayrı bir model (**one-vs-one**, WEKA ve sklearn `SVC`'nin yöntemi) ya da her sınıf için "bu sınıf / diğerleri" modeli (**one-vs-rest**) kurulur. **Regresyon** için SVM'in bir türevi olan SVR kullanılır (WEKA: `SMOreg`).
+> **Çok sınıflı SVM:** SVM doğası gereği ikili bir sınıflandırıcıdır. Çok sınıflı problemlerde her sınıf çifti için ayrı bir model (**one-vs-one**, WEKA ve sklearn `SVC`'nin yöntemi) ya da her sınıf için "bu sınıf / diğerleri" modeli (**one-vs-rest**) kurulur. **Regresyon** için SVM'in bir türevi olan SVR kullanılır (WEKA: `SMOreg`).
 
 ---
 
@@ -1212,7 +1214,7 @@ $C$ ve $\gamma$'nın en iyi değerleri **Grid Search** ile bulunur ([Bölüm 21]
 
 ## 12. Yapay Sinir Ağlarına Giriş
 
-### 12.1 Yapay Nöron 🟢
+### 12.1 Yapay Nöron
 
 Beyindeki nöronlardan esinlenen **yapay nöron (algılayıcı, perceptron)** girdileri ağırlıklarla çarpıp toplar, sonucu bir **aktivasyon fonksiyonundan** geçirir:
 
@@ -1228,11 +1230,11 @@ $$
 
 <p align="center"><img src="./images/yapay_sinir_agi.svg" alt="Tek bir yapay nöron ve girdi, gizli, çıktı katmanlarından oluşan çok katmanlı ağ" width="860"></p>
 
-> 💡 Aktivasyon fonksiyonu **sigmoid** seçilirse tek bir nöron tam olarak **lojistik regresyondur** ([Bölüm 7](#b7)).
+> **İpucu:** Aktivasyon fonksiyonu **sigmoid** seçilirse tek bir nöron tam olarak **lojistik regresyondur** ([Bölüm 7](#b7)).
 
 **Yaygın aktivasyon fonksiyonları:** Sigmoid $\frac{1}{1+e^{-z}}$ (0–1 arası), tanh (−1 ile 1 arası), **ReLU** $\max(0, z)$ (derin ağlarda en yaygın olanı).
 
-### 12.2 Çok Katmanlı Algılayıcı (MLP) 🟢
+### 12.2 Çok Katmanlı Algılayıcı (MLP)
 
 Tek bir nöron yalnızca doğrusal sınırlar çizebilir (ünlü XOR problemini çözemez). Nöronları **katmanlar** hâlinde dizersek (girdi → gizli katman(lar) → çıktı) ağ, doğrusal olmayan çok karmaşık ilişkileri öğrenebilir. **Derin öğrenme**, çok sayıda gizli katmanı olan ağlardır.
 
@@ -1251,7 +1253,7 @@ Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** denir. Güncellemenin
 | | Kararlarını açıklamak zordur (kara kutu) |
 | | Kolayca aşırı öğrenir; erken durdurma ve düzenlileştirme gerekir ([Bölüm 21](#b21)) |
 
-🧪 **WEKA:** `functions → MultilayerPerceptron`. Önemli parametreler: `hiddenLayers` (ör. `a` = (öznitelik+sınıf)/2 nöron, `5,3` = iki gizli katman), `learningRate` (0.3), `momentum` (0.2), `trainingTime` (epoch sayısı, 500). `GUI = True` ile ağı görsel olarak izleyebilirsiniz. Bu depodaki [`application/`](https://github.com/erkanozhan/machinelearning/tree/main/application) uygulamaları, WEKA'da eğitilip `MLP_iris_model.model` olarak kaydedilmiş bir MLP modelini kullanır.
+**WEKA:** `functions → MultilayerPerceptron`. Önemli parametreler: `hiddenLayers` (ör. `a` = (öznitelik+sınıf)/2 nöron, `5,3` = iki gizli katman), `learningRate` (0.3), `momentum` (0.2), `trainingTime` (epoch sayısı, 500). `GUI = True` ile ağı görsel olarak izleyebilirsiniz. Bu depodaki [`application/`](https://github.com/erkanozhan/machinelearning/tree/main/application) uygulamaları, WEKA'da eğitilip `MLP_iris_model.model` olarak kaydedilmiş bir MLP modelini kullanır.
 
 **Python:** `MLPClassifier(hidden_layer_sizes=(10,), max_iter=2000)` → Iris'te 10 katlı CV doğruluğu ≈ **0.960**. Derin öğrenme için **PyTorch**, **TensorFlow/Keras** gibi kütüphaneler kullanılır.
 
@@ -1261,7 +1263,7 @@ Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** denir. Güncellemenin
 
 ## 13. Model Değerlendirme Yöntemleri: Modelimiz Gerçekten Öğrendi mi?
 
-### 13.1 Ezberleme ile Öğrenme Arasındaki Fark 🟢
+### 13.1 Ezberleme ile Öğrenme Arasındaki Fark
 
 Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberlerse**, aynı sorular sorulduğunda %100 alır. Ama sınavda aynı konudan **farklı** sorular gelince başarısız olur. Model de böyledir: Eğitildiği veriyle test edilirse sonuç bir **yanılsama** olabilir.
 
@@ -1276,7 +1278,7 @@ Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberle
 | Neden | Model çok basit | Doğru karmaşıklık | Model çok karmaşık, gürültüyü ezberliyor |
 | Çözüm | Daha karmaşık model, daha iyi öznitelikler | — | Daha fazla veri, düzenlileştirme, budama, erken durdurma, daha basit model |
 
-### 13.2 Yanlılık–Varyans Dengesi (Bias–Variance Trade-off) 🟢
+### 13.2 Yanlılık–Varyans Dengesi (Bias–Variance Trade-off)
 
 - **Yanlılık (bias):** Modelin **sistematik** hatası. Gerçek ilişkiyi yakalayamayacak kadar basit bir model (eğrisel veriye doğru uydurmak) yüksek yanlılığa sahiptir.
 - **Varyans (variance):** Modelin eğitim verisindeki küçük değişikliklere **aşırı duyarlılığı**. Farklı bir örneklemle eğitilse bambaşka bir model çıkıyorsa varyans yüksektir.
@@ -1286,7 +1288,7 @@ Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberle
 Model karmaşıklaştıkça yanlılık azalır ama varyans artar. Amaç, **test hatasını** en küçük yapan dengeyi bulmaktır.
 
 <details>
-<summary>🎓 <b>Derinleşme: Hatanın ayrıştırılması</b></summary>
+<summary><b>Derinleşme (İleri Seviye): Hatanın ayrıştırılması</b></summary>
 
 Karesel hata için beklenen test hatası üç parçaya ayrılır:
 
@@ -1303,7 +1305,7 @@ $$
 
 </details>
 
-### 13.3 Holdout (Dışarıda Tutma) 🟢
+### 13.3 Holdout (Dışarıda Tutma)
 
 En basit yöntem: Veri **bir kez** ikiye bölünür. Büyük parça **eğitim**, küçük parça **test** için kullanılır (yaygın oranlar: 80/20, 70/30, 66/34).
 
@@ -1319,7 +1321,7 @@ graph LR
 
 **Dezavantajı:** Sonuç, bölmenin şansına bağlıdır. Aynı model ve veriyle, sadece rastgele bölme değiştirilerek (10 farklı `random_state`) elde edilen test doğrulukları **0.889 ile 0.977** arasında değişti. Küçük veri setlerinde bu risk daha da büyüktür.
 
-### 13.4 Eğitim / Doğrulama / Test (Üçlü Ayırma) 🟢
+### 13.4 Eğitim / Doğrulama / Test (Üçlü Ayırma)
 
 Model geliştirirken **hiperparametre** (ağacın derinliği, $k$, $C$…) seçmemiz gerekir. Bu seçim test setine bakılarak yapılırsa, test setinin bilgisi dolaylı olarak modele **sızar** ve test sonucu artık tarafsız olmaz. Çözüm veriyi üçe ayırmaktır:
 
@@ -1327,7 +1329,7 @@ Model geliştirirken **hiperparametre** (ağacın derinliği, $k$, $C$…) seçm
 2. **Doğrulama seti (validation):** Hiperparametre ayarlama ve model seçimi için (ör. %20).
 3. **Test seti (test):** Tüm kararlar verildikten sonra **yalnızca bir kez**, nihai performansı raporlamak için (ör. %20). Tüm süreç boyunca "kasada kilitli" tutulur.
 
-### 13.5 K-Katlı Çapraz Doğrulama (K-Fold Cross-Validation) 🟢
+### 13.5 K-Katlı Çapraz Doğrulama (K-Fold Cross-Validation)
 
 Tek bir bölmenin şansına güvenmek yerine, veriyi **K eşit parçaya (katman, fold)** ayırıp K kez deneme yaparız:
 
@@ -1339,7 +1341,7 @@ Tek bir bölmenin şansına güvenmek yerine, veriyi **K eşit parçaya (katman,
 
 **Avantajı:** Her örnek tam olarak bir kez test, $K-1$ kez eğitim için kullanılır. Verinin tamamından yararlanılır ve sonuç çok daha **kararlıdır**. Bu, veri az olduğunda hayati önem taşır.
 
-#### K Değerinin Seçimi 🎓
+#### K Değerinin Seçimi (İleri Seviye)
 
 | | **Küçük K (ör. 2–3)** | **Büyük K (ör. 10, LOOCV)** |
 | :--- | :--- | :--- |
@@ -1350,15 +1352,15 @@ Tek bir bölmenin şansına güvenmek yerine, veriyi **K eşit parçaya (katman,
 
 Genel kabul görmüş uygulama $K = 5$ veya $K = 10$'dur. Bu değerler yanlılık, varyans ve hesaplama maliyeti arasında makul bir denge sağlar.
 
-### 13.6 Tabakalı Örnekleme (Stratified K-Fold) 🟢
+### 13.6 Tabakalı Örnekleme (Stratified K-Fold)
 
 Sınıflar dengesizse (ör. 1000 hastanın 950'si sağlıklı, 50'si hasta) rastgele bölmede bazı katmanlarda hiç hasta olmayabilir. **Tabakalı** çapraz doğrulama, her katmanda **sınıf oranlarının orijinal veriyle aynı** (%95 / %5) kalmasını garanti eder. Sınıflandırmada **varsayılan tercih** olmalıdır (WEKA'nın çapraz doğrulaması zaten tabakalıdır; scikit-learn'de `StratifiedKFold` veya `train_test_split(..., stratify=y)`).
 
-### 13.7 Birini Dışarıda Bırak (Leave-One-Out, LOOCV) 🟢
+### 13.7 Birini Dışarıda Bırak (Leave-One-Out, LOOCV)
 
 $K = N$ (örnek sayısı) olan özel durum: Her seferinde **tek bir örnek** test edilir, kalan $N-1$ örnekle eğitilir; bu $N$ kez tekrarlanır. Yanlılığı çok düşüktür ama $N$ model eğitmek gerektiğinden **hesaplama maliyeti çok yüksektir**. Genellikle çok küçük veri setlerinde (onlarca örnek) kullanılır.
 
-### 13.8 Bootstrap Örnekleme ve Torba Dışı (OOB) Örnekler 🟢
+### 13.8 Bootstrap Örnekleme ve Torba Dışı (OOB) Örnekler
 
 Torbada 10 farklı renkte bilye var. Bir bilye çekip rengini not ediyor ve **torbaya geri koyuyorsunuz**. Bunu 10 kez tekrarlıyorsunuz. Sonuçta bazı renkler birden fazla kez seçilir (kopyalar), bazıları ise hiç seçilmez. Bu **yerine koyarak örnekleme (sampling with replacement)** işlemine **bootstrap** denir.
 
@@ -1380,7 +1382,7 @@ Yani her bootstrap eğitim seti, farklı örneklerin ortalama **%63.2**'sini iç
 
 Bootstrap, **Bagging** ve **Random Forest**'ın temelidir ([Bölüm 16](#b16)). Her ağacın kendi OOB örnekleri üzerindeki başarısının ortalaması (**OOB skoru**), ayrı bir doğrulama seti ayırmadan genelleme başarısı hakkında güvenilir bir **tahmin** verir. Yine de akademik bir çalışmada nihai sonuç için ayrı bir test seti veya çapraz doğrulama kullanmak iyi bir uygulamadır.
 
-### 13.9 Özet Deney 🧪
+### 13.9 Özet Deney
 
 Meme kanseri verisi, karar ağacı:
 
@@ -1392,7 +1394,7 @@ Meme kanseri verisi, karar ağacı:
 | 10 katlı tabakalı CV | 0.923 ± 0.040 |
 | Bootstrap / OOB (200 tekrar) | 0.922 ± 0.019 |
 
-➡️ Tüm yöntemlerin kodu: [`codes/python/05_model_degerlendirme_yontemleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/05_model_degerlendirme_yontemleri.py)
+**Kod:** Tüm yöntemlerin kodu: [`codes/python/05_model_degerlendirme_yontemleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/05_model_degerlendirme_yontemleri.py)
 
 **WEKA'da karşılıkları** (Classify → *Test options*):
 
@@ -1411,7 +1413,7 @@ Meme kanseri verisi, karar ağacı:
 
 "Bu model ne kadar iyi?" sorusunu nesnel olarak cevaplamak için **performans ölçütleri (metrikler)** kullanılır. Sınıflandırma ve regresyon için farklı ölçütler vardır.
 
-### 14.1 Karışıklık Matrisi (Confusion Matrix) 🟢
+### 14.1 Karışıklık Matrisi (Confusion Matrix)
 
 Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tablo, modelin tahminlerini gerçek değerlerle karşılaştırır.
 
@@ -1424,7 +1426,7 @@ Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tab
 | **FP** – Yanlış Pozitif (**Tip I hata**) | Negatife yanlışlıkla pozitif dedik | Sağlıklıya "hasta" dedik (yanlış alarm) |
 | **FN** – Yanlış Negatif (**Tip II hata**) | Pozitifi kaçırdık | Hastaya "sağlıklı" dedik |
 
-> 💡 **Hatırlama yolu:** İkinci kelime modelin **ne dediğini** (Pozitif/Negatif), ilk kelime bunun **doğru mu yanlış mı** olduğunu söyler. "Yanlış Pozitif" = model "pozitif" dedi ama yanlıştı.
+> **Hatırlama yolu:** İkinci kelime modelin **ne dediğini** (Pozitif/Negatif), ilk kelime bunun **doğru mu yanlış mı** olduğunu söyler. "Yanlış Pozitif" = model "pozitif" dedi ama yanlıştı.
 
 **Çalışma örneği** (1000 kişi: 500 gerçekten hasta, 500 sağlıklı):
 
@@ -1434,7 +1436,7 @@ Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tab
 | **Gerçek: Negatif** | FP = 250 | TN = 250 | 500 |
 | **Toplam** | 600 | 400 | 1000 |
 
-### 14.2 Sınıflandırma Ölçütleri 🟢
+### 14.2 Sınıflandırma Ölçütleri
 
 #### Doğruluk (Accuracy)
 
@@ -1446,7 +1448,7 @@ $$
 
 **Örnek:** $(350 + 250)/1000 = 0.60$
 
-> ⚠️ **Doğruluk tuzağı:** 990 sağlıklı, 10 hasta olan bir veri setinde herkese "sağlıklı" diyen, **hiçbir şey öğrenmemiş** bir model %99 doğruluk elde eder, ama tek bir hastayı bile bulamaz. **Dengesiz veri setlerinde doğruluk tek başına kullanılmamalıdır.**
+> **Doğruluk tuzağı:** 990 sağlıklı, 10 hasta olan bir veri setinde herkese "sağlıklı" diyen, **hiçbir şey öğrenmemiş** bir model %99 doğruluk elde eder, ama tek bir hastayı bile bulamaz. **Dengesiz veri setlerinde doğruluk tek başına kullanılmamalıdır.**
 
 #### Kesinlik (Precision)
 
@@ -1488,7 +1490,7 @@ $$
 
 **Örnek:** $\frac{2 \cdot 0.583 \cdot 0.70}{0.583 + 0.70} \approx 0.636$
 
-> 🎓 **$F_\beta$ skoru:** $F_\beta = (1+\beta^2)\frac{P\cdot R}{\beta^2 P + R}$. $\beta = 2$ recall'a, $\beta = 0.5$ precision'a daha fazla ağırlık verir.
+> **$F_\beta$ skoru:** $F_\beta = (1+\beta^2)\frac{P\cdot R}{\beta^2 P + R}$. $\beta = 2$ recall'a, $\beta = 0.5$ precision'a daha fazla ağırlık verir.
 
 #### Cohen'in Kappa Katsayısı ($\kappa$)
 
@@ -1522,7 +1524,7 @@ $$
 
 WEKA her sınıflandırma çıktısında `Kappa statistic` değerini otomatik verir.
 
-#### Matthews Korelasyon Katsayısı (MCC) 🎓
+#### Matthews Korelasyon Katsayısı (MCC) (İleri Seviye)
 
 Karışıklık matrisinin dört hücresini birden kullanan, dengesiz veride çok güvenilir bir ölçüttür ($-1$: tamamen ters, $0$: rastgele, $+1$: mükemmel):
 
@@ -1532,7 +1534,7 @@ $$
 
 **Örnek:** $\frac{350\cdot 250 - 250\cdot 150}{\sqrt{600\cdot 500\cdot 500\cdot 400}} \approx 0.204$. WEKA'da `MCC` sütunu olarak görünür.
 
-#### Çok Sınıflı Problemlerde Ortalama Alma: Macro ve Weighted 🟢
+#### Çok Sınıflı Problemlerde Ortalama Alma: Macro ve Weighted
 
 Üç sınıf (A, B, C) varsa her sınıf için ayrı precision, recall ve F1 hesaplanır ("bu sınıf pozitif, diğerleri negatif"). Genel skor için ortalama alınır:
 
@@ -1547,9 +1549,9 @@ $$
 
 Macro ortalama, azınlık sınıflarındaki (B, C) kötü performansı açıkça gösterir. Weighted ortalama ise çoğunluk sınıfının (A) başarısıyla yüksek görünür. **Nadir sınıflar önemliyse** (nadir bir hastalık gibi) macro ortalamaya bakılmalıdır. scikit-learn'ün `classification_report` çıktısında ikisi `macro avg` ve `weighted avg` olarak yan yana verilir.
 
-> 🎓 **Micro ortalama:** Tüm sınıfların TP, FP ve FN değerleri önce toplanır, sonra metrik hesaplanır. Tek etiketli çok sınıflı problemlerde micro-F1 doğruluğa eşittir.
+> **Micro ortalama:** Tüm sınıfların TP, FP ve FN değerleri önce toplanır, sonra metrik hesaplanır. Tek etiketli çok sınıflı problemlerde micro-F1 doğruluğa eşittir.
 
-### 14.3 ROC Eğrisi ve AUC 🟢
+### 14.3 ROC Eğrisi ve AUC
 
 #### Kökeni
 
@@ -1579,7 +1581,7 @@ Eşik 1'den 0'a doğru kaydırılır ve her eşik için **(FPR, TPR)** noktası 
 - **Sol üst köşe (0, 1):** Mükemmel model: hiç yanlış alarm vermeden tüm pozitifleri bulur.
 - Eğri sol üst köşeye ne kadar yakınsa model o kadar iyidir.
 
-> 🎬 **Animasyon:** Eşiği kaydırdıkça ROC eğrisinin nasıl oluştuğunu izleyin → [ROC Eğrisi Animasyonu](https://erkanozhan.github.io/machinelearning/roc_animation.html)
+> **Animasyon:** Eşiği kaydırdıkça ROC eğrisinin nasıl oluştuğunu izleyin → [ROC Eğrisi Animasyonu](https://erkanozhan.github.io/machinelearning/roc_animation.html)
 
 #### Eğri Altındaki Alan (AUC)
 
@@ -1594,13 +1596,13 @@ ROC performansını tek bir sayıyla özetler:
 | 0.5 | Rastgele |
 | < 0.5 | Rastgeleden kötü (tahminler ters çevrilirse iyileşir) |
 
-> 🎓 **AUC'nin olasılıksal anlamı:** Rastgele seçilen bir pozitif örneğin skorunun, rastgele seçilen bir negatif örneğin skorundan **yüksek olma olasılığıdır**. Bu yüzden AUC eşikten bağımsızdır ve modelin **sıralama** başarısını ölçer.
+> **AUC'nin olasılıksal anlamı:** Rastgele seçilen bir pozitif örneğin skorunun, rastgele seçilen bir negatif örneğin skorundan **yüksek olma olasılığıdır**. Bu yüzden AUC eşikten bağımsızdır ve modelin **sıralama** başarısını ölçer.
 
-#### Precision–Recall (PR) Eğrisi 🎓
+#### Precision–Recall (PR) Eğrisi (İleri Seviye)
 
 Pozitif sınıf **çok nadirse** (ör. %1 dolandırıcılık), ROC eğrisi iyimser görünebilir: TN sayısı çok büyük olduğu için FPR küçük kalır. Bu durumda **recall (x) – precision (y)** eğrisi ve altındaki alan (**AP, Average Precision**; WEKA'da `PRC Area`) daha bilgilendiricidir. Rastgele bir modelin AP değeri, pozitif sınıfın oranına eşittir.
 
-#### 🧪 Python ile Dengesiz Veride Tüm Ölçütler
+#### Python ile Dengesiz Veride Tüm Ölçütler
 
 %90 negatif, %10 pozitif yapay veri; lojistik regresyon:
 
@@ -1642,7 +1644,7 @@ Eşik düşürülünce precision ile recall arasındaki takas:
 | Precision | 0.615 | 0.655 | 0.929 | 1.000 |
 | Recall | **0.800** | 0.633 | 0.433 | 0.300 |
 
-➡️ Grafiklerle birlikte tam kod: [`codes/python/06_siniflandirma_metrikleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/06_siniflandirma_metrikleri.py)
+**Kod:** Grafiklerle birlikte tam kod: [`codes/python/06_siniflandirma_metrikleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/06_siniflandirma_metrikleri.py)
 
 #### Hangi Ölçütü Ne Zaman Kullanmalı?
 
@@ -1656,9 +1658,9 @@ Eşik düşürülünce precision ile recall arasındaki takas:
 | Eşikten bağımsız genel sıralama başarısı | ROC-AUC |
 | Hataların maliyetleri farklı ve biliniyor | **Toplam maliyet** ([Bölüm 20](#b20)) |
 
-> 💡 Tek bir "en iyi" ölçüt yoktur; **probleme en uygun** ölçüt vardır. Akademik raporlarda birden fazla ölçüt birlikte verilmelidir.
+> **İpucu:** Tek bir "en iyi" ölçüt yoktur; **probleme en uygun** ölçüt vardır. Akademik raporlarda birden fazla ölçüt birlikte verilmelidir.
 
-### 14.4 Regresyon Ölçütleri 🟢
+### 14.4 Regresyon Ölçütleri
 
 Regresyonda soru "Doğru bildi mi?" değil, "**Gerçek değere ne kadar yaklaştı?**" sorusudur.
 
@@ -1723,9 +1725,9 @@ $R^2 = 1 - 1725/61\,120 \approx 0.972$ → "Fiyatlardaki değişkenliğin **%97.
 
 - $R^2 = 1$: Mükemmel uyum.
 - $R^2 = 0$: Model, herkese ortalamayı söylemekten daha iyi değil.
-- ⚠️ **$R^2 < 0$ olabilir!** Test verisinde model ortalamadan bile kötü tahmin yapıyorsa $R^2$ negatif çıkar. (Örneğin tahminler $[500, 200, 450, 250, 300]$ olsaydı $R^2 = -2.47$ çıkardı.) "$R^2$ bir karedir, negatif olamaz" düşüncesi yalnızca en küçük kareler ile eğitim verisinde hesaplanan değer için geçerlidir.
+- **$R^2 < 0$ olabilir!** Test verisinde model ortalamadan bile kötü tahmin yapıyorsa $R^2$ negatif çıkar. (Örneğin tahminler $[500, 200, 450, 250, 300]$ olsaydı $R^2 = -2.47$ çıkardı.) "$R^2$ bir karedir, negatif olamaz" düşüncesi yalnızca en küçük kareler ile eğitim verisinde hesaplanan değer için geçerlidir.
 
-#### Düzeltilmiş $R^2$ (Adjusted $R^2$) 🎓
+#### Düzeltilmiş $R^2$ (Adjusted $R^2$) (İleri Seviye)
 
 Modele **anlamsız** bir öznitelik bile eklense (ev sahibinin ayakkabı numarası gibi), eğitim verisindeki $R^2$ hemen hemen her zaman artar. Düzeltilmiş $R^2$ öznitelik sayısını cezalandırır:
 
@@ -1754,11 +1756,11 @@ $$
 
 **Regresyonda kullanımı:** Gerçek değerler ile tahminler arasındaki korelasyon, modelin gerçeği ne kadar iyi takip ettiğini gösterir. Örneğimizde $r(y, \hat{y}) \approx 0.987$ çok güçlü bir pozitif ilişki demektir.
 
-> ⚠️ **$r^2$ ile $R^2$ her zaman eşit değildir.** Eşitlik yalnızca en küçük kareler ile kurulmuş bir lineer modelin **kendi eğitim verisinde** geçerlidir. Örneğimizde $r^2 = 0.975$, $R^2 = 0.972$'dir. Ayrıca korelasyon ölçek ve kaymadan etkilenmez: Tüm tahminler 100 bin TL fazla olsa bile $r$ değişmez ama model açıkça kötüdür. Bu yüzden korelasyon **tek başına** bir hata ölçüsü değildir. **Korelasyon nedensellik de değildir:** Dondurma satışı ile boğulma vakaları birlikte artar, ama ortak neden sıcak havadır.
+> **$r^2$ ile $R^2$ her zaman eşit değildir.** Eşitlik yalnızca en küçük kareler ile kurulmuş bir lineer modelin **kendi eğitim verisinde** geçerlidir. Örneğimizde $r^2 = 0.975$, $R^2 = 0.972$'dir. Ayrıca korelasyon ölçek ve kaymadan etkilenmez: Tüm tahminler 100 bin TL fazla olsa bile $r$ değişmez ama model açıkça kötüdür. Bu yüzden korelasyon **tek başına** bir hata ölçüsü değildir. **Korelasyon nedensellik de değildir:** Dondurma satışı ile boğulma vakaları birlikte artar, ama ortak neden sıcak havadır.
 
-➡️ Tüm hesaplar: [`codes/python/07_regresyon_metrikleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/07_regresyon_metrikleri.py)
+**Kod:** Tüm hesaplar: [`codes/python/07_regresyon_metrikleri.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/07_regresyon_metrikleri.py)
 
-#### 🧪 WEKA ile Regresyon: `cpu.arff`
+#### WEKA ile Regresyon: `cpu.arff`
 
 `cpu.arff`, 209 bilgisayar işlemcisinin donanım özelliklerinden (MYCT: saat döngü süresi, MMIN/MMAX: bellek, CACH: önbellek, CHMIN/CHMAX: kanal sayısı) göreli performansını (son öznitelik `class`, sayısal) tahmin etmeyi amaçlar.
 
@@ -1782,7 +1784,7 @@ Total Number of Instances              209
 
 - **MAE ≈ 41:** Tahminler ortalama 41 performans birimi sapıyor. **RMSE (≈ 70) MAE'den belirgin biçimde büyük:** Model bazı işlemcilerde çok büyük hatalar yapıyor.
 - **Correlation coefficient ≈ 0.90:** Tahminler gerçeği güçlü biçimde izliyor. Karesi (≈ 0.81) yalnızca **yaklaşık** bir $R^2$ fikri verir (yukarıdaki uyarıya bakın).
-- 🎓 **RAE ve RRSE:** Modelin hatasının, her örneğe ortalamayı söyleyen modelin hatasına oranıdır. $RAE = \frac{\sum\lvert y_i-\hat{y}_i\rvert}{\sum\lvert y_i-\bar{y}\rvert}$, $RRSE = \sqrt{\frac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}}$. %100 = ortalama kadar kötü, %0 = mükemmel. Dikkat: $RRSE^2 = 1 - R^2$, yani $R^2 \approx 1 - 0.432^2 \approx 0.81$.
+- **RAE ve RRSE:** Modelin hatasının, her örneğe ortalamayı söyleyen modelin hatasına oranıdır. $RAE = \frac{\sum\lvert y_i-\hat{y}_i\rvert}{\sum\lvert y_i-\bar{y}\rvert}$, $RRSE = \sqrt{\frac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}}$. %100 = ortalama kadar kötü, %0 = mükemmel. Dikkat: $RRSE^2 = 1 - R^2$, yani $R^2 \approx 1 - 0.432^2 \approx 0.81$.
 
 `trees → M5P` (model ağacı) ve `functions → MultilayerPerceptron` ile de deneyip sonuçları karşılaştırın.
 
@@ -1790,7 +1792,7 @@ Total Number of Instances              209
 
 <a id="b15"></a>
 
-## 15. WEKA ile Uçtan Uca Uygulama: Iris 🧪
+## 15. WEKA ile Uçtan Uca Uygulama: Iris
 
 Bu uygulama, bir makine öğrenmesi projesinin **eğitim → değerlendirme → kaydetme → yeni veride kullanma** adımlarının tamamını içerir.
 
@@ -1838,7 +1840,7 @@ Weighted Avg.    0.960    0.020    0.960      0.960    0.960      0.940  0.968  
 - `Mean absolute error` gibi değerler sınıflandırmada **olasılık tahminlerinin** hatasıdır; yorumlarken öncelik doğruluk, Kappa ve sınıf bazlı ölçütlerdedir.
 - Ağacı görmek için: **Result list**'te modele sağ tık → **Visualize tree**.
 
-> 💡 Classify ekranında "Classifier output"taki `=== Classifier model (full training set) ===` bölümü, **tüm veriyle** eğitilmiş son modeldir. Performans değerleri ise çapraz doğrulamadan gelir.
+> **İpucu:** Classify ekranında "Classifier output"taki `=== Classifier model (full training set) ===` bölümü, **tüm veriyle** eğitilmiş son modeldir. Performans değerleri ise çapraz doğrulamadan gelir.
 
 ### Adım 3 – Modeli Kaydetme
 
@@ -1866,7 +1868,7 @@ Yeni çiçekler için bir `.arff` dosyası hazırlanır. **Başlık bölümü (`
 6.3,3.3,6.0,2.5,?
 ```
 
-> ⚠️ ARFF'de yorum satırı `%` ile **satır başında** başlar. Veri satırlarının sonuna yorum eklemeyin; WEKA dosyayı okuyamayabilir.
+> **Dikkat:** ARFF'de yorum satırı `%` ile **satır başında** başlar. Veri satırlarının sonuna yorum eklemeyin; WEKA dosyayı okuyamayabilir.
 
 ### Adım 5 – Kaydedilmiş Modelle Tahmin
 
@@ -1881,9 +1883,9 @@ Yeni çiçekler için bir `.arff` dosyası hazırlanır. **Başlık bölümü (`
 2. Classify → Result list'te boş alana sağ tık → **Load model** → `iris_j48.model`.
 3. Senaryo A'daki 1–4. adımlar.
 
-> 🎓 **Gerçek bir uygulamada** model, programın içine gömülür. Bu depodaki [`application/`](https://github.com/erkanozhan/machinelearning/tree/main/application) klasöründe WEKA modelini Java masaüstü (Swing) ve Spring Boot web uygulamasında kullanan örnek projeler bulunur.
+> **Gerçek bir uygulamada** model, programın içine gömülür. Bu depodaki [`application/`](https://github.com/erkanozhan/machinelearning/tree/main/application) klasöründe WEKA modelini Java masaüstü (Swing) ve Spring Boot web uygulamasında kullanan örnek projeler bulunur.
 
-### Ek: WEKA ile R Bağlantısı 🎓
+### Ek: WEKA ile R Bağlantısı (İleri Seviye)
 
 WEKA'nın kolay arayüzü R'ın istatistik ve görselleştirme gücüyle birleştirilebilir. (Geliştiricilerin anlatımı: [YouTube](https://www.youtube.com/watch?v=EGwHXC3baWU))
 1. R ve WEKA'yı kurun. R konsolunda: `install.packages("rJava")`.
@@ -1900,7 +1902,7 @@ WEKA'nın kolay arayüzü R'ın istatistik ve görselleştirme gücüyle birleş
 
 ## 16. Topluluk Öğrenmesi (Ensemble Learning)
 
-### 16.1 Birlikten Kuvvet Doğar 🟢
+### 16.1 Birlikten Kuvvet Doğar
 
 Bir kavanozdaki bilye sayısını tahmin edeceğiz. Tek bir kişinin tahmini çok hatalı olabilir. Ama 100 kişinin tahminlerinin **ortalaması** genellikle şaşırtıcı derecede isabetlidir, çünkü bireysel hatalar birbirini dengeler ("kalabalıkların bilgeliği").
 
@@ -1912,7 +1914,7 @@ Topluluk öğrenmesi, birden çok modelin tahminlerini birleştirerek tek bir mo
 | **Boosting** | Sıralı, her biri öncekinin hatasına odaklanır | **Yanlılık** (ve varyans) | AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost |
 | **Stacking** | Farklı türde modeller + bir meta-model | Her ikisi | Stacking |
 
-### 16.2 Bagging (Bootstrap Aggregating) 🟢
+### 16.2 Bagging (Bootstrap Aggregating)
 
 1. Orijinal veriden **bootstrap** ile (yerine koyarak) $B$ adet yeni eğitim seti çekilir ([Bölüm 13.8](#b13)).
 2. Her set üzerinde **aynı türden** bir model (genellikle derin, budanmamış karar ağacı) bağımsız olarak eğitilir.
@@ -1944,7 +1946,7 @@ $$
 
 **Random Forest (Rastgele Orman):** Bagging'e ek olarak, her düğümde bölme yapılırken özniteliklerin yalnızca **rastgele bir alt kümesi** (sınıflandırmada genellikle $\sqrt{d}$ tane) değerlendirilir. Bu sayede ağaçlar birbirine daha az benzer (**daha az ilişkili**) hâle gelir ve ortalamanın varyans azaltma etkisi güçlenir. Hem sınıflandırma hem regresyonda çok güçlü ve az ayar gerektiren bir modeldir. OOB skoru ve öznitelik önemi de verir.
 
-### 16.3 Boosting (Güçlendirme) 🟢
+### 16.3 Boosting (Güçlendirme)
 
 Zor bir problemi sırayla çözen bir uzmanlar ekibi düşünün: İlk uzman genel bir çözüm önerir. İkincisi, ilkinin **hata yaptığı** noktalara odaklanır. Üçüncüsü, hâlâ çözülemeyen kısımlarla uğraşır… Sonunda bu sıralı ve odaklı çaba, tek bir uzmanın ulaşabileceğinden çok daha iyi bir sonuç verir.
 
@@ -1966,7 +1968,7 @@ graph LR
 - **XGBoost, LightGBM, CatBoost:** Gradient Boosting'in hızlı ve düzenlileştirilmiş uygulamaları. Tablo verisi yarışmalarında (Kaggle) çok sık kazanan modellerdir.
 
 <details>
-<summary>🎓 <b>Derinleşme: Gradient Boosting'in güncelleme adımı</b></summary>
+<summary><b>Derinleşme (İleri Seviye): Gradient Boosting'in güncelleme adımı</b></summary>
 
 $$
 F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \, h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_{i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_{F = F_{t-1}(\mathbf{x}_i)}
@@ -1981,15 +1983,15 @@ $$
 
 </details>
 
-> ⚠️ Boosting, gürültülü veride ve çok fazla turda **aşırı öğrenebilir**. Tur sayısı ve öğrenme oranı birlikte ayarlanmalı, gerekirse erken durdurma kullanılmalıdır.
+> **Dikkat:** Boosting, gürültülü veride ve çok fazla turda **aşırı öğrenebilir**. Tur sayısı ve öğrenme oranı birlikte ayarlanmalı, gerekirse erken durdurma kullanılmalıdır.
 
-### 16.4 Stacking (Yığınlama) 🟢
+### 16.4 Stacking (Yığınlama)
 
 Bir inşaat projesinde mimar, statik mühendisi ve şehir plancısı ayrı raporlar sunar. Deneyimli bir proje yöneticisi bu raporları girdi olarak alır ve **hangi uzmana hangi konuda ne kadar güveneceğini** zamanla öğrenerek nihai kararı verir.
 
 - **Seviye-0 (temel modeller):** Genellikle **farklı türde** modeller (SVM, Naive Bayes, karar ağacı…).
 - **Seviye-1 (meta-model):** Temel modellerin tahminlerini **yeni öznitelikler** olarak alıp nihai kararı veren, genellikle basit bir model (lojistik/lineer regresyon).
-- ⚠️ **Veri sızıntısını önlemek için** meta-modelin eğitim verisi, temel modellerin **eğitimde görmediği** katmanlardaki tahminlerinden (**out-of-fold**) üretilir. scikit-learn'deki `cv=5` parametresi bunu otomatik yapar.
+- **Veri sızıntısını önlemek için** meta-modelin eğitim verisi, temel modellerin **eğitimde görmediği** katmanlardaki tahminlerinden (**out-of-fold**) üretilir. scikit-learn'deki `cv=5` parametresi bunu otomatik yapar.
 
 ```mermaid
 graph TD
@@ -2003,7 +2005,7 @@ graph TD
     META --> S["Nihai tahmin"]
 ```
 
-### 16.5 Deney Sonuçları 🧪
+### 16.5 Deney Sonuçları
 
 Aynı 10 katlı tabakalı CV bölmeleriyle ölçülen doğruluklar ([`codes/python/08_topluluk_ogrenmesi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/08_topluluk_ogrenmesi.py)):
 
@@ -2031,7 +2033,7 @@ Regresyon (diyabet verisi, 10 katlı CV):
 - Iris çok kolay bir veri seti olduğu için modeller arasındaki farklar standart sapmanın içinde kalıyor; **istatistiksel olarak anlamlı değil** ([Bölüm 24](#b24)).
 - Diyabet verisinde en iyi model **basit lineer regresyon** çıktı. Karmaşık model her zaman kazanmaz; ilişki doğrusala yakınsa ve veri azsa basit modeller güçlüdür. Bu yüzden her projede **basit bir referans modelle (baseline)** başlanmalıdır.
 
-### 16.6 WEKA'da Topluluk Öğrenmesi 🧪
+### 16.6 WEKA'da Topluluk Öğrenmesi
 
 Topluluk algoritmaları Classify → Choose → **`meta`** klasöründedir.
 
@@ -2069,9 +2071,9 @@ stack = StackingClassifier(
 
 Kümeleme **denetimsiz** öğrenmenin en temel tekniğidir: Etiket yoktur; amaç veriyi, **küme içinde benzer**, **kümeler arasında farklı** gruplara ayırmaktır. Kullanım alanları: müşteri segmentasyonu, belge gruplama, görüntü sıkıştırma, anomali tespiti, gen ifadesi analizi.
 
-> ⚠️ Kümeleme mesafeye dayanır → **öznitelikler ölçeklenmelidir** ([Bölüm 5.8](#b5)). WEKA'nın SimpleKMeans'i bunu otomatik yapar (0–1 normalizasyonu).
+> **Dikkat:** Kümeleme mesafeye dayanır → **öznitelikler ölçeklenmelidir** ([Bölüm 5.8](#b5)). WEKA'nın SimpleKMeans'i bunu otomatik yapar (0–1 normalizasyonu).
 
-### 17.1 K-Means (K-Ortalamalar) 🟢
+### 17.1 K-Means (K-Ortalamalar)
 
 Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gereken** bir parametredir.
 
@@ -2098,20 +2100,20 @@ $$
 
 Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20.31 → 9.83 → 7.09 → 7.00 → 6.98 → 6.98** (6. adımda yakınsadı).
 
-> 🎬 **Animasyon:** Atama ve güncelleme adımlarını tek tek izleyin; rastgele ve k-means++ başlangıcı karşılaştırın → [K-Means Animasyonu](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
+> **Animasyon:** Atama ve güncelleme adımlarını tek tek izleyin; rastgele ve k-means++ başlangıcı karşılaştırın → [K-Means Animasyonu](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
 
 **Önemli özellikler:**
 - Her adımda SSE **azalır veya aynı kalır**; algoritma her zaman durur. Ancak bulunan çözüm **yerel minimum** olabilir: Kötü başlangıç merkezleri kötü kümelere götürebilir. Çözüm: algoritmayı farklı başlangıçlarla birçok kez çalıştırıp en düşük SSE'li sonucu seçmek (sklearn `n_init=10`) ve merkezleri birbirinden uzak seçen **k-means++** başlangıcını kullanmak (WEKA: `initializationMethod = k-means++`).
 - **Küresel ve benzer büyüklükte** kümeleri iyi bulur; hilal, halka gibi şekillerde ve çok farklı yoğunluklarda başarısızdır.
 - Aykırı değerler merkezleri kendilerine doğru çeker.
 
-#### K Nasıl Seçilir? Dirsek Yöntemi ve Siluet Skoru 🟢
+#### K Nasıl Seçilir? Dirsek Yöntemi ve Siluet Skoru
 
 **Dirsek yöntemi (Elbow method):** $K = 1, 2, \dots$ için SSE hesaplanıp çizilir. $K$ arttıkça SSE **her zaman** azalır ($K = n$ olursa SSE = 0). Aranan nokta, düşüşün belirgin biçimde **yavaşladığı** kırılma noktasıdır ("dirsek").
 
 <p align="center"><img src="./images/dirsek_yontemi.svg" alt="Iris verisinde K arttıkça SSE'nin azalması ve K=3'te dirsek oluşması" width="580"></p>
 
-**Siluet skoru (Silhouette)** 🎓: Her nokta için "kendi kümesine ne kadar yakın, en yakın komşu kümeye ne kadar uzak?" sorusunu ölçer:
+**Siluet skoru (Silhouette)** (İleri Seviye): Her nokta için "kendi kümesine ne kadar yakın, en yakın komşu kümeye ne kadar uzak?" sorusunu ölçer:
 
 $$
 s(i) = \frac{b(i) - a(i)}{\max\lbrace a(i),\, b(i) \rbrace}
@@ -2132,7 +2134,7 @@ Tüm noktaların ortalama siluet değeri en yüksek olan $K$ tercih edilir.
 
 Siluet $K = 2$'yi öneriyor, çünkü setosa diğer iki türden çok belirgin biçimde ayrıktır; versicolor ve virginica ise birbirine çok yakındır. Dirsek $K = 3$ civarında. **Yöntemler her zaman aynı cevabı vermez**; son karar alan bilgisiyle verilir (biyolojik olarak 3 tür olduğunu biliyoruz).
 
-### 17.2 Hiyerarşik Kümeleme 🟢
+### 17.2 Hiyerarşik Kümeleme
 
 Küme sayısını önceden vermeyi gerektirmez; veriden bir **küme ağacı** oluşturur.
 
@@ -2143,7 +2145,7 @@ Sonuç bir **dendrogram** ile gösterilir. Ağaç istenen bir yükseklikten **ke
 
 <p align="center"><img src="./images/dendrogram.svg" alt="Beş noktanın birleşme sırasını gösteren dendrogram ve iki küme veren kesme çizgisi" width="540"></p>
 
-**İki kümenin uzaklığı nasıl ölçülür? (Bağlantı / linkage)** 🎓
+**İki kümenin uzaklığı nasıl ölçülür? (Bağlantı / linkage)** (İleri Seviye)
 
 | Yöntem | Tanım | Özellik |
 | :--- | :--- | :--- |
@@ -2154,7 +2156,7 @@ Sonuç bir **dendrogram** ile gösterilir. Ağaç istenen bir yükseklikten **ke
 
 WEKA: Cluster → `HierarchicalClusterer` (`linkType`, `numClusters`). Sonuç ağacı için Result list → sağ tık → **Visualize tree**.
 
-### 17.3 DBSCAN (Yoğunluk Tabanlı Kümeleme) 🟢
+### 17.3 DBSCAN (Yoğunluk Tabanlı Kümeleme)
 
 K-Means küresel kümeleri iyi bulur. Peki kümeler hilal ya da halka biçimindeyse? **DBSCAN** (*Density-Based Spatial Clustering of Applications with Noise*) merkezlere değil **yoğunluğa** bakar: Yoğun bölgeleri birbirine bağlayarak kümeler oluşturur.
 
@@ -2182,14 +2184,14 @@ Algoritma bir çekirdek noktadan başlar ve $\varepsilon$ komşuluğu üzerinden
 
 WEKA: Cluster → `DBSCAN` (WEKA 3.8'de Package Manager'dan `optics_dbScan` paketi kurulmalıdır).
 
-### 17.4 Kümelemenin Değerlendirilmesi 🟢
+### 17.4 Kümelemenin Değerlendirilmesi
 
 | Tür | Ne zaman? | Ölçütler |
 | :--- | :--- | :--- |
 | **İçsel (internal)** | Gerçek etiketler **yok** (gerçek hayatın çoğu) | SSE, siluet, Davies–Bouldin |
 | **Dışsal (external)** | Gerçek etiketler **var** (eğitim amaçlı deneyler) | Yanlış kümelenen oran, Adjusted Rand Index (ARI), saflık |
 
-### 17.5 WEKA ile Iris'in Kümelenmesi 🧪
+### 17.5 WEKA ile Iris'in Kümelenmesi
 
 Amaç: Bilgisayara çiçek türlerini söylemeden, sadece ölçülere bakarak 150 çiçeği gruplara ayırmasını istemek ve sonucu gerçek türlerle karşılaştırmak.
 
@@ -2234,9 +2236,9 @@ Within cluster sum of squared errors: 6.998114004826762
 - **Within cluster sum of squared errors (SSE)** içsel bir ölçüttür: "Gruplama ne kadar sıkı?" Etiket olmasa da her zaman hesaplanır. Küçük değer, noktaların merkezlerinin etrafında sıkı toplandığını gösterir.
 - Görselleştirme: Result list → sağ tık → **Visualize cluster assignments**. Eksenlere `petallength` ve `petalwidth` seçin, **Color: Cluster** yapın.
 
-> 💡 **Kümeleri yeni öznitelik olarak kullanmak:** Preprocess → `filters → unsupervised → attribute → AddCluster` filtresi, her örneğe bulunduğu kümeyi yeni bir sütun olarak ekler. Bu yöntem [Bölüm 25](#b25)'teki ödevde kullanılır.
+> **Kümeleri yeni öznitelik olarak kullanmak:** Preprocess → `filters → unsupervised → attribute → AddCluster` filtresi, her örneğe bulunduğu kümeyi yeni bir sütun olarak ekler. Bu yöntem [Bölüm 25](#b25)'teki ödevde kullanılır.
 
-➡️ K-Means'in sıfırdan yazılışı, dirsek/siluet, dendrogram ve DBSCAN: [`codes/python/10_kumeleme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/10_kumeleme.py)
+**Kod:** K-Means'in sıfırdan yazılışı, dirsek/siluet, dendrogram ve DBSCAN: [`codes/python/10_kumeleme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/10_kumeleme.py)
 
 ---
 
@@ -2244,7 +2246,7 @@ Within cluster sum of squared errors: 6.998114004826762
 
 ## 18. Birliktelik Kuralları (Association Rules)
 
-### 18.1 Sepet Analizi 🟢
+### 18.1 Sepet Analizi
 
 "Ekmek alan müşterilerin çoğu tereyağı da alıyor." Bu tür **"EĞER X İSE Y"** kurallarını büyük işlem verilerinden otomatik bulmaya **birliktelik kuralı madenciliği** denir. Marketlerde ürün yerleşimi ve kampanya tasarımı, e-ticarette "Bunu alanlar şunu da aldı" önerileri, web kullanım analizi ve tıpta birlikte görülen belirtilerin tespiti tipik uygulamalarıdır.
 
@@ -2261,7 +2263,7 @@ Within cluster sum of squared errors: 6.998114004826762
 | 7 | ekmek, tereyağı |
 | 8 | ekmek, süt, yumurta |
 
-### 18.2 Destek, Güven ve Kaldıraç (Lift) 🟢
+### 18.2 Destek, Güven ve Kaldıraç (Lift)
 
 Bir kural $X \Rightarrow Y$ biçimindedir ($X$: öncül / antecedent, $Y$: sonuç / consequent).
 
@@ -2286,9 +2288,9 @@ $$
 - güven = 0.375 / 0.375 = **1.00** → çay alan herkes süt de almış.
 - destek(süt) = 6/8 = 0.75 → lift = 1.00 / 0.75 = **1.33** → çay alanların süt alma olasılığı genel ortalamanın 1.33 katı.
 
-**Örnek: $\lbrace$ekmek$\rbrace \Rightarrow \lbrace$süt$\rbrace$:** güven = 0.500 / 0.750 = 0.667 ama lift = 0.667 / 0.75 = **0.89 < 1**. Güven yüksek görünse de ekmek almak süt alma olasılığını **artırmıyor** (süt zaten çok popüler). ⚠️ **Sadece güvene bakmak yanıltıcıdır; lift'e de bakılmalıdır.**
+**Örnek: $\lbrace$ekmek$\rbrace \Rightarrow \lbrace$süt$\rbrace$:** güven = 0.500 / 0.750 = 0.667 ama lift = 0.667 / 0.75 = **0.89 < 1**. Güven yüksek görünse de ekmek almak süt alma olasılığını **artırmıyor** (süt zaten çok popüler). **Sadece güvene bakmak yanıltıcıdır; lift'e de bakılmalıdır.**
 
-### 18.3 Apriori Algoritması 🟢
+### 18.3 Apriori Algoritması
 
 Tüm ürün kombinasyonlarını denemek imkânsızdır: 1000 ürün için $2^{1000}$ alt küme vardır. **Apriori ilkesi** arama uzayını büyük ölçüde budar:
 
@@ -2297,7 +2299,7 @@ Tüm ürün kombinasyonlarını denemek imkânsızdır: 1000 ürün için $2^{10
 **Adımlar** (min. destek = 0.25, min. güven = 0.60):
 1. **Seviye 1:** Tek ürünlerin desteği hesaplanır; eşiğin altındakiler elenir. (Burada hepsi geçti; yumurta tam 0.25.)
 2. **Seviye 2:** Sık tekli kümelerden ikili adaylar üretilir. {yumurta, tereyağı} (0.125), {yumurta, süt} (0.125), {çay, yumurta} (0), {çay, ekmek} (0.125) **elenir**.
-3. **Seviye 3:** Sadece **tüm alt kümeleri sık olan** üçlüler aday olur: {ekmek, süt, tereyağı} (0.25 ✓), {süt, tereyağı, çay} (0.25 ✓).
+3. **Seviye 3:** Sadece **tüm alt kümeleri sık olan** üçlüler aday olur: {ekmek, süt, tereyağı} (0.25, sık), {süt, tereyağı, çay} (0.25, sık).
 4. **Kural üretimi:** Her sık kümeden kurallar türetilir, güven ve lift eşiğini geçenler raporlanır.
 
 En yüksek lift'li kurallar:
@@ -2310,11 +2312,11 @@ En yüksek lift'li kurallar:
 | $\lbrace$çay$\rbrace \Rightarrow \lbrace$süt$\rbrace$ | 0.375 | 1.000 | 1.33 |
 | $\lbrace$ekmek$\rbrace \Rightarrow \lbrace$süt$\rbrace$ | 0.500 | 0.667 | 0.89 |
 
-➡️ Ek kütüphane gerektirmeyen Apriori kodu: [`codes/python/11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py) (hazır kütüphane: `pip install mlxtend`)
+**Kod:** Ek kütüphane gerektirmeyen Apriori kodu: [`codes/python/11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py) (hazır kütüphane: `pip install mlxtend`)
 
-> 🎓 **FP-Growth**, veritabanını bir önek ağacına (FP-tree) sıkıştırarak aday üretmeden sık öğe kümelerini bulur; büyük veride Apriori'den çok daha hızlıdır. WEKA'da `FPGrowth` olarak bulunur.
+> **FP-Growth**, veritabanını bir önek ağacına (FP-tree) sıkıştırarak aday üretmeden sık öğe kümelerini bulur; büyük veride Apriori'den çok daha hızlıdır. WEKA'da `FPGrowth` olarak bulunur.
 
-### 18.4 WEKA ile Birliktelik Kuralları 🧪
+### 18.4 WEKA ile Birliktelik Kuralları
 
 1. Explorer → Preprocess → `weather.nominal.arff` (veya büyük bir örnek için `supermarket.arff`). Apriori **kategorik** veri ister; sayısal öznitelikler varsa önce `Discretize` filtresi uygulanmalıdır.
 2. **Associate** sekmesi → Choose → `Apriori`.
@@ -2333,7 +2335,7 @@ Okunuşu: "outlook = overcast olan 4 günün 4'ünde de play = yes; güven = 1, 
 
 ## 19. Boyut Azaltma: PCA ve Öznitelik Seçimi
 
-### 19.1 Neden Boyut Azaltırız? 🟢
+### 19.1 Neden Boyut Azaltırız?
 
 "Veri ne kadar çoksa o kadar iyi" düşüncesi **öznitelik sayısı** için her zaman doğru değildir. Yüzlerce, binlerce öznitelikle karşılaşıldığında **boyut laneti (curse of dimensionality)** ortaya çıkar: Boyut arttıkça veri uzayda seyrekleşir, mesafe ve benzerlik ölçüleri anlamını yitirir ve model gürültüyü ezberlemeye başlar.
 
@@ -2350,11 +2352,11 @@ Boyut azaltmanın amaçları:
 | Özniteliklerin anlamı korunur (yorumlanabilir) | Yeni özniteliklerin doğrudan fiziksel anlamı yoktur |
 | Örnek: Bilgi kazancı ile sıralama, CFS, RFE, Lasso | Örnek: **PCA**, LDA, t-SNE, UMAP, otokodlayıcılar |
 
-### 19.2 Temel Bileşen Analizi (PCA) 🟢
+### 19.2 Temel Bileşen Analizi (PCA)
 
 PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralarında ilişki olmayan ve verideki **değişimi (varyansı) en iyi açıklayan** daha az sayıda yeni değişkene dönüştürür. Bu yeni değişkenlere **temel bileşenler (principal components)** denir.
 
-> 💡 Bir fotoğrafçı, 3 boyutlu bir heykelin **en çok ayrıntısını** gösterecek tek bir 2 boyutlu fotoğraf çekmek ister ve bunun için en uygun açıyı arar. PCA matematiksel olarak tam bunu yapar: Veriyi en az bilgi kaybıyla daha az boyuta yansıtan "açıyı" bulur.
+> **İpucu:** Bir fotoğrafçı, 3 boyutlu bir heykelin **en çok ayrıntısını** gösterecek tek bir 2 boyutlu fotoğraf çekmek ister ve bunun için en uygun açıyı arar. PCA matematiksel olarak tam bunu yapar: Veriyi en az bilgi kaybıyla daha az boyuta yansıtan "açıyı" bulur.
 
 1. **PC1 (birinci bileşen):** Verinin **en çok yayıldığı** yön.
 2. **PC2:** Kalan varyansın en büyük olduğu yön; PC1'e **dik (ortogonal)** olmak zorundadır. Böylece PC1'in taşıdığı bilgiyi tekrar etmez.
@@ -2363,7 +2365,7 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 <p align="center"><img src="./images/pca.svg" alt="PCA ile verinin en çok yayıldığı yönlerin bulunması ve noktaların PC1 eksenine izdüşümü" width="860"></p>
 
 <details>
-<summary>🎓 <b>Derinleşme: PCA'nın matematiği</b></summary>
+<summary><b>Derinleşme (İleri Seviye): PCA'nın matematiği</b></summary>
 
 1. Veri **standartlaştırılır** (her sütun ortalama 0, std 1).
 2. **Kovaryans matrisi** hesaplanır: $\Sigma = \frac{1}{n-1}X^{T}X$ ($d \times d$).
@@ -2382,11 +2384,11 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 
 </details>
 
-> ⚠️ **PCA'dan önce standartlaştırma şarttır.** PCA varyansa bakar. Bir sütun 1–10, diğeri 1000–5000 aralığındaysa PCA büyük sayılı sütunu "daha önemli" sanır.
+> **PCA'dan önce standartlaştırma şarttır.** PCA varyansa bakar. Bir sütun 1–10, diğeri 1000–5000 aralığındaysa PCA büyük sayılı sütunu "daha önemli" sanır.
 >
-> ⚠️ PCA **denetimsizdir**: Sınıf etiketine bakmaz. En çok varyansı taşıyan yön, sınıfları ayıran yön olmayabilir. Ayrıca **doğrusal** bir yöntemdir; eğrisel yapılarda (İsviçre rulosu gibi) **t-SNE** veya **UMAP** gibi doğrusal olmayan yöntemler gerekir. Bu yöntemler daha çok görselleştirme için kullanılır.
+> **Dikkat:** PCA **denetimsizdir**: Sınıf etiketine bakmaz. En çok varyansı taşıyan yön, sınıfları ayıran yön olmayabilir. Ayrıca **doğrusal** bir yöntemdir; eğrisel yapılarda (İsviçre rulosu gibi) **t-SNE** veya **UMAP** gibi doğrusal olmayan yöntemler gerekir. Bu yöntemler daha çok görselleştirme için kullanılır.
 
-#### 🧪 WEKA ile PCA
+#### WEKA ile PCA
 
 Hipotez: *Öznitelik sayısını azaltsak da sınıflandırma başarısı fazla düşmemeli.*
 1. **Referans:** `iris.arff` → Classify → `J48`, 10 katlı CV → doğruluk ≈ **%96**.
@@ -2395,9 +2397,9 @@ Hipotez: *Öznitelik sayısını azaltsak da sınıflandırma başarısı fazla 
 
 **Yorum:** Doğruluk genellikle bir miktar **düşer** (Python deneyinde 0.933 → 0.913). Atılan bileşenler tamamen "gereksiz" değildi. PCA yalnızca varyansa baktığı için sınıf ayrımına yarayan küçük ayrıntıları atabilir. **Karar bir takastır:** Öznitelik sayısını yarıya indirmek, küçük bir doğruluk kaybına değer mi? Iris'te öznitelik zaten az olduğu için muhtemelen hayır; binlerce öznitelikli bir veride ise genellikle evet. Bu durumda başvurulacak ikinci yol **öznitelik seçimidir**.
 
-> ⚠️ Preprocess'te PCA uygulayıp **sonra** CV yapmak küçük bir veri sızıntısıdır (PCA test katmanlarını da görmüştür). Doğrusu: `meta → FilteredClassifier` (filter = PrincipalComponents, classifier = J48) ([Bölüm 22](#b22)).
+> **Dikkat:** Preprocess'te PCA uygulayıp **sonra** CV yapmak küçük bir veri sızıntısıdır (PCA test katmanlarını da görmüştür). Doğrusu: `meta → FilteredClassifier` (filter = PrincipalComponents, classifier = J48) ([Bölüm 22](#b22)).
 
-#### 🧪 Python ile PCA
+#### Python ile PCA
 
 ```python
 from sklearn.datasets import load_iris
@@ -2411,9 +2413,9 @@ X_pca = pca.transform(X_std)                                # 3) 4 boyut → 2 b
 print(pca.explained_variance_ratio_)                        # [0.7296 0.2285] → toplam %95.8 bilgi korundu
 ```
 
-➡️ PCA'nın sıfırdan (özdeğer ayrışımıyla) hesaplanması, görselleştirme ve sızıntısız Pipeline karşılaştırması: [`codes/python/12_pca_ve_oznitelik_secimi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/12_pca_ve_oznitelik_secimi.py)
+**Kod:** PCA'nın sıfırdan (özdeğer ayrışımıyla) hesaplanması, görselleştirme ve sızıntısız Pipeline karşılaştırması: [`codes/python/12_pca_ve_oznitelik_secimi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/12_pca_ve_oznitelik_secimi.py)
 
-### 19.3 Öznitelik Seçimi 🟢
+### 19.3 Öznitelik Seçimi
 
 Burada öznitelikleri dönüştürmek yerine **eleğe** koyarız: "Hangi sütun işe yarıyor, hangisi kalabalık yapıyor?"
 
@@ -2423,7 +2425,7 @@ Burada öznitelikleri dönüştürmek yerine **eleğe** koyarız: "Hangi sütun 
 | **Sarmalayıcı (wrapper)** | Öznitelik alt kümelerini **bir modeli eğitip test ederek** değerlendirir | İleri/geri seçim, RFE, WEKA `WrapperSubsetEval` | Yavaş ama genellikle daha isabetli |
 | **Gömülü (embedded)** | Seçim, modelin eğitimi sırasında kendiliğinden yapılır | Lasso (L1), karar ağacı öznitelik önemi | Orta |
 
-#### 🧪 WEKA: "Select attributes" Sekmesi
+#### WEKA: "Select attributes" Sekmesi
 
 Bu sekmede birbiriyle uyumlu çalışması gereken iki bileşen vardır:
 1. **Attribute Evaluator (değerlendirici, "jüri"):** Öznitelik veya öznitelik kümesine puan verir.
@@ -2463,7 +2465,7 @@ Bireysel olarak iyi öznitelikleri bir araya getirmek her zaman en iyi takımı 
 | Yorumlanabilirlik | Düşük (PC1 = karışım) | Yüksek (hangi ölçüm önemli, açıkça görülür) |
 | Sınıf etiketini kullanır mı? | Hayır | Genellikle evet |
 
-> 💡 Bir projeye başlarken yüzlerce sütunu doğrudan modele vermek yerine önce bu analizi yapmak, kurulacak modelin başarısını doğrudan etkileyen **stratejik** bir adımdır. Ayrıca veri toplama maliyetini de düşürür: Gereksiz bir ölçüm artık yapılmayabilir.
+> **İpucu:** Bir projeye başlarken yüzlerce sütunu doğrudan modele vermek yerine önce bu analizi yapmak, kurulacak modelin başarısını doğrudan etkileyen **stratejik** bir adımdır. Ayrıca veri toplama maliyetini de düşürür: Gereksiz bir ölçüm artık yapılmayabilir.
 
 ---
 
@@ -2471,7 +2473,7 @@ Bireysel olarak iyi öznitelikleri bir araya getirmek her zaman en iyi takımı 
 
 ## 20. Dengesiz Veri ve Maliyete Duyarlı Öğrenme
 
-### 20.1 Her Hatanın Bedeli Aynı Değildir 🟢
+### 20.1 Her Hatanın Bedeli Aynı Değildir
 
 Standart algoritmalar tüm hataların **eşit maliyetli** olduğunu varsayar ve toplam hata sayısını en aza indirir:
 
@@ -2490,7 +2492,7 @@ Oysa gerçek hayatta:
 
 Bu durum özellikle **dengesiz veri setlerinde** (dolandırıcılık %0.1, nadir hastalık %1, üretim hattındaki kusurlu parça %0.5) kritiktir. Algoritma nadir ama önemli sınıfı görmezden gelip çoğunluk sınıfını tahmin ederek yüksek doğruluk elde edebilir ([Bölüm 14.2](#b14)).
 
-### 20.2 Maliyet Matrisi 🟢
+### 20.2 Maliyet Matrisi
 
 Karışıklık matrisindeki her hücreye bir **maliyet** atanır. Satırlar **gerçek**, sütunlar **tahmin edilen** sınıftır:
 
@@ -2510,14 +2512,14 @@ $$
 | $C_{FP}$, $C_{FN}$ | "ce ef pe", "ce ef en" | Yanlış pozitif ve yanlış negatif hatalarının maliyeti. Doğru tahminlerin maliyeti genellikle 0 alınır |
 | $C(y_i, \hat{y}_i)$ | | $i$. örnek için ödenen bedel |
 
-⚠️ Hangi hatanın FP, hangisinin FN olduğu **pozitif sınıfın hangisi seçildiğine** bağlıdır. Raporlarda pozitif sınıfı her zaman açıkça belirtin.
+**Dikkat:** Hangi hatanın FP, hangisinin FN olduğu **pozitif sınıfın hangisi seçildiğine** bağlıdır. Raporlarda pozitif sınıfı her zaman açıkça belirtin.
 
-### 20.3 Çözüm Yaklaşımları 🟢
+### 20.3 Çözüm Yaklaşımları
 
 1. **Veri seviyesi – yeniden örnekleme:**
    - **Aşırı örnekleme (oversampling):** Azınlık sınıfının örnekleri çoğaltılır. **SMOTE**, iki komşu azınlık örneği arasında **yapay yeni örnekler** üretir.
    - **Alt örnekleme (undersampling):** Çoğunluk sınıfından örnek atılır.
-   - ⚠️ Yeniden örnekleme **yalnızca eğitim verisine** uygulanır; test verisi gerçek dünyayı temsil etmeli ve olduğu gibi kalmalıdır ([Bölüm 22](#b22)).
+   - **Dikkat:** Yeniden örnekleme **yalnızca eğitim verisine** uygulanır; test verisi gerçek dünyayı temsil etmeli ve olduğu gibi kalmalıdır ([Bölüm 22](#b22)).
 2. **Algoritma seviyesi – sınıf ağırlıkları:** Kayıp fonksiyonunda pahalı sınıfın hataları daha ağır sayılır:
    $L = -\sum_{i} w_{y_i}\,\log \hat{p}_{i,\,y_i}$ ($w_{y_i}$: örneğin gerçek sınıfının ağırlığı; $\hat{p}_{i,y_i}$: modelin gerçek sınıfa verdiği olasılık). scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
 3. **Karar eşiğini kaydırma (threshold moving):** Model eğitildikten sonra 0.5 eşiği değiştirilir. Olasılıklar iyi kalibre edilmişse, pozitif demenin beklenen maliyeti negatif demenin beklenen maliyetinden küçük olduğunda pozitif denmelidir:
@@ -2533,7 +2535,7 @@ $$
 
    **Örnek:** $C_{FP} = 1$, $C_{FN} = 10$ → $t^* = 1/11 \approx 0.09$. Model bir işlem için "yalnızca %10 ihtimalle dolandırıcılık" dese bile işlemi şüpheli olarak işaretlemek toplam maliyeti düşürür. Pratikte eşik, **doğrulama seti** üzerinde maliyeti en küçük yapacak şekilde de aranabilir (test setinde **değil**).
 
-### 20.4 Deney 🧪
+### 20.4 Deney
 
 %95 negatif / %5 pozitif veri, $C_{FP} = 1$, $C_{FN} = 10$, test seti (1200 örnek):
 
@@ -2548,9 +2550,9 @@ $$
 
 **Yorum:** Standart model neredeyse hiçbir pozitifi yakalamıyor (recall 0.02). Doğruluğu çok yüksek görünür (~%94.4), ama maliyeti en yüksek olan odur. Maliyete duyarlı tüm yöntemler doğruluğu **düşürürken** toplam maliyeti **azaltıyor**. **Mühendislikte hedef en yüksek doğruluk değil, problemi en düşük toplam maliyetle çözmektir.**
 
-➡️ [`codes/python/13_maliyete_duyarli_ogrenme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/13_maliyete_duyarli_ogrenme.py) (SMOTE için: `pip install imbalanced-learn`)
+**Kod:** [`codes/python/13_maliyete_duyarli_ogrenme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/13_maliyete_duyarli_ogrenme.py) (SMOTE için: `pip install imbalanced-learn`)
 
-### 20.5 WEKA ile Maliyete Duyarlı Öğrenme 🧪
+### 20.5 WEKA ile Maliyete Duyarlı Öğrenme
 
 WEKA'da `meta → CostSensitiveClassifier` bir **meta-sınıflandırıcıdır**: Kendi başına karar vermez, J48 veya NaiveBayes gibi bir temel sınıflandırıcıyı sarmalayarak ona maliyet bilinci kazandırır.
 
@@ -2572,7 +2574,7 @@ gerçek bad       5.0           0.0        ← kötü müşteriye kredi vermek (
 5. **More options → Cost-sensitive evaluation** → aynı matrisi girin. Çıktıda `Total Cost` ve `Average Cost` satırları görünür.
 6. Karşılaştırma: Önce tek başına J48, sonra CostSensitiveClassifier. Genellikle **doğruluk biraz düşer**, `bad` sınıfının recall değeri artar ve **toplam maliyet azalır**. Model, pahalı hatayı önlemek için karar sınırlarını daha temkinli hâle getirmiştir.
 
-> 💡 Dengesiz veri için WEKA'da ayrıca `supervised → instance → SMOTE` (Package Manager'dan kurulur), `ClassBalancer` ve `Resample` filtreleri vardır. Bunları sızıntısız kullanmak için `FilteredClassifier` içine yerleştirin.
+> **İpucu:** Dengesiz veri için WEKA'da ayrıca `supervised → instance → SMOTE` (Package Manager'dan kurulur), `ClassBalancer` ve `Resample` filtreleri vardır. Bunları sızıntısız kullanmak için `FilteredClassifier` içine yerleştirin.
 
 ---
 
@@ -2580,7 +2582,7 @@ gerçek bad       5.0           0.0        ← kötü müşteriye kredi vermek (
 
 ## 21. Optimizasyon ve Hiperparametre Ayarlama
 
-### 21.1 Model Nasıl Öğrenir? Optimizasyon 🟢
+### 21.1 Model Nasıl Öğrenir? Optimizasyon
 
 Eğitim sırasında cevaplanan soru şudur: *"Veriye en iyi uyan parametre değerleri nedir?"* Bunun için bir **maliyet fonksiyonu** $J(\theta)$ tanımlanır ([Bölüm 6.2](#b6)) ve en küçük değeri aranır. Bu işleme **optimizasyon** denir (Latince *optimus*: "en iyi").
 
@@ -2593,7 +2595,7 @@ En yaygın yöntem **gradyan inişidir** ([Bölüm 6.4](#b6)). Varyantları:
 | Mini-batch GD | Küçük bir grup (ör. 32–256 örnek) | Derin öğrenmede standart |
 | Momentum, RMSProp, **Adam** | — | Adım yönünü ve büyüklüğünü geçmiş gradyanlara göre uyarlar |
 
-### 21.2 Öğrenme Oranı ve Zamanlaması 🟢
+### 21.2 Öğrenme Oranı ve Zamanlaması
 
 **Öğrenme oranı** ($\alpha$ veya $\eta$) her adımın büyüklüğüdür. Çok büyükse model hedefi atlar ve ıraksayabilir; çok küçükse öğrenme çok yavaş olur ([şekil, Bölüm 6.4](#b6)).
 
@@ -2602,11 +2604,11 @@ En yaygın yöntem **gradyan inişidir** ([Bölüm 6.4](#b6)). Varyantları:
 - **Exponential decay:** $\alpha_t = \alpha_0\,e^{-kt}$
 - **Uyarlamalı yöntemler (Adam vb.):** Her parametre için öğrenme oranını otomatik ayarlar.
 
-### 21.3 Ölçeklendirme ve Gradyan İnişi 🟢
+### 21.3 Ölçeklendirme ve Gradyan İnişi
 
 Bir öznitelik 0–1, diğeri 0–10 000 aralığındaysa maliyet yüzeyi çok uzamış bir vadi gibidir ve gradyan inişi zikzaklar çizerek çok yavaş ilerler. Ölçeklendirilmemiş veriyle gradyan inişi, bir bacağı uzun diğeri kısa biriyle yürümeye benzer. Standardizasyon ($z = \frac{x-\mu}{\sigma}$) veya normalizasyon ($\frac{x - x_{\min}}{x_{\max}-x_{\min}}$) yüzeyi yuvarlaklaştırır ve yakınsamayı hızlandırır ([Bölüm 5.8](#b5)).
 
-### 21.4 Düzenlileştirme (Regularization): Modeli Dizginlemek 🟢
+### 21.4 Düzenlileştirme (Regularization): Modeli Dizginlemek
 
 Aşırı öğrenmeyi önlemenin bir yolu, maliyet fonksiyonuna **parametrelerin büyüklüğünü cezalandıran** bir terim eklemektir (Latince *regularis*: "kurala uygun"):
 
@@ -2624,7 +2626,7 @@ $$
 - **L1 (Lasso):** Bazı katsayıları **tam sıfır** yapar ve böylece otomatik **öznitelik seçimi** yapar ([Bölüm 19.3](#b19)).
 - **Elastic Net:** İkisinin karışımı.
 
-> 💡 L2 bütçedeki tüm kalemleri biraz kısar; L1 bazı kalemleri tamamen siler.
+> **İpucu:** L2 bütçedeki tüm kalemleri biraz kısar; L1 bazı kalemleri tamamen siler.
 
 L2 ile gradyan inişi güncellemesi (sabitler $\lambda$'nın içine katılarak):
 
@@ -2634,15 +2636,15 @@ $$
 
 Her adımda iki kuvvet dengelenir: hatayı azaltmak isteyen gradyan ve parametreleri sıfıra doğru çeken ceza (**ağırlık sönümü, weight decay**).
 
-> ⚠️ Kütüphanelerde adlandırma farklıdır: scikit-learn `Ridge`/`Lasso`/`SGD*` modellerinde `alpha` = $\lambda$'dır. `LogisticRegression` ve `SVC`'de ise **`C` = $1/\lambda$**'dır; yani **büyük C = az düzenlileştirme**.
+> **Dikkat:** Kütüphanelerde adlandırma farklıdır: scikit-learn `Ridge`/`Lasso`/`SGD*` modellerinde `alpha` = $\lambda$'dır. `LogisticRegression` ve `SVC`'de ise **`C` = $1/\lambda$**'dır; yani **büyük C = az düzenlileştirme**.
 
-### 21.5 Erken Durdurma (Early Stopping) 🟢
+### 21.5 Erken Durdurma (Early Stopping)
 
 Eğitim sırasında hem **eğitim hatası** hem de ayrı bir **doğrulama hatası** izlenir. Eğitim hatası genellikle sürekli düşer. Doğrulama hatası ise bir noktadan sonra düşmeyi bırakır, hatta yükselmeye başlar. O nokta, modelin **ezberlemeye başladığı** andır ([şekil, Bölüm 13.2](#b13)). Erken durdurma eğitimi orada keser ve en iyi doğrulama skorundaki parametreleri kullanır. Özellikle sinir ağları ve gradyan artırmada etkilidir.
 
 **Deney** (MLP, meme kanseri): Erken durdurma **olmadan** 92 epoch, eğitim doğruluğu 1.000, test 0.953. Erken durdurma **ile** 23 epoch, eğitim 0.995, test **0.959**. Dört kat daha kısa eğitimle aynı veya biraz daha iyi genelleme elde edildi.
 
-### 21.6 Parametre ile Hiperparametre Arasındaki Fark 🟢
+### 21.6 Parametre ile Hiperparametre Arasındaki Fark
 
 | | **Parametre** | **Hiperparametre** |
 | :--- | :--- | :--- |
@@ -2651,7 +2653,7 @@ Eğitim sırasında hem **eğitim hatası** hem de ayrı bir **doğrulama hatas�
 
 *Hyper* ön eki Yunanca "üstünde" anlamına gelir: Hiperparametreler, parametrelerin **nasıl öğrenileceğini** belirleyen üst düzey ayarlardır. Doğru değerlerin önceden bilinen bir formülü yoktur; **sistematik olarak denenmeleri** gerekir.
 
-### 21.7 Izgara Araması (Grid Search) 🟢
+### 21.7 Izgara Araması (Grid Search)
 
 Her hiperparametre için aday değerler belirlenir ve **tüm kombinasyonlar** çapraz doğrulamayla denenir.
 
@@ -2688,7 +2690,7 @@ arama = GridSearchCV(pipe, izgara, cv=5, scoring="accuracy").fit(X, y)   # 16 x 
 print(arama.best_params_, arama.best_score_)             # {'svm__C': 10, 'svm__gamma': 0.01} 0.982
 ```
 
-### 21.8 Rastgele Arama (Random Search) 🟢
+### 21.8 Rastgele Arama (Random Search)
 
 Tüm ızgara yerine, belirlenen **dağılımlardan rastgele** $N$ kombinasyon denenir. Aynı bütçeyle genellikle Grid Search kadar, geniş arama uzaylarında ondan **daha iyi** sonuç verir (Bergstra & Bengio, 2012). Nedeni şudur: Genellikle hiperparametrelerin yalnızca birkaçı gerçekten önemlidir. Izgara, önemli eksende sadece birkaç farklı değer dener; rastgele arama ise her denemede farklı bir değer dener.
 
@@ -2704,9 +2706,9 @@ rand = RandomizedSearchCV(pipe, dagilim, n_iter=16, cv=5, random_state=0).fit(X,
 print(rand.best_params_, rand.best_score_)               # ≈ C=4.07, gamma=0.0118 → 0.981
 ```
 
-> 🎓 Daha gelişmiş yöntemler: **Bayesçi optimizasyon** (önceki denemelerden öğrenerek bir sonraki aday noktayı seçer; ör. `Optuna`, `scikit-optimize`) ve **Successive Halving / Hyperband** (kötü adayları erken eler).
+> **İleri seviye:** Daha gelişmiş yöntemler: **Bayesçi optimizasyon** (önceki denemelerden öğrenerek bir sonraki aday noktayı seçer; ör. `Optuna`, `scikit-optimize`) ve **Successive Halving / Hyperband** (kötü adayları erken eler).
 
-### 21.9 İç İçe Çapraz Doğrulama (Nested Cross-Validation) 🟢
+### 21.9 İç İçe Çapraz Doğrulama (Nested Cross-Validation)
 
 **Sık yapılan hata:** Grid Search'ün bulduğu `best_score_` değerini modelin performansı olarak raporlamak. Bu skor, **en iyiyi seçmek için kullanılan** veride ölçülmüştür; seçimin kendisi iyimser bir yanlılık yaratır.
 
@@ -2718,7 +2720,7 @@ print(rand.best_params_, rand.best_score_)               # ≈ C=4.07, gamma=0.0
 
 Dış döngüdeki her turun kendi bağımsız hiperparametre araması vardır. Raporlanan skor, **hiperparametre seçiminin etkisinden arındırılmış** tarafsız bir tahmindir.
 
-> 🎬 **Animasyon:** [Nested Cross-Validation Animasyonu](https://erkanozhan.github.io/machinelearning/animation/nested_cv_animation.html)
+> **Animasyon:** [Nested Cross-Validation Animasyonu](https://erkanozhan.github.io/machinelearning/animation/nested_cv_animation.html)
 
 ```python
 from sklearn.model_selection import cross_val_score, StratifiedKFold
@@ -2732,9 +2734,9 @@ print(f"{skorlar.mean():.4f} ± {skorlar.std():.4f}")                  # 0.9754 
 
 **Sonuç:** Grid Search `best_score_` = 0.982 (iyimser) ↔ Nested CV = **0.975 ± 0.030** (tarafsız). Fark bu örnekte küçüktür, ama çok sayıda hiperparametre ve az veri olduğunda çok büyüyebilir.
 
-➡️ Grid, random, nested CV ve erken durdurma: [`codes/python/14_hiperparametre_optimizasyonu.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/14_hiperparametre_optimizasyonu.py) · R (`caret`) sürümleri: [`codes/R/grid_ve_random_search.R`](https://github.com/erkanozhan/machinelearning/blob/main/codes/R/grid_ve_random_search.R), [`codes/R/nested_cv.R`](https://github.com/erkanozhan/machinelearning/blob/main/codes/R/nested_cv.R)
+**Kod:** Grid, random, nested CV ve erken durdurma: [`codes/python/14_hiperparametre_optimizasyonu.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/14_hiperparametre_optimizasyonu.py) · R (`caret`) sürümleri: [`codes/R/grid_ve_random_search.R`](https://github.com/erkanozhan/machinelearning/blob/main/codes/R/grid_ve_random_search.R), [`codes/R/nested_cv.R`](https://github.com/erkanozhan/machinelearning/blob/main/codes/R/nested_cv.R)
 
-### 21.10 WEKA'da Hiperparametre Optimizasyonu 🧪
+### 21.10 WEKA'da Hiperparametre Optimizasyonu
 
 **`meta → CVParameterSelection`**: Bir sınıflandırıcının parametrelerini iç çapraz doğrulamayla tarar.
 1. `diabetes.arff` → Classify → `meta → CVParameterSelection`.
@@ -2746,7 +2748,7 @@ print(f"{skorlar.mean():.4f} ± {skorlar.std():.4f}")                  # 0.9754 
 4. `numFolds` = iç CV kat sayısı. **Start.**
 5. Çıktıda seçilen değerler `Classifier Options: -C 0.2 -M 4` biçiminde görünür.
 
-> 💡 Test options'ta 10 katlı CV seçiliyken CVParameterSelection çalıştırıldığında, her dış katmanda ayrı bir iç arama yapılır. Yani WEKA bu durumda **zaten iç içe çapraz doğrulama** yapmaktadır ve raporlanan doğruluk tarafsızdır.
+> **İpucu:** Test options'ta 10 katlı CV seçiliyken CVParameterSelection çalıştırıldığında, her dış katmanda ayrı bir iç arama yapılır. Yani WEKA bu durumda **zaten iç içe çapraz doğrulama** yapmaktadır ve raporlanan doğruluk tarafsızdır.
 
 WEKA'da ayrıca `meta → GridSearch` (iki parametreyi birlikte tarar, Package Manager'dan) ve `Auto-WEKA` paketi (algoritma ve hiperparametreyi birlikte otomatik seçer) bulunur.
 
@@ -2756,26 +2758,26 @@ WEKA'da ayrıca `meta → GridSearch` (iki parametreyi birlikte tarar, Package M
 
 ## 22. Veri Sızıntısı (Data Leakage): Modelin Sınav Sorularını Önceden Görmesi
 
-### 22.1 Nedir? 🟢
+### 22.1 Nedir?
 
 Bir öğrenciye konuları öğretip (eğitim), sonra **daha önce görmediği** sorularla sınava sokarız (test). Bu, gerçek başarıyı ölçmenin adil yoludur. Ama öğrenci sınav sorularının bir kısmını, hatta sadece "sınavın ortalamasının kaç olacağını" önceden öğrenmişse, aldığı yüksek not konuyu anladığını göstermez.
 
 **Veri sızıntısı**, test verisine (veya gelecekte karşılaşılacak veriye) ait herhangi bir bilginin **eğitim veya ön işleme** sırasında modele ulaşmasıdır. Sonuç: Performans metrikleri yapay olarak şişer, model gerçek dünyada beklenenden çok daha kötü çalışır. Makine öğrenmesindeki **en sinsi ve en yaygın** hatalardan biridir.
 
-### 22.2 Çarpıcı Bir Deney 🧪
+### 22.2 Çarpıcı Bir Deney
 
 Tamamen **rastgele** 10 000 öznitelik ve **rastgele** etiketlerden oluşan 100 örneklik bir veri üretelim. Öğrenilecek hiçbir şey yoktur; gerçek başarı %50 (yazı-tura) olmalıdır.
 
 | Yöntem | 5 katlı CV doğruluğu |
 | :--- | :---: |
-| ❌ **Yanlış:** En iyi 20 özniteliği **tüm veriye** bakarak seç, sonra CV yap | **0.870** (sahte başarı!) |
-| ✅ **Doğru:** Öznitelik seçimini Pipeline içine koy (her katmanda yalnızca eğitim kısmına bakar) | **0.470** (≈ şans) |
+| **Yanlış:** En iyi 20 özniteliği **tüm veriye** bakarak seç, sonra CV yap | **0.870** (sahte başarı!) |
+| **Doğru:** Öznitelik seçimini Pipeline içine koy (her katmanda yalnızca eğitim kısmına bakar) | **0.470** (≈ şans) |
 
 Yanlış yöntemde seçici, etiketlere bakarken test katmanlarını da gördü ve **tesadüfen** test etiketleriyle ilişkili görünen gürültü sütunlarını seçti.
 
-➡️ [`codes/python/15_veri_sizintisi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/15_veri_sizintisi.py)
+**Kod:** [`codes/python/15_veri_sizintisi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/15_veri_sizintisi.py)
 
-### 22.3 Sızıntının Yaygın Kaynakları 🟢
+### 22.3 Sızıntının Yaygın Kaynakları
 
 1. **Ön işlemi bölmeden önce tüm veriye uygulamak:** Normalize/Standardize (min, max, ortalama test verisinden de hesaplanır), PCA, Discretize, eksik değer doldurma (ortalama test verisini de içerir), öznitelik seçimi, SMOTE/oversampling (kopyalanan örneklerin eşleri hem eğitimde hem testte yer alabilir).
 2. **Hedefi dolaylı olarak içeren öznitelikler (target leakage):** "Hastalık var mı?" tahmininde "bu hastalık için ilaç kullanıyor mu?" sütunu. Bu bilgi tahmin anında elde yoktur.
@@ -2783,15 +2785,15 @@ Yanlış yöntemde seçici, etiketlere bakarken test katmanlarını da gördü v
 4. **Aynı varlığın tekrarları:** Aynı hastanın farklı günlerdeki kayıtları hem eğitimde hem testte. Böyle durumlarda bölme **hasta bazında** yapılmalıdır (`GroupKFold`).
 5. **Test setine bakarak model/hiperparametre seçmek** ([Bölüm 13.4](#b13), [21.9](#b21)).
 
-### 22.4 Doğru Yol: Pipeline 🟢
+### 22.4 Doğru Yol: Pipeline
 
 ```mermaid
 flowchart LR
-    subgraph Yanlis["❌ YANLIŞ"]
+    subgraph Yanlis["YANLIŞ"]
         direction TB
         A1["Tüm veri"] --> B1["Normalize / PCA / Seçim<br/>(test bilgisi sızdı!)"] --> C1["Eğitim / test bölme"] --> D1["Model"]
     end
-    subgraph Dogru["✅ DOĞRU"]
+    subgraph Dogru["DOĞRU"]
         direction TB
         A2["Tüm veri"] --> C2["Eğitim / test bölme"]
         C2 --> B2["Ön işlemi SADECE eğitimde fit et"]
@@ -2806,7 +2808,7 @@ flowchart LR
 - **WEKA Explorer:** Preprocess sekmesinde uygulanan filtre tüm veriyi değiştirir. Değerlendirme için **`meta → FilteredClassifier`** (filtre + sınıflandırıcı), öznitelik seçimi için **`meta → AttributeSelectedClassifier`** kullanın.
 - **WEKA KnowledgeFlow:** Filtre bileşenlerini `CrossValidationFoldMaker`'dan **sonra** yerleştirin ([Bölüm 23](#b23)).
 
-> 💡 **Kural:** Bir ön işlem **veriden bir şey öğreniyorsa** (ortalama, min/max, bileşenler, seçilen sütunlar, küme merkezleri…) o bir **modelin parçasıdır** ve yalnızca eğitim verisinden öğrenilmelidir.
+> **Kural:** Bir ön işlem **veriden bir şey öğreniyorsa** (ortalama, min/max, bileşenler, seçilen sütunlar, küme merkezleri…) o bir **modelin parçasıdır** ve yalnızca eğitim verisinden öğrenilmelidir.
 
 ---
 
@@ -2814,7 +2816,7 @@ flowchart LR
 
 ## 23. WEKA KnowledgeFlow
 
-### 23.1 Nedir? Explorer'dan Farkı 🟢
+### 23.1 Nedir? Explorer'dan Farkı
 
 **KnowledgeFlow**, veri madenciliği sürecini **sürükle-bırak** bileşenlerden oluşan bir **akış şeması (pipeline)** olarak tasarlamayı sağlayan WEKA arayüzüdür. Her kutu (WEKA 3.8'de **step**, eski sürümlerde **bean**) bir işlemi temsil eder: veri yükleme, filtre, sınıflandırıcı, değerlendirme, görselleştirme. Oklar ise verinin akış yolunu gösterir. Veri akışı (data-flow) programlamada bir bileşen, girdisi hazır olduğunda çalışır. Bu yüzden birbirinden bağımsız dallar **paralel** yürütülebilir.
 
@@ -2826,7 +2828,7 @@ flowchart LR
 | Tekrar kullanım | Her seferinde elle yapılır | Akış `.kf` dosyası olarak kaydedilip yeniden çalıştırılır |
 | Model karşılaştırma | Modeller sırayla çalıştırılır | Birden fazla modelin ROC eğrisi aynı grafikte |
 
-### 23.2 Bileşen Kategorileri 🟢
+### 23.2 Bileşen Kategorileri
 
 | Kategori | Örnek bileşenler | Görevi |
 | :--- | :--- | :--- |
@@ -2851,7 +2853,7 @@ flowchart LR
 | `thresholdData` | ROC eğrisi için eşik verileri |
 | `chart` | Canlı grafik verisi |
 
-### 23.3 Uygulama 1: J48 ile 10 Katlı Çapraz Doğrulama 🧪
+### 23.3 Uygulama 1: J48 ile 10 Katlı Çapraz Doğrulama
 
 ```mermaid
 flowchart LR
@@ -2872,12 +2874,12 @@ flowchart LR
 6. **Evaluation → ClassifierPerformanceEvaluator** eklenir. J48 → **batchClassifier** → değerlendirici.
 7. **Visualization → TextViewer**: Değerlendirici → **text** → TextViewer.
 8. **Visualization → GraphViewer**: **J48 → graph** → GraphViewer. *(Bu bağlantı değerlendiriciden değil doğrudan J48'den alınır, çünkü gösterilecek şey modelin kendisidir.)*
-9. Araç çubuğundaki **▶ (Run)** düğmesine basılır. Alttaki *Status* alanında ilerleme izlenir.
+9. Araç çubuğundaki **Run** (oynat) düğmesine basılır. Alttaki *Status* alanında ilerleme izlenir.
 10. TextViewer → sağ tık → **Show results**: doğruluk, Kappa, karışıklık matrisi. GraphViewer → **Show results**: karar ağacının görüntüsü.
 
-> 💡 J48, C4.5 algoritmasının Java uygulamasıdır. Bölmeleri **kazanç oranına** (gain ratio) göre seçer ve budama yapar ([Bölüm 10](#b10)).
+> **İpucu:** J48, C4.5 algoritmasının Java uygulamasıdır. Bölmeleri **kazanç oranına** (gain ratio) göre seçer ve budama yapar ([Bölüm 10](#b10)).
 
-### 23.4 Uygulama 2: J48 ve Random Forest'ın ROC Karşılaştırması 🧪
+### 23.4 Uygulama 2: J48 ve Random Forest'ın ROC Karşılaştırması
 
 ```mermaid
 flowchart LR
@@ -2898,7 +2900,7 @@ flowchart LR
 
 **Yorum:** Eğrisi sol üst köşeye daha yakın olan ve **AUC**'si daha büyük olan model, tüm eşik değerleri genelinde daha iyi ayırt edicidir ([Bölüm 14.3](#b14)). Bu grafik, tek bir doğruluk değerinden çok daha kapsamlı bir karşılaştırma sağlar.
 
-### 23.5 Uygulama 3: Artımlı Öğrenme ve Akan Veri 🧪
+### 23.5 Uygulama 3: Artımlı Öğrenme ve Akan Veri
 
 IoT sensörleri, finansal işlemler, web kayıtları gibi uygulamalarda veri sürekli bir **akış (stream)** hâlinde gelir; tamamını bekleyip eğitmek mümkün değildir. **Artımlı öğrenmede** model her yeni örnekle kendini günceller ve tüm veriyi bellekte tutmaz. WEKA'da bunu yapabilen algoritmalar `UpdateableClassifier` arayüzünü uygular:
 - **NaiveBayesUpdateable:** Her örnekle olasılık tablolarını günceller.
@@ -2918,7 +2920,7 @@ flowchart LR
 3. **Evaluation → IncrementalClassifierEvaluator**; sınıflandırıcıdan → **incrementalClassifier**. Bu değerlendirici **önce test, sonra eğitim (prequential / test-then-train)** yöntemini kullanır: Gelen her örnek önce tahmin edilir, sonra gerçek etiketiyle model güncellenir.
 4. **Visualization → StripChart**; değerlendiriciden → **chart**. StripChart'a sağ tık → **Show chart**, sonra akışı başlatın. Doğruluk ve RMSE, bir EKG cihazı gibi zaman içinde akan çizgiler olarak görünür (x: işlenen örnek sayısı).
 
-### 23.6 KnowledgeFlow'da Veri Sızıntısına Dikkat ⚠️
+### 23.6 KnowledgeFlow'da Veri Sızıntısına Dikkat
 
 `Normalize` veya `Discretize` gibi bir filtre **CrossValidationFoldMaker'dan önce** konursa, istatistikler (min, max, aralık sınırları) **tüm veriden** (test katmanları dahil) hesaplanır ve sonuçlar iyimser çıkar ([Bölüm 22](#b22)). Doğru yol, filtreyi CrossValidationFoldMaker'dan **sonra** yerleştirmek (eğitim ve test bağlantılarıyla) ya da `FilteredClassifier` kullanmaktır.
 
@@ -2928,13 +2930,13 @@ flowchart LR
 
 ## 24. WEKA Experimenter ve Sonuçların Raporlanması
 
-### 24.1 Rastgelelik, Seed ve Tekrarlanabilirlik 🟢
+### 24.1 Rastgelelik, Seed ve Tekrarlanabilirlik
 
 Çapraz doğrulama veya yüzdeye göre bölme yapılırken veri **rastgele** karıştırılır. Bu rastgeleliği kontrol eden sayıya **seed** (tohum; scikit-learn'de `random_state`) denir.
 - Seed **sabit tutulursa**, deney farklı bilgisayarlarda ve farklı zamanlarda **aynı bölmelerle** tekrarlanabilir. Bilimsel karşılaştırma için bu şarttır.
 - Seed değiştikçe performans ölçütleri de biraz değişir. Tek bir seed ile elde edilen sonuç **şanslı** veya **şanssız** olabilir. Bu yüzden deneyler **farklı seed'lerle defalarca tekrarlanıp** ortalama ve standart sapma raporlanmalıdır. Experimenter tam olarak bunu otomatik yapar.
 
-### 24.2 Gözlenen Fark Gerçek mi? 🟢
+### 24.2 Gözlenen Fark Gerçek mi?
 
 Explorer'da A algoritması %82.1, B algoritması %80.9 doğruluk verdi. A gerçekten daha mı iyi, yoksa fark rastlantısal mı? Bu soruyu cevaplamak için **istatistiksel test** gerekir.
 
@@ -2972,10 +2974,10 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 *(Yukarıdaki sayılar okumayı göstermek için verilmiş bir örnektir; kendi deneyinizde değerler farklı olacaktır.)*
 
-> 💡 **ZeroR**'u her deneye ekleyin. Her örneğe en sık sınıfı söyleyen bu "hiçbir şey öğrenmeyen" model, **alt sınırdır**. Modeliniz ZeroR'dan anlamlı biçimde iyi değilse hiçbir şey öğrenmemiştir.
+> **ZeroR**'u her deneye ekleyin. Her örneğe en sık sınıfı söyleyen bu "hiçbir şey öğrenmeyen" model, **alt sınırdır**. Modeliniz ZeroR'dan anlamlı biçimde iyi değilse hiçbir şey öğrenmemiştir.
 
 <details>
-<summary>🎓 <b>Derinleşme: Neden "düzeltilmiş" t-testi?</b></summary>
+<summary><b>Derinleşme (İleri Seviye): Neden "düzeltilmiş" t-testi?</b></summary>
 
 WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
@@ -2994,7 +2996,7 @@ $$
 
 </details>
 
-### 24.3 Sonuçların Raporlanması 🟢
+### 24.3 Sonuçların Raporlanması
 
 Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yeterli değildir. **Hangi aralıkta, hangi doğrulama stratejisiyle, hangi ölçütle** arandığı açıkça yazılmalıdır.
 
@@ -3010,7 +3012,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 
 **Bir raporda bulunması gerekenler:** veri setinin tanımı (örnek sayısı, öznitelikler, sınıf dağılımı) · ön işleme adımları · kullanılan algoritmalar ve hiperparametreleri · doğrulama stratejisi (kat sayısı, tekrar, seed) · birden fazla uygun performans ölçütü (ortalama ± std) · referans (baseline) model · istatistiksel test ve anlamlılık düzeyi · karışıklık matrisi.
 
-### 24.4 Özet Tablo 🟢
+### 24.4 Özet Tablo
 
 | Kavram | Tanım | Pratik çıkarım |
 | :--- | :--- | :--- |
@@ -3028,7 +3030,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 | **Veri sızıntısı** | Test bilgisinin eğitime karışması | Tüm ön işlemleri Pipeline / FilteredClassifier içine koyun |
 | **Düzeltilmiş t-testi** | CV skorları için anlamlılık testi | Farkın rastlantısal olup olmadığını gösterir |
 
-### 24.5 Temel İlkeler ve Sık Yapılan Hatalar ⚠️
+### 24.5 Temel İlkeler ve Sık Yapılan Hatalar
 
 1. **Basitten başlayın:** Önce ZeroR ve basit bir model (lojistik/lineer regresyon, tek ağaç) ile bir referans oluşturun.
 2. **Test verisini koruyun:** Test setine yalnızca en sonda, bir kez bakın.
@@ -3036,7 +3038,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 4. **İstatistik kullanın:** Tekrarlı CV ve anlamlılık testi yapın.
 5. **Şeffaf raporlayın:** Seed, parametre aralıkları, doğrulama stratejisi ve testler yazılsın.
 
-| ❌ Yanlış | ✅ Doğru |
+| Yanlış | Doğru |
 | :--- | :--- |
 | Eğitim verisindeki doğruluğu raporlamak | Test verisinde veya çapraz doğrulamayla raporlamak |
 | Ön işlemi tüm veriye uygulayıp sonra CV yapmak | Ön işlemi her katmanda yalnızca eğitim kısmından öğrenmek (Pipeline) |
@@ -3051,7 +3053,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 
 <a id="b25"></a>
 
-## 25. Kapsamlı Uygulama (Proje Ödevi) 🧪
+## 25. Kapsamlı Uygulama (Proje Ödevi)
 
 Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabiliyorsanız önemli bir yol kat etmişsiniz demektir.
 
@@ -3184,7 +3186,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 
 **Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)): `notlar.arff`, `iris_yeni_test.arff`, `insanlar.csv`, `musteri_ticaret.csv`
 
-**Etkileşimli animasyonlar** 🎬 (tarayıcıda açılır):
+**Etkileşimli animasyonlar** (tarayıcıda açılır):
 
 | Animasyon | Konu |
 | :--- | :--- |
