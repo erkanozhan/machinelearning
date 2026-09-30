@@ -99,8 +99,8 @@ ax[0].set_ylabel("Gerçek")
 fpr_e, tpr_e, _ = roc_curve(y_te, y_skor)                     # Tüm eşikler için FPR ve TPR
 ax[1].plot(fpr_e, tpr_e, lw=2, label=f"Model (AUC = {roc_auc_score(y_te, y_skor):.2f})")
 ax[1].plot([0, 1], [0, 1], "--", color="gray", label="Rastgele (AUC = 0.5)")
-ax[1].set_xlabel("Yanlış Pozitif Oranı (FPR)")
-ax[1].set_ylabel("Doğru Pozitif Oranı (TPR)")
+ax[1].set_xlabel("Sahte Pozitif Oranı (FPR)")
+ax[1].set_ylabel("Gerçek Pozitif Oranı (TPR)")
 ax[1].set_title("ROC Eğrisi")
 ax[1].legend(loc="lower right")
 

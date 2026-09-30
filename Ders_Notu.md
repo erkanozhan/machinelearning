@@ -1421,12 +1421,12 @@ Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tab
 
 | Terim | Anlamı | Örnek (hastalık testi) |
 | :--- | :--- | :--- |
-| **TP** – Doğru Pozitif | Pozitifi doğru bildik | Hastaya "hasta" dedik |
-| **TN** – Doğru Negatif | Negatifi doğru bildik | Sağlıklıya "sağlıklı" dedik |
-| **FP** – Yanlış Pozitif (**Tip I hata**) | Negatife yanlışlıkla pozitif dedik | Sağlıklıya "hasta" dedik (yanlış alarm) |
-| **FN** – Yanlış Negatif (**Tip II hata**) | Pozitifi kaçırdık | Hastaya "sağlıklı" dedik |
+| **TP** – Gerçek Pozitif | Pozitifi doğru bildik | Hastaya "hasta" dedik |
+| **TN** – Gerçek Negatif | Negatifi doğru bildik | Sağlıklıya "sağlıklı" dedik |
+| **FP** – Sahte Pozitif (**Tip I hata**) | Negatife yanlışlıkla pozitif dedik | Sağlıklıya "hasta" dedik (yanlış alarm) |
+| **FN** – Sahte Negatif (**Tip II hata**) | Pozitifi kaçırdık | Hastaya "sağlıklı" dedik |
 
-> **Hatırlama yolu:** İkinci kelime modelin **ne dediğini** (Pozitif/Negatif), ilk kelime bunun **doğru mu yanlış mı** olduğunu söyler. "Yanlış Pozitif" = model "pozitif" dedi ama yanlıştı.
+> **Hatırlama yolu:** İkinci kelime modelin **ne dediğini** (Pozitif/Negatif), ilk kelime bu tahminin **gerçek mi sahte mi** olduğunu söyler. "Sahte Pozitif" = model "pozitif" dedi ama bu tahmin sahteydi (gerçekte negatifti). "Gerçek Negatif" = model "negatif" dedi ve gerçekten de negatifti.
 
 **Çalışma örneği** (1000 kişi: 500 gerçekten hasta, 500 sağlıklı):
 
@@ -1470,7 +1470,7 @@ $$
 
 **Örnek:** $350/500 = 0.70$. **Kaçırmanın pahalı olduğu** durumlarda kritiktir. *Örnek:* Kanser taraması, dolandırıcılık tespiti.
 
-#### Özgüllük (Specificity, TNR) ve Yanlış Pozitif Oranı (FPR)
+#### Özgüllük (Specificity, TNR) ve Sahte Pozitif Oranı (FPR)
 
 "Gerçek negatiflerin ne kadarını doğru bildim?" ve bunun tümleyeni olan "yanlış alarm oranı":
 
@@ -1834,7 +1834,7 @@ Weighted Avg.    0.960    0.020    0.960      0.960    0.960      0.940  0.968  
 ```
 
 **Yorum:**
-- `TP Rate` = recall, `FP Rate` = yanlış pozitif oranı, `F-Measure` = F1, `ROC Area` = AUC, `PRC Area` = PR eğrisi altındaki alan.
+- `TP Rate` = recall, `FP Rate` = sahte pozitif oranı, `F-Measure` = F1, `ROC Area` = AUC, `PRC Area` = PR eğrisi altındaki alan.
 - WEKA'da karışıklık matrisinin **satırları gerçek sınıfı, sütunları tahmini** gösterir. `b` satırı, `c` sütunundaki 3: *Gerçekte versicolor olan 3 çiçek virginica sanılmış.*
 - Hataların tamamına yakını **versicolor ile virginica** arasındadır; bu iki türün ölçüleri birbirine çok yakındır.
 - `Mean absolute error` gibi değerler sınıflandırmada **olasılık tahminlerinin** hatasıdır; yorumlarken öncelik doğruluk, Kappa ve sınıf bazlı ölçütlerdedir.
@@ -1935,14 +1935,14 @@ graph TD
 ```
 
 $$
-\hat{y}_{\text{sınıf}} = \operatorname{mod}\big\lbrace \hat{y}^{(1)}, \dots, \hat{y}^{(B)} \big\rbrace, \qquad \hat{y}_{\text{regresyon}} = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^{(b)}
+\hat{y}_{\text{sınıf}} = \mathrm{mod}\big\lbrace \hat{y}^{(1)}, \dots, \hat{y}^{(B)} \big\rbrace, \qquad \hat{y}_{\text{regresyon}} = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^{(b)}
 $$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
 | $B$ | "be" | Topluluktaki model sayısı |
 | $\hat{y}^{(b)}$ | "ye şapka üst b" | $b$. modelin tahmini |
-| $\operatorname{mod}$ | "mod" | En sık görülen değer (çoğunluk oyu) |
+| $\mathrm{mod}$ | "mod" | En sık görülen değer (çoğunluk oyu) |
 
 **Random Forest (Rastgele Orman):** Bagging'e ek olarak, her düğümde bölme yapılırken özniteliklerin yalnızca **rastgele bir alt kümesi** (sınıflandırmada genellikle $\sqrt{d}$ tane) değerlendirilir. Bu sayede ağaçlar birbirine daha az benzer (**daha az ilişkili**) hâle gelir ve ortalamanın varyans azaltma etkisi güçlenir. Hem sınıflandırma hem regresyonda çok güçlü ve az ayar gerektiren bir modeldir. OOB skoru ve öznitelik önemi de verir.
 
@@ -2509,7 +2509,7 @@ $$
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
 | $C_{jk}$ | "ce je ka" | Gerçek sınıf $j$ iken $k$ tahmin etmenin maliyeti |
-| $C_{FP}$, $C_{FN}$ | "ce ef pe", "ce ef en" | Yanlış pozitif ve yanlış negatif hatalarının maliyeti. Doğru tahminlerin maliyeti genellikle 0 alınır |
+| $C_{FP}$, $C_{FN}$ | "ce ef pe", "ce ef en" | Sahte pozitif ve sahte negatif hatalarının maliyeti. Doğru tahminlerin maliyeti genellikle 0 alınır |
 | $C(y_i, \hat{y}_i)$ | | $i$. örnek için ödenen bedel |
 
 **Dikkat:** Hangi hatanın FP, hangisinin FN olduğu **pozitif sınıfın hangisi seçildiğine** bağlıdır. Raporlarda pozitif sınıfı her zaman açıkça belirtin.

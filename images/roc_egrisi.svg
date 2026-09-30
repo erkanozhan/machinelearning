@@ -8,8 +8,8 @@
 <rect x="80" y="50" width="400" height="330" fill="none" stroke="#e2e8f0"/>
 <line x1="80" y1="380" x2="490" y2="380" stroke="#1e293b" stroke-width="1.6" marker-end="url(#ok)"/>
 <line x1="80" y1="380" x2="80" y2="40" stroke="#1e293b" stroke-width="1.6" marker-end="url(#ok)"/>
-<text x="280.0" y="418.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" >Yanlış Pozitif Oranı (FPR) = FP / (FP + TN)</text>
-<text x="38.0" y="215.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" transform="rotate(-90 38 215.0)">Doğru Pozitif Oranı (TPR = Recall)</text>
+<text x="280.0" y="418.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" >Sahte Pozitif Oranı (FPR) = FP / (FP + TN)</text>
+<text x="38.0" y="215.0" font-size="14" text-anchor="middle" fill="#1e293b" font-weight="normal" transform="rotate(-90 38 215.0)">Gerçek Pozitif Oranı (TPR = Recall)</text>
 <line x1="80.0" y1="380" x2="80.0" y2="385" stroke="#1e293b"/><text x="80.0" y="400.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >0</text>
 <line x1="160.0" y1="380" x2="160.0" y2="385" stroke="#1e293b"/><text x="160.0" y="400.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >0.2</text>
 <line x1="240.0" y1="380" x2="240.0" y2="385" stroke="#1e293b"/><text x="240.0" y="400.0" font-size="12" text-anchor="middle" fill="#1e293b" font-weight="normal" >0.4</text>
