@@ -2,7 +2,7 @@
 """
 05 - Model Değerlendirme Yöntemleri
 ===================================
-Ders notu bölümü: "12. Model Değerlendirme: Modelimiz Gerçekten Öğrendi mi?"
+Ders notu bölümü: "8. Model Değerlendirme Yöntemleri: Modelimiz Gerçekten Öğrendi mi?"
 
 Aynı model (karar ağacı) ve aynı veri (meme kanseri teşhis verisi) ile:
   1) Eğitim verisinde test etmenin yanıltıcılığı (ezber / overfitting)

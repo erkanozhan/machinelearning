@@ -2,7 +2,7 @@
 """
 13 - Dengesiz Veri ve Maliyete Duyarlı Öğrenme
 ==============================================
-Ders notu bölümü: "18. Dengesiz Veri ve Maliyete Duyarlı Öğrenme"
+Ders notu bölümü: "22. Dengesiz Veri ve Maliyete Duyarlı Öğrenme"
 
 Pozitif sınıf (1) nadir ve kaçırılması PAHALI olan durumdur (ör. dolandırıcılık, hastalık).
   C_FP = 1  : Gerçekte negatif olanı pozitif demek (gereksiz alarm)

@@ -2,7 +2,7 @@
 """
 14 - Hiperparametre Optimizasyonu: Grid Search, Random Search, Nested CV
 =========================================================================
-Ders notu bölümü: "19. Optimizasyon ve Hiperparametre Ayarlama"
+Ders notu bölümü: "20. Optimizasyon ve Hiperparametre Ayarlama"
 
   1) Pipeline + GridSearchCV (ölçekleme her katmanda yeniden fit edilir → sızıntı yok)
   2) RandomizedSearchCV ile aynı bütçeyi rastgele dağıtmak

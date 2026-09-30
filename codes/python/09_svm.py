@@ -2,7 +2,7 @@
 """
 09 - Destek Vektör Makineleri (SVM)
 ===================================
-Ders notu bölümü: "10. Destek Vektör Makineleri"
+Ders notu bölümü: "13. Destek Vektör Makineleri"
 
   1) Doğrusal ayrılabilir veride destek vektörlerini ve marjı bulur
   2) C parametresinin (yumuşak marj) etkisini gösterir

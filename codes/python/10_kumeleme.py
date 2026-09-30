@@ -2,7 +2,7 @@
 """
 10 - Kümeleme: K-Means, Hiyerarşik Kümeleme ve DBSCAN
 =====================================================
-Ders notu bölümü: "15. Kümeleme"
+Ders notu bölümü: "17. Kümeleme"
 
   1) K-Means'i sıfırdan (NumPy ile) yazar ve adımlarını yazdırır
   2) Iris üzerinde dirsek (elbow) yöntemi ve siluet skoru ile K seçimi

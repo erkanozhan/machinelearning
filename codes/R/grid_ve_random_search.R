@@ -1,6 +1,6 @@
 # =============================================================================
 # R ile Grid Search ve Random Search (caret paketi)
-# Ders notu bölümü: "19. Optimizasyon ve Hiperparametre Ayarlama"
+# Ders notu bölümü: "20. Optimizasyon ve Hiperparametre Ayarlama"
 #
 # Gerekli paketler:  install.packages(c("caret", "glmnet", "mlbench"))
 # =============================================================================

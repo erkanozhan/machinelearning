@@ -2,7 +2,7 @@
 """
 04 - Entropi, Bilgi Kazancı ve Naive Bayes'in Elle Hesaplanması
 ===============================================================
-Ders notu bölümleri: "8. Naive Bayes" ve "9. Karar Ağaçları"
+Ders notu bölümleri: "11. Naive Bayes" ve "12. Karar Ağaçları"
 
 Weka ile birlikte gelen meşhur "weather.nominal" (hava durumu / tenis oynama)
 veri seti üzerinde hiçbir ML kütüphanesi kullanmadan:

@@ -2,7 +2,7 @@
 """
 12 - Boyut Azaltma: PCA ve Öznitelik Seçimi
 ===========================================
-Ders notu bölümü: "17. Boyut Azaltma"
+Ders notu bölümü: "19. Boyut Azaltma"
 
   1) PCA'yı sıfırdan yazar: standartlaştır → kovaryans matrisi → özdeğer/özvektör → izdüşüm
   2) Aynı sonucu sklearn PCA ile doğrular; açıklanan varyans oranlarını yazdırır

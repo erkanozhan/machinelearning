@@ -2,7 +2,7 @@
 """
 08 - Topluluk Öğrenmesi (Ensemble Learning): Bagging, Boosting, Stacking
 =========================================================================
-Ders notu bölümü: "14. Topluluk Öğrenmesi"
+Ders notu bölümü: "16. Topluluk Öğrenmesi"
 
 Bölüm A (sınıflandırma): Iris ve meme kanseri veri setlerinde tek karar ağacı ile
                          Bagging, Random Forest, AdaBoost, Gradient Boosting ve Stacking'i

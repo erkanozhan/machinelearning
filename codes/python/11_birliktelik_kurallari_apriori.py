@@ -2,7 +2,7 @@
 """
 11 - Birliktelik Kuralları ve Apriori Algoritması
 =================================================
-Ders notu bölümü: "16. Birliktelik Kuralları"
+Ders notu bölümü: "18. Birliktelik Kuralları"
 
 Ek kütüphane gerektirmeden (sadece Python) Apriori algoritmasını uygular:
   1) Sık öğe kümelerini (frequent itemsets) seviye seviye bulur

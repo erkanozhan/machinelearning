@@ -2,8 +2,8 @@
 """
 03 - Temel Sınıflandırma Algoritmalarının Karşılaştırılması
 ===========================================================
-Ders notu bölümleri: "6. Lojistik Regresyon", "7. k-En Yakın Komşu",
-                     "8. Naive Bayes", "9. Karar Ağaçları", "11. Yapay Sinir Ağları"
+Ders notu bölümleri: "7. Lojistik Regresyon", "10. k-En Yakın Komşu",
+                     "11. Naive Bayes", "12. Karar Ağaçları", "14. Yapay Sinir Ağları"
 
 Iris veri seti üzerinde beş algoritmayı AYNI 10 katlı tabakalı çapraz doğrulama
 bölmeleriyle karşılaştırır. Ayrıca:

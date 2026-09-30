@@ -2,7 +2,7 @@
 """
 15 - Veri Sızıntısı (Data Leakage) Deneyi
 =========================================
-Ders notu bölümü: "20. Veri Sızıntısı ve Pipeline"
+Ders notu bölümü: "21. Veri Sızıntısı (Data Leakage)"
 
 Klasik ve çarpıcı bir deney:
   - Tamamen RASTGELE (hiçbir anlamı olmayan) 10.000 öznitelik ve rastgele etiketler üretiyoruz.

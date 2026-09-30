@@ -2,7 +2,7 @@
 """
 06 - Sınıflandırma Performans Ölçütleri
 =======================================
-Ders notu bölümü: "13. Performans Ölçütleri" → Sınıflandırma
+Ders notu bölümü: "9. Performans Ölçütleri" → Sınıflandırma
 
 Bölüm A: Ders notundaki 1000 kişilik örneğin (TP=350, FN=150, FP=250, TN=250)
          tüm metriklerini elle ve scikit-learn ile hesaplar.

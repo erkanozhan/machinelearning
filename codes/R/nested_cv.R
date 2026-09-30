@@ -1,6 +1,6 @@
 # =============================================================================
 # R ile Nested (İç İçe) Çapraz Doğrulama
-# Ders notu bölümü: "19. Optimizasyon ve Hiperparametre Ayarlama" → Nested CV
+# Ders notu bölümü: "20. Optimizasyon ve Hiperparametre Ayarlama" → Nested CV
 #
 # Dış döngü (10 katman): performansı ölçer
 # İç döngü  (5 katman) : her dış katmanın EĞİTİM kısmında Grid Search yapar

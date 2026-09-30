@@ -2,7 +2,7 @@
 """
 01 - Temel İstatistik ve Öznitelik Ölçeklendirme
 ================================================
-Ders notu bölümü: "4. Veri ve Öznitelikler" → "Özniteliklerin Ölçeklendirilmesi"
+Ders notu bölümü: "5. Veri ve Öznitelikler" → "5.8 Özniteliklerin Ölçeklendirilmesi"
 
 Bu betik şunları gösterir:
   1) Ortalama, medyan, varyans ve standart sapmanın elle ve NumPy ile hesaplanması

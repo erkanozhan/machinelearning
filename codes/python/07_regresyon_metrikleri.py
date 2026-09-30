@@ -2,7 +2,7 @@
 """
 07 - Regresyon Performans Ölçütleri
 ===================================
-Ders notu bölümü: "13. Performans Ölçütleri" → Regresyon
+Ders notu bölümü: "9. Performans Ölçütleri" → Regresyon
 
 Ders notundaki 5 evlik örnek üzerinde MAE, MSE, RMSE, R², Düzeltilmiş R²
 ve korelasyon katsayısını hem elle hem scikit-learn ile hesaplar.

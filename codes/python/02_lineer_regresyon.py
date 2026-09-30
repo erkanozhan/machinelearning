@@ -2,7 +2,7 @@
 """
 02 - Lineer Regresyon: En Küçük Kareler ve Gradyan İnişi
 ========================================================
-Ders notu bölümü: "5. Lineer Regresyon"
+Ders notu bölümü: "6. Lineer Regresyon"
 
 Bu betik aynı problemi üç farklı yolla çözer ve sonuçların aynı çıktığını gösterir:
   1) Kapalı form (en küçük kareler) formülü ile elle çözüm
