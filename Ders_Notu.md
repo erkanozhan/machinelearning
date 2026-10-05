@@ -17,6 +17,8 @@ Notta bazı kısımlar şu etiketlerle işaretlenmiştir:
 | **Animasyon** | Tarayıcıda açılan etkileşimli animasyon. |
 | **Kod** | `codes/` klasöründeki ilgili kod dosyası. |
 
+**Terimler hakkında:** Türkçe kavramların ilk geçtiği yerde parantez içinde İngilizce karşılığı ve varsa kelimenin kökeni verilmiştir. Örnek: **Model** (İng. *model*; Lat. *modulus*: "küçük ölçü"). Kısaltmalar: *İng.* İngilizce, *Lat.* Latince, *Yun.* Yunanca, *Alm.* Almanca, *Fr.* Fransızca. Tüm terimlerin listesi [Ek B](#ekB)'dedir.
+
 **Formüller hakkında:** Her önemli formülün altında, formüldeki sembollerin **nasıl okunduğunu** ve **ne anlama geldiğini** gösteren bir tablo bulunur. Tüm semboller ayrıca [Ek A: Sembol Sözlüğü](#ekA) bölümünde toplanmıştır.
 
 **Kodlar hakkında:** Kısa kodlar anlatımın içinde verilmiştir. Uzun ve uygulama dersinde çalıştırılacak kodlar [`codes/`](https://github.com/erkanozhan/machinelearning/tree/main/codes) klasöründedir. Her kod satırında Türkçe açıklama vardır. Kurulum:
@@ -66,11 +68,11 @@ pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphanele
 
 ### 1.1 Yapay Zekâ, Makine Öğrenmesi ve Derin Öğrenme
 
-**Yapay Zekâ (Artificial Intelligence – AI)**, normalde insan zekâsı gerektiren işleri (görme, anlama, karar verme, planlama…) bilgisayarların yapabilmesini amaçlayan bilim dalının en genel adıdır. İnsanların **bilgi, deneyim ve uzmanlığını** bilgisayarlara aktarmanın yollarını inceler.
+**Yapay Zekâ** (İng. *Artificial Intelligence – AI*; Lat. *artificialis*: "beceriyle yapılmış", *intelligentia*: "kavrama, anlama yetisi"), normalde insan zekâsı gerektiren işleri (görme, anlama, karar verme, planlama…) bilgisayarların yapabilmesini amaçlayan bilim dalının en genel adıdır. İnsanların **bilgi, deneyim ve uzmanlığını** bilgisayarlara aktarmanın yollarını inceler.
 
-**Makine Öğrenmesi (Machine Learning – ML)**, yapay zekânın bir **alt dalıdır**. Kuralları bir insanın tek tek yazması yerine, bilgisayarın bu kuralları **veriden kendisinin öğrenmesini** sağlayan yöntemleri kapsar.
+**Makine Öğrenmesi** (İng. *Machine Learning – ML*; "makine" Lat. *machina*: "düzenek, araç"), yapay zekânın bir **alt dalıdır**. Kuralları bir insanın tek tek yazması yerine, bilgisayarın bu kuralları **veriden kendisinin öğrenmesini** sağlayan yöntemleri kapsar.
 
-**Yapay Sinir Ağları** makine öğrenmesinin bir yöntem ailesidir; **Derin Öğrenme (Deep Learning)** ise çok katmanlı sinir ağlarıyla yapılan öğrenmedir.
+**Yapay Sinir Ağları** (İng. *Artificial Neural Networks*; "nöron" Yun. *neuron*: "sinir") makine öğrenmesinin bir yöntem ailesidir; **Derin Öğrenme** (İng. *Deep Learning*) ise çok katmanlı sinir ağlarıyla yapılan öğrenmedir.
 
 <p align="center"><img src="./images/yz_ml_dl.svg" alt="Yapay zekâ, makine öğrenmesi, yapay sinir ağları ve derin öğrenme iç içe kümeler" width="600"></p>
 
@@ -79,7 +81,7 @@ pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphanele
 
 ### 1.2 Klasik Programlama ile Makine Öğrenmesinin Farkı
 
-Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle işler. Klasik programlamada, bir problemi çözmek için gereken kuralları **programcı** bu dile çevirir. Makine öğrenmesinde ise bilgisayara **veri ve doğru cevaplar** verilir, kuralları **öğrenme algoritması** kendisi çıkarır.
+Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle işler. Klasik programlamada, bir problemi çözmek için gereken kuralları **programcı** bu dile çevirir. Makine öğrenmesinde ise bilgisayara **veri ve doğru cevaplar** verilir, kuralları **öğrenme algoritması** (İng. *learning algorithm*; "algoritma", 9. yüzyıl matematikçisi el-Hârizmî'nin adının Latince yazılışı *Algoritmi*'den gelir) kendisi çıkarır.
 
 <p align="center"><img src="./images/klasik_programlama_vs_ml.svg" alt="Klasik programlamada veri ve kurallardan cevap üretilir; makine öğrenmesinde veri ve cevaplardan kurallar öğrenilir" width="720"></p>
 
@@ -89,7 +91,7 @@ Bu yaklaşımın en büyük **avantajı**, kuralları açıkça yazmanın çok z
 
 **Datum** Latince kökenli bir kelimedir ve "verilen şey" anlamına gelir. İngilizcedeki **data** kelimesi bunun çoğuludur: tek bir ölçüm *datum*, ölçümlerin bütünü *data*dır.
 
-**Veri**, bir nesne, varlık, olay veya durum hakkındaki nitel (kategorik) ya da nicel (sayısal) gözlemlerin belirli bir sisteme göre **kayıt altına alınmış** hâlidir.
+**Veri** (İng. *data*; Lat. *datum*), bir nesne, varlık, olay veya durum hakkındaki nitel (kategorik) ya da nicel (sayısal) gözlemlerin belirli bir sisteme göre **kayıt altına alınmış** hâlidir.
 
 Veri, işlendikçe değer kazanır ve şu basamaklardan geçer:
 
@@ -101,8 +103,8 @@ Veri, işlendikçe değer kazanır ve şu basamaklardan geçer:
 | :--- | :--- | :--- |
 | **Ham Veri (Raw Data)** | Henüz ölçülmemiş, kaydedilmemiş gerçeklik. | Yeni doğan bir bebeğin ağırlığı: Bir ağırlığı vardır ama henüz bilinmiyor. |
 | **Veri (Data)** | Bir ölçüte (kg, m, inç, galon…) göre ölçülüp kaydedilmiş değer. | Bebeğin tartılıp kilosunun "3.1 kg" olarak deftere yazılması. |
-| **Bilgi (Information)** | Düzenlenmiş, özetlenmiş, bağlamı olan veri. | "Çorlu'da Mart ayında doğan bebeklerin ortalama kilosu 3.1 kg'dır." |
-| **Knowledge** (anlamlı, işe yarar bilgi) | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, **işe yarar ve anlamlı** örüntü ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
+| **Bilgi** (İng. *information*; Lat. *informatio*: "biçim verme, şekillendirme") | Düzenlenmiş, özetlenmiş, bağlamı olan veri. | "Çorlu'da Mart ayında doğan bebeklerin ortalama kilosu 3.1 kg'dır." |
+| **Knowledge** (anlamlı, işe yarar bilgi) | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, **işe yarar ve anlamlı** örüntü (İng. *pattern*) ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
 | **Wisdom** (bilgelik) | Farklı kaynaklardan elde edilen knowledge'ları **birleştirip** "ne yapmalıyız?" sorusuna somut, uygulanabilir bir cevap vermek: doğru kararı, doğru zamanda, doğru gerekçeyle seçmek. | Sistem, ağlamanın açlıktan kaynaklandığını, son beslenmeden bu yana 3 saat geçtiğini ve bebeğin kilo alımının ortalamanın altında kaldığını birlikte değerlendirir ve "Şimdi besleyin; beslenme aralığını 2.5 saate indirin, kilo takibini haftalık yapın" önerisini verir. |
 
 #### Bir Dağıtım Firmasında Ham Veriden Wisdom'a
@@ -114,7 +116,7 @@ Bir gıda dağıtım firmasının deposunda son kullanma tarihine 10 gün kalmı
 | **Ham Veri** | Depodaki ürünler, raflardaki tarihler, araçların konumu, marketlerdeki satışlar… Hepsi gerçekte vardır ama henüz sisteme girilmemiştir. |
 | **Veri** | Barkod okuyucudan gelen kayıtlar: "Ürün: Yoğurt 1 kg, Adet: 2 000, SKT: 15.10", her satış fişi, GPS'ten gelen araç konumları, yol mesafeleri. |
 | **Bilgi (Information)** | Özetler ve raporlar: "Depoda SKT'sine 10 gün kalmış 2 000 yoğurt var." · "Geçen ay en çok yoğurt satan 5 dağıtım noktası şunlar." · "A noktasında yoğurt satışı haftada 400 kutu." |
-| **Knowledge** | Veri madenciliği ve makine öğrenmesi ile elde edilen, ilk bakışta görülmeyen örüntüler:<br>• **Birliktelik kuralları (Apriori, [Bölüm 18](#b18)):** "Yoğurt alan müşterilerin %70'i ekmek ve salatalık da alıyor (lift = 1.8)." *(Yoğurt tek başına değil, bu ürünlerle birlikte daha hızlı satılabilir.)*<br>• **Satış tahmini (regresyon):** "B ve D noktalarında önümüzdeki hafta yoğurt talebinin %30 artması bekleniyor."<br>• **En kısa yol (rota optimizasyonu):** "Depo → B → D → A rotası 42 km, mevcut rota 67 km." |
+| **Knowledge** | Veri madenciliği (İng. *data mining*) ve makine öğrenmesi ile elde edilen, ilk bakışta görülmeyen örüntüler:<br>• **Birliktelik kuralları** (İng. *association rules*; Lat. *associare*: "ortak etmek"), Apriori algoritması ([Bölüm 18](#b18)): "Yoğurt alan müşterilerin %70'i ekmek ve salatalık da alıyor (lift = 1.8)." *(Yoğurt tek başına değil, bu ürünlerle birlikte daha hızlı satılabilir.)*<br>• **Satış tahmini** (regresyon; İng. *regression*, Lat. *regressio*: "geri dönüş", yani "ortalamaya dönüş"): "B ve D noktalarında önümüzdeki hafta yoğurt talebinin %30 artması bekleniyor."<br>• **En kısa yol** (rota optimizasyonu; İng. *optimization*, Lat. *optimus*: "en iyi"): "Depo → B → D → A rotası 42 km, mevcut rota 67 km." |
 | **Wisdom** | Tüm bu knowledge'ları **birleştirerek** somut bir eylem planı üretmek:<br>*"SKT'si yaklaşan 2 000 yoğurdu, talebi artması beklenen B ve D noktalarına öncelikli gönder. Yoğurdu, birlikte satıldığı ekmek ve salatalıkla 'kahvaltı paketi' kampanyasına koy. Araçları en kısa rota olan Depo → B → D → A ile çıkar. Böylece ürün tarihi geçmeden satılır, imha maliyeti ve yakıt gideri düşer."* |
 
 Dikkat edilirse **Wisdom**, tek bir algoritmanın çıktısı değildir. Stok bilgisi, satış tahmini, birliktelik kuralları ve rota optimizasyonundan gelen ayrı ayrı knowledge parçalarının, işletmenin **amacı** (zarar etmemek, müşteriyi memnun etmek) doğrultusunda bir **karara** dönüştürülmesidir. Günümüzde bu birleştirme genellikle **karar destek sistemleri** ile yapılır; son kararı ise çoğu zaman yine bir insan verir.
@@ -123,7 +125,7 @@ Dikkat edilirse **Wisdom**, tek bir algoritmanın çıktısı değildir. Stok bi
 
 ### 1.4 Makine Öğrenmesiyle İlişkili Disiplinler
 
-Makine öğrenmesi tek başına bir ada değildir. Temelini **istatistik** ve **matematik** (özellikle lineer cebir, olasılık ve optimizasyon) oluşturur; uygulaması **bilgisayar bilimleri** ve **mühendislik** gerektirir.
+Makine öğrenmesi tek başına bir ada değildir. Temelini **istatistik** (İng. *statistics*; Yeni Lat. *statisticum*: "devlet işleriyle ilgili", Lat. *status*: "durum, devlet") ve **matematik** (İng. *mathematics*; Yun. *mathēma*: "öğrenilen şey") (özellikle lineer cebir (İng. *linear algebra*; Lat. *linearis*: "çizgiye ait"), olasılık (İng. *probability*; Lat. *probabilis*: "kanıtlanabilir, akla yatkın") ve optimizasyon) oluşturur; uygulaması **bilgisayar bilimleri** ve **mühendislik** gerektirir.
 
 ```mermaid
 flowchart LR
@@ -148,9 +150,9 @@ graph LR
 
 ### 1.5 Model Nedir? Öğrenme Nedir?
 
-**Model**, girdiye bakarak çıktıyı tahmin eden, veriden öğrenilmiş **matematiksel bir fonksiyon** veya **kural kümesidir**. Bir doğru denklemi ($y = \theta_0 + \theta_1 x$), bir karar ağacı ya da milyonlarca parametreli bir sinir ağı birer modeldir.
+**Model** (İng. *model*; Lat. *modulus*: "küçük ölçü, ölçek", *modus*: "ölçü"), girdiye bakarak çıktıyı tahmin eden, veriden öğrenilmiş **matematiksel bir fonksiyon** (İng. *function*; Lat. *functio*: "yerine getirme, görev") veya **kural kümesidir**. Bir doğru denklemi ($y = \theta_0 + \theta_1 x$), bir karar ağacı (İng. *decision tree*) ya da milyonlarca parametreli bir sinir ağı birer modeldir.
 
-Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**parametreleri**) veriye bakarak, tahmin hatasını en aza indirecek şekilde ayarlama sürecidir. Bu sürece **eğitim (training)** denir. İyi eğitilmiş bir model, daha önce **hiç görmediği** verilere de doğru tahminler yapabilir; bu yeteneğe **genelleme (generalization)** denir.
+Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**parametreleri**; İng. *parameters*; Yun. *para*: "yanında" + *metron*: "ölçü") veriye bakarak, tahmin hatasını en aza indirecek şekilde ayarlama sürecidir. Bu sürece **eğitim** (İng. *training*; Lat. *trahere*: "çekmek, yönlendirmek") denir. İyi eğitilmiş bir model, daha önce **hiç görmediği** verilere de doğru tahminler yapabilir; bu yeteneğe **genelleme** (İng. *generalization*; Lat. *generalis*: "genele, bütün türe ait") denir.
 
 > **Dikkat:** Modellerin ürettiği sonuçlar **kesin değil, olasılıksaldır**. "Bu e-posta %97 olasılıkla spam" demek, bazen yanılacağımızı da kabul etmek demektir.
 
@@ -230,7 +232,7 @@ Gerçek dünya verisi nadiren temizdir: eksik değerler, hatalı girişler, ayk�
 Farklı algoritmalar (karar ağaçları, SVM, sinir ağları…) **eğitim verisi** üzerinde denenir.
 - Her problem ve veri tipi için "en iyi" tek bir algoritma yoktur (**No Free Lunch** teoremi). Bu yüzden birden fazla algoritma denenir.
 - Bazı algoritmalar yalnızca sayısal veriyle çalışır; bazıları kategorik veriyi doğrudan işleyebilir.
-- Algoritmaların **hiperparametreleri** ayarlanır ([Bölüm 20](#b20)).
+- Algoritmaların **hiperparametreleri** (İng. *hyperparameters*; Yun. *hyper*: "üstünde, ötesinde") ayarlanır ([Bölüm 20](#b20)).
 
 ### Adım 5 – Değerlendirme ve İyileştirme
 
@@ -255,15 +257,15 @@ Bilgisayarların veriden nasıl öğrendiğine göre makine öğrenmesi yönteml
 
 ### 3.1 Denetimli Öğrenme (Supervised Learning)
 
-Küçük bir çocuğa hayvanları öğrettiğimizi düşünelim. Ona bir kedi resmi gösterip "bu bir kedi", bir köpek resmi gösterip "bu bir köpek" deriz. Yani her resim için **doğru cevabı (etiketi)** veririz. Çocuk yeterince örnek gördükten sonra, daha önce hiç görmediği bir hayvan resmini de doğru tanımaya başlar.
+Küçük bir çocuğa hayvanları öğrettiğimizi düşünelim. Ona bir kedi resmi gösterip "bu bir kedi", bir köpek resmi gösterip "bu bir köpek" deriz. Yani her resim için **doğru cevabı** (etiketi; İng. *label*) veririz. Çocuk yeterince örnek gördükten sonra, daha önce hiç görmediği bir hayvan resmini de doğru tanımaya başlar.
 
-Denetimli öğrenme tam olarak böyle çalışır. Elimizde girdiler ($X$) ve her girdiye karşılık gelen doğru çıktı ($y$) bulunur. Bu tür veriye **etiketli veri (labeled data)** denir. Amaç, girdiden çıktıya giden ilişkiyi öğrenip **yeni** girdiler için doğru çıktıyı tahmin edebilen bir model kurmaktır. Makine öğrenmesinde en sık karşılaşılan türdür.
+Denetimli öğrenme (İng. *supervised learning*; Lat. *super*: "üstten" + *videre*: "görmek", yani "gözetim altında") tam olarak böyle çalışır. Elimizde girdiler ($X$) ve her girdiye karşılık gelen doğru çıktı ($y$) bulunur. Bu tür veriye **etiketli veri (labeled data)** denir. Amaç, girdiden çıktıya giden ilişkiyi öğrenip **yeni** girdiler için doğru çıktıyı tahmin edebilen bir model kurmaktır. Makine öğrenmesinde en sık karşılaşılan türdür.
 
-Tahmin edilen çıktının türüne göre ikiye ayrılır:
+Tahmin (İng. *prediction*; Lat. *praedicere*: "önceden söylemek") edilen çıktının türüne göre ikiye ayrılır:
 
-| | **Sınıflandırma (Classification)** | **Regresyon (Regression)** |
+| | **Sınıflandırma** (İng. *classification*; Lat. *classis*: "sınıf, grup") | **Regresyon** (İng. *regression*) |
 | :--- | :--- | :--- |
-| Çıktı | Kategorik bir **sınıf** | Sürekli bir **sayı** |
+| Çıktı | Kategorik (İng. *categorical*; Yun. *katēgoria*: "sınıflama") bir **sınıf** | Sürekli bir **sayı** |
 | Soru | "Hangisi?" | "Ne kadar?" |
 | Örnek | E-posta **spam mı, normal mi?** | Evin satış **fiyatı kaç TL?** |
 | Örnek | Kredi başvurusu **onay / ret** | Yarınki **sıcaklık kaç °C?** |
@@ -273,12 +275,12 @@ Tahmin edilen çıktının türüne göre ikiye ayrılır:
 
 Size bir kutu dolusu farklı renk ve şekilde oyuncak veriliyor ve "Bunları benzerliklerine göre grupla" deniyor. Hangi oyuncağın ne olduğunu ya da kaç grup olması gerektiğini söyleyen kimse yok. Siz de renklerine, boyutlarına, şekillerine bakarak kendinizce gruplar oluşturuyorsunuz.
 
-Denetimsiz öğrenmede veri **etiketsizdir (unlabeled)**; doğru cevaplar ve sınıflar önceden bilinmez. Amaç, verinin kendi içindeki **gizli yapıyı** ortaya çıkarmaktır. Bulunan yapının anlamlı olup olmadığına genellikle **veri analisti ve alan uzmanı** karar verir.
+Denetimsiz öğrenmede (İng. *unsupervised learning*) veri **etiketsizdir (unlabeled)**; doğru cevaplar ve sınıflar önceden bilinmez. Amaç, verinin kendi içindeki **gizli yapıyı** ortaya çıkarmaktır. Bulunan yapının anlamlı olup olmadığına genellikle **veri analisti ve alan uzmanı** karar verir.
 
 - **Kümeleme (Clustering):** Benzer örnekleri gruplara ayırır. *Örnek:* Bir e-ticaret sitesinin müşterilerini satın alma alışkanlıklarına göre segmentlere ayırması ([Bölüm 17](#b17)).
 - **Birliktelik Kuralları (Association Rules):** Birlikte ortaya çıkan olayları bulur. *Örnek:* **Sepet analizi**: "Ekmek alan müşterilerin çoğu tereyağı da alıyor." ([Bölüm 18](#b18))
-- **Boyut Azaltma (Dimensionality Reduction):** Çok sayıda özniteliği, bilgi kaybını en aza indirerek daha az sayıda öznitelikle temsil eder ([Bölüm 19](#b19)).
-- **Anomali Tespiti (Anomaly Detection):** Normalin dışındaki sıra dışı örnekleri bulur. *Örnek:* Olağandışı kredi kartı harcamaları.
+- **Boyut Azaltma** (İng. *Dimensionality Reduction*; Lat. *dimensio*: "ölçme", *reductio*: "geri götürme"): Çok sayıda özniteliği, bilgi kaybını en aza indirerek daha az sayıda öznitelikle temsil eder ([Bölüm 19](#b19)).
+- **Anomali Tespiti** (İng. *Anomaly Detection*; Yun. *anōmalia*: "düzensizlik"): Normalin dışındaki sıra dışı örnekleri bulur. *Örnek:* Olağandışı kredi kartı harcamaları.
 
 ### 3.3 Yarı Denetimli Öğrenme (Semi-supervised Learning)
 
@@ -286,7 +288,7 @@ Etiketlemek çoğu zaman pahalıdır (bir radyoloğun binlerce görüntüyü tek
 
 ### 3.4 Pekiştirmeli Öğrenme (Reinforcement Learning)
 
-Bir köpeği eğitirken doğru davranışta ödül (mama), yanlış davranışta ödülsüzlük uygularız. Pekiştirmeli öğrenmede de bir **ajan (agent)**, bir **ortamda (environment)** eylemler yapar ve karşılığında **ödül (reward)** veya ceza alır. Hiç kimse ona doğru cevabı söylemez; ajan **deneme-yanılma** ile uzun vadede toplam ödülü en büyük yapan davranış biçimini (**politika**) öğrenir. Satranç ve Go oynayan yapay zekâlar, robot kontrolü ve otonom sürüşün bazı bileşenleri bu yaklaşımı kullanır.
+Bir köpeği eğitirken doğru davranışta ödül (mama), yanlış davranışta ödülsüzlük uygularız. Pekiştirmeli öğrenmede (İng. *reinforcement learning*; Lat. *re-* + *in-* + *fortis*: "yeniden güçlendirmek") de bir **ajan** (İng. *agent*; Lat. *agens*: "eylemde bulunan"), bir **ortamda (environment)** eylemler yapar ve karşılığında **ödül (reward)** veya ceza alır. Hiç kimse ona doğru cevabı söylemez; ajan **deneme-yanılma** ile uzun vadede toplam ödülü en büyük yapan davranış biçimini (**politika**; İng. *policy*; Yun. *politeia*: "yönetim biçimi") öğrenir. Satranç ve Go oynayan yapay zekâlar, robot kontrolü ve otonom sürüşün bazı bileşenleri bu yaklaşımı kullanır.
 
 > **İleri seviye:** Bu derste ağırlıklı olarak **denetimli** ve **denetimsiz** öğrenme yöntemleri işlenmektedir. Pekiştirmeli öğrenme, genellikle ayrı bir ileri seviye dersin konusudur.
 
@@ -316,7 +318,7 @@ Bu derste iki araç birlikte kullanılır:
 
 | Arayüz | Ne için kullanılır? |
 | :--- | :--- |
-| **Explorer** | Veri yükleme, ön işleme, model kurma ve değerlendirme. Derste en çok kullanacağımız ekran. |
+| **Explorer** | Veri yükleme, ön işleme (İng. *preprocessing*), model kurma ve değerlendirme. Derste en çok kullanacağımız ekran. |
 | **Experimenter** | Birden çok algoritmayı birden çok veri setinde, tekrarlı deneylerle ve istatistiksel testlerle karşılaştırma ([Bölüm 24](#b24)). |
 | **KnowledgeFlow** | Sürükle-bırak ile veri akış şeması (pipeline) tasarlama ([Bölüm 23](#b23)). |
 | **Workbench** | Yukarıdakilerin tümünü tek pencerede toplayan arayüz. |
@@ -380,7 +382,7 @@ olasilik = model.predict_proba(X_test)             # 5) (Varsa) sınıf olasıl�
 
 Ön işleme araçları da benzer biçimde çalışır: `fit` (istatistikleri öğren), `transform` (dönüştür), `fit_transform` (ikisi birden).
 
-> **Altın kural:** `fit` her zaman **yalnızca eğitim verisiyle** yapılır. Test verisine sadece `transform` / `predict` uygulanır. Bu kuralın neden bu kadar önemli olduğu [Bölüm 21](#b21)'de anlatılıyor.
+> **Altın kural:** `fit` her zaman **yalnızca eğitim verisiyle** yapılır. Test (İng. *test*; Lat. *testum*: madenleri denemek için kullanılan toprak kap) verisine sadece `transform` / `predict` uygulanır. Bu kuralın neden bu kadar önemli olduğu [Bölüm 21](#b21)'de anlatılıyor.
 
 ---
 
@@ -400,12 +402,12 @@ Makine öğrenmesinde veri genellikle bir **tablo** olarak düşünülür:
 
 | Terim | Karşılığı | Tablodaki yeri |
 | :--- | :--- | :--- |
-| **Örnek** (instance, sample, observation, kayıt) | Tek bir müşteri, hasta, çiçek… | Bir **satır** |
-| **Öznitelik** (feature, attribute, değişken) | Örneği tanımlayan bir özellik | Bir **sütun** (Yaş, Gelir…) |
+| **Örnek** (İng. *instance*, *sample*, *observation*; Lat. *instantia*: "mevcut olma", *exemplum*: "örnek"; kayıt) | Tek bir müşteri, hasta, çiçek… | Bir **satır** |
+| **Öznitelik** (İng. *feature*, *attribute*; Lat. *attribuere*: "atfetmek, yüklemek"; değişken, İng. *variable*, Lat. *variabilis*: "değişebilen") | Örneği tanımlayan bir özellik | Bir **sütun** (Yaş, Gelir…) |
 | **Hedef / Etiket / Sınıf** (target, label, class) | Tahmin etmek istediğimiz değer | Son sütun (Risk) |
-| **Öznitelik vektörü** | Bir örneğin tüm öznitelik değerleri | Bir satırın hedef dışındaki kısmı |
+| **Öznitelik vektörü** (İng. *feature vector*; Lat. *vector*: "taşıyıcı") | Bir örneğin tüm öznitelik değerleri | Bir satırın hedef dışındaki kısmı |
 
-Matematiksel gösterimde $n$ örnek ve $d$ öznitelik varsa veri bir $X$ matrisiyle, hedef ise bir $y$ vektörüyle gösterilir:
+Matematiksel gösterimde $n$ örnek ve $d$ öznitelik varsa veri bir $X$ matrisiyle (İng. *matrix*; Lat. *matrix*: "ana rahmi, kaynak"), hedef ise bir $y$ vektörüyle gösterilir:
 
 $$
 X = \begin{bmatrix} x_{11} & x_{12} & \cdots & x_{1d} \\ x_{21} & x_{22} & \cdots & x_{2d} \\ \vdots & \vdots & \ddots & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{nd} \end{bmatrix}, \qquad y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix}
@@ -426,13 +428,13 @@ $$
 
 Veriyi tanımak için ilk bakılan değerler bunlardır. WEKA'da **Preprocess** sekmesinde bir öznitelik seçildiğinde sağ panelde otomatik görünürler.
 
-**Aritmetik ortalama:**
+**Aritmetik ortalama** (İng. *arithmetic mean*; Yun. *arithmos*: "sayı"):
 
 $$
 \bar{x} = \mu = \frac{1}{n}\sum_{i=1}^{n} x_i
 $$
 
-**Varyans ve standart sapma** (değerlerin ortalama etrafında ne kadar yayıldığı):
+**Varyans** (İng. *variance*; Lat. *variantia*: "değişkenlik") **ve standart sapma** (İng. *standard deviation*; Lat. *deviare*: "yoldan çıkmak") (değerlerin ortalama etrafında ne kadar yayıldığı):
 
 $$
 \sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\mu)^2 \qquad\qquad s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2
@@ -445,8 +447,8 @@ $$
 | $\sigma^2$, $\sigma$ | "sigma kare", "sigma" | Kitle varyansı ve standart sapması ($n$'e bölünür) |
 | $s^2$, $s$ | "es kare", "es" | Örneklem varyansı ve standart sapması ($n-1$'e bölünür) |
 
-**Medyan:** Değerler sıralandığında ortadaki değer. Aykırı değerlerden ortalamaya göre çok daha az etkilenir.
-**Çeyrekler ve IQR:** $Q_1$ (%25), $Q_3$ (%75) ve çeyrekler arası açıklık $IQR = Q_3 - Q_1$.
+**Medyan** (İng. *median*; Lat. *medianus*: "ortadaki"): Değerler sıralandığında ortadaki değer. Aykırı değerlerden ortalamaya göre çok daha az etkilenir.
+**Çeyrekler** (İng. *quartiles*; Lat. *quartus*: "dördüncü") **ve IQR** (*interquartile range*): $Q_1$ (%25), $Q_3$ (%75) ve çeyrekler arası açıklık $IQR = Q_3 - Q_1$.
 
 **Örnek:** Notlar $[60, 70, 80, 100]$
 
@@ -461,15 +463,15 @@ $$
 
 | Tür | Açıklama | Örnek | İzin verilen işlemler |
 | :--- | :--- | :--- | :--- |
-| **Nominal (kategorik)** | Sırasız kategoriler | Şehir, kan grubu, marka | Eşit mi / değil mi |
-| **İkili (binary)** | Sadece iki değerli nominal | Garajı var mı? (Evet/Hayır) | Eşitlik |
-| **Sıralı (ordinal)** | Sıralanabilen kategoriler | Eğitim: İlkokul < Lise < Lisans | Sıralama (<, >) |
-| **Aralık (interval)** | Sayısal, **gerçek sıfır noktası yok** | Sıcaklık (°C), takvim yılı | Toplama/çıkarma |
-| **Oran (ratio)** | Sayısal, **gerçek sıfır var** | Boy, gelir, yaş, kilo | Tüm aritmetik işlemler (100 kg, 50 kg'ın iki katıdır) |
+| **Nominal** (İng. *nominal*; Lat. *nomen*: "ad") (kategorik) | Sırasız kategoriler | Şehir, kan grubu, marka | Eşit mi / değil mi |
+| **İkili** (İng. *binary*; Lat. *binarius*: "ikişerli") | Sadece iki değerli nominal | Garajı var mı? (Evet/Hayır) | Eşitlik |
+| **Sıralı** (İng. *ordinal*; Lat. *ordo*: "sıra") | Sıralanabilen kategoriler | Eğitim: İlkokul < Lise < Lisans | Sıralama (<, >) |
+| **Aralık** (İng. *interval*; Lat. *intervallum*: "iki sur arasındaki boşluk") | Sayısal, **gerçek sıfır noktası yok** | Sıcaklık (°C), takvim yılı | Toplama/çıkarma |
+| **Oran** (İng. *ratio*; Lat. *ratio*: "hesap, oran") | Sayısal, **gerçek sıfır var** | Boy, gelir, yaş, kilo | Tüm aritmetik işlemler (100 kg, 50 kg'ın iki katıdır) |
 
 > **İpucu:** Pratikte bu beş tür iki büyük gruba indirgenir: **sayısal (numeric)** ve **kategorik (nominal)**. WEKA'daki `numeric` ve `{...}` tanımları bu ayrımdır.
 
-Sayısal öznitelikler ayrıca **sürekli** (boy: 1.753 m) veya **kesikli** (çocuk sayısı: 2) olabilir.
+Sayısal öznitelikler ayrıca **sürekli** (İng. *continuous*; Lat. *continuus*: "kesintisiz") (boy: 1.753 m) veya **kesikli** (İng. *discrete*; Lat. *discretus*: "ayrılmış") (çocuk sayısı: 2) olabilir.
 
 ### 5.4 Öznitelik Seçimi ve Öznitelik Mühendisliği
 
@@ -488,7 +490,7 @@ Kısacası, bir modelin ne kadar "akıllı" olacağı ona verdiğimiz bilginin k
 
 | Strateji | Ne zaman? | Dikkat |
 | :--- | :--- | :--- |
-| Satırı silmek | Eksik satır çok azsa | Veri kaybı; eksiklik rastgele değilse yanlılık yaratır |
+| Satırı silmek | Eksik satır çok azsa | Veri kaybı; eksiklik rastgele değilse yanlılık (İng. *bias*) yaratır |
 | Sütunu silmek | Sütunun büyük kısmı boşsa | Önemli bilgi kaybolabilir |
 | Ortalama / medyan ile doldurmak | Sayısal öznitelik | Medyan, aykırı değerlere karşı daha güvenlidir |
 | En sık değer (mod) ile doldurmak | Kategorik öznitelik | |
@@ -496,7 +498,7 @@ Kısacası, bir modelin ne kadar "akıllı" olacağı ona verdiğimiz bilginin k
 
 WEKA'da: `filters → unsupervised → attribute → ReplaceMissingValues` (sayısalda ortalama, kategorikte mod ile doldurur).
 
-**Aykırı değer (outlier)** – Diğerlerinden çok farklı değer. Bir ölçüm hatası da (yaş = 250) olabilir, gerçek ama nadir bir durum da (çok yüksek gelirli bir müşteri). Yaygın bir kural, **IQR kuralıdır**: $Q_1 - 1.5\cdot IQR$ altındaki veya $Q_3 + 1.5\cdot IQR$ üstündeki değerler şüphelidir. Aykırı değeri silmeden önce **neden** oluştuğunu anlamak gerekir. WEKA'da `InterquartileRange` filtresi bu kuralı uygular.
+**Aykırı değer** (İng. *outlier*: "dışarıda kalan") – Diğerlerinden çok farklı değer. Bir ölçüm hatası da (yaş = 250) olabilir, gerçek ama nadir bir durum da (çok yüksek gelirli bir müşteri). Yaygın bir kural, **IQR kuralıdır**: $Q_1 - 1.5\cdot IQR$ altındaki veya $Q_3 + 1.5\cdot IQR$ üstündeki değerler şüphelidir. Aykırı değeri silmeden önce **neden** oluştuğunu anlamak gerekir. WEKA'da `InterquartileRange` filtresi bu kuralı uygular.
 
 ### 5.6 Kategorik Verinin Sayıya Dönüştürülmesi
 
@@ -549,13 +551,13 @@ Bir ev fiyatı modeli düşünelim:
 | Metrekare (m²) | 150 | ~50 – 250 |
 | Oda sayısı | 3 | ~1 – 6 |
 
-İki evin "ne kadar farklı" olduğunu ölçen **mesafe tabanlı** bir algoritma (k-NN, K-Means, SVM) metrekaredeki 10 birimlik farkı, oda sayısındaki 1 birimlik farktan çok daha önemli sayar. **Gradyan inişi** kullanan modeller (lineer/lojistik regresyon, sinir ağları) ise ölçek farkı yüzünden çok yavaş öğrenir. Ölçekleme, tüm özniteliklere **adil söz hakkı** tanımak için yapılır.
+İki evin "ne kadar farklı" olduğunu ölçen **mesafe tabanlı** bir algoritma (k-NN, K-Means, SVM) metrekaredeki 10 birimlik farkı, oda sayısındaki 1 birimlik farktan çok daha önemli sayar. **Gradyan inişi** (İng. *gradient descent*; Lat. *gradiens*: "adım atan", *descendere*: "aşağı inmek") kullanan modeller (lineer/lojistik regresyon, sinir ağları) ise ölçek farkı yüzünden çok yavaş öğrenir. Ölçekleme, tüm özniteliklere **adil söz hakkı** tanımak için yapılır.
 
-> **Hangi modeller ölçeklemeye duyarlı?** k-NN, K-Means, SVM, PCA, lineer/lojistik regresyon (özellikle düzenlileştirme varsa), sinir ağları → **Evet.** Karar ağaçları, Random Forest, gradyan artırma ağaçları, Naive Bayes → **Genellikle hayır.**
+> **Hangi modeller ölçeklemeye duyarlı?** k-NN, K-Means, SVM, PCA, lineer/lojistik regresyon (özellikle düzenlileştirme (İng. *regularization*; Lat. *regularis*: "kurala uygun") varsa), sinir ağları → **Evet.** Karar ağaçları, Random Forest, gradyan artırma ağaçları, Naive Bayes → **Genellikle hayır.**
 
 #### a) Min-Max Normalizasyonu
 
-Değerleri $[0, 1]$ aralığına taşır.
+**Normalizasyon** (İng. *normalization*; Lat. *norma*: "gönye, kural"), değerleri $[0, 1]$ aralığına taşır.
 
 $$
 x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
@@ -587,7 +589,7 @@ $$
 
 **Örnek:** $[60, 70, 80, 100]$, $\mu = 77.5$, $\sigma \approx 14.79$ (scikit-learn'ün kullandığı değer). 70 için: $z = \frac{70-77.5}{14.79} \approx -0.51$ → "70, ortalamanın yaklaşık yarım standart sapma altında." Tüm sonuç: $[-1.18,\ -0.51,\ 0.17,\ 1.52]$. *(WEKA $n-1$ ile hesapladığı için $\sigma \approx 17.08$ ve $z \approx -0.44$ bulur.)*
 
-Standardizasyon değerleri sabit bir aralığa sıkıştırmaz. Bu yüzden tek bir aykırı değer diğerlerini Min-Max kadar ezmez. Ancak ortalama ve standart sapma da aykırı değerlerden etkilendiği için **tam olarak dayanıklı değildir**. Normal dağılıma yakın veride ve SVM, lojistik regresyon, PCA gibi yöntemlerde genellikle ilk tercihtir.
+Standardizasyon (İng. *standardization*) değerleri sabit bir aralığa sıkıştırmaz. Bu yüzden tek bir aykırı değer diğerlerini Min-Max kadar ezmez. Ancak ortalama ve standart sapma da aykırı değerlerden etkilendiği için **tam olarak dayanıklı değildir**. Normal dağılıma yakın veride ve SVM, lojistik regresyon, PCA gibi yöntemlerde genellikle ilk tercihtir.
 
 #### c) Dayanıklı Ölçekleme (Robust Scaling) (İleri Seviye)
 
@@ -626,7 +628,7 @@ $$
 3. **Undo** ile geri alın.
 4. **Z-skoru:** Aynı yoldan `Standardize` → **Apply**. Mean ≈ 0, StdDev = 1 olur.
 
-> **Dikkat:** Preprocess sekmesinde uygulanan filtre **tüm veriye** uygulanır. Sadece veriyi incelemek için sorun değildir; ancak ardından çapraz doğrulama yapılacaksa doğru yol filtreyi `FilteredClassifier` içine koymaktır ([Bölüm 21](#b21)).
+> **Dikkat:** Preprocess sekmesinde uygulanan filtre **tüm veriye** uygulanır. Sadece veriyi incelemek için sorun değildir; ancak ardından çapraz doğrulama (İng. *cross-validation*, [Bölüm 8.6](#b8)) yapılacaksa doğru yol filtreyi `FilteredClassifier` içine koymaktır ([Bölüm 21](#b21)).
 
 #### Python'da Ölçeklendirme
 
@@ -644,7 +646,7 @@ print(StandardScaler().fit_transform(notlar).ravel())      # [-1.183 -0.507  0.1
 
 ### 5.9 Mesafe (Uzaklık) Ölçüleri
 
-k-NN, K-Means, hiyerarşik kümeleme ve DBSCAN gibi yöntemler iki örneğin **ne kadar benzer** olduğunu bir mesafe ölçüsüyle belirler. $\mathbf{a} = (a_1,\dots,a_d)$ ve $\mathbf{b} = (b_1,\dots,b_d)$ iki örnek olsun:
+k-NN, K-Means, hiyerarşik kümeleme ve DBSCAN gibi yöntemler iki örneğin **ne kadar benzer** olduğunu bir mesafe (İng. *distance*; Lat. *distantia*: "uzakta durma") ölçüsüyle belirler. $\mathbf{a} = (a_1,\dots,a_d)$ ve $\mathbf{b} = (b_1,\dots,b_d)$ iki örnek olsun:
 
 $$
 d_{\text{Öklid}}(\mathbf{a},\mathbf{b}) = \sqrt{\sum_{j=1}^{d}(a_j-b_j)^2} \qquad d_{\text{Manhattan}}(\mathbf{a},\mathbf{b}) = \sum_{j=1}^{d}\lvert a_j-b_j \rvert
@@ -671,7 +673,7 @@ $$
 
 Hayatta birçok şeyin birbiriyle ilişkili olduğunu gözlemleriz: Evin büyüklüğü arttıkça fiyatı artar, ders çalışma süresi arttıkça sınav notu yükselme eğilimindedir. **Lineer regresyon**, bir girdi ile sürekli bir çıktı arasındaki ilişkiyi bir **doğru** ile ifade eden, makine öğrenmesinin en temel modelidir.
 
-**Basit lineer regresyonun modeli (hipotezi):**
+**Basit lineer regresyonun modeli (hipotezi; İng. *hypothesis*, Yun. *hypothesis*: "alta konan, varsayım"):**
 
 $$
 \hat{y} = h_\theta(x) = \theta_0 + \theta_1 x
@@ -682,7 +684,7 @@ $$
 | $\hat{y}$ | "ye şapka" | Modelin tahmini (ör. tahmini sınav notu) |
 | $h_\theta(x)$ | "h teta iks" | Hipotez fonksiyonu: $\theta$ parametreleriyle çalışan model |
 | $x$ | "iks" | Girdi / bağımsız değişken (ör. çalışma süresi) |
-| $\theta_0$ | "teta sıfır" | **Kesişim (intercept):** $x = 0$ iken tahmin; doğrunun $y$ eksenini kestiği nokta |
+| $\theta_0$ | "teta sıfır" | **Kesişim** (İng. *intercept*; Lat. *intercipere*: "araya girip yakalamak"): $x = 0$ iken tahmin; doğrunun $y$ eksenini kestiği nokta |
 | $\theta_1$ | "teta bir" | **Eğim (slope):** $x$ bir birim artınca $\hat{y}$'deki değişim; ilişkinin yönü ve gücü |
 
 > **İpucu:** Bazı kaynaklarda aynı denklem $y = \beta_0 + \beta_1 x$ (istatistik) veya $y = w x + b$ (makine öğrenmesi, $w$: ağırlık, $b$: bias) olarak yazılır. Hepsi aynı şeydir.
@@ -691,7 +693,7 @@ $$
 
 ### 6.2 Maliyet Fonksiyonu: "En İyi Doğru" Ne Demek?
 
-Her veri noktası için gerçek değer ile tahmin arasındaki farka **artık (residual)** veya **hata** denir: $e_i = y_i - \hat{y}_i$. En iyi doğru, bu hataların **karelerinin toplamını** en küçük yapan doğrudur. Bu yönteme **En Küçük Kareler (Ordinary Least Squares – OLS)** denir.
+Her veri noktası için gerçek değer ile tahmin arasındaki farka **artık** (İng. *residual*; Lat. *residuum*: "geride kalan") veya **hata** (İng. *error*; Lat. *errare*: "yolunu şaşırmak") denir: $e_i = y_i - \hat{y}_i$. En iyi doğru, bu hataların **karelerinin toplamını** en küçük yapan doğrudur. Bu yönteme **En Küçük Kareler (Ordinary Least Squares – OLS)** denir.
 
 $$
 J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^{m}\left(\hat{y}_i - y_i\right)^2 = \frac{1}{2m}\sum_{i=1}^{m}\left(\theta_0 + \theta_1 x_i - y_i\right)^2
@@ -699,7 +701,7 @@ $$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
-| $J(\theta)$ | "ce teta" | **Maliyet (cost) / kayıp (loss) fonksiyonu:** modelin toplam hatasının ölçüsü |
+| $J(\theta)$ | "ce teta" | **Maliyet** (İng. *cost*; Lat. *constare*: "mal olmak") / **kayıp** (İng. *loss*) **fonksiyonu:** modelin toplam hatasının ölçüsü |
 | $m$ | "em" | Eğitim örneği sayısı |
 | $\left(\hat{y}_i - y_i\right)^2$ | — | $i$. örneğin hata karesi |
 | $\frac{1}{2m}$ | "bir bölü iki em" | Ortalama almak için $\frac{1}{m}$; $\frac{1}{2}$ ise türev alınca sadeleşsin diye eklenir (sonucu değiştirmez) |
@@ -817,7 +819,7 @@ $$
 \hat{y} = \theta_0 + \theta_1 x + \theta_2 x^2 \quad\xrightarrow{\;x_2 \,:=\, x^2\;}\quad \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2
 $$
 
-Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönüşümler veri setine yeni sütunlar olarak eklenebilir. Buna **polinom regresyon** veya **temel fonksiyon genişletmesi** denir. Ancak derece arttıkça model veriyi ezberleyebilir ([Bölüm 8.1](#b8)).
+Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönüşümler veri setine yeni sütunlar olarak eklenebilir. Buna **polinom regresyon** veya **temel fonksiyon genişletmesi** denir. Ancak derece arttıkça model veriyi ezberleyebilir (aşırı öğrenme, İng. *overfitting*) ([Bölüm 8.1](#b8)).
 
 ### 6.7 Varsayımlar, Avantajlar ve Sınırlılıklar
 
@@ -845,7 +847,7 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 
 ### 7.2 Sigmoid Fonksiyonu
 
-**Lojistik regresyon**, adında "regresyon" geçse de bir **sınıflandırma** algoritmasıdır. Lineer bir kombinasyonu **sigmoid (lojistik) fonksiyonundan** geçirir:
+**Lojistik regresyon** (İng. *logistic regression*; Yun. *logistikos*: "hesapla ilgili"), adında "regresyon" geçse de bir **sınıflandırma** algoritmasıdır. Lineer bir kombinasyonu **sigmoid** (Yun. *sigma* + *-eidēs*: "S biçiminde") **(lojistik) fonksiyonundan** geçirir:
 
 $$
 z = \theta_0 + \theta_1 x_1 + \cdots + \theta_d x_d, \qquad \hat{p} = P(y=1 \mid \mathbf{x}) = \sigma(z) = \frac{1}{1+e^{-z}}
@@ -868,11 +870,11 @@ $$
 - 3 saat: $z = 0.5$ → $\sigma(0.5) \approx 0.62$ → **geçer**
 - Karar sınırı: $z = 0 \Rightarrow x = 4/1.5 \approx 2.67$ saat.
 
-> **Eşik 0.5 olmak zorunda değildir.** Hasta birini kaçırmak çok pahalıysa eşik 0.2'ye düşürülebilir ([Bölüm 22](#b22)).
+> **Eşik (İng. *threshold*) 0.5 olmak zorunda değildir.** Hasta birini kaçırmak çok pahalıysa eşik 0.2'ye düşürülebilir ([Bölüm 22](#b22)).
 
 ### 7.3 Log-Loss (Çapraz Entropi) Maliyet Fonksiyonu (İleri Seviye)
 
-Lojistik regresyonda karesel hata yerine **log-loss** (ikili çapraz entropi) kullanılır:
+Lojistik regresyonda karesel hata yerine **log-loss** (ikili çapraz entropi; İng. *cross-entropy*; Yun. *entropia*: "içe dönüş, dönüşüm") kullanılır:
 
 $$
 J(\boldsymbol{\theta}) = -\frac{1}{m}\sum_{i=1}^{m}\Big[\,y_i \log(\hat{p}_i) + (1-y_i)\log(1-\hat{p}_i)\Big]
@@ -910,8 +912,8 @@ Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberle
 | :--- | :--- | :--- | :--- |
 | Eğitim hatası | Yüksek | Düşük | Çok düşük (≈ 0) |
 | Test hatası | Yüksek | Düşük | **Yüksek** |
-| Neden | Model çok basit | Doğru karmaşıklık | Model çok karmaşık, gürültüyü ezberliyor |
-| Çözüm | Daha karmaşık model, daha iyi öznitelikler | — | Daha fazla veri, düzenlileştirme, budama, erken durdurma, daha basit model |
+| Neden | Model çok basit | Doğru karmaşıklık | Model çok karmaşık, gürültüyü (İng. *noise*) ezberliyor |
+| Çözüm | Daha karmaşık model, daha iyi öznitelikler | — | Daha fazla veri, düzenlileştirme, budama (İng. *pruning*), erken durdurma (İng. *early stopping*), daha basit model |
 
 ### 8.2 Yanlılık–Varyans Dengesi (Bias–Variance Trade-off)
 
@@ -970,7 +972,7 @@ graph LR
 Model geliştirirken **hiperparametre** (ağacın derinliği, $k$, $C$…) seçmemiz gerekir. Bu seçim test setine bakılarak yapılırsa, test setinin bilgisi dolaylı olarak modele **sızar** ve test sonucu artık tarafsız olmaz. Çözüm veriyi üçe ayırmaktır:
 
 1. **Eğitim seti (training):** Modelin parametrelerini öğrendiği kısım (ör. %60).
-2. **Doğrulama seti (validation):** Hiperparametre ayarlama ve model seçimi için (ör. %20).
+2. **Doğrulama seti** (İng. *validation set*; Lat. *validus*: "güçlü, geçerli"): Hiperparametre ayarlama ve model seçimi için (ör. %20).
 3. **Test seti (test):** Tüm kararlar verildikten sonra **yalnızca bir kez**, nihai performansı raporlamak için (ör. %20). Tüm süreç boyunca "kasada kilitli" tutulur.
 
 ### 8.6 K-Katlı Çapraz Doğrulama (K-Fold Cross-Validation)
@@ -998,7 +1000,7 @@ Genel kabul görmüş uygulama $K = 5$ veya $K = 10$'dur. Bu değerler yanlılı
 
 ### 8.7 Tabakalı Örnekleme (Stratified K-Fold)
 
-Sınıflar dengesizse (ör. 1000 hastanın 950'si sağlıklı, 50'si hasta) rastgele bölmede bazı katmanlarda hiç hasta olmayabilir. **Tabakalı** çapraz doğrulama, her katmanda **sınıf oranlarının orijinal veriyle aynı** (%95 / %5) kalmasını garanti eder. Sınıflandırmada **varsayılan tercih** olmalıdır (WEKA'nın çapraz doğrulaması zaten tabakalıdır; scikit-learn'de `StratifiedKFold` veya `train_test_split(..., stratify=y)`).
+Sınıflar dengesizse (İng. *imbalanced*; ör. 1000 hastanın 950'si sağlıklı, 50'si hasta) rastgele bölmede bazı katmanlarda hiç hasta olmayabilir. **Tabakalı** (İng. *stratified*; Lat. *stratum*: "katman, serilmiş örtü") çapraz doğrulama, her katmanda **sınıf oranlarının orijinal veriyle aynı** (%95 / %5) kalmasını garanti eder. Sınıflandırmada **varsayılan tercih** olmalıdır (WEKA'nın çapraz doğrulaması zaten tabakalıdır; scikit-learn'de `StratifiedKFold` veya `train_test_split(..., stratify=y)`).
 
 ### 8.8 Birini Dışarıda Bırak (Leave-One-Out, LOOCV)
 
@@ -1006,7 +1008,7 @@ $K = N$ (örnek sayısı) olan özel durum: Her seferinde **tek bir örnek** tes
 
 ### 8.9 Bootstrap Örnekleme ve Torba Dışı (OOB) Örnekler
 
-Torbada 10 farklı renkte bilye var. Bir bilye çekip rengini not ediyor ve **torbaya geri koyuyorsunuz**. Bunu 10 kez tekrarlıyorsunuz. Sonuçta bazı renkler birden fazla kez seçilir (kopyalar), bazıları ise hiç seçilmez. Bu **yerine koyarak örnekleme (sampling with replacement)** işlemine **bootstrap** denir.
+Torbada 10 farklı renkte bilye var. Bir bilye çekip rengini not ediyor ve **torbaya geri koyuyorsunuz**. Bunu 10 kez tekrarlıyorsunuz. Sonuçta bazı renkler birden fazla kez seçilir (kopyalar), bazıları ise hiç seçilmez. Bu **yerine koyarak örnekleme (sampling with replacement)** işlemine **bootstrap** denir (İng. deyim *to pull oneself up by one's bootstraps*: "kendi çizme kayışından çekerek kalkmak", yani dış yardım olmadan, eldeki veriyle idare etmek).
 
 Makine öğrenmesinde $n$ satırlık veriden yine $n$ satırlık bir **eğitim seti** bu şekilde çekilir. Hiç seçilmeyen satırlara **torba dışı (out-of-bag, OOB)** örnekler denir. Model bunları hiç görmediği için bu örnekler doğal bir **test seti** oluşturur.
 
@@ -1059,7 +1061,7 @@ Meme kanseri verisi, karar ağacı:
 
 ### 9.1 Karışıklık Matrisi (Confusion Matrix)
 
-Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tablo, modelin tahminlerini gerçek değerlerle karşılaştırır.
+Sınıflandırma performansını (İng. *performance*; Lat. *per* + *formare*: "tamamen biçimlendirmek") analiz etmeye her zaman buradan başlanır. Tablo, modelin tahminlerini gerçek değerlerle karşılaştırır.
 
 <p align="center"><img src="./images/karisiklik_matrisi.svg" alt="TP, FN, FP ve TN hücrelerinden oluşan karışıklık matrisi" width="600"></p>
 
@@ -1084,7 +1086,7 @@ Sınıflandırma performansını analiz etmeye her zaman buradan başlanır. Tab
 
 #### Doğruluk (Accuracy)
 
-"Tüm tahminlerin ne kadarı doğru?"
+"Tüm tahminlerin ne kadarı doğru?" (İng. *accuracy*; Lat. *accuratus*: "özenle yapılmış")
 
 $$
 \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
@@ -1096,7 +1098,7 @@ $$
 
 #### Kesinlik (Precision)
 
-"Pozitif dediklerimin ne kadarı gerçekten pozitif?"
+"Pozitif dediklerimin ne kadarı gerçekten pozitif?" (İng. *precision*; Lat. *praecisio*: "kesip ayırma, kesinlik")
 
 $$
 \text{Precision} = \frac{TP}{TP + FP}
@@ -1106,7 +1108,7 @@ $$
 
 #### Duyarlılık (Recall, Sensitivity, TPR)
 
-"Gerçek pozitiflerin ne kadarını yakalayabildim?"
+"Gerçek pozitiflerin ne kadarını yakalayabildim?" (İng. *recall*, *sensitivity*; Lat. *sensitivus*: "duyumsayan")
 
 $$
 \text{Recall} = \text{TPR} = \frac{TP}{TP + FN}
@@ -1116,7 +1118,7 @@ $$
 
 #### Özgüllük (Specificity, TNR) ve Sahte Pozitif Oranı (FPR)
 
-"Gerçek negatiflerin ne kadarını doğru bildim?" ve bunun tümleyeni olan "yanlış alarm oranı":
+"Gerçek negatiflerin ne kadarını doğru bildim?" (İng. *specificity*; Lat. *species*: "tür, görünüş") ve bunun tümleyeni olan "yanlış alarm oranı":
 
 $$
 \text{Specificity} = \text{TNR} = \frac{TN}{TN + FP}, \qquad \text{FPR} = \frac{FP}{FP + TN} = 1 - \text{Specificity}
@@ -1388,7 +1390,7 @@ Eklenen öznitelik açıklayıcılığa anlamlı katkı yapmıyorsa $R^2_{adj}$ 
 
 #### Korelasyon Katsayısı ($r$)
 
-İki sayısal değişkenin **doğrusal** olarak birlikte ne kadar hareket ettiğini ölçer ($-1 \le r \le +1$):
+Korelasyon (İng. *correlation*; Lat. *com-*: "birlikte" + *relatio*: "ilişki"), iki sayısal değişkenin **doğrusal** olarak birlikte ne kadar hareket ettiğini ölçer ($-1 \le r \le +1$):
 
 $$
 r = \frac{\sum_i (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i (x_i-\bar{x})^2}\,\sqrt{\sum_i (y_i-\bar{y})^2}}
@@ -1492,9 +1494,9 @@ $$
 | :---: | :--- | :--- |
 | $C$ | "ce" | Bir sınıf (ör. "oynanır = yes") |
 | $\mathbf{x}$ | "iks vektörü" | Örneğin öznitelikleri (ör. güneşli, serin, nemli, rüzgârlı) |
-| $P(C \mid \mathbf{x})$ | "iks verildiğinde ce'nin olasılığı" | **Sonsal (posterior) olasılık:** Bu gözlemler varken sınıfın olasılığı. **Aradığımız şey budur.** |
-| $P(\mathbf{x} \mid C)$ | "ce verildiğinde iks'in olasılığı" | **Olabilirlik (likelihood):** Bu sınıfta bu gözlemleri görme olasılığı |
-| $P(C)$ | "ce'nin olasılığı" | **Önsel (prior) olasılık:** Veri görmeden önce sınıfın genel sıklığı |
+| $P(C \mid \mathbf{x})$ | "iks verildiğinde ce'nin olasılığı" | **Sonsal** (İng. *posterior*; Lat. *posterior*: "sonraki") **olasılık:** Bu gözlemler varken sınıfın olasılığı. **Aradığımız şey budur.** |
+| $P(\mathbf{x} \mid C)$ | "ce verildiğinde iks'in olasılığı" | **Olabilirlik** (İng. *likelihood*): Bu sınıfta bu gözlemleri görme olasılığı |
+| $P(C)$ | "ce'nin olasılığı" | **Önsel** (İng. *prior*; Lat. *prior*: "önceki") **olasılık:** Veri görmeden önce sınıfın genel sıklığı |
 | $P(\mathbf{x})$ | "iks'in olasılığı" | **Kanıt (evidence):** Tüm sınıflar için aynı olduğundan karşılaştırmada ihmal edilebilir |
 
 ### 11.2 "Naive" (Saf) Varsayım
@@ -1671,9 +1673,9 @@ SVM'nin cevabı: **İki sınıfa da en uzak olan**, yani aradaki "güvenlik şer
 
 <p align="center"><img src="./images/svm_marj.svg" alt="SVM hiperdüzlemi, marj çizgileri ve destek vektörleri" width="600"></p>
 
-- **Hiperdüzlem (hyperplane):** Ayırıcı sınır. 2 boyutta doğru, 3 boyutta düzlem, daha yüksek boyutta hiperdüzlem.
-- **Destek vektörleri (support vectors):** Marjın kenarında duran, sınıra en yakın örnekler. Sınırı **yalnızca bunlar** belirler; diğer noktalar silinse bile hiperdüzlem değişmez. Algoritmanın adı buradan gelir.
-- **Marj (margin):** İki sınıfın en yakın noktaları arasındaki şeridin genişliği.
+- **Hiperdüzlem** (İng. *hyperplane*; Yun. *hyper*: "öte, üstünde"): Ayırıcı sınır. 2 boyutta doğru, 3 boyutta düzlem, daha yüksek boyutta hiperdüzlem.
+- **Destek vektörleri** (İng. *support vectors*; Lat. *supportare*: "taşımak, desteklemek", *vector*: "taşıyıcı"): Marjın kenarında duran, sınıra en yakın örnekler. Sınırı **yalnızca bunlar** belirler; diğer noktalar silinse bile hiperdüzlem değişmez. Algoritmanın adı buradan gelir.
+- **Marj** (İng. *margin*; Lat. *margo*: "kenar, sınır"): İki sınıfın en yakın noktaları arasındaki şeridin genişliği.
 
 ### 13.2 Matematiksel Formülasyon (İleri Seviye)
 
@@ -1775,7 +1777,7 @@ $C$ ve $\gamma$'nın en iyi değerleri **Grid Search** ile bulunur ([Bölüm 20]
 
 ### 14.1 Yapay Nöron
 
-Beyindeki nöronlardan esinlenen **yapay nöron (algılayıcı, perceptron)** girdileri ağırlıklarla çarpıp toplar, sonucu bir **aktivasyon fonksiyonundan** geçirir:
+Beyindeki nöronlardan esinlenen **yapay nöron** (algılayıcı; İng. *perceptron*; Lat. *perceptio*: "algılama") girdileri ağırlıklarla çarpıp toplar, sonucu bir **aktivasyon fonksiyonundan** geçirir:
 
 $$
 z = \sum_{j=1}^{d} w_j x_j + b, \qquad \hat{y} = f(z)
@@ -1785,7 +1787,7 @@ $$
 | :---: | :--- | :--- |
 | $w_j$ | "dabılyu j" | $j$. girdinin ağırlığı (öğrenilen parametre) |
 | $b$ | "be" | Sapma (bias) |
-| $f$ | "ef" | Aktivasyon fonksiyonu |
+| $f$ | "ef" | Aktivasyon fonksiyonu (İng. *activation function*; Lat. *activus* < *agere*: "harekete geçirmek") |
 
 <p align="center"><img src="./images/yapay_sinir_agi.svg" alt="Tek bir yapay nöron ve girdi, gizli, çıktı katmanlarından oluşan çok katmanlı ağ" width="860"></p>
 
@@ -1800,10 +1802,10 @@ Tek bir nöron yalnızca doğrusal sınırlar çizebilir (ünlü XOR problemini 
 **Eğitim nasıl olur?**
 1. **İleri yayılım (forward pass):** Girdi ağdan geçer, tahmin üretilir.
 2. **Hata hesabı:** Tahmin gerçek değerle karşılaştırılır (ör. log-loss).
-3. **Geri yayılım (backpropagation):** Zincir kuralıyla her ağırlığın hataya katkısı (gradyanı) hesaplanır.
+3. **Geri yayılım** (İng. *backpropagation*; Lat. *propagare*: "yaymak, çoğaltmak"): Zincir kuralıyla her ağırlığın hataya katkısı (gradyanı) hesaplanır.
 4. **Güncelleme:** Ağırlıklar gradyan inişiyle güncellenir ([Bölüm 6.4](#b6)).
 
-Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** denir. Güncellemenin kaç örnekte bir yapıldığı ise **batch (yığın) boyutudur**.
+Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** (Yun. *epokhē*: "dönem, devir") denir. Güncellemenin kaç örnekte bir yapıldığı ise **batch (yığın) boyutudur**.
 
 | Avantajlar | Dezavantajlar |
 | :--- | :--- |
@@ -1934,7 +1936,7 @@ WEKA'nın kolay arayüzü R'ın istatistik ve görselleştirme gücüyle birleş
 
 Bir kavanozdaki bilye sayısını tahmin edeceğiz. Tek bir kişinin tahmini çok hatalı olabilir. Ama 100 kişinin tahminlerinin **ortalaması** genellikle şaşırtıcı derecede isabetlidir, çünkü bireysel hatalar birbirini dengeler ("kalabalıkların bilgeliği").
 
-Topluluk öğrenmesi, birden çok modelin tahminlerini birleştirerek tek bir modelden **daha doğru ve daha kararlı** tahminler elde eder. Temel koşul, modellerin **farklı hatalar** yapmasıdır: Hepsi aynı hatayı yapıyorsa birleştirmek işe yaramaz.
+Topluluk öğrenmesi (İng. *ensemble learning*; Fr. *ensemble*, Lat. *insimul*: "bir arada"), birden çok modelin tahminlerini birleştirerek tek bir modelden **daha doğru ve daha kararlı** tahminler elde eder. Temel koşul, modellerin **farklı hatalar** yapmasıdır: Hepsi aynı hatayı yapıyorsa birleştirmek işe yaramaz.
 
 | Yöntem | Modeller nasıl eğitilir? | Temel olarak neyi azaltır? | Örnekler |
 | :--- | :--- | :--- | :--- |
@@ -2106,7 +2108,7 @@ Kümeleme **denetimsiz** öğrenmenin en temel tekniğidir: Etiket yoktur; amaç
 Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gereken** bir parametredir.
 
 **Algoritma:**
-1. **Başlangıç:** $K$ adet küme merkezi (**centroid**) seçilir (genellikle rastgele veri noktaları).
+1. **Başlangıç:** $K$ adet küme merkezi (**centroid**; Lat. *centrum*: "merkez") seçilir (genellikle rastgele veri noktaları).
 2. **Atama:** Her nokta, **en yakın** merkezin kümesine atanır (Öklid mesafesi).
 3. **Güncelleme:** Her merkez, kendi kümesindeki noktaların **ortalamasına** taşınır.
 4. **Tekrar:** Hiçbir nokta küme değiştirmeyene (veya merkezler kıpırdamayana) kadar 2–3 tekrarlanır.
@@ -2169,7 +2171,7 @@ Küme sayısını önceden vermeyi gerektirmez; veriden bir **küme ağacı** ol
 - **Birleştirici (agglomerative, aşağıdan yukarı):** Her nokta başta ayrı bir kümedir. Her adımda **en yakın iki küme** birleştirilir; sonunda tek küme kalır. En yaygın türdür.
 - **Bölücü (divisive, yukarıdan aşağı):** Tüm noktalar tek kümede başlar, adım adım bölünür.
 
-Sonuç bir **dendrogram** ile gösterilir. Ağaç istenen bir yükseklikten **kesilerek** istenen sayıda küme elde edilir.
+Sonuç bir **dendrogram** (Yun. *dendron*: "ağaç" + *gramma*: "çizim") ile gösterilir. Ağaç istenen bir yükseklikten **kesilerek** istenen sayıda küme elde edilir.
 
 <p align="center"><img src="./images/dendrogram.svg" alt="Beş noktanın birleşme sırasını gösteren dendrogram ve iki küme veren kesme çizgisi" width="540"></p>
 
@@ -2186,7 +2188,7 @@ WEKA: Cluster → `HierarchicalClusterer` (`linkType`, `numClusters`). Sonuç a�
 
 ### 17.3 DBSCAN (Yoğunluk Tabanlı Kümeleme)
 
-K-Means küresel kümeleri iyi bulur. Peki kümeler hilal ya da halka biçimindeyse? **DBSCAN** (*Density-Based Spatial Clustering of Applications with Noise*) merkezlere değil **yoğunluğa** bakar: Yoğun bölgeleri birbirine bağlayarak kümeler oluşturur.
+K-Means küresel kümeleri iyi bulur. Peki kümeler hilal ya da halka biçimindeyse? **DBSCAN** (*Density-Based Spatial Clustering of Applications with Noise*) merkezlere değil **yoğunluğa** (İng. *density*; Lat. *densitas*: "sıklık") bakar: Yoğun bölgeleri birbirine bağlayarak kümeler oluşturur.
 
 **Parametreler:**
 - **$\varepsilon$ (epsilon):** Bir noktanın komşuluk yarıçapı.
@@ -2276,7 +2278,7 @@ Within cluster sum of squared errors: 6.998114004826762
 
 ### 18.1 Sepet Analizi
 
-"Ekmek alan müşterilerin çoğu tereyağı da alıyor." Bu tür **"EĞER X İSE Y"** kurallarını büyük işlem verilerinden otomatik bulmaya **birliktelik kuralı madenciliği** denir. Marketlerde ürün yerleşimi ve kampanya tasarımı, e-ticarette "Bunu alanlar şunu da aldı" önerileri, web kullanım analizi ve tıpta birlikte görülen belirtilerin tespiti tipik uygulamalarıdır.
+"Ekmek alan müşterilerin çoğu tereyağı da alıyor." Bu tür **"EĞER X İSE Y"** kurallarını büyük işlem verilerinden otomatik bulmaya **birliktelik kuralı madenciliği** (İng. *association rule mining*) denir. Marketlerde ürün yerleşimi ve kampanya tasarımı, e-ticarette "Bunu alanlar şunu da aldı" önerileri, web kullanım analizi ve tıpta birlikte görülen belirtilerin tespiti tipik uygulamalarıdır.
 
 Örnek veri (8 alışveriş sepeti):
 
@@ -2307,7 +2309,7 @@ $$
 | $\text{conf}$ | "konfidans" | Güven (confidence) |
 | $X \cup Y$ | "iks birleşim ye" | $X$ ve $Y$'deki ürünlerin **hepsini** içeren sepetler |
 | **Destek (support)** | | Kuralın ne kadar **yaygın** olduğu |
-| **Güven (confidence)** | | $X$ alındığında $Y$'nin de alınma olasılığı: $P(Y \mid X)$ |
+| **Güven** (İng. *confidence*; Lat. *confidentia*: "güven", *fidere*: "güvenmek") | | $X$ alındığında $Y$'nin de alınma olasılığı: $P(Y \mid X)$ |
 | **Kaldıraç (lift)** | | $X$'in varlığı $Y$'nin olasılığını kaç kat artırıyor? **> 1:** pozitif ilişki · **= 1:** bağımsız · **< 1:** birbirini dışlıyor |
 
 **Örnek: {çay} ⇒ {süt}**
@@ -2320,7 +2322,7 @@ $$
 
 ### 18.3 Apriori Algoritması
 
-Tüm ürün kombinasyonlarını denemek imkânsızdır: 1000 ürün için $2^{1000}$ alt küme vardır. **Apriori ilkesi** arama uzayını büyük ölçüde budar:
+Tüm ürün kombinasyonlarını denemek imkânsızdır: 1000 ürün için $2^{1000}$ alt küme vardır. **Apriori ilkesi** (Lat. *a priori*: "önceden gelenden"; algoritma, önceki seviyede bulunan bilgiyi kullandığı için bu adı alır) arama uzayını büyük ölçüde budar:
 
 > **"Bir öğe kümesi sık değilse, onu içeren hiçbir büyük küme de sık olamaz."** (Az kişi {çay, yumurta} alıyorsa, {çay, yumurta, ekmek} alan daha da azdır.)
 
@@ -2382,7 +2384,7 @@ Boyut azaltmanın amaçları:
 
 ### 19.2 Temel Bileşen Analizi (PCA)
 
-PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralarında ilişki olmayan ve verideki **değişimi (varyansı) en iyi açıklayan** daha az sayıda yeni değişkene dönüştürür. Bu yeni değişkenlere **temel bileşenler (principal components)** denir.
+PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralarında ilişki olmayan ve verideki **değişimi (varyansı) en iyi açıklayan** daha az sayıda yeni değişkene dönüştürür. Bu yeni değişkenlere **temel bileşenler** (İng. *principal components*; Lat. *principalis*: "birincil", *componere*: "bir araya koymak") denir.
 
 > **İpucu:** Bir fotoğrafçı, 3 boyutlu bir heykelin **en çok ayrıntısını** gösterecek tek bir 2 boyutlu fotoğraf çekmek ister ve bunun için en uygun açıyı arar. PCA matematiksel olarak tam bunu yapar: Veriyi en az bilgi kaybıyla daha az boyuta yansıtan "açıyı" bulur.
 
@@ -2396,8 +2398,8 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 <summary><b>Derinleşme (İleri Seviye): PCA'nın matematiği</b></summary>
 
 1. Veri **standartlaştırılır** (her sütun ortalama 0, std 1).
-2. **Kovaryans matrisi** hesaplanır: $\Sigma = \frac{1}{n-1}X^{T}X$ ($d \times d$).
-3. $\Sigma$'nın **özdeğer–özvektör** ayrışımı yapılır: $\Sigma\,\mathbf{v}_k = \lambda_k\,\mathbf{v}_k$.
+2. **Kovaryans** (İng. *covariance*; Lat. *co-*: "birlikte" + *variantia*: "değişim") **matrisi** hesaplanır: $\Sigma = \frac{1}{n-1}X^{T}X$ ($d \times d$).
+3. $\Sigma$'nın **özdeğer–özvektör** (İng. *eigenvalue–eigenvector*; Alm. *eigen*: "kendine özgü") ayrışımı yapılır: $\Sigma\,\mathbf{v}_k = \lambda_k\,\mathbf{v}_k$.
 4. Özvektörler özdeğere göre büyükten küçüğe sıralanır. İlk $k$ özvektör bir $W_k$ matrisi oluşturur ve veri bu yönlere izdüşürülür: $Z = X W_k$.
 5. $k$. bileşenin açıkladığı varyans oranı: $\frac{\lambda_k}{\sum_j \lambda_j}$.
 
@@ -2672,7 +2674,7 @@ WEKA'da ayrıca `meta → GridSearch` (iki parametreyi birlikte tarar, Package M
 
 Bir öğrenciye konuları öğretip (eğitim), sonra **daha önce görmediği** sorularla sınava sokarız (test). Bu, gerçek başarıyı ölçmenin adil yoludur. Ama öğrenci sınav sorularının bir kısmını, hatta sadece "sınavın ortalamasının kaç olacağını" önceden öğrenmişse, aldığı yüksek not konuyu anladığını göstermez.
 
-**Veri sızıntısı**, test verisine (veya gelecekte karşılaşılacak veriye) ait herhangi bir bilginin **eğitim veya ön işleme** sırasında modele ulaşmasıdır. Sonuç: Performans metrikleri yapay olarak şişer, model gerçek dünyada beklenenden çok daha kötü çalışır. Makine öğrenmesindeki **en sinsi ve en yaygın** hatalardan biridir.
+**Veri sızıntısı** (İng. *data leakage*), test verisine (veya gelecekte karşılaşılacak veriye) ait herhangi bir bilginin **eğitim veya ön işleme** sırasında modele ulaşmasıdır. Sonuç: Performans metrikleri yapay olarak şişer, model gerçek dünyada beklenenden çok daha kötü çalışır. Makine öğrenmesindeki **en sinsi ve en yaygın** hatalardan biridir.
 
 ### 21.2 Çarpıcı Bir Deney
 
