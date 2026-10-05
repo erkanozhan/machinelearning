@@ -1,0 +1,12 @@
+% Naive Bayes kısa uygulaması (Ders Notu, Bölüm 11): tahmin edilecek yeni gün.
+% Başlık bölümü WEKA ile gelen weather.nominal.arff dosyasıyla birebir aynıdır.
+@relation weather.symbolic
+
+@attribute outlook {sunny, overcast, rainy}
+@attribute temperature {hot, mild, cool}
+@attribute humidity {high, normal}
+@attribute windy {TRUE, FALSE}
+@attribute play {yes, no}
+
+@data
+sunny,cool,high,TRUE,?

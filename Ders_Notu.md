@@ -663,6 +663,34 @@ $$
 
 > **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
 
+
+### 5.10 Kısa Uygulama: Eksik Veri ve Kategorik Kodlama
+
+**WEKA**
+1. Preprocess → **Open file…** → WEKA klasöründeki `data/labor.arff` (iş sözleşmeleri verisi; çok sayıda eksik değer içerir).
+2. Sol listeden öznitelikleri tek tek seçin; sağ üstteki **Missing** satırında eksik değer sayısını ve yüzdesini not edin.
+3. Filter → `unsupervised → attribute → ReplaceMissingValues` → **Apply**. Missing değerlerinin 0 olduğunu görün. *(Sayısal sütunlar ortalama, kategorik sütunlar en sık değer ile doldurulur.)*
+4. Filter → `unsupervised → attribute → NominalToBinary` → **Apply**. Kategorik özniteliklerin 0/1 sütunlarına dönüştüğünü inceleyin.
+
+**Python**
+
+```python
+import numpy as np, pandas as pd
+
+df = pd.DataFrame({"yas":   [25, 32, np.nan, 41, 29],                       # Eksik yaş
+                   "sehir": ["İstanbul", "Ankara", "İzmir", np.nan, "Ankara"],   # Eksik şehir
+                   "gelir": [18000, 25000, 22000, 40000, np.nan]})            # Eksik gelir
+print(df.isna().sum())                                         # Her sütundaki eksik değer sayısı
+df["yas"]   = df["yas"].fillna(df["yas"].median())              # Sayısal → medyan ile doldur
+df["gelir"] = df["gelir"].fillna(df["gelir"].median())
+df["sehir"] = df["sehir"].fillna(df["sehir"].mode()[0])         # Kategorik → en sık değer (Ankara)
+print(pd.get_dummies(df, columns=["sehir"], dtype=int))         # One-hot kodlama
+```
+
+**Gözlem soruları**
+- Eksik yaş neden ortalama yerine medyan ile dolduruldu? Gelirde 40 000 TL gibi yüksek bir değer varken ortalama ne olurdu?
+- One-hot kodlamadan sonra kaç sütun oluştu? Şehir sayısı 81 olsaydı ne olurdu?
+
 ---
 
 <a id="b6"></a>
@@ -835,6 +863,34 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 
 > **WEKA:** Classify → `functions → LinearRegression`. Hedef sayısal olduğunda WEKA otomatik olarak regresyon yapar. `cpu.arff` üzerindeki uygulama ve çıktının yorumu [Bölüm 9.3](#b9)'tedir.
 
+
+### 6.8 Kısa Uygulama: Katsayıları Yorumlamak
+
+**WEKA**
+1. `data/cpu.arff` → Classify → `functions → LinearRegression` → Test options: **Use training set** → **Start**.
+2. Çıktının başındaki `class = … * MYCT + … * MMIN + …` denklemini bulun. WEKA, katkısı zayıf öznitelikleri varsayılan olarak denklemden çıkarır (`attributeSelectionMethod = M5 method`).
+3. Aynı modeli **Cross-validation (10)** ile tekrar çalıştırın ve `Correlation coefficient` değerlerini karşılaştırın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_score
+
+X, y = load_diabetes(return_X_y=True, as_frame=True)          # 442 hasta, 10 öznitelik (önceden standartlaştırılmış)
+model = LinearRegression().fit(X, y)
+for ad, k in sorted(zip(X.columns, model.coef_), key=lambda t: -abs(t[1]))[:3]:
+    print(f"{ad:>4}: {k:8.1f}")                                # En etkili 3 öznitelik: s1 −792, s5 +751, bmi +520
+print("R² (eğitim):", round(model.score(X, y), 3))             # 0.518
+print("R² (5 katlı CV):", round(cross_val_score(LinearRegression(), X, y, cv=5, scoring="r2").mean(), 3))  # 0.482
+```
+
+**Gözlem soruları**
+- Bir katsayının **negatif** olması ne anlama gelir? `bmi` (vücut kitle indeksi) katsayısının pozitif olması tıbben mantıklı mı?
+- Eğitim verisindeki $R^2$ neden çapraz doğrulamadakinden yüksek?
+- WEKA'da hangi öznitelikler denklemden çıkarıldı?
+
 ---
 
 <a id="b7"></a>
@@ -891,6 +947,37 @@ $$
 **Çok sınıflı durum:** Sınıf sayısı ikiden fazlaysa ya her sınıf için ayrı bir "bu sınıf / diğerleri" modeli kurulur (**one-vs-rest**) ya da sigmoidin genellemesi olan **softmax** kullanılır.
 
 **WEKA:** `functions → Logistic` · **Python:** `sklearn.linear_model.LogisticRegression`. Iris verisinde 10 katlı çapraz doğrulamayla (bir sonraki bölümde, [Bölüm 8](#b8)'de anlatılıyor) doğruluk ≈ **0.953**. Model her çiçek için olasılık da verir (ör. setosa = 0.985, versicolor = 0.015, virginica = 0.000). **Kod:** [`codes/python/03_siniflandirma_algoritmalari.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/03_siniflandirma_algoritmalari.py)
+
+
+### 7.4 Kısa Uygulama: Olasılık Çıktısı ve Eşik
+
+**WEKA**
+1. `data/diabetes.arff` (Pima yerlilerinde diyabet; 768 kişi, 8 öznitelik) → Classify → `functions → Logistic` → Cross-validation (10) → **Start**. Doğruluk yaklaşık **%77** çıkar.
+2. Çıktıdaki **Odds Ratios** tablosuna bakın. 1'den büyük değer, öznitelik arttıkça `tested_positive` olasılığının arttığını gösterir.
+3. **More options… → Output predictions → PlainText** ile tekrar çalıştırın. Her kişi için `prediction` sütununda modelin verdiği olasılığı görün.
+
+**Python**
+
+```python
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+X, y = load_breast_cancer(return_X_y=True)                     # y: 1 = iyi huylu, 0 = kötü huylu
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)
+p = model.predict_proba(X_te[:5])[:, 1]                         # İlk 5 hasta için P(iyi huylu)
+print(np.round(p, 3))                                          # [0.    0.872 0.001 0.985 0.   ]
+print("Tahmin:", (p >= 0.5).astype(int), "Gerçek:", y_te[:5])   # 2. hasta: model %87 emin ama yanılıyor!
+print("Test doğruluğu:", round(model.score(X_te, y_te), 3))      # 0.959
+```
+
+**Gözlem soruları**
+- İkinci hastada model %87 olasılıkla "iyi huylu" dedi ama hasta kötü huyluydu. Bu hata türünün adı nedir ([Bölüm 9](#b9))? Tıpta neden tehlikelidir?
+- Eşiği 0.5 yerine 0.9 yaparsanız bu hasta için karar değişir mi?
 
 ---
 
@@ -1050,6 +1137,37 @@ Meme kanseri verisi, karar ağacı:
 | Supplied test set | Ayrı bir test dosyasıyla holdout |
 | Cross-validation (Folds = 10) | Tabakalı K-katlı CV |
 | Percentage split (% 66) | Holdout |
+
+
+### 8.11 Kısa Uygulama: Aynı Model, Üç Farklı Değerlendirme
+
+**WEKA**
+1. `data/iris.arff` → Classify → `trees → J48`.
+2. Test options'ı sırayla değiştirip her birinde **Start**'a basın ve `Correctly Classified Instances` değerini bir tabloya yazın:
+   - **Use training set** (eğitim verisinde test)
+   - **Percentage split** (% 66)
+   - **Cross-validation** (Folds = 10)
+3. Percentage split'i **More options… → Random seed** değerini 1, 2, 3 yaparak tekrarlayın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split, cross_val_score
+
+X, y = load_iris(return_X_y=True)
+agac = DecisionTreeClassifier(random_state=0)
+print("Eğitim verisinde:", agac.fit(X, y).score(X, y))                        # 1.0 → yanıltıcı!
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.34, stratify=y, random_state=1)
+print("Holdout %66/%34 :", round(agac.fit(X_tr, y_tr).score(X_te, y_te), 3))   # 0.942
+s = cross_val_score(agac, X, y, cv=10)
+print(f"10 katlı CV     : {s.mean():.3f} ± {s.std():.3f}")                    # 0.960 ± 0.044
+```
+
+**Gözlem soruları**
+- Hangi yöntem en yüksek, hangisi en güvenilir sonucu verdi? Neden aynı değil?
+- Seed değiştikçe Percentage split sonucu ne kadar oynadı? Çapraz doğrulamanın "±" değeri size ne söylüyor?
 
 ---
 
@@ -1434,6 +1552,34 @@ Total Number of Instances              209
 
 `trees → M5P` (model ağacı) ve `functions → MultilayerPerceptron` ile de deneyip sonuçları karşılaştırın.
 
+
+### 9.5 Kısa Uygulama: Ölçütleri Karışıklık Matrisinden Elle Hesaplamak
+
+**WEKA**
+1. `data/diabetes.arff` → Classify → `bayes → NaiveBayes` → Cross-validation (10) → **Start** (doğruluk yaklaşık **%76**).
+2. Çıktının en altındaki **Confusion Matrix**'i deftere yazın. Pozitif sınıf `tested_positive` olsun.
+3. TP, FN, FP, TN değerlerinden **precision, recall, F1 ve accuracy**'yi elle hesaplayın. Sonuçlarınızı `Detailed Accuracy By Class` tablosundaki `tested_positive` satırıyla karşılaştırın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, classification_report
+
+X, y = load_breast_cancer(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+y_pred = GaussianNB().fit(X_tr, y_tr).predict(X_te)
+print(confusion_matrix(y_te, y_pred, labels=[1, 0]))             # Satır: gerçek, sütun: tahmin → [[101 6] [7 57]]
+print(classification_report(y_te, y_pred, labels=[1, 0], digits=3,
+                            target_names=["iyi huylu (1)", "kötü huylu (0)"]))
+```
+
+**Gözlem soruları**
+- Python çıktısında "iyi huylu" pozitif kabul edildiğinde precision = 101 / (101 + 7) ≈ 0.935 ve recall = 101 / (101 + 6) ≈ 0.944'tür. Rapordaki değerlerle karşılaştırın.
+- Tıbbi açıdan hangi hata daha tehlikeli: 6 mı yoksa 7 mi? Hangi ölçüte öncelik verirdiniz?
+
 ---
 
 <a id="b10"></a>
@@ -1475,6 +1621,42 @@ Iris verisinde (standartlaştırılmış, 10 katlı çapraz doğrulama) ölçül
 - **Boyut laneti (curse of dimensionality):** Öznitelik sayısı çok arttığında tüm noktalar birbirine neredeyse eşit uzaklıkta hâle gelir ve "en yakın komşu" kavramı anlamını yitirir. Bu nedenle k-NN'den önce öznitelik seçimi veya boyut azaltma faydalıdır ([Bölüm 19](#b19)).
 
 **WEKA:** `lazy → IBk` (`KNN` parametresi = $k$; `distanceWeighting` ile ağırlıklandırma; `crossValidate=True` ile en iyi $k$'yı otomatik arar). **Python:** `KNeighborsClassifier(n_neighbors=5)`.
+
+
+### 10.4 Kısa Uygulama: k Değeri ve Ölçeklemenin Etkisi
+
+**WEKA**
+1. `data/glass.arff` (cam türleri; öznitelikler farklı ölçeklerde) → Classify → `lazy → IBk` → Cross-validation (10).
+2. `KNN` parametresini **1, 5, 15** yapıp her birinin doğruluğunu not edin.
+3. En iyi $k$ için `distanceWeighting = Weight by 1/distance` seçip tekrar deneyin.
+4. **Ölçeklemenin etkisi:** IBk mesafeleri varsayılan olarak kendisi normalize eder. Ayarlarda `nearestNeighbourSearchAlgorithm` (LinearNNSearch) → `distanceFunction` (EuclideanDistance) içinde `dontNormalize = True` yapın ve doğruluğun nasıl değiştiğine bakın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_wine
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
+
+X, y = load_wine(return_X_y=True)                     # 178 şarap, 13 öznitelik (prolin ≈ 1000, diğerleri ≈ 1–10)
+for olcek in [False, True]:
+    for k in [1, 5, 15]:
+        m = KNeighborsClassifier(n_neighbors=k)
+        if olcek:
+            m = make_pipeline(StandardScaler(), m)      # Ölçekleme + k-NN
+        print(f"ölçekleme={olcek!s:5} k={k:<2} doğruluk={cross_val_score(m, X, y, cv=10).mean():.3f}")
+```
+
+| | k = 1 | k = 5 | k = 15 |
+| :--- | :---: | :---: | :---: |
+| Ölçeklemesiz | 0.748 | 0.675 | 0.720 |
+| **Ölçeklemeli** | **0.943** | **0.966** | **0.966** |
+
+**Gözlem soruları**
+- Ölçekleme doğruluğu neden bu kadar artırdı? İpucu: Ölçeklemesiz durumda mesafeyi hangi öznitelik belirliyor?
+- Ölçeklemesiz durumda $k$ arttıkça doğruluk neden düzenli değişmiyor?
 
 ---
 
@@ -1543,6 +1725,41 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
 
 **WEKA:** `bayes → NaiveBayes`. `NaiveBayesUpdateable` sürümü veriyi satır satır öğrenebilir ([Bölüm 23](#b23)). **Python:** `GaussianNB` (sayısal), `MultinomialNB` (kelime sayıları), `CategoricalNB` (kategorik). Iris'te 10 katlı CV doğruluğu ≈ **0.953**.
+
+
+### 11.5 Kısa Uygulama: Elle Yaptığımız Hesabı WEKA'ya Doğrulatmak
+
+**WEKA**
+1. `data/weather.nominal.arff` → Classify → `bayes → NaiveBayes` → **Use training set** → **Start**.
+2. Çıktıdaki sayım tablolarını inceleyin. Sayılar, elle hesapladığımızdan **birer fazladır** (ör. `outlook = sunny` için yes: 3, no: 4), çünkü WEKA sıfır frekans sorununu önlemek için **Laplace düzeltmesi** uygular.
+3. Yeni günü tahmin edin: Test options → **Supplied test set** → [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) → **More options → Output predictions → PlainText** → Result list'te modele sağ tık → **Re-evaluate model on current test set**.
+4. Tahmin `no` olmalıdır. Olasılık, Laplace düzeltmesi nedeniyle elle bulduğumuz 0.795'ten biraz düşük, yaklaşık **0.74** çıkar.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.naive_bayes import CategoricalNB
+from sklearn.preprocessing import OrdinalEncoder
+
+veri = pd.DataFrame([["sunny","hot","high","false","no"], ["sunny","hot","high","true","no"],
+    ["overcast","hot","high","false","yes"], ["rainy","mild","high","false","yes"], ["rainy","cool","normal","false","yes"],
+    ["rainy","cool","normal","true","no"], ["overcast","cool","normal","true","yes"], ["sunny","mild","high","false","no"],
+    ["sunny","cool","normal","false","yes"], ["rainy","mild","normal","false","yes"], ["sunny","mild","normal","true","yes"],
+    ["overcast","mild","high","true","yes"], ["overcast","hot","normal","false","yes"], ["rainy","mild","high","true","no"]],
+    columns=["outlook", "temperature", "humidity", "windy", "play"])
+kod = OrdinalEncoder()                                          # Kategorileri 0, 1, 2… sayılarına çevirir
+X, y = kod.fit_transform(veri.iloc[:, :4]), veri["play"]
+yeni = kod.transform(pd.DataFrame([["sunny", "cool", "high", "true"]], columns=veri.columns[:4]))
+for alfa in [1e-10, 1.0]:                                       # alpha: Laplace düzeltmesi (≈0: yok, 1: var)
+    nb = CategoricalNB(alpha=alfa).fit(X, y)
+    print(f"alpha={alfa}:", dict(zip(nb.classes_, nb.predict_proba(yeni)[0].round(3))))
+# alpha=1e-10 → no: 0.795 (elle hesapla aynı)   alpha=1.0 → no: 0.720
+```
+
+**Gözlem soruları**
+- Laplace düzeltmesi olmadan `outlook = overcast` olan bir gün için `no` olasılığı ne çıkardı? Neden?
+- Python'daki `alpha=1.0` sonucu (0.720) neden WEKA'nınkinden (≈ 0.74) biraz farklı? İpucu: WEKA önsel olasılıklara da düzeltme uygular.
 
 ---
 
@@ -1658,6 +1875,38 @@ Sınırsız büyüyen bir ağaç, her eğitim örneği için ayrı bir yaprak ol
 Tek ağacın kararsızlığı, **Random Forest** ve **Gradient Boosting** gibi güçlü topluluk yöntemlerinin çıkış noktasıdır ([Bölüm 16](#b16)).
 
 **WEKA:** `trees → J48`. Sonucu görsel olarak görmek için Result list'te sağ tık → **Visualize tree**. **Python:** `DecisionTreeClassifier(criterion="entropy")`, kuralları yazdırmak için `export_text`.
+
+
+### 12.5 Kısa Uygulama: Ağacı Görmek ve Budamanın Etkisi
+
+**WEKA**
+1. `data/weather.nominal.arff` → `trees → J48` → **Use training set** → **Start** → Result list'te sağ tık → **Visualize tree**. Ağacın, [şekildeki](#b12) ağaçla aynı olduğunu doğrulayın.
+2. `data/diabetes.arff` → J48 → Cross-validation (10). Çıktıdaki `Number of Leaves`, `Size of the tree` ve doğruluk değerlerini not edin.
+3. Aynı veride sırayla `unpruned = True`, sonra `minNumObj = 20` yapıp tekrar çalıştırın ve üç sonucu karşılaştırın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+X, y = load_breast_cancer(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+for d in [1, 2, 3, 5, 10, None]:                                # None: sınırsız derinlik
+    a = DecisionTreeClassifier(max_depth=d, random_state=0).fit(X_tr, y_tr)
+    print(f"max_depth={str(d):<4} eğitim={a.score(X_tr, y_tr):.3f} "
+          f"test={a.score(X_te, y_te):.3f} yaprak={a.get_n_leaves()}")
+```
+
+| max_depth | 1 | 2 | 3 | 5 | 10 | sınırsız |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Eğitim | 0.932 | 0.942 | 0.980 | 0.997 | **1.000** | **1.000** |
+| Test | 0.889 | 0.906 | 0.901 | **0.912** | 0.906 | 0.906 |
+
+**Gözlem soruları**
+- Eğitim doğruluğu 1.000'e ulaşırken test doğruluğu neden artmadı? Bu durumun adı nedir ([Bölüm 8.1](#b8))?
+- WEKA'da budamasız ağaç daha mı büyük oldu? Doğruluğu arttı mı?
 
 ---
 
@@ -1817,6 +2066,36 @@ Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** (Yun. *epokhē*: "dö
 **WEKA:** `functions → MultilayerPerceptron`. Önemli parametreler: `hiddenLayers` (ör. `a` = (öznitelik+sınıf)/2 nöron, `5,3` = iki gizli katman), `learningRate` (0.3), `momentum` (0.2), `trainingTime` (epoch sayısı, 500). `GUI = True` ile ağı görsel olarak izleyebilirsiniz. Bu depodaki [`application/`](https://github.com/erkanozhan/machinelearning/tree/main/application) uygulamaları, WEKA'da eğitilip `MLP_iris_model.model` olarak kaydedilmiş bir MLP modelini kullanır.
 
 **Python:** `MLPClassifier(hidden_layer_sizes=(10,), max_iter=2000)` → Iris'te 10 katlı CV doğruluğu ≈ **0.960**. Derin öğrenme için **PyTorch**, **TensorFlow/Keras** gibi kütüphaneler kullanılır.
+
+
+### 14.3 Kısa Uygulama: Ağın Büyüklüğünü Değiştirmek
+
+**WEKA**
+1. `data/iris.arff` → Classify → `functions → MultilayerPerceptron`.
+2. Ayarlarda `GUI = True` yapıp **Start**'a basın. Açılan pencerede ağın yapısını (girdi, gizli ve çıktı katmanları) görün, **Start** ile eğitimi başlatıp **Accept** ile bitirin.
+3. `GUI = False` yapın. `hiddenLayers` değerini sırayla `1`, `a` (varsayılan), `10`, `10,10` yapıp 10 katlı CV doğruluklarını karşılaştırın.
+4. `trainingTime` (epoch sayısı) değerini 50 ve 2000 yaparak eğitim süresinin etkisine bakın.
+
+**Python**
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
+
+X, y = load_iris(return_X_y=True)
+for gizli in [(1,), (3,), (10,), (10, 10)]:                        # (10, 10): iki gizli katman, her birinde 10 nöron
+    m = make_pipeline(StandardScaler(),
+                      MLPClassifier(hidden_layer_sizes=gizli, max_iter=3000, random_state=0))
+    print(f"gizli katman={str(gizli):<8} doğruluk={cross_val_score(m, X, y, cv=10).mean():.3f}")
+# (1,): 0.953   (3,): 0.973   (10,): 0.960   (10, 10): 0.967
+```
+
+**Gözlem soruları**
+- Tek nöronlu bir gizli katman bile neden bu kadar başarılı? Iris problemi ne kadar "zor"?
+- Daha büyük ağ her zaman daha iyi sonuç verdi mi? Küçük bir veri setinde büyük ağın riski nedir?
 
 ---
 
@@ -2722,6 +3001,22 @@ flowchart LR
 
 > **Kural:** Bir ön işlem **veriden bir şey öğreniyorsa** (ortalama, min/max, bileşenler, seçilen sütunlar, küme merkezleri…) o bir **modelin parçasıdır** ve yalnızca eğitim verisinden öğrenilmelidir.
 
+
+### 21.5 Kısa Uygulama: WEKA'da Sızıntıyı Görmek
+
+**WEKA**
+1. `data/diabetes.arff` → Preprocess → Filter → `supervised → attribute → Discretize` → **Apply**. *(Bu filtre, aralık sınırlarını belirlerken **sınıf etiketine** bakar.)*
+2. Classify → `bayes → NaiveBayes` → Cross-validation (10) → **Start** → doğruluğu not edin (**yanlış yöntem**).
+3. Preprocess'te **Undo** ile filtreyi geri alın.
+4. Classify → `meta → FilteredClassifier` → `filter = supervised → attribute → Discretize`, `classifier = NaiveBayes` → aynı CV ile **Start** (**doğru yöntem**).
+5. İki doğruluğu karşılaştırın. Yanlış yöntemde aralık sınırları test katmanlarının etiketleri de görülerek belirlendiği için sonuç genellikle **biraz daha iyimser** çıkar.
+
+**Python:** [Bölüm 21.2](#b21)'deki deney ve [`codes/python/15_veri_sizintisi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/15_veri_sizintisi.py)
+
+**Gözlem soruları**
+- Aradaki fark büyük müydü? Öznitelik sayısı çok, örnek sayısı az olsaydı fark nasıl değişirdi?
+- Preprocess sekmesinde **unsupervised** `Normalize` uygulamak da sızıntı mıdır? Neden etkisi daha küçüktür?
+
 ---
 
 <a id="b22"></a>
@@ -3205,7 +3500,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 
 **R kodları** ([`codes/R/`](https://github.com/erkanozhan/machinelearning/tree/main/codes/R)): `grid_ve_random_search.R`, `nested_cv.R`
 
-**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)): `notlar.arff`, `iris_yeni_test.arff`, `insanlar.csv`, `musteri_ticaret.csv`
+**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)): `notlar.arff`, `iris_yeni_test.arff`, `weather_yeni_gun.arff`, `insanlar.csv`, `musteri_ticaret.csv`
 
 **Etkileşimli animasyonlar** (tarayıcıda açılır):
 
