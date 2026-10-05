@@ -103,7 +103,21 @@ Veri, işlendikçe değer kazanır ve şu basamaklardan geçer:
 | **Veri (Data)** | Bir ölçüte (kg, m, inç, galon…) göre ölçülüp kaydedilmiş değer. | Bebeğin tartılıp kilosunun "3.1 kg" olarak deftere yazılması. |
 | **Bilgi (Information)** | Düzenlenmiş, özetlenmiş, bağlamı olan veri. | "Çorlu'da Mart ayında doğan bebeklerin ortalama kilosu 3.1 kg'dır." |
 | **Knowledge** (anlamlı, işe yarar bilgi) | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, **işe yarar ve anlamlı** örüntü ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
-| **Wisdom** (bilgelik) | Knowledge'a dayanarak doğru kararı verip doğru eylemi seçmek. | Sistemin önerisine göre ebeveynin bebeğin ihtiyacına doğru müdahaleyi yapması. |
+| **Wisdom** (bilgelik) | Farklı kaynaklardan elde edilen knowledge'ları **birleştirip** "ne yapmalıyız?" sorusuna somut, uygulanabilir bir cevap vermek: doğru kararı, doğru zamanda, doğru gerekçeyle seçmek. | Sistem, ağlamanın açlıktan kaynaklandığını, son beslenmeden bu yana 3 saat geçtiğini ve bebeğin kilo alımının ortalamanın altında kaldığını birlikte değerlendirir ve "Şimdi besleyin; beslenme aralığını 2.5 saate indirin, kilo takibini haftalık yapın" önerisini verir. |
+
+#### Bir Dağıtım Firmasında Ham Veriden Wisdom'a
+
+Bir gıda dağıtım firmasının deposunda son kullanma tarihine 10 gün kalmış 2 000 kutu yoğurt olduğunu düşünelim. Aynı süreç, bu firma için beş basamakta şöyle işler:
+
+| Seviye | Dağıtım firmasında karşılığı |
+| :--- | :--- |
+| **Ham Veri** | Depodaki ürünler, raflardaki tarihler, araçların konumu, marketlerdeki satışlar… Hepsi gerçekte vardır ama henüz sisteme girilmemiştir. |
+| **Veri** | Barkod okuyucudan gelen kayıtlar: "Ürün: Yoğurt 1 kg, Adet: 2 000, SKT: 15.10", her satış fişi, GPS'ten gelen araç konumları, yol mesafeleri. |
+| **Bilgi (Information)** | Özetler ve raporlar: "Depoda SKT'sine 10 gün kalmış 2 000 yoğurt var." · "Geçen ay en çok yoğurt satan 5 dağıtım noktası şunlar." · "A noktasında yoğurt satışı haftada 400 kutu." |
+| **Knowledge** | Veri madenciliği ve makine öğrenmesi ile elde edilen, ilk bakışta görülmeyen örüntüler:<br>• **Birliktelik kuralları (Apriori, [Bölüm 18](#b18)):** "Yoğurt alan müşterilerin %70'i ekmek ve salatalık da alıyor (lift = 1.8)." *(Yoğurt tek başına değil, bu ürünlerle birlikte daha hızlı satılabilir.)*<br>• **Satış tahmini (regresyon):** "B ve D noktalarında önümüzdeki hafta yoğurt talebinin %30 artması bekleniyor."<br>• **En kısa yol (rota optimizasyonu):** "Depo → B → D → A rotası 42 km, mevcut rota 67 km." |
+| **Wisdom** | Tüm bu knowledge'ları **birleştirerek** somut bir eylem planı üretmek:<br>*"SKT'si yaklaşan 2 000 yoğurdu, talebi artması beklenen B ve D noktalarına öncelikli gönder. Yoğurdu, birlikte satıldığı ekmek ve salatalıkla 'kahvaltı paketi' kampanyasına koy. Araçları en kısa rota olan Depo → B → D → A ile çıkar. Böylece ürün tarihi geçmeden satılır, imha maliyeti ve yakıt gideri düşer."* |
+
+Dikkat edilirse **Wisdom**, tek bir algoritmanın çıktısı değildir. Stok bilgisi, satış tahmini, birliktelik kuralları ve rota optimizasyonundan gelen ayrı ayrı knowledge parçalarının, işletmenin **amacı** (zarar etmemek, müşteriyi memnun etmek) doğrultusunda bir **karara** dönüştürülmesidir. Günümüzde bu birleştirme genellikle **karar destek sistemleri** ile yapılır; son kararı ise çoğu zaman yine bir insan verir.
 
 > **İpucu:** Makine öğrenmesinin asıl işi, **veriden knowledge'a** giden yolu otomatikleştirmektir. **Veri madenciliği (data mining)** terimi de tam olarak bu süreci anlatır. Literatürde bu hiyerarşinin Ham Veri basamağı olmadan hâli **DIKW** (Data → Information → Knowledge → Wisdom) olarak bilinir.
 
