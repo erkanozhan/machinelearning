@@ -85,24 +85,27 @@ Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle i
 
 Bu yaklaşımın en büyük **avantajı**, kuralları açıkça yazmanın çok zor veya imkânsız olduğu problemlerde (bir fotoğrafta kedi olup olmadığını anlamak, bir sesin kime ait olduğunu bulmak gibi) insan uzmanlığının **veri aracılığıyla** bilgisayara aktarılabilmesidir.
 
-### 1.3 Veri, Enformasyon ve Bilgi
+### 1.3 Ham Veriden Wisdom'a: Veri Hiyerarşisi
 
 **Datum** Latince kökenli bir kelimedir ve "verilen şey" anlamına gelir. İngilizcedeki **data** kelimesi bunun çoğuludur: tek bir ölçüm *datum*, ölçümlerin bütünü *data*dır.
 
 **Veri**, bir nesne, varlık, olay veya durum hakkındaki nitel (kategorik) ya da nicel (sayısal) gözlemlerin belirli bir sisteme göre **kayıt altına alınmış** hâlidir.
 
-Veri, işlendikçe değer kazanır. Bu süreç literatürde **DIKW hiyerarşisi** (Data → Information → Knowledge → Wisdom) olarak bilinir:
+Veri, işlendikçe değer kazanır ve şu basamaklardan geçer:
 
-<p align="center"><img src="./images/veri_bilgi_piramidi.svg" alt="Veri, enformasyon, bilgi ve bilgelik piramidi" width="660"></p>
+<p align="center"><b>Ham Veri → Veri → Bilgi (Information) → Knowledge → Wisdom</b></p>
+
+<p align="center"><img src="./images/veri_bilgi_piramidi.svg" alt="Ham veri, veri, bilgi, knowledge ve wisdom piramidi" width="700"></p>
 
 | Seviye | Açıklama | Yeni doğan bebek örneği |
 | :--- | :--- | :--- |
-| **Veri (Data)** | Ölçülmüş ve kaydedilmiş ham değerler. | Bir bebeğin tartılıp kilosunun "3.1 kg" olarak deftere yazılması. *(Bebek tartılmadan önce de bir ağırlığı vardır, ama henüz veri değildir.)* |
-| **Enformasyon (Information)** | Düzenlenmiş, özetlenmiş, bağlamı olan veri. | "Çorlu'da Mart ayında doğan bebeklerin ortalama kilosu 3.1 kg'dır." |
-| **Bilgi (Knowledge)** | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, **işe yarar** örüntü ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
-| **Bilgelik (Wisdom)** | Bilgiye dayanarak doğru eylemi seçmek. | Sistemin önerisine göre ebeveynin doğru müdahaleyi yapması. |
+| **Ham Veri (Raw Data)** | Henüz ölçülmemiş, kaydedilmemiş gerçeklik. | Yeni doğan bir bebeğin ağırlığı: Bir ağırlığı vardır ama henüz bilinmiyor. |
+| **Veri (Data)** | Bir ölçüte (kg, m, inç, galon…) göre ölçülüp kaydedilmiş değer. | Bebeğin tartılıp kilosunun "3.1 kg" olarak deftere yazılması. |
+| **Bilgi (Information)** | Düzenlenmiş, özetlenmiş, bağlamı olan veri. | "Çorlu'da Mart ayında doğan bebeklerin ortalama kilosu 3.1 kg'dır." |
+| **Knowledge** (anlamlı, işe yarar bilgi) | Büyük ve karmaşık veriden çıkarılan, ilk bakışta fark edilmeyen, daha önce elde edilmemiş, **işe yarar ve anlamlı** örüntü ve ilişkiler. | Bir yapay zekâ sisteminin ağlama seslerini analiz ederek bebeğin açlıktan mı, uykusuzluktan mı yoksa ağrıdan mı ağladığını ayırt edebilmesi. |
+| **Wisdom** (bilgelik) | Knowledge'a dayanarak doğru kararı verip doğru eylemi seçmek. | Sistemin önerisine göre ebeveynin bebeğin ihtiyacına doğru müdahaleyi yapması. |
 
-> **İpucu:** Makine öğrenmesinin asıl işi, **veriden bilgiye (knowledge)** giden yolu otomatikleştirmektir. **Veri madenciliği (data mining)** terimi de tam olarak bu süreci anlatır.
+> **İpucu:** Makine öğrenmesinin asıl işi, **veriden knowledge'a** giden yolu otomatikleştirmektir. **Veri madenciliği (data mining)** terimi de tam olarak bu süreci anlatır. Literatürde bu hiyerarşinin Ham Veri basamağı olmadan hâli **DIKW** (Data → Information → Knowledge → Wisdom) olarak bilinir.
 
 ### 1.4 Makine Öğrenmesiyle İlişkili Disiplinler
 

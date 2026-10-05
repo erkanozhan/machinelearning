@@ -1,21 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380" role="img" aria-label="Veri, enformasyon, bilgi ve bilgelik piramidi">
-<title>Veri – Enformasyon – Bilgi – Bilgelik (DIKW) piramidi</title>
-<rect width="700" height="380" rx="12" fill="#fff" stroke="#e2e8f0"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" role="img" aria-label="Ham veri, veri, bilgi, knowledge ve wisdom piramidi">
+<title>Ham Veri – Veri – Bilgi – Knowledge – Wisdom hiyerarşisi</title>
+<rect width="760" height="440" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
 <g font-family="Segoe UI, Arial, Helvetica, sans-serif" text-anchor="middle" fill="#1e293b">
-<text x="350" y="30" font-size="17" font-weight="bold">Veriden Bilgeliğe (DIKW Hiyerarşisi)</text>
-<polygon points="40,350 360,350 320,280 80,280" fill="#dbeafe" stroke="#2563eb"/>
-<polygon points="80,280 320,280 280,210 120,210" fill="#dcfce7" stroke="#16a34a"/>
-<polygon points="120,210 280,210 240,140 160,140" fill="#ffedd5" stroke="#ea580c"/>
-<polygon points="160,140 240,140 200,70" fill="#fee2e2" stroke="#dc2626"/>
-<text x="200" y="320" font-size="15" font-weight="bold">Veri (Data)</text>
-<text x="200" y="250" font-size="14" font-weight="bold">Enformasyon</text>
-<text x="200" y="182" font-size="14" font-weight="bold">Bilgi</text>
-<text x="200" y="128" font-size="12" font-weight="bold">Bilgelik</text>
+<text x="380" y="30" font-size="17" font-weight="bold">Ham Veriden Wisdom'a: Veri Hiyerarşisi</text>
+<polygon points="30,410 370,410 334,345 66,345" fill="#f1f5f9" stroke="#64748b"/>
+<polygon points="66,345 334,345 298,280 102,280" fill="#dbeafe" stroke="#2563eb"/>
+<polygon points="102,280 298,280 262,215 138,215" fill="#dcfce7" stroke="#16a34a"/>
+<polygon points="138,215 262,215 226,150 174,150" fill="#ffedd5" stroke="#ea580c"/>
+<polygon points="174,150 226,150 200,70" fill="#fee2e2" stroke="#dc2626"/>
+<text x="200" y="374" font-size="14.5" font-weight="bold">Ham Veri</text><text x="200" y="392" font-size="11.5">(Raw Data)</text>
+<text x="200" y="309" font-size="14.5" font-weight="bold">Veri</text><text x="200" y="327" font-size="11.5">(Data)</text>
+<text x="200" y="244" font-size="14" font-weight="bold">Bilgi</text><text x="200" y="262" font-size="11.5">(Information)</text>
+<text x="200" y="180" font-size="12.5" font-weight="bold">Knowledge</text><text x="200" y="196" font-size="9.5">(anlamlı bilgi)</text>
+<text x="200" y="133" font-size="10.5" font-weight="bold">Wisdom</text>
 <g text-anchor="start" font-size="12.5">
-<text x="380" y="310">Ölçülmüş, kaydedilmiş ham değerler.</text><text x="380" y="327" fill="#64748b">"3.1 kg", "Mart", "Çorlu"</text>
-<text x="380" y="240">Düzenlenmiş, özetlenmiş, bağlamı olan veri.</text><text x="380" y="257" fill="#64748b">"Çorlu'da Mart'ta doğanların ortalaması 3.1 kg"</text>
-<text x="380" y="170">Örüntü/ilişki: neden–nasıl sorusuna cevap.</text><text x="380" y="187" fill="#64748b">"Annenin beslenmesi doğum kilosunu etkiliyor"</text>
-<text x="380" y="105">Bilgiye dayanarak doğru karar vermek.</text><text x="380" y="122" fill="#64748b">"Hamilelere beslenme programı başlatalım"</text>
+<text x="400" y="372">Henüz ölçülmemiş, kaydedilmemiş gerçeklik.</text><text x="400" y="389" fill="#64748b">Bebeğin bir ağırlığı var ama bilinmiyor</text>
+<text x="400" y="307">Bir ölçüte göre ölçülüp kaydedilmiş değer.</text><text x="400" y="324" fill="#64748b">"Bebek 3.1 kg" (deftere yazıldı)</text>
+<text x="400" y="242">Düzenlenmiş, özetlenmiş, bağlamı olan veri.</text><text x="400" y="259" fill="#64748b">"Mart'ta doğanların ortalaması 3.1 kg"</text>
+<text x="400" y="177">İlk bakışta görülmeyen, işe yarar örüntüler.</text><text x="400" y="194" fill="#64748b">"Ağlama sesinden nedeni ayırt edilebiliyor"</text>
+<text x="400" y="112">Knowledge'a dayanarak doğru karar vermek.</text><text x="400" y="129" fill="#64748b">"Ebeveyn doğru müdahaleyi yapar"</text>
 </g>
-<text x="630" y="345" font-size="11" fill="#64748b">Anlam ve değer ↑</text>
+<text x="720" y="425" font-size="11" fill="#64748b" text-anchor="end">Yukarı çıktıkça anlam ve değer artar ↑</text>
 </g></svg>
