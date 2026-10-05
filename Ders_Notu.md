@@ -150,7 +150,7 @@ graph LR
 
 ### 1.5 Model Nedir? Öğrenme Nedir?
 
-**Model** (İng. *model*; Lat. *modulus*: "küçük ölçü, ölçek", *modus*: "ölçü"), girdiye bakarak çıktıyı tahmin eden, veriden öğrenilmiş **matematiksel bir fonksiyon** (İng. *function*; Lat. *functio*: "yerine getirme, görev") veya **kural kümesidir**. Bir doğru denklemi ($y = \theta_0 + \theta_1 x$), bir karar ağacı (İng. *decision tree*) ya da milyonlarca parametreli bir sinir ağı birer modeldir.
+**Model** (İng. *model*; Lat. *modulus*: "küçük ölçü, ölçek", *modus*: "ölçü"), girdiye bakarak çıktıyı tahmin eden, veriden öğrenilmiş **matematiksel bir fonksiyon** (İng. *function*; Lat. *functio*: "yerine getirme, görev") veya **kural kümesidir**. Bir doğru denklemi ($y = \theta_0 + \theta_1 x$), bir karar ağacı (İng. *decision tree*; "karar" Lat. *decisio*: "kesip ayırma, hüküm") ya da milyonlarca parametreli bir sinir ağı birer modeldir.
 
 Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**parametreleri**; İng. *parameters*; Yun. *para*: "yanında" + *metron*: "ölçü") veriye bakarak, tahmin hatasını en aza indirecek şekilde ayarlama sürecidir. Bu sürece **eğitim** (İng. *training*; Lat. *trahere*: "çekmek, yönlendirmek") denir. İyi eğitilmiş bir model, daha önce **hiç görmediği** verilere de doğru tahminler yapabilir; bu yeteneğe **genelleme** (İng. *generalization*; Lat. *generalis*: "genele, bütün türe ait") denir.
 
@@ -318,7 +318,7 @@ Bu derste iki araç birlikte kullanılır:
 
 | Arayüz | Ne için kullanılır? |
 | :--- | :--- |
-| **Explorer** | Veri yükleme, ön işleme (İng. *preprocessing*), model kurma ve değerlendirme. Derste en çok kullanacağımız ekran. |
+| **Explorer** | Veri yükleme, ön işleme (İng. *preprocessing*; Lat. *processus*: "ilerleyiş, süreç"), model kurma ve değerlendirme. Derste en çok kullanacağımız ekran. |
 | **Experimenter** | Birden çok algoritmayı birden çok veri setinde, tekrarlı deneylerle ve istatistiksel testlerle karşılaştırma ([Bölüm 24](#b24)). |
 | **KnowledgeFlow** | Sürükle-bırak ile veri akış şeması (pipeline) tasarlama ([Bölüm 23](#b23)). |
 | **Workbench** | Yukarıdakilerin tümünü tek pencerede toplayan arayüz. |
@@ -912,7 +912,7 @@ Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberle
 | :--- | :--- | :--- | :--- |
 | Eğitim hatası | Yüksek | Düşük | Çok düşük (≈ 0) |
 | Test hatası | Yüksek | Düşük | **Yüksek** |
-| Neden | Model çok basit | Doğru karmaşıklık | Model çok karmaşık, gürültüyü (İng. *noise*) ezberliyor |
+| Neden | Model çok basit | Doğru karmaşıklık | Model çok karmaşık, gürültüyü (İng. *noise*; Lat. *nausea*: "deniz tutması, rahatsızlık") ezberliyor |
 | Çözüm | Daha karmaşık model, daha iyi öznitelikler | — | Daha fazla veri, düzenlileştirme, budama (İng. *pruning*), erken durdurma (İng. *early stopping*), daha basit model |
 
 ### 8.2 Yanlılık–Varyans Dengesi (Bias–Variance Trade-off)
@@ -1000,7 +1000,7 @@ Genel kabul görmüş uygulama $K = 5$ veya $K = 10$'dur. Bu değerler yanlılı
 
 ### 8.7 Tabakalı Örnekleme (Stratified K-Fold)
 
-Sınıflar dengesizse (İng. *imbalanced*; ör. 1000 hastanın 950'si sağlıklı, 50'si hasta) rastgele bölmede bazı katmanlarda hiç hasta olmayabilir. **Tabakalı** (İng. *stratified*; Lat. *stratum*: "katman, serilmiş örtü") çapraz doğrulama, her katmanda **sınıf oranlarının orijinal veriyle aynı** (%95 / %5) kalmasını garanti eder. Sınıflandırmada **varsayılan tercih** olmalıdır (WEKA'nın çapraz doğrulaması zaten tabakalıdır; scikit-learn'de `StratifiedKFold` veya `train_test_split(..., stratify=y)`).
+Sınıflar dengesizse (İng. *imbalanced*; Lat. *bilanx*: "iki kefeli terazi"; ör. 1000 hastanın 950'si sağlıklı, 50'si hasta) rastgele bölmede bazı katmanlarda hiç hasta olmayabilir. **Tabakalı** (İng. *stratified*; Lat. *stratum*: "katman, serilmiş örtü") çapraz doğrulama, her katmanda **sınıf oranlarının orijinal veriyle aynı** (%95 / %5) kalmasını garanti eder. Sınıflandırmada **varsayılan tercih** olmalıdır (WEKA'nın çapraz doğrulaması zaten tabakalıdır; scikit-learn'de `StratifiedKFold` veya `train_test_split(..., stratify=y)`).
 
 ### 8.8 Birini Dışarıda Bırak (Leave-One-Out, LOOCV)
 
