@@ -424,6 +424,35 @@ $$
 
 > **Öznitelik** ile **parametre** farklı şeylerdir. Öznitelik, veride bulunan bir girdidir (evin metrekaresi). **Parametre** ise modelin içinde, eğitim sırasında öğrenilen bir sayıdır (metrekarenin fiyata etkisini gösteren katsayı, $\theta$). Kaynaklarda bazen karıştırılır; biz bu ayrımı koruyacağız.
 
+Bu ayrım, en temel model olan **lineer modelde** açıkça görülür ([Bölüm 6](#b6)). Model, her özniteliği kendi parametresiyle çarpıp toplar:
+
+$$
+y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m
+$$
+
+| Sembol | Okunuşu | Anlamı |
+| :---: | :--- | :--- |
+| $y$ | "ye" | Tahmin edilmek istenen sonuç (hedef) |
+| $x_1, x_2, \dots, x_m$ | "iks bir, iks iki, …, iks em" | **Öznitelikler:** Sonucu etkilediğini düşündüğümüz, veride bulunan girdiler |
+| $\theta_0$ | "teta sıfır" | **Sabit terim (kesişim):** Tüm öznitelikler sıfırken $y$'nin değeri |
+| $\theta_1, \theta_2, \dots, \theta_m$ | "teta bir, teta iki, …, teta em" | **Parametreler (katsayılar):** Her özniteliğin $y$ üzerindeki etkisinin yönü ve büyüklüğü; eğitim sırasında veriden öğrenilir |
+| $m$ | "em" | Öznitelik sayısı |
+
+Öznitelikler bir araya gelerek **öznitelik vektörünü** $\mathbf{x} = (x_1, x_2, \dots, x_m)$ oluşturur. Hangi özniteliklerin vektöre alınacağına karar verirken önce **alan uzmanlarının** görüşüne başvurulur; tahmin edilmek istenen durumu en iyi tanımlayan özellikleri onlar bilir.
+
+**Örnek: Yarınki hava sıcaklığının tahmini**
+
+| Sembol | Anlamı |
+| :---: | :--- |
+| $y$ | Yarınki hava sıcaklığı (tahmin edilecek hedef) |
+| $x_1$ | Bugünkü sıcaklık |
+| $x_2$ | Bugünkü nem |
+| $x_3$ | Bugünkü hava basıncı |
+| $x_4$ | Bugünkü rüzgâr hızı |
+| $x_5$ | Bugünkü rüzgâr yönü |
+
+Burada $x_1, \dots, x_5$ meteoroloji istasyonunun ölçtüğü **özniteliklerdir**. $\theta_1, \dots, \theta_5$ ise modelin geçmiş yılların verisinden **öğrendiği parametrelerdir**. Örneğin $\theta_1$ büyük ve pozitif çıkarsa, "bugün sıcaksa yarın da büyük ihtimalle sıcak olur" anlamına gelir.
+
 ### 5.2 Temel İstatistikler
 
 Veriyi tanımak için ilk bakılan değerler bunlardır. WEKA'da **Preprocess** sekmesinde bir öznitelik seçildiğinde sağ panelde otomatik görünürler.
@@ -3404,7 +3433,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | $\mu$, $\bar{x}$ | mü, iks bar | Ortalama | 5.2 |
 | $\sigma$, $\sigma^2$ | sigma, sigma kare | Standart sapma, varyans | 5.2 |
 | $\lvert a \rvert$ | mutlak değer | İşaretsiz büyüklük | 5.8 |
-| $\theta$, $\boldsymbol{\theta}$ | teta | Model parametreleri | 6.1 |
+| $\theta$, $\boldsymbol{\theta}$ | teta | Model parametreleri | 5.1 |
 | $h_\theta(x)$ | h teta iks | Hipotez (model) fonksiyonu | 6.1 |
 | $J(\theta)$ | ce teta | Maliyet (kayıp) fonksiyonu | 6.2 |
 | $\alpha$, $\eta$ | alfa, eta | Öğrenme oranı | 6.4 |
