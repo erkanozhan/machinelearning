@@ -2438,7 +2438,9 @@ $$
 
 Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20.31 → 9.83 → 7.09 → 7.00 → 6.98 → 6.98** (6. adımda yakınsadı).
 
-> **Animasyon:** Atama ve güncelleme adımlarını tek tek izleyin; rastgele ve k-means++ başlangıcı karşılaştırın → [K-Means Animasyonu](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
+> **Animasyon 1, algoritmayı adım adım anlamak için:** Her noktanın üç merkeze olan uzaklığının tek tek hesaplandığını, noktanın en yakın merkeze atandığını ve 12 nokta bittiğinde merkezlerin kendi noktalarının ortalamasına kaydığını izleyin → [K-Means Şeffaf Algoritma Simülasyonu](https://erkanozhan.github.io/machinelearning/animation/k-means_interactive_animation.html)
+>
+> **Animasyon 2, deney yapmak için:** K sayısını ve gerçek grup sayısını değiştirin; rastgele başlangıç ile k-means++ başlangıcını karşılaştırın; kötü bir başlangıcın algoritmayı **yerel minimuma** nasıl hapsettiğini ve SSE'nin her adımda nasıl azaldığını görün → [K-Means Deney Ortamı](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
 
 **Önemli özellikler:**
 - Her adımda SSE **azalır veya aynı kalır**; algoritma her zaman durur. Ancak bulunan çözüm **yerel minimum** olabilir: Kötü başlangıç merkezleri kötü kümelere götürebilir. Çözüm: algoritmayı farklı başlangıçlarla birçok kez çalıştırıp en düşük SSE'li sonucu seçmek (sklearn `n_init=10`) ve merkezleri birbirinden uzak seçen **k-means++** başlangıcını kullanmak (WEKA: `initializationMethod = k-means++`).
@@ -3536,7 +3538,8 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | Animasyon | Konu |
 | :--- | :--- |
 | [Gradyan İnişi](https://erkanozhan.github.io/machinelearning/animation/gradyan_inisi_animasyonu.html) | Öğrenme oranının lineer regresyon eğitimine etkisi |
-| [K-Means](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html) | Atama/güncelleme adımları, rastgele vs k-means++ |
+| [K-Means Şeffaf Algoritma Simülasyonu](https://erkanozhan.github.io/machinelearning/animation/k-means_interactive_animation.html) | Her noktanın merkezlere uzaklığı, atama ve merkez güncelleme adımları |
+| [K-Means Deney Ortamı](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html) | K seçimi, rastgele vs k-means++ başlangıç, yerel minimum, SSE grafiği |
 | [ROC Eğrisi](https://erkanozhan.github.io/machinelearning/roc_animation.html) | Eşik değiştikçe ROC eğrisinin oluşumu |
 | [Nested Cross-Validation](https://erkanozhan.github.io/machinelearning/animation/nested_cv_animation.html) | İç ve dış döngülerin işleyişi |
 
