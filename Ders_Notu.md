@@ -363,7 +363,7 @@ WEKA'nın kendi dosya biçimi **ARFF**'dir (*Attribute-Relation File Format*). D
 - Diğer türler: `string` (metin), `date` (tarih).
 - `.csv` dosyalarını WEKA'da açıp **Save** ile `.arff` olarak kaydedebilirsiniz. Veritabanından veri çekmek için ilgili **JDBC** sürücüsünün WEKA'ya tanıtılması gerekir.
 
-Bu örnek dosya depoda hazırdır: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff).
+Bu dosyanın **200 öğrencilik** genişletilmiş hâli depoda hazırdır: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff). Öğrencinin durumu, dönem ortalamasına göre belirlenmiştir: $\text{ortalama} = 0.4 \cdot \text{vize} + 0.6 \cdot \text{final}$; ortalaması **60 ve üstü** olanlar `gecti`, diğerleri `kaldi` (117 geçen, 83 kalan).
 
 WEKA'nın kurulum klasöründeki `data/` dizininde derste kullanacağımız hazır veri setleri bulunur: `iris.arff`, `weather.nominal.arff`, `cpu.arff`, `diabetes.arff`, `credit-g.arff`, `supermarket.arff` vb.
 
