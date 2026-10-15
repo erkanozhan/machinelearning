@@ -365,7 +365,7 @@ WEKA'nın kendi dosya biçimi **ARFF**'dir (*Attribute-Relation File Format*). D
 
 Bu dosyanın **200 öğrencilik** genişletilmiş hâli depoda hazırdır: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff). Öğrencinin durumu, dönem ortalamasına göre belirlenmiştir: $\text{ortalama} = 0.4 \cdot \text{vize} + 0.6 \cdot \text{final}$; ortalaması **60 ve üstü** olanlar `gecti`, diğerleri `kaldi` (117 geçen, 83 kalan).
 
-WEKA'nın kurulum klasöründeki `data/` dizininde derste kullanacağımız hazır veri setleri bulunur: `iris.arff`, `weather.nominal.arff`, `cpu.arff`, `diabetes.arff`, `credit-g.arff`, `supermarket.arff` vb.
+Derse özel, Türkçe veri setleri depodaki [`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data) klasöründedir; her biri hem CSV (Python/R) hem ARFF (WEKA) biçimindedir (liste: [Ek C](#ekC)). Ayrıca WEKA'nın kurulum klasöründeki `data/` dizininde derste kullanacağımız hazır veri setleri bulunur: `iris.arff`, `weather.nominal.arff`, `cpu.arff`, `diabetes.arff`, `credit-g.arff`, `supermarket.arff` vb.
 
 ### 4.3 Python ve scikit-learn
 
@@ -488,6 +488,44 @@ $$
 
 > **Hangi standart sapma?** `numpy.std()` ve scikit-learn'ün `StandardScaler`'ı **$n$'e böler** (14.79). Excel `STDEV`, pandas `.std()` ve WEKA **$n-1$'e böler** (17.08). Aynı veride farklı araçların küçük farklı sonuçlar vermesinin sık bir nedeni budur.
 
+#### Kısa Uygulama: 200 Öğrencinin Notlarını Özetlemek
+
+Veri: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff) (WEKA) ve [`data/notlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.csv) (Python, R). 200 öğrencinin vize ve final notu; dönem ortalaması 60 ve üstü olanlar `gecti`.
+
+**WEKA:** Preprocess → **Open file…** → `notlar.arff`. Sol listeden `vize`'yi seçin. Sağdaki Minimum, Maximum, Mean ve StdDev değerlerini not edin; histogram, `durum`'a göre renklenir.
+
+**Python**
+
+```python
+import pandas as pd
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "notlar.csv")                     # 200 öğrenci: vize, final, durum
+
+print(df.head())                                           # İlk 5 satır
+print(df.describe())                                       # Sayısal sütunlar: adet, ortalama, std, min, çeyrekler, max
+print("Medyan:", df["vize"].median())                      # Ortanca değer
+print("Std (n-1):", round(df["vize"].std(), 2))            # pandas varsayılanı: örneklem std (÷ n-1)
+print("Std (n)  :", round(df["vize"].std(ddof=0), 2))      # Kitle std (÷ n), NumPy ve StandardScaler bunu kullanır
+print(df["durum"].value_counts())                          # Kategorik sütunun sıklıkları
+```
+
+> **Veriyi okuma:** Kodlar veriyi doğrudan GitHub'dan okur; Google Colab'da da çalışır. Dosyayı indirdiyseniz `VERI = "data/"` yazarak yerel klasörden okuyabilirsiniz.
+
+**R**
+
+```r
+VERI <- "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df <- read.csv(paste0(VERI, "notlar.csv"))     # 200 öğrenci
+summary(df)                                    # Min, çeyrekler (1st Qu., 3rd Qu.), medyan, ortalama, max
+sd(df$vize)                                    # Örneklem standart sapması (÷ n-1) → 19.68
+table(df$durum)                                # gecti: 117, kaldi: 83
+```
+
+**Gözlem soruları**
+- WEKA'nın `StdDev` değeri (19.68) pandas `.std()` ile mi, yoksa `.std(ddof=0)` ile mi aynı? Neden?
+- `vize` ortalaması (63.4) medyandan (65) küçük. Bu, dağılımın hangi tarafında uç değerler olduğunu gösterir?
+
 ### 5.3 Öznitelik Türleri
 
 | Tür | Açıklama | Örnek | İzin verilen işlemler |
@@ -568,6 +606,8 @@ Bir bankada, kredi başvurusu yapan müşterinin borcunu zamanında ödeyip öde
 3. **Hedefi belirlemek:** "Yüksek risk" / "Düşük risk" → iki sınıflı bir **sınıflandırma** problemi.
 4. **Dönüştürmek:** Gecikme → 0/1; şehir → one-hot; gelir → ölçekleme veya gruplama.
 5. **Modellemek ve değerlendirmek:** Sonraki bölümlerde göreceğimiz algoritmalarla.
+
+Bu senaryonun yapay ama gerçekçi bir veri seti depoda hazırdır: [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv) / [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.arff). 600 başvuru; `yas`, `aylik_gelir`, `borc_gelir_orani`, `calisma_yili`, `sehir`, `gecmis_gecikme` ve hedef `risk` (dusuk/yuksek). Başvuruların yaklaşık %20'si yüksek risklidir ve bazı gelir ve şehir bilgileri **eksiktir**. Bu veriyle [Bölüm 5.10](#b5)'da ön işleme, [Bölüm 9.3](#b9)'te ROC eğrisi ve [Bölüm 22](#b22)'de maliyete duyarlı öğrenme uygulaması yapılır.
 
 > **Etik not:** Kredi, işe alım, sağlık gibi insanları doğrudan etkileyen kararlarda cinsiyet, etnik köken gibi korunan özellikler (veya onların dolaylı temsilcileri, ör. posta kodu) ayrımcılığa yol açabilir. Modelin **adil** olup olmadığı ayrıca denetlenmelidir.
 
@@ -693,32 +733,68 @@ $$
 > **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
 
 
-### 5.10 Kısa Uygulama: Eksik Veri ve Kategorik Kodlama
+#### Kısa Uygulama: İki Öğrenci Arasındaki Mesafe
 
-**WEKA**
-1. Preprocess → **Open file…** → WEKA klasöründeki `data/labor.arff` (iş sözleşmeleri verisi; çok sayıda eksik değer içerir).
-2. Sol listeden öznitelikleri tek tek seçin; sağ üstteki **Missing** satırında eksik değer sayısını ve yüzdesini not edin.
-3. Filter → `unsupervised → attribute → ReplaceMissingValues` → **Apply**. Missing değerlerinin 0 olduğunu görün. *(Sayısal sütunlar ortalama, kategorik sütunlar en sık değer ile doldurulur.)*
-4. Filter → `unsupervised → attribute → NominalToBinary` → **Apply**. Kategorik özniteliklerin 0/1 sütunlarına dönüştüğünü inceleyin.
+Notlar verisinin ilk iki öğrencisi: (vize 60, final 75) ve (vize 45, final 50).
 
 **Python**
 
 ```python
-import numpy as np, pandas as pd
+import numpy as np
 
-df = pd.DataFrame({"yas":   [25, 32, np.nan, 41, 29],                       # Eksik yaş
-                   "sehir": ["İstanbul", "Ankara", "İzmir", np.nan, "Ankara"],   # Eksik şehir
-                   "gelir": [18000, 25000, 22000, 40000, np.nan]})            # Eksik gelir
-print(df.isna().sum())                                         # Her sütundaki eksik değer sayısı
-df["yas"]   = df["yas"].fillna(df["yas"].median())              # Sayısal → medyan ile doldur
-df["gelir"] = df["gelir"].fillna(df["gelir"].median())
-df["sehir"] = df["sehir"].fillna(df["sehir"].mode()[0])         # Kategorik → en sık değer (Ankara)
-print(pd.get_dummies(df, columns=["sehir"], dtype=int))         # One-hot kodlama
+a = np.array([60, 75])                         # 1. öğrenci: vize 60, final 75
+b = np.array([45, 50])                         # 2. öğrenci: vize 45, final 50
+
+oklid = np.sqrt(((a - b) ** 2).sum())          # √(15² + 25²)
+manhattan = np.abs(a - b).sum()                # 15 + 25
+print(f"Öklid = {oklid:.2f}, Manhattan = {manhattan}")   # Öklid = 29.15, Manhattan = 40
 ```
 
+**R**
+
+```r
+x <- rbind(c(60, 75), c(45, 50))      # Her satır bir öğrenci
+dist(x)                                # Öklid (varsayılan) → 29.15
+dist(x, method = "manhattan")          # Manhattan → 40
+```
+
+### 5.10 Kısa Uygulama: Kredi Başvurularında Eksik Veri ve Kodlama
+
+Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.arff) (WEKA) ve [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv) (Python). [Bölüm 5.7](#b5)'deki senaryonun verisi: 600 başvuru, %5'inde gelir, %3'ünde şehir bilgisi eksik.
+
+**WEKA**
+1. Preprocess → **Open file…** → `kredi_basvurulari.arff`.
+2. `aylik_gelir` ve `sehir`'i seçin; sağ üstteki **Missing** satırında eksik değer sayısını (30 ve 18) görün.
+3. Filter → `unsupervised → attribute → ReplaceMissingValues` → **Apply**. Missing değerleri 0 olur. *(Sayısal sütunlar ortalama, kategorik sütunlar en sık değer ile doldurulur.)*
+4. Filter → `unsupervised → attribute → Discretize` → `attributeIndices = 2`, `bins = 3` → **Apply**. `aylik_gelir` üç aralığa bölünür.
+5. Filter → `unsupervised → attribute → NominalToBinary` → **Apply**. Kategorik öznitelikler 0/1 sütunlarına dönüşür.
+
+**Python**
+
+```python
+import pandas as pd
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "kredi_basvurulari.csv")            # 600 kredi başvurusu
+
+print(df.isna().sum())                                       # Sütun başına eksik değer sayısı
+df["aylik_gelir"] = df["aylik_gelir"].fillna(df["aylik_gelir"].median())   # Sayısal → medyan
+df["sehir"] = df["sehir"].fillna(df["sehir"].mode()[0])                    # Kategorik → en sık değer
+
+df["gelir_grubu"] = pd.cut(df["aylik_gelir"], bins=[0, 25000, 45000, float("inf")],
+                           labels=["dusuk", "orta", "yuksek"])            # Gruplama (binning)
+X = pd.get_dummies(df.drop(columns="risk"), columns=["sehir", "gecmis_gecikme", "gelir_grubu"],
+                   dtype=int)                                              # One-hot kodlama
+print(X.shape)                                               # (600, 13): kategorikler 0/1 sütunlarına açıldı
+print(pd.crosstab(df["gecmis_gecikme"], df["risk"], normalize="index").round(2))   # Gecikme–risk ilişkisi
+```
+
+> **Veriyi okuma:** Kodlar veriyi doğrudan GitHub'dan okur; Google Colab'da da çalışır. Dosyayı indirdiyseniz `VERI = "data/"` yazarak yerel klasörden okuyabilirsiniz.
+
 **Gözlem soruları**
-- Eksik yaş neden ortalama yerine medyan ile dolduruldu? Gelirde 40 000 TL gibi yüksek bir değer varken ortalama ne olurdu?
-- One-hot kodlamadan sonra kaç sütun oluştu? Şehir sayısı 81 olsaydı ne olurdu?
+- Eksik gelir neden ortalama yerine medyan ile dolduruldu? Gelir dağılımında çok yüksek gelirli birkaç kişi varsa ortalama ne olur?
+- Geçmişte gecikme yaşayanların yüksek risk oranı (%43), yaşamayanlarınkinin (%13) kaç katı? Bu öznitelik model için ne kadar değerli olabilir?
+- WEKA'nın `Discretize` filtresi aralıkları eşit genişlikte mi, eşit sayıda kişi içerecek şekilde mi bölüyor? (İpucu: `useEqualFrequency` parametresi.)
 
 ---
 
@@ -893,32 +969,60 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 > **WEKA:** Classify → `functions → LinearRegression`. Hedef sayısal olduğunda WEKA otomatik olarak regresyon yapar. `cpu.arff` üzerindeki uygulama ve çıktının yorumu [Bölüm 9.3](#b9)'tedir.
 
 
-### 6.8 Kısa Uygulama: Katsayıları Yorumlamak
+### 6.8 Kısa Uygulama: Ev Fiyatı Modeli ve Katsayıların Yorumu
+
+Veri: [`data/ev_fiyatlari.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/ev_fiyatlari.arff) (WEKA) ve [`data/ev_fiyatlari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/ev_fiyatlari.csv) (Python, R). 240 ev: `metrekare`, `oda_sayisi`, `bina_yasi`, `kat`, `semt` (merkez/cevre/banliyo), `otopark` (evet/hayir) ve hedef `fiyat_bin_tl`.
 
 **WEKA**
-1. `data/cpu.arff` → Classify → `functions → LinearRegression` → Test options: **Use training set** → **Start**.
-2. Çıktının başındaki `class = … * MYCT + … * MMIN + …` denklemini bulun. WEKA, katkısı zayıf öznitelikleri varsayılan olarak denklemden çıkarır (`attributeSelectionMethod = M5 method`).
-3. Aynı modeli **Cross-validation (10)** ile tekrar çalıştırın ve `Correlation coefficient` değerlerini karşılaştırın.
+1. `ev_fiyatlari.arff` → Classify → `functions → LinearRegression` → **Use training set** → **Start**. Çıktının başındaki `fiyat_bin_tl = … * metrekare + …` denklemini bulun. Kategorik `semt` ve `otopark`, WEKA tarafından otomatik olarak 0/1 değişkenlere çevrilir.
+2. Aynı modeli **Cross-validation (10)** ile çalıştırın; `Correlation coefficient`, `Mean absolute error` ve `Root mean squared error` değerlerini not edin.
+3. `trees → M5P` ile tekrar deneyin ve hataları karşılaştırın.
 
 **Python**
 
 ```python
-from sklearn.datasets import load_diabetes
+import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import cross_val_score
 
-X, y = load_diabetes(return_X_y=True, as_frame=True)          # 442 hasta, 10 öznitelik (önceden standartlaştırılmış)
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "ev_fiyatlari.csv")                         # 240 ev
+X = pd.get_dummies(df.drop(columns="fiyat_bin_tl"), drop_first=True, dtype=int)   # semt, otopark → 0/1
+y = df["fiyat_bin_tl"]
+
 model = LinearRegression().fit(X, y)
-for ad, k in sorted(zip(X.columns, model.coef_), key=lambda t: -abs(t[1]))[:3]:
-    print(f"{ad:>4}: {k:8.1f}")                                # En etkili 3 öznitelik: s1 −792, s5 +751, bmi +520
-print("R² (eğitim):", round(model.score(X, y), 3))             # 0.518
-print("R² (5 katlı CV):", round(cross_val_score(LinearRegression(), X, y, cv=5, scoring="r2").mean(), 3))  # 0.482
+print("θ0 (kesişim):", round(model.intercept_))
+for ad, k in zip(X.columns, model.coef_):                           # Her özniteliğin katsayısı (θ)
+    print(f"{ad:<14}: {k:8.1f}")
+r2 = cross_val_score(LinearRegression(), X, y, cv=10, scoring="r2")
+print(f"10 katlı CV R²: {r2.mean():.3f} ± {r2.std():.3f}")
 ```
 
+| Öznitelik | Katsayı ($\theta$) | Yorum |
+| :--- | :---: | :--- |
+| metrekare | +30.3 | Her ek m² fiyatı yaklaşık **30 bin TL** artırır |
+| bina_yasi | −25.3 | Bina bir yıl eskidikçe fiyat yaklaşık 25 bin TL düşer |
+| semt_merkez | +1520.2 | Merkezdeki ev, (diğer her şey aynıyken) banliyödekinden yaklaşık 1.5 milyon TL pahalı |
+| otopark_hayir | −173.3 | Otoparkı olmayan ev yaklaşık 173 bin TL ucuz |
+| oda_sayisi | −26.5 | **Negatif!** (soruya bakın) |
+
+10 katlı CV $R^2$ = **0.886 ± 0.045**.
+
+**R** (katsayıların yanında anlamlılık testleri de verir)
+
+```r
+VERI <- "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+ev <- read.csv(paste0(VERI, "ev_fiyatlari.csv"), stringsAsFactors = TRUE)
+model <- lm(fiyat_bin_tl ~ ., data = ev)       # "~ ." : diğer tüm sütunlar girdi; semt ve otopark otomatik 0/1 olur
+summary(model)                                 # Katsayılar, p-değerleri (Pr(>|t|)), R², düzeltilmiş R²
+```
+
+R çıktısında `oda_sayisi` için p-değeri **0.45** çıkar (anlamsız); diğer tüm öznitelikler p < 0.001 ile anlamlıdır. $R^2$ = 0.914, düzeltilmiş $R^2$ = 0.912.
+
 **Gözlem soruları**
-- Bir katsayının **negatif** olması ne anlama gelir? `bmi` (vücut kitle indeksi) katsayısının pozitif olması tıbben mantıklı mı?
-- Eğitim verisindeki $R^2$ neden çapraz doğrulamadakinden yüksek?
-- WEKA'da hangi öznitelikler denklemden çıkarıldı?
+- Daha çok oda, evi neden **ucuzlatıyor** gibi görünüyor? İpucu: Oda sayısı ile metrekare arasındaki ilişkiyi düşünün (**çoklu doğrusallık**, [Bölüm 6.7](#b6)). "Metrekare sabitken oda sayısı artarsa" ne olur?
+- Eğitim verisindeki $R^2$ (0.914) neden 10 katlı CV $R^2$'den (0.886) büyük?
+- WEKA'da hangi öznitelikler denklemden çıkarıldı (`attributeSelectionMethod = M5 method`)?
 
 ---
 
@@ -1007,6 +1111,37 @@ print("Test doğruluğu:", round(model.score(X_te, y_te), 3))      # 0.959
 **Gözlem soruları**
 - İkinci hastada model %87 olasılıkla "iyi huylu" dedi ama hasta kötü huyluydu. Bu hata türünün adı nedir ([Bölüm 9](#b9))? Tıpta neden tehlikelidir?
 - Eşiği 0.5 yerine 0.9 yaparsanız bu hasta için karar değişir mi?
+
+#### Ek Uygulama: Lojistik Regresyon Gizli Kuralı Bulabilir mi?
+
+Notlar verisindeki `durum`, **dönem ortalaması = 0.4·vize + 0.6·final ≥ 60** kuralıyla belirlenmişti ([`data/notlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.csv)). Modele bu kuralı söylemeden yalnızca vize, final ve durum verildiğinde kuralı bulabilir mi?
+
+**WEKA:** `notlar.arff` → `functions → Logistic` → Cross-validation (10) → **Start**. Doğruluk yaklaşık **%99** çıkar. Çıktıdaki katsayıların çok büyük olduğuna dikkat edin.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "notlar.csv")
+X, y = df[["vize", "final"]], (df["durum"] == "gecti").astype(int)   # gecti = 1, kaldi = 0
+
+model = LogisticRegression(C=1000, max_iter=10000).fit(X, y)        # Büyük C: neredeyse cezasız
+t0, (t1, t2) = model.intercept_[0], model.coef_[0]
+print(f"z = {t0:.2f} + {t1:.3f}·vize + {t2:.3f}·final")
+print(f"θ1/θ2 = {t1 / t2:.2f}   (gerçek kuralda 0.4/0.6 = 0.67)")
+print(f"Karar sınırı: final = {-t0 / t2:.1f} − {t1 / t2:.2f}·vize")
+print("10 katlı CV doğruluğu:", round(cross_val_score(model, X, y, cv=10).mean(), 3))
+```
+
+Çıktı: $\theta_1/\theta_2 = 0.69$ (gerçek: 0.67) ve karar sınırı **final ≈ 101.3 − 0.69·vize**. Gerçek kural ise final = 100 − 0.67·vize'dir; model kuralı neredeyse aynen bulmuştur.
+
+**Gözlem soruları**
+- Katsayılar (θ₀ ≈ −736) neden bu kadar büyük? İpucu: Veri, bir doğruyla **kusursuz** ayrılabiliyor. Sigmoid'in 0 ve 1'e tam ulaşması için $z$ ne olmalıdır? *(Bu duruma **tam ayrılma** (İng. *perfect separation*) denir; R'ın `glm` fonksiyonu bu veride "algorithm did not converge" uyarısı verir.)*
+- Katsayıların büyüklüğü değil, **oranı** neden anlamlıdır?
 
 ---
 
@@ -1453,6 +1588,58 @@ Eşik düşürülünce precision ile recall arasındaki takas:
 
 > **İpucu:** Tek bir "en iyi" ölçüt yoktur; **probleme en uygun** ölçüt vardır. Akademik raporlarda birden fazla ölçüt birlikte verilmelidir.
 
+#### Kısa Uygulama: Kredi Riskinde ROC Eğrisi ve Eşik Seçimi
+
+Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.arff) / [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv). Pozitif sınıf: `risk = yuksek` (yaklaşık %20).
+
+**WEKA**
+1. `kredi_basvurulari.arff` → Classify → `functions → Logistic` → Cross-validation (10) → **Start**. *(Logistic eksik değerleri kendisi doldurur.)* `Detailed Accuracy By Class` tablosunda `yuksek` satırının `ROC Area` değerini not edin.
+2. Result list'te modele sağ tık → **Visualize threshold curve** → `yuksek`. X ekseni `False Positive Rate`, Y ekseni `True Positive Rate` seçili olsun. Gördüğünüz eğri, ROC eğrisidir.
+3. Eğri üzerindeki noktalara tıklayarak farklı eşiklerdeki (`Threshold`) TP, FP değerlerini inceleyin.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.compose import make_column_transformer
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, precision_score, recall_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "kredi_basvurulari.csv")
+X, y = df.drop(columns="risk"), (df["risk"] == "yuksek").astype(int)    # Pozitif sınıf: yüksek risk
+sayisal = ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]
+kategorik = ["sehir", "gecmis_gecikme"]
+
+on_isleme = make_column_transformer(                                     # Eksik doldurma + ölçekleme + one-hot
+    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), sayisal),
+    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), kategorik))
+model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000))
+
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+p = model.fit(X_tr, y_tr).predict_proba(X_te)[:, 1]                     # P(yüksek risk)
+print("ROC-AUC:", round(roc_auc_score(y_te, p), 3))
+for esik in [0.5, 0.3, 0.2]:                                            # Eşik düştükçe recall artar
+    t = (p >= esik).astype(int)
+    print(f"eşik={esik}: precision={precision_score(y_te, t):.2f}  recall={recall_score(y_te, t):.2f}")
+```
+
+| Eşik | Precision | Recall |
+| :---: | :---: | :---: |
+| 0.5 | 0.77 | 0.29 |
+| 0.3 | 0.43 | 0.63 |
+| 0.2 | 0.37 | **0.89** |
+
+ROC-AUC = **0.841**.
+
+**Gözlem soruları**
+- Varsayılan 0.5 eşiğinde riskli başvuruların yalnızca %29'u yakalanıyor. Banka için hangi eşik daha uygun olur? Bu karar hangi bilgiye bağlıdır ([Bölüm 22](#b22))?
+- Modelin doğruluğu (accuracy) yüksek olabilir ama recall düşüktür. Bu çelişki dengesiz veride neden sık görülür?
+
 ### 9.4 Regresyon Ölçütleri
 
 Regresyonda soru "Doğru bildi mi?" değil, "**Gerçek değere ne kadar yaklaştı?**" sorusudur.
@@ -1581,6 +1768,37 @@ Total Number of Instances              209
 
 `trees → M5P` (model ağacı) ve `functions → MultilayerPerceptron` ile de deneyip sonuçları karşılaştırın.
 
+
+#### Kısa Uygulama: Regresyon Ölçütlerini Formüllerle Hesaplamak
+
+Ev fiyatı modelinin ([Bölüm 6.8](#b6)) hatalarını, bu bölümdeki formüllerle kendimiz hesaplayalım. Veri: [`data/ev_fiyatlari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/ev_fiyatlari.csv)
+
+**Python**
+
+```python
+import numpy as np, pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_predict
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "ev_fiyatlari.csv")
+X = pd.get_dummies(df.drop(columns="fiyat_bin_tl"), drop_first=True, dtype=int)
+y = df["fiyat_bin_tl"].to_numpy()
+
+y_hat = cross_val_predict(LinearRegression(), X, y, cv=10)    # Her ev, görmediği katmanda tahmin edilir
+e = y - y_hat                                                  # Artıklar
+mae  = np.abs(e).mean()
+rmse = np.sqrt((e ** 2).mean())
+r2   = 1 - (e ** 2).sum() / ((y - y.mean()) ** 2).sum()
+r    = np.corrcoef(y, y_hat)[0, 1]
+print(f"MAE={mae:.0f}  RMSE={rmse:.0f}  R²={r2:.3f}  r={r:.3f}  (bin TL)")
+```
+
+Çıktı: **MAE = 283**, **RMSE = 361**, **R² = 0.906**, **r = 0.952** (bin TL). Tahminler gerçek fiyattan ortalama 283 bin TL sapıyor. RMSE'nin MAE'den büyük olması, bazı evlerde büyük hatalar yapıldığını gösterir.
+
+**Gözlem soruları**
+- `sklearn.metrics` içindeki `mean_absolute_error`, `root_mean_squared_error` ve `r2_score` fonksiyonlarıyla aynı sonucu buluyor musunuz?
+- Buradaki $R^2$ (0.906), [Bölüm 6.8](#b6)'deki katmanların ortalama $R^2$'sinden (0.886) biraz farklı. Neden? (İpucu: Burada tüm tahminler birleştirilip **tek** bir $R^2$ hesaplanıyor.)
 
 ### 9.5 Kısa Uygulama: Ölçütleri Karışıklık Matrisinden Elle Hesaplamak
 
@@ -1727,7 +1945,7 @@ Bu varsayım gerçekte nadiren doğrudur (hava sıcaklığı ile nem bağımsız
 
 ### 11.3 Elle Çözülmüş Örnek: Tenis Oynanır mı?
 
-WEKA ile gelen `weather.nominal.arff` verisi (14 gün; 9 "yes", 5 "no"). Yeni gün: **outlook = sunny, temperature = cool, humidity = high, windy = true.**
+WEKA ile gelen `weather.nominal.arff` verisi ([`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff); 14 gün; 9 "yes", 5 "no"). Yeni gün: **outlook = sunny, temperature = cool, humidity = high, windy = true.**
 
 Eğitim verisinden sayılan olasılıklar:
 
@@ -1759,7 +1977,7 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 ### 11.5 Kısa Uygulama: Elle Yaptığımız Hesabı WEKA'ya Doğrulatmak
 
 **WEKA**
-1. `data/weather.nominal.arff` → Classify → `bayes → NaiveBayes` → **Use training set** → **Start**.
+1. [`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff) (WEKA klasöründe de vardır) → Classify → `bayes → NaiveBayes` → **Use training set** → **Start**.
 2. Çıktıdaki sayım tablolarını inceleyin. Sayılar, elle hesapladığımızdan **birer fazladır** (ör. `outlook = sunny` için yes: 3, no: 4), çünkü WEKA sıfır frekans sorununu önlemek için **Laplace düzeltmesi** uygular.
 3. Yeni günü tahmin edin: Test options → **Supplied test set** → [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) → **More options → Output predictions → PlainText** → Result list'te modele sağ tık → **Re-evaluate model on current test set**.
 4. Tahmin `no` olmalıdır. Olasılık, Laplace düzeltmesi nedeniyle elle bulduğumuz 0.795'ten biraz düşük, yaklaşık **0.74** çıkar.
@@ -1909,7 +2127,7 @@ Tek ağacın kararsızlığı, **Random Forest** ve **Gradient Boosting** gibi g
 ### 12.5 Kısa Uygulama: Ağacı Görmek ve Budamanın Etkisi
 
 **WEKA**
-1. `data/weather.nominal.arff` → `trees → J48` → **Use training set** → **Start** → Result list'te sağ tık → **Visualize tree**. Ağacın, [şekildeki](#b12) ağaçla aynı olduğunu doğrulayın.
+1. [`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff) → `trees → J48` → **Use training set** → **Start** → Result list'te sağ tık → **Visualize tree**. Ağacın, [şekildeki](#b12) ağaçla aynı olduğunu doğrulayın.
 2. `data/diabetes.arff` → J48 → Cross-validation (10). Çıktıdaki `Number of Leaves`, `Size of the tree` ve doğruluk değerlerini not edin.
 3. Aynı veride sırayla `unpruned = True`, sonra `minNumObj = 20` yapıp tekrar çalıştırın ve üç sonucu karşılaştırın.
 
@@ -1936,6 +2154,30 @@ for d in [1, 2, 3, 5, 10, None]:                                # None: sınırs
 **Gözlem soruları**
 - Eğitim doğruluğu 1.000'e ulaşırken test doğruluğu neden artmadı? Bu durumun adı nedir ([Bölüm 8.1](#b8))?
 - WEKA'da budamasız ağaç daha mı büyük oldu? Doğruluğu arttı mı?
+
+#### Ek Uygulama: Karar Ağacı Çapraz Bir Sınırı Nasıl Öğrenir?
+
+Notlar verisinde gerçek karar sınırı **çapraz bir doğrudur** (0.4·vize + 0.6·final = 60). Karar ağacı ise yalnızca "vize ≤ a" veya "final ≤ b" gibi **eksenlere paralel** sorular sorabilir. Veri: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff) / [`data/notlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.csv)
+
+**WEKA:** `notlar.arff` → `trees → J48` → Cross-validation (10) → **Start** → doğruluğu ve `Size of the tree` değerini not edin → Result list'te sağ tık → **Visualize tree**.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "notlar.csv")
+agac = DecisionTreeClassifier(max_depth=3, random_state=0).fit(df[["vize", "final"]], df["durum"])
+print(export_text(agac, feature_names=["vize", "final"]))     # Öğrenilen EĞER-İSE kuralları
+```
+
+Ağacın ilk sorusu **final ≤ 61.5** oluyor. Ardından vize'ye göre bölmeler geliyor. Ağaç, çapraz sınırı **merdiven** biçiminde basamaklarla yaklaşık olarak çiziyor.
+
+**Gözlem soruları**
+- J48'in 10 katlı CV doğruluğunu, lojistik regresyonunkiyle ([Bölüm 7.4](#b7), %99) karşılaştırın. Hangi model bu veriye daha uygun? Neden?
+- Ağaçta, iki yaprağı da aynı sınıfı veren bölmeler var (ör. `vize ≤ 62.5` ve `> 62.5`'in ikisi de `kaldi`). Bu bölmeler neden yapılmış olabilir? Budama ([Bölüm 12.3](#b12)) bunları ne yapar?
 
 ---
 
@@ -2580,6 +2822,67 @@ Within cluster sum of squared errors: 6.998114004826762
 
 **Kod:** K-Means'in sıfırdan yazılışı, dirsek/siluet, dendrogram ve DBSCAN: [`codes/python/10_kumeleme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/10_kumeleme.py)
 
+### 17.6 Kısa Uygulama: Müşteri Segmentasyonu
+
+Bir mağaza zinciri müşterilerini gruplara ayırıp her gruba farklı kampanya yapmak istiyor. Veri: [`data/musteri_segmentleri.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_segmentleri.arff) (WEKA) ve [`data/musteri_segmentleri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_segmentleri.csv) (Python, R). 300 müşteri; `yas`, `yillik_gelir_bin_tl`, `harcama_puani` (1–100). **Etiket yok**: kaç grup olduğunu biz bulacağız.
+
+**WEKA**
+1. `musteri_segmentleri.arff` → **Cluster** → `SimpleKMeans` → `numClusters` değerini 2'den 7'ye kadar değiştirerek her seferinde **Start**'a basın. `Within cluster sum of squared errors` değerlerini bir tabloya yazın ve dirseği bulun.
+2. Seçtiğiniz K ile çıktıdaki **Final cluster centroids** tablosunu inceleyin: Her kümenin ortalama yaşı, geliri ve harcaması nedir?
+3. Result list → sağ tık → **Visualize cluster assignments** → X: `yillik_gelir_bin_tl`, Y: `harcama_puani`, Color: `Cluster`.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "musteri_segmentleri.csv")            # 300 müşteri, etiket yok
+X = StandardScaler().fit_transform(df)                        # Gelir (yüzler) yaşı (onlar) ezmesin
+
+for k in range(2, 9):                                         # Dirsek ve siluet ile K seçimi
+    km = KMeans(n_clusters=k, n_init=10, random_state=0).fit(X)
+    print(f"K={k}  SSE={km.inertia_:7.1f}  siluet={silhouette_score(X, km.labels_):.3f}")
+
+df["kume"] = KMeans(n_clusters=5, n_init=10, random_state=0).fit_predict(X)
+print(df.groupby("kume").mean().round(0))                     # Her segmentin ortalama profili
+```
+
+| K | 2 | 3 | 4 | **5** | 6 | 7 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| SSE | 492.2 | 319.1 | 171.9 | **78.2** | 72.3 | 67.6 |
+| Siluet | 0.410 | 0.462 | 0.555 | **0.632** | 0.537 | 0.467 |
+
+K = 5'te SSE'nin düşüşü durur (dirsek) ve siluet en yüksektir. Bulunan beş segment:
+
+| Segment | Yaş | Yıllık gelir (bin TL) | Harcama puanı | Olası yorum |
+| :---: | :---: | :---: | :---: | :--- |
+| A | 25 | 307 | 77 | Genç, düşük gelirli ama çok harcayan |
+| B | 37 | 1092 | 83 | Yüksek gelirli, çok harcayan (en değerli müşteri) |
+| C | 47 | 1050 | 17 | Yüksek gelirli ama az harcayan (kampanya fırsatı) |
+| D | 40 | 653 | 51 | Ortalama müşteri |
+| E | 63 | 372 | 21 | Emekli, düşük gelirli, az harcayan |
+
+**R**
+
+```r
+VERI <- "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+m <- read.csv(paste0(VERI, "musteri_segmentleri.csv"))
+X <- scale(m)                                       # Standartlaştırma (ortalama 0, std 1)
+set.seed(1)                                         # Rastgele başlangıç tekrarlanabilir olsun
+sse <- sapply(2:8, function(k) kmeans(X, centers = k, nstart = 10)$tot.withinss)
+plot(2:8, sse, type = "b", xlab = "K", ylab = "SSE")  # Dirsek grafiği
+km <- kmeans(X, centers = 5, nstart = 10)           # nstart = 10: 10 farklı başlangıç, en iyisi
+aggregate(m, by = list(kume = km$cluster), FUN = mean)  # Segment profilleri
+```
+
+**Gözlem soruları**
+- Standartlaştırma yapmadan K-Means çalıştırırsanız hangi öznitelik kümeleri belirler? Deneyin ve sonuçları karşılaştırın.
+- C segmentine (yüksek gelir, düşük harcama) nasıl bir pazarlama stratejisi önerirsiniz? Kümeleme sonucunu yorumlamak neden alan bilgisi gerektirir?
+
 ---
 
 <a id="b18"></a>
@@ -2668,6 +2971,48 @@ En yüksek lift'li kurallar:
 ```
 
 Okunuşu: "outlook = overcast olan 4 günün 4'ünde de play = yes; güven = 1, lift = 1.56."
+
+### 18.5 Kısa Uygulama: Market Sepeti Analizi
+
+Veri: [`data/market_sepeti.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.arff) (WEKA) ve [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv) (Python). 391 alışveriş sepeti, 12 ürün. Veride birkaç **gizli** birliktelik vardır; bunları bulmaya çalışın.
+
+**WEKA**
+1. `market_sepeti.arff` → **Associate** → `Apriori`. Ayarlar: `lowerBoundMinSupport = 0.1`, `minMetric = 0.6` (güven), `numRules = 20` → **Start**.
+2. Bulunan kuralları inceleyin. Sonra `metricType = Lift`, `minMetric = 1.5` yapıp tekrar çalıştırın; listede hangi kurallar kaldı?
+
+**Python** (iki ürünlü tüm kuralları hesaplar)
+
+```python
+import pandas as pd
+from itertools import combinations
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+S = pd.read_csv(VERI + "market_sepeti.csv")                   # Her satır bir sepet, 1 = ürün alındı
+
+kurallar = []
+for a, b in combinations(S.columns, 2):                       # Tüm ürün çiftleri
+    for x, y in [(a, b), (b, a)]:                             # İki yönlü kural: x → y
+        destek = (S[x] & S[y]).mean()                         # supp(x ∪ y)
+        guven = destek / S[x].mean()                          # conf(x → y)
+        lift = guven / S[y].mean()                            # lift(x → y)
+        kurallar.append((f"{x} → {y}", destek, guven, lift))
+tablo = pd.DataFrame(kurallar, columns=["kural", "destek", "guven", "lift"])
+print(tablo[(tablo.destek >= 0.05) & (tablo.guven >= 0.6)].sort_values("lift", ascending=False).round(3))
+```
+
+| Kural | Destek | Güven | Lift |
+| :--- | :---: | :---: | :---: |
+| salca → makarna | 0.156 | 0.726 | **3.30** |
+| makarna → salca | 0.156 | 0.709 | **3.30** |
+| seker → cay | 0.156 | 0.656 | 2.59 |
+| peynir → zeytin | 0.187 | 0.664 | 2.52 |
+| domates → ekmek | 0.276 | 0.675 | 1.08 |
+| peynir → ekmek | 0.174 | 0.618 | **0.99** |
+
+**Gözlem soruları**
+- `peynir → ekmek` kuralının güveni (%62) yüksek görünüyor, ama lift'i 1'in altında. Bu kural market için neden **değersizdir**? (İpucu: Sepetlerin %63'ünde zaten ekmek var.)
+- Bulduğunuz kurallara göre market raflarını veya kampanyalarını nasıl düzenlersiniz?
+- Üç ürünlü kural `{peynir, zeytin} → yumurta`'yı WEKA buldu mu? Python kodu neden bulamıyor?
 
 ---
 
@@ -3157,6 +3502,52 @@ gerçek bad       5.0           0.0        ← kötü müşteriye kredi vermek (
 
 > **İpucu:** Dengesiz veri için WEKA'da ayrıca `supervised → instance → SMOTE` (Package Manager'dan kurulur), `ClassBalancer` ve `Resample` filtreleri vardır. Bunları sızıntısız kullanmak için `FilteredClassifier` içine yerleştirin.
 
+### 22.6 Kısa Uygulama: Kredi Başvurularında Maliyete Duyarlı Model
+
+Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.arff) / [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv). Varsayım: Yüksek riskli bir başvuruyu kaçırmak (FN), düşük riskli birini reddetmekten (FP) **5 kat** pahalıdır.
+
+**WEKA**
+1. `kredi_basvurulari.arff` → Classify → `meta → CostSensitiveClassifier` → `classifier = functions → Logistic`.
+2. `costMatrix` (sınıf sırası `dusuk, yuksek`; satır = gerçek, sütun = tahmin): `[0 1; 5 0]`.
+3. **More options → Cost-sensitive evaluation** ile aynı matrisi girin, 10 katlı CV ile **Start**. `Total Cost` değerini, tek başına `Logistic`'in toplam maliyetiyle karşılaştırın.
+
+**Python**
+
+```python
+import pandas as pd
+from sklearn.compose import make_column_transformer
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_val_predict
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+df = pd.read_csv(VERI + "kredi_basvurulari.csv")
+X, y = df.drop(columns="risk"), (df["risk"] == "yuksek").astype(int)
+on_isleme = make_column_transformer(
+    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()),
+     ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]),
+    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), ["sehir", "gecmis_gecikme"]))
+
+C_FP, C_FN = 1, 5                                             # Riskliyi kaçırmak 5 kat pahalı
+for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs maliyete duyarlı
+    model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000, class_weight=agirlik))
+    tahmin = cross_val_predict(model, X, y, cv=10)
+    TN, FP, FN, TP = confusion_matrix(y, tahmin).ravel()
+    print(f"class_weight={agirlik}: FP={FP} FN={FN} → toplam maliyet = {FP * C_FP + FN * C_FN}")
+```
+
+| Model | FP | FN | Toplam maliyet |
+| :--- | :---: | :---: | :---: |
+| Standart lojistik regresyon | 18 | 80 | 418 |
+| Maliyete duyarlı (`class_weight = {0: 1, 1: 5}`) | 161 | 29 | **306** |
+
+**Gözlem soruları**
+- Maliyete duyarlı model çok daha fazla başvuruyu reddediyor (FP 18 → 161). Buna rağmen toplam maliyet neden düştü?
+- Maliyet oranı 5 yerine 2 olsaydı sonuç nasıl değişirdi? Kodu değiştirip deneyin.
+
 ---
 
 <a id="b23"></a>
@@ -3531,7 +3922,20 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 
 **R kodları** ([`codes/R/`](https://github.com/erkanozhan/machinelearning/tree/main/codes/R)): `grid_ve_random_search.R`, `nested_cv.R`
 
-**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)): `notlar.arff`, `iris_yeni_test.arff`, `weather_yeni_gun.arff`, `insanlar.csv`, `musteri_ticaret.csv`
+**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)). Python ve R kodları veriyi `https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/` adresinden doğrudan okur. Derse özel veriler yapaydır (sentetiktir); nasıl üretildikleri [`codes/python/00_veri_setlerini_uret.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/00_veri_setlerini_uret.py) dosyasında açıkça yazılıdır.
+
+| Veri seti | Biçim | Satır | Görev | Kullanıldığı bölüm |
+| :--- | :--- | :---: | :--- | :--- |
+| [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff), `notlar.csv` | ARFF, CSV | 200 | Sınıflandırma (gecti/kaldi) | 4.2, 5.2, 5.8, 7.4, 12.5 |
+| [`data/ev_fiyatlari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/ev_fiyatlari.csv), `.arff` | CSV, ARFF | 240 | Regresyon (fiyat) | 6.8, 9.4 |
+| [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv), `.arff` | CSV, ARFF | 600 | Dengesiz sınıflandırma, eksik değerli | 5.7, 5.10, 9.3, 22.6 |
+| [`data/musteri_segmentleri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_segmentleri.csv), `.arff` | CSV, ARFF | 300 | Kümeleme (etiketsiz) | 17.6 |
+| [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv), `.arff` | CSV, ARFF | 391 | Birliktelik kuralları | 18.5 |
+| [`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff) | ARFF | 14 | Sınıflandırma (elle hesap) | 11.3, 11.5, 12.2, 12.5 |
+| [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) | ARFF | 1 | Naive Bayes ile yeni tahmin | 11.5 |
+| [`data/iris_yeni_test.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/iris_yeni_test.arff) | ARFF | 5 | Kaydedilmiş modelle tahmin | 15 |
+| [`data/insanlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/insanlar.csv), [`data/musteri_ticaret.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_ticaret.csv) | CSV | 50, 90 | Proje ödevi | 25 |
+
 
 **Etkileşimli animasyonlar** (tarayıcıda açılır):
 

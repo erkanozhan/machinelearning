@@ -1,0 +1,25 @@
+% Klasik "tenis oynanır mı?" verisi (Quinlan, 1986). WEKA ile birlikte gelen weather.nominal.arff ile aynıdır.
+% Ders notu Bölüm 11 (Naive Bayes) ve 12 (Karar Ağaçları) elle hesaplanan örnekler.
+@relation weather.symbolic
+
+@attribute outlook {sunny, overcast, rainy}
+@attribute temperature {hot, mild, cool}
+@attribute humidity {high, normal}
+@attribute windy {TRUE, FALSE}
+@attribute play {yes, no}
+
+@data
+sunny,hot,high,FALSE,no
+sunny,hot,high,TRUE,no
+overcast,hot,high,FALSE,yes
+rainy,mild,high,FALSE,yes
+rainy,cool,normal,FALSE,yes
+rainy,cool,normal,TRUE,no
+overcast,cool,normal,TRUE,yes
+sunny,mild,high,FALSE,no
+sunny,cool,normal,FALSE,yes
+rainy,mild,normal,FALSE,yes
+sunny,mild,normal,TRUE,yes
+overcast,mild,high,TRUE,yes
+overcast,hot,normal,FALSE,yes
+rainy,mild,high,TRUE,no

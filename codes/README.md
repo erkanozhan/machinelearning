@@ -14,6 +14,7 @@ Kurulum yapmadan çalıştırmak için dosya içeriğini [Google Colab](https://
 
 | Dosya | Konu | Ders notu bölümü |
 | :--- | :--- | :---: |
+| `00_veri_setlerini_uret.py` | `data/` klasöründeki derse özel veri setlerini (notlar, ev fiyatları, kredi, müşteri, market sepeti) üretir | Ek C |
 | `01_istatistik_ve_olceklendirme.py` | Ortalama, varyans, std; Min-Max, Z-skoru, Robust, onluk ölçekleme | 5 |
 | `02_lineer_regresyon.py` | En küçük kareler, sıfırdan gradyan inişi, öğrenme oranı deneyi | 6 |
 | `03_siniflandirma_algoritmalari.py` | Lojistik regresyon, k-NN, Naive Bayes, karar ağacı, MLP karşılaştırması | 7, 10–12, 14 |
