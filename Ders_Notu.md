@@ -656,7 +656,7 @@ $$
 | $\mu$ | "mü" | Özniteliğin (eğitim verisindeki) ortalaması |
 | $\sigma$ | "sigma" | Özniteliğin standart sapması |
 
-**Örnek:** $[60, 70, 80, 100]$, $\mu = 77.5$, $\sigma \approx 14.79$ (scikit-learn'ün kullandığı değer). 70 için: $z = \frac{70-77.5}{14.79} \approx -0.51$ → "70, ortalamanın yaklaşık yarım standart sapma altında." Tüm sonuç: $[-1.18,\ -0.51,\ 0.17,\ 1.52]$. *(WEKA $n-1$ ile hesapladığı için $\sigma \approx 17.08$ ve $z \approx -0.44$ bulur.)*
+**Örnek:** $[60, 70, 80, 100]$, $\mu = 77.5$, $\sigma \approx 14.79$ (scikit-learn'ün kullandığı değer). 70 için: $z = \frac{70-77.5}{14.79} \approx -0.51$ → "70, ortalamanın yaklaşık yarım standart sapma altında." Tüm sonuç: $[-1.18,\ -0.51,\ 0.17,\ 1.52]$. (WEKA $n-1$ ile hesapladığı için $\sigma \approx 17.08$ ve $z \approx -0.44$ bulur.)
 
 Standardizasyon (İng. *standardization*) değerleri sabit bir aralığa sıkıştırmaz. Bu yüzden tek bir aykırı değer diğerlerini Min-Max kadar ezmez. Ancak ortalama ve standart sapma da aykırı değerlerden etkilendiği için **tam olarak dayanıklı değildir**. Normal dağılıma yakın veride ve SVM, lojistik regresyon, PCA gibi yöntemlerde genellikle ilk tercihtir.
 
@@ -930,9 +930,9 @@ Tek öznitelikte model bir **doğru**, iki öznitelikte bir **düzlem**, daha fa
 
 Her örneğe sabit terim için $x_0 = 1$ eklenirse model vektörlerle yazılır: $\hat{y} = \boldsymbol{\theta}^{T}\mathbf{x}$. Tüm veri için $\hat{\mathbf{y}} = X\boldsymbol{\theta}$ olur. Maliyeti sıfıra eşitleyerek bulunan kapalı form çözüme **normal denklem** denir:
 
-$$
+```math
 \boldsymbol{\theta} = \left(X^{T}X\right)^{-1}X^{T}\mathbf{y}
-$$
+```
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1180,9 +1180,9 @@ Model karmaşıklaştıkça yanlılık azalır ama varyans artar. Amaç, **test 
 
 Karesel hata için beklenen test hatası üç parçaya ayrılır:
 
-$$
+```math
 E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(x)\big)^2}_{\text{Yanlılık}^2} + \underbrace{E\big[(\hat{f}(x) - E[\hat{f}(x)])^2\big]}_{\text{Varyans}} + \underbrace{\sigma_\varepsilon^2}_{\text{Gürültü}}
-$$
+```
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1705,7 +1705,7 @@ $R^2 = 1 - 1725/61\,120 \approx 0.972$ → "Fiyatlardaki değişkenliğin **%97.
 
 - $R^2 = 1$: Mükemmel uyum.
 - $R^2 = 0$: Model, herkese ortalamayı söylemekten daha iyi değil.
-- **$R^2 < 0$ olabilir!** Test verisinde model ortalamadan bile kötü tahmin yapıyorsa $R^2$ negatif çıkar. (Örneğin tahminler $[500, 200, 450, 250, 300]$ olsaydı $R^2 = -2.47$ çıkardı.) "$R^2$ bir karedir, negatif olamaz" düşüncesi yalnızca en küçük kareler ile eğitim verisinde hesaplanan değer için geçerlidir.
+- **$R^2 < 0$ olabilir!** Test verisinde model ortalamadan bile kötü tahmin yapıyorsa $R^2$ negatif çıkar. (Örneğin tahminler $[500, 200, 450, 250, 300]$ olsaydı $R^2 = -2.47$ çıkardı.) "R² bir karedir, negatif olamaz" düşüncesi yalnızca en küçük kareler ile eğitim verisinde hesaplanan değer için geçerlidir.
 
 #### Düzeltilmiş $R^2$ (Adjusted $R^2$) (İleri Seviye)
 
@@ -1938,7 +1938,7 @@ $$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
-| $\propto$ | "orantılıdır" | Sabit bir çarpan ($1/P(\mathbf{x})$) dışında eşittir |
+| $\propto$ | "orantılıdır" | Sabit bir çarpan, yani $1/P(\mathbf{x})$, dışında eşittir |
 | $\prod_{j=1}^{d}$ | "pi, j birden d'ye" | $j=1$'den $d$'ye kadar tüm terimleri **çarp** |
 
 Bu varsayım gerçekte nadiren doğrudur (hava sıcaklığı ile nem bağımsız değildir). Buna rağmen model sınıflar arasında **doğru sıralamayı** çoğu zaman bulduğu için pratikte iyi çalışır. Özellikle **metin sınıflandırmada** (spam filtresi) çok başarılıdır.
@@ -2240,7 +2240,7 @@ Veri doğrusal olarak hiç ayrılamıyorsa ne olur? SVM'nin buradaki çözümü 
 
 <p align="center"><img src="./images/svm_cekirdek.svg" alt="Tek boyutta ayrılamayan verinin x kare eklenerek iki boyutta doğru ile ayrılması" width="820"></p>
 
-Şekilde tek boyutta mavi noktalar ortada, turuncular iki yandadır; tek bir eşikle ayrılamazlar. Her noktaya ikinci bir koordinat olarak $x^2$ eklersek ($\varphi(x) = (x, x^2)$), iki boyutta **yatay bir doğru** onları mükemmel ayırır.
+Şekilde tek boyutta mavi noktalar ortada, turuncular iki yandadır; tek bir eşikle ayrılamazlar. Her noktaya ikinci bir koordinat olarak $x^2$ eklersek, yani $\varphi(x) = (x, x^2)$ dönüşümünü uygularsak, iki boyutta **yatay bir doğru** onları mükemmel ayırır.
 
 Bu dönüşümü açıkça yapmak çok pahalı olabilir (boyut sonsuza bile çıkabilir). **Çekirdek fonksiyonu**, dönüşümü hiç yapmadan yüksek boyuttaki iç çarpımı doğrudan hesaplar: $K(\mathbf{x}, \mathbf{z}) = \varphi(\mathbf{x})\cdot\varphi(\mathbf{z})$.
 
@@ -2550,9 +2550,9 @@ graph LR
 <details>
 <summary><b>Derinleşme (İleri Seviye): Gradient Boosting'in güncelleme adımı</b></summary>
 
-$$
+```math
 F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \, h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_{i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_{F = F_{t-1}(\mathbf{x}_i)}
-$$
+```
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3447,7 +3447,7 @@ $$
    - **Alt örnekleme (undersampling):** Çoğunluk sınıfından örnek atılır.
    - **Dikkat:** Yeniden örnekleme **yalnızca eğitim verisine** uygulanır; test verisi gerçek dünyayı temsil etmeli ve olduğu gibi kalmalıdır ([Bölüm 21](#b21)).
 2. **Algoritma seviyesi – sınıf ağırlıkları:** Kayıp fonksiyonunda pahalı sınıfın hataları daha ağır sayılır:
-   $L = -\sum_{i} w_{y_i}\,\log \hat{p}_{i,\,y_i}$ ($w_{y_i}$: örneğin gerçek sınıfının ağırlığı; $\hat{p}_{i,y_i}$: modelin gerçek sınıfa verdiği olasılık). scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
+   $L = -\sum_{i} w_{y_i} \log \hat{p}_{i,y_i}$. Burada $w$, örneğin gerçek sınıfının ağırlığı; $\hat{p}$ ise modelin gerçek sınıfa verdiği olasılıktır. scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
 3. **Karar eşiğini kaydırma (threshold moving):** Model eğitildikten sonra 0.5 eşiği değiştirilir. Olasılıklar iyi kalibre edilmişse, pozitif demenin beklenen maliyeti negatif demenin beklenen maliyetinden küçük olduğunda pozitif denmelidir:
 
 $$
@@ -3471,7 +3471,7 @@ $$
 | `class_weight={0:1, 1:10}` | 195 | 44 | 0.33 | 635 |
 | `class_weight="balanced"` | 382 | 22 | 0.67 | 602 |
 | Rastgele aşırı örnekleme (eğitimde) | 379 | 23 | 0.65 | 609 |
-| **Teorik eşik $t^* = 0.091$** | 166 | 41 | 0.38 | **576** |
+| **Teorik eşik** $t^{\ast} = 0.091$ | 166 | 41 | 0.38 | **576** |
 | Doğrulama setinde seçilen eşik (0.10) | 140 | 46 | 0.30 | 600 |
 
 **Yorum:** Standart model neredeyse hiçbir pozitifi yakalamıyor (recall 0.02). Doğruluğu çok yüksek görünür (~%94.4), ama maliyeti en yüksek olan odur. Maliyete duyarlı tüm yöntemler doğruluğu **düşürürken** toplam maliyeti **azaltıyor**. **Mühendislikte hedef en yüksek doğruluk değil, problemi en düşük toplam maliyetle çözmektir.**
@@ -3719,9 +3719,9 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
-$$
+```math
 t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\,r} + \frac{n_{test}}{n_{train}}\right)\hat{\sigma}_d^2}}
-$$
+```
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |

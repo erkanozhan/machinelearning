@@ -28,6 +28,12 @@
             if (lang === 'mermaid') {
               return '<div class="mermaid">' + code + '</div>';
             }
+            // ```math blokları (GitHub'ın display formül biçimi) → KaTeX ile çiz
+            if (lang === 'math' && window.katex) {
+              return '<div class="math-blok">' +
+                window.katex.renderToString(code, { displayMode: true, throwOnError: false }) +
+                '</div>';
+            }
             return this.origin.code.apply(this, arguments);
           }
         }
@@ -40,6 +46,7 @@
   
   <!-- KaTeX - Formüller için -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1.4.4/dist/docsify-katex.js"></script>
   
   <!-- Mermaid -->
