@@ -1089,6 +1089,8 @@ $$
 2. Çıktıdaki **Odds Ratios** tablosuna bakın. 1'den büyük değer, öznitelik arttıkça `tested_positive` olasılığının arttığını gösterir.
 3. **More options… → Output predictions → PlainText** ile tekrar çalıştırın. Her kişi için `prediction` sütununda modelin verdiği olasılığı görün.
 
+**Veri nereden?** Bu uygulamada ve sonraki bölümlerde kullanılan **meme kanseri verisi** (Wisconsin Diagnostic Breast Cancer; 569 hasta, 30 sayısal öznitelik, 212 kötü huylu / 357 iyi huylu) gerçek bir tıbbi veridir ve `scikit-learn` kütüphanesiyle birlikte gelir. Python'da `load_breast_cancer()` veriyi bilgisayardan yükler; dosya indirmeye veya internete gerek yoktur. WEKA ve R kullananlar aynı veriyi [`data/meme_kanseri.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/meme_kanseri.arff) ve [`data/meme_kanseri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/meme_kanseri.csv) dosyalarından alır. Sınıf sütunu `tani`'dır ve iki değer alır: `kotu_huylu`, `iyi_huylu`. R'da veriyi `read.csv("https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/meme_kanseri.csv")` ile okuyabilirsiniz. WEKA'nın kendi `data/` klasöründeki `breast-cancer.arff` **farklı** bir veridir (286 hasta, nominal öznitelikler); karıştırmayın.
+
 **Python**
 
 ```python
@@ -3939,6 +3941,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv), `.arff` | CSV, ARFF | 391 | Birliktelik kuralları | 18.5 |
 | [`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff) | ARFF | 14 | Sınıflandırma (elle hesap) | 11.3, 11.5, 12.2, 12.5 |
 | [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) | ARFF | 1 | Naive Bayes ile yeni tahmin | 11.5 |
+| [`data/meme_kanseri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/meme_kanseri.csv), `.arff` | CSV, ARFF | 569 | Sınıflandırma (gerçek veri; Python'da `load_breast_cancer()`) | 7.4, 8, 9.5, 12.5, 16.5, 19.3, 20.5, 20.6 |
 | [`data/iris_yeni_test.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/iris_yeni_test.arff) | ARFF | 5 | Kaydedilmiş modelle tahmin | 15 |
 | [`data/insanlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/insanlar.csv), [`data/musteri_ticaret.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_ticaret.csv) | CSV | 50, 90 | Proje ödevi | 25 |
 

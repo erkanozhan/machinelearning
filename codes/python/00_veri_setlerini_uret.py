@@ -13,6 +13,8 @@ Sabit tohum (seed) kullanıldığı için betik her çalıştırıldığında AY
   musteri_segmentleri        : 300 müşteri, kümeleme (etiketsiz, 5 doğal grup)
   market_sepeti              : 400 alışveriş sepeti, birliktelik kuralları
   weather.nominal.arff       : Quinlan'ın klasik 14 günlük hava durumu verisi (WEKA ile de gelir)
+  meme_kanseri               : 569 hasta, GERÇEK veri (Wisconsin Diagnostic Breast Cancer; scikit-learn'deki
+                               load_breast_cancer ile aynı). WEKA ve R kullananlar için CSV + ARFF olarak kaydedilir.
 
 Çalıştırma (depo kök klasöründen):  python codes/python/00_veri_setlerini_uret.py
 """
@@ -35,7 +37,7 @@ def arff_yaz(df, dosya, relation, aciklama, nominal=None):
             # Kategorik: olası değerler { } içinde
             satirlar.append(f"@attribute {kol} {{{', '.join(nominal[kol])}}}")
         else:                                                     # Sayısal öznitelik
-            satirlar.append(f"@attribute {kol} numeric")          # Sayısal öznitelik
+            satirlar.append(f"@attribute {kol} numeric")
     satirlar += ["", "@data"]
     for _, r in df.iterrows():                                    # Her satır @data bölümüne
         degerler = ["?" if pd.isna(v) else (f"{v:g}" if isinstance(v, float) else str(v)) for v in r]
@@ -203,6 +205,26 @@ rainy,mild,high,TRUE,no
         f.write(icerik)
 
 
+# ---------------------------------------------------------------------------
+# 7) Meme kanseri teşhis verisi (Wolberg vd., 1995; UCI, CC BY 4.0). YAPAY DEĞİL, gerçek veri.
+#    Python kodları bunu doğrudan load_breast_cancer() ile alır; bu dosyalar WEKA ve R içindir.
+# ---------------------------------------------------------------------------
+def meme_kanseri():
+    from sklearn.datasets import load_breast_cancer              # Veri scikit-learn ile birlikte gelir
+    v = load_breast_cancer(as_frame=True)
+    df = v.data.copy()
+    df.columns = [c.replace(" ", "_") for c in df.columns]        # "mean radius" -> "mean_radius" (ARFF boşluk sevmez)
+    df["tani"] = v.target.map({0: "kotu_huylu", 1: "iyi_huylu"})  # 0 = malignant, 1 = benign
+    df.to_csv(os.path.join(DATA, "meme_kanseri.csv"), index=False)  # Python/R için CSV
+    arff_yaz(df, "meme_kanseri.arff", "meme_kanseri",              # WEKA için ARFF
+             ["Wisconsin Diagnostic Breast Cancer (WDBC) verisi: 569 hasta, 30 sayısal öznitelik.",
+              "Kaynak: Wolberg, Street ve Mangasarian (1995), UCI Machine Learning Repository (CC BY 4.0).",
+              "scikit-learn'deki load_breast_cancer() ile aynı veridir. Ders notu Bölüm 7, 8, 9, 12, 16, 19, 20.",
+              "Not: WEKA ile gelen breast-cancer.arff FARKLI bir veridir (286 hasta, nominal öznitelikler)."],
+             nominal={"tani": ["kotu_huylu", "iyi_huylu"]})
+    return df
+
+
 if __name__ == "__main__":                                           # Betik doğrudan çalıştırılırsa
     rng = np.random.default_rng(2026)                 # Tüm veri setleri için tek, sabit tohum
     n = notlar_csv()
@@ -211,6 +233,7 @@ if __name__ == "__main__":                                           # Betik do�
     m = musteri_segmentleri(rng)
     s = market_sepeti(rng)
     weather_nominal()                                 # weather.nominal.arff dosyasını yaz
+    b = meme_kanseri()
     print(f"notlar.csv           : {len(n)} satır, gecti={int((n.durum == 'gecti').sum())}")
     print(f"ev_fiyatlari         : {len(e)} satır, fiyat {e.fiyat_bin_tl.min()}–{e.fiyat_bin_tl.max()} bin TL")
     print(f"kredi_basvurulari    : {len(k)} satır, yuksek risk oranı={(k.risk == 'yuksek').mean():.3f}, "
@@ -218,3 +241,4 @@ if __name__ == "__main__":                                           # Betik do�
     print(f"musteri_segmentleri  : {len(m)} satır")
     print(f"market_sepeti        : {len(s)} sepet, ürün başına destek: " +
           ", ".join(f"{u}={v:.2f}" for u, v in s.mean().items()))
+    print(f"meme_kanseri         : {len(b)} hasta, " + ", ".join(f"{t}={c}" for t, c in b.tani.value_counts().items()))
