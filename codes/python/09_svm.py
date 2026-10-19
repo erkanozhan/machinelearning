@@ -19,6 +19,7 @@ from sklearn.datasets import make_blobs, make_circles, load_iris   # Veri üreti
 from sklearn.svm import SVC                                   # Destek vektör sınıflandırıcı
 from sklearn.pipeline import make_pipeline                    # Ölçekleme + model zinciri
 from sklearn.preprocessing import StandardScaler              # SVM mesafeye duyarlıdır → ölçekleme şart
+# CV, ızgara araması, tabakalı bölme
 from sklearn.model_selection import cross_val_score, GridSearchCV, StratifiedKFold
 
 # ---------------------------------------------------------------------------
@@ -38,7 +39,7 @@ print()
 # ---------------------------------------------------------------------------
 X2, y2 = make_blobs(n_samples=200, centers=2, cluster_std=2.2, random_state=3)   # Sınıflar iç içe geçiyor
 print("=== 2) C parametresi (yumuşak marj) ===")
-for C in [0.01, 0.1, 1, 10, 100]:
+for C in [0.01, 0.1, 1, 10, 100]:                                                # Farklı C değerlerini dene
     m = SVC(kernel="linear", C=C).fit(X2, y2)
     cv_skor = cross_val_score(SVC(kernel="linear", C=C), X2, y2, cv=5).mean()
     print(f"C={C:<6}: destek vektörü={len(m.support_):>3}, marj={2/np.linalg.norm(m.coef_):.2f}, CV doğruluğu={cv_skor:.3f}")
@@ -50,7 +51,7 @@ print()
 # ---------------------------------------------------------------------------
 X3, y3 = make_circles(n_samples=300, factor=0.4, noise=0.08, random_state=0)   # İç halka ve dış halka
 print("=== 3) Doğrusal olmayan veri (iç içe halkalar) ===")
-for kernel in ["linear", "poly", "rbf"]:
+for kernel in ["linear", "poly", "rbf"]:                                       # Üç çekirdeği karşılaştır
     s = cross_val_score(SVC(kernel=kernel, degree=2, gamma="scale"), X3, y3, cv=5).mean()
     print(f"kernel={kernel:<7}: CV doğruluğu = {s:.3f}")
 print()
@@ -78,16 +79,24 @@ def sinir_ciz(ax, model, X, y, baslik):
     Z = model.decision_function(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)   # w·x+b değeri
     ax.contourf(xx, yy, Z > 0, alpha=0.15, cmap="coolwarm")                          # Bölgeleri boya
     ax.contour(xx, yy, Z, levels=[-1, 0, 1], linestyles=["--", "-", "--"], colors="k")  # Marj ve hiperdüzlem
+    # Veri noktaları (renk = sınıf)
     ax.scatter(X[:, 0], X[:, 1], c=y, cmap="coolwarm", s=20, edgecolors="k")
+    # Model destek vektörü içeriyorsa
     if hasattr(model, "support_vectors_"):
+        # Destek vektörlerini halka ile işaretle
         ax.scatter(*model.support_vectors_.T, s=120, facecolors="none", edgecolors="k", label="Destek vektörleri")
     ax.set_title(baslik)
 
 
 fig, ax = plt.subplots(1, 3, figsize=(15, 4.5))
+# Sert marjlı doğrusal SVM
 sinir_ciz(ax[0], svm, X, y, "Doğrusal SVM (sert marj)")
+# Halkalarda lineer çekirdek
 sinir_ciz(ax[1], SVC(kernel="linear").fit(X3, y3), X3, y3, "Halkalar – lineer çekirdek")
+# Halkalarda RBF çekirdek
 sinir_ciz(ax[2], SVC(kernel="rbf").fit(X3, y3), X3, y3, "Halkalar – RBF çekirdek")
 ax[0].legend(loc="lower left")
+# Grafikler üst üste binmesin
 plt.tight_layout()
+# Grafik penceresini aç
 plt.show()

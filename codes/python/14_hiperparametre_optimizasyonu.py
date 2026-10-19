@@ -20,7 +20,7 @@ from sklearn.pipeline import Pipeline                         # Adımları isiml
 from sklearn.preprocessing import StandardScaler              # Ölçekleme
 from sklearn.svm import SVC                                   # Ayarlanacak model
 from sklearn.neural_network import MLPClassifier              # Early stopping örneği için
-from sklearn.model_selection import (GridSearchCV, RandomizedSearchCV,
+from sklearn.model_selection import (GridSearchCV, RandomizedSearchCV,  # Arama yöntemleri ve CV araçları
                                      StratifiedKFold, cross_val_score, train_test_split)
 
 X, y = load_breast_cancer(return_X_y=True)
@@ -72,10 +72,11 @@ print()
 # ---------------------------------------------------------------------------
 X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
 sc = StandardScaler().fit(X_tr)
-for es in [False, True]:
+for es in [False, True]:                                      # Erken durdurmasız ve erken durdurmalı
     mlp = MLPClassifier(hidden_layer_sizes=(50,), max_iter=3000, early_stopping=es,   # es=True → eğitimin %15'i doğrulamaya ayrılır
                         validation_fraction=0.15, n_iter_no_change=10,               # 10 epoch iyileşme yoksa dur
                         alpha=1e-6, learning_rate_init=0.01, random_state=0)
+    # Ölçeklenmiş eğitim verisiyle eğit
     mlp.fit(sc.transform(X_tr), y_tr)
     print(f"early_stopping={es!s:<5}: {mlp.n_iter_:>4} epoch, "
           f"eğitim={mlp.score(sc.transform(X_tr), y_tr):.3f}, test={mlp.score(sc.transform(X_te), y_te):.3f}")

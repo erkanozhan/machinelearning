@@ -47,25 +47,25 @@ tum_ogeler = sorted(set().union(*sepetler))          # Tüm farklı ürünler
 sik_kumeler = {}                                     # {frozenset: destek}
 aday = [frozenset([o]) for o in tum_ogeler]          # Seviye 1: tek elemanlı adaylar
 seviye = 1
-while aday:
+while aday:                                          # Aday kalmayana kadar seviye seviye ilerle
     print(f"--- Seviye {seviye}: {len(aday)} aday ---")
     bu_seviye = {}
-    for kume in aday:
+    for kume in aday:                                # Her adayın desteği
         d = destek(kume)
         durum = "✓ sık" if d >= MIN_DESTEK else "✗ elendi"
         print(f"  {set(kume)}: destek = {d:.3f} {durum}")
-        if d >= MIN_DESTEK:
+        if d >= MIN_DESTEK:                          # Eşiği geçen küme sıktır
             bu_seviye[kume] = d
-    sik_kumeler.update(bu_seviye)
+    sik_kumeler.update(bu_seviye)                    # Bu seviyenin sık kümelerini kaydet
     # Bir sonraki seviyenin adaylarını üret: sık kümeleri ikişer ikişer birleştir
     anahtarlar = list(bu_seviye)
     yeni_aday = set()
     for a, b in combinations(anahtarlar, 2):
         birlesim = a | b
-        if len(birlesim) == seviye + 1:
+        if len(birlesim) == seviye + 1:              # Birleşim tam bir seviye büyük mü?
             # Budama (pruning): birleşimin TÜM alt kümeleri sık olmalı (Apriori ilkesi)
             if all(frozenset(alt) in bu_seviye for alt in combinations(birlesim, seviye)):
-                yeni_aday.add(birlesim)
+                yeni_aday.add(birlesim)              # Geçerli aday
     aday = list(yeni_aday)
     seviye += 1
 print()
@@ -78,17 +78,17 @@ print()
 print("=== Kurallar (güven ≥ %.0f%%) ===" % (MIN_GUVEN * 100))
 print(f"{'Kural':<32} {'Destek':>7} {'Güven':>7} {'Lift':>6}")
 kurallar = []
-for kume, d_xy in sik_kumeler.items():
+for kume, d_xy in sik_kumeler.items():               # Her sık kümeden kural üret
     if len(kume) < 2:
         continue                                     # Tek elemanlı kümeden kural çıkmaz
-    for r in range(1, len(kume)):
+    for r in range(1, len(kume)):                    # Sol tarafın eleman sayısı
         for sol in combinations(kume, r):            # Kuralın sol tarafı (öncül / antecedent)
             X = frozenset(sol)
             Y = kume - X                             # Sağ taraf (sonuç / consequent)
             guven = d_xy / sik_kumeler[X]
             lift = guven / destek(Y)
-            if guven >= MIN_GUVEN:
-                kurallar.append((X, Y, d_xy, guven, lift))
+            if guven >= MIN_GUVEN:                   # Güven eşiğini geçen kurallar
+                kurallar.append((X, Y, d_xy, guven, lift))  # Kuralı listeye ekle
 for X, Y, d, g, l in sorted(kurallar, key=lambda k: -k[4]):   # Lift'e göre büyükten küçüğe
     print(f"{str(set(X)) + ' → ' + str(set(Y)):<32} {d:>7.3f} {g:>7.3f} {l:>6.2f}")
 print("\nlift > 1: birlikte alınma şanstan yüksek | lift = 1: bağımsız | lift < 1: birbirini dışlıyor")

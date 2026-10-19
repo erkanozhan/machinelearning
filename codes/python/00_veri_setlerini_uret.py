@@ -17,9 +17,9 @@ Sabit tohum (seed) kullanıldığı için betik her çalıştırıldığında AY
 Çalıştırma (depo kök klasöründen):  python codes/python/00_veri_setlerini_uret.py
 """
 
-import os
-import numpy as np
-import pandas as pd
+import os  # Dosya yolları
+import numpy as np  # Sayısal diziler, rastgele sayılar
+import pandas as pd  # Tablolar, CSV yazma
 
 KOK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # Depo kök klasörü
 DATA = os.path.join(KOK, "data")                                                      # Çıktı klasörü
@@ -29,17 +29,20 @@ def arff_yaz(df, dosya, relation, aciklama, nominal=None):
     """DataFrame'i WEKA'nın okuyabileceği ARFF dosyasına yazar. Eksik değerler '?' olur."""
     nominal = nominal or {}
     satirlar = [f"% {s}" for s in aciklama] + [f"@relation {relation}", ""]
+    # Her sütun için bir @attribute satırı
     for kol in df.columns:
         if kol in nominal:                                        # Kategorik (nominal) öznitelik
+            # Kategorik: olası değerler { } içinde
             satirlar.append(f"@attribute {kol} {{{', '.join(nominal[kol])}}}")
         else:                                                     # Sayısal öznitelik
-            satirlar.append(f"@attribute {kol} numeric")
+            satirlar.append(f"@attribute {kol} numeric")          # Sayısal öznitelik
     satirlar += ["", "@data"]
-    for _, r in df.iterrows():
+    for _, r in df.iterrows():                                    # Her satır @data bölümüne
         degerler = ["?" if pd.isna(v) else (f"{v:g}" if isinstance(v, float) else str(v)) for v in r]
-        satirlar.append(",".join(degerler))
+        satirlar.append(",".join(degerler))                       # Değerleri virgülle birleştir
+    # UTF-8 olarak yazmak için aç
     with open(os.path.join(DATA, dosya), "w", encoding="utf-8", newline="\n") as f:
-        f.write("\n".join(satirlar) + "\n")
+        f.write("\n".join(satirlar) + "\n")                       # Tüm satırları dosyaya yaz
 
 
 # ---------------------------------------------------------------------------
@@ -47,17 +50,17 @@ def arff_yaz(df, dosya, relation, aciklama, nominal=None):
 # ---------------------------------------------------------------------------
 def notlar_csv():
     satirlar = []
-    with open(os.path.join(DATA, "notlar.arff"), encoding="utf-8") as f:
+    with open(os.path.join(DATA, "notlar.arff"), encoding="utf-8") as f:  # ARFF dosyasını oku
         veri_bolumu = False
-        for s in f:
+        for s in f:                                               # Satır satır ilerle
             s = s.strip()
-            if s.lower() == "@data":
+            if s.lower() == "@data":                              # Veri bölümü buradan başlar
                 veri_bolumu = True
                 continue
-            if veri_bolumu and s and not s.startswith("%"):
-                satirlar.append(s.split(","))
+            if veri_bolumu and s and not s.startswith("%"):       # Boş ve yorum satırlarını atla
+                satirlar.append(s.split(","))                     # Değerleri sütunlara ayır
     df = pd.DataFrame(satirlar, columns=["vize", "final", "durum"]).astype({"vize": int, "final": int})
-    df.to_csv(os.path.join(DATA, "notlar.csv"), index=False)
+    df.to_csv(os.path.join(DATA, "notlar.csv"), index=False)      # CSV olarak kaydet
     return df
 
 
@@ -78,8 +81,8 @@ def ev_fiyatlari(rng):
              + np.where(otopark == "evet", 250, 0) + rng.normal(0, 350, n))
     df = pd.DataFrame({"metrekare": m2, "oda_sayisi": oda, "bina_yasi": yas, "kat": kat,
                        "semt": semt, "otopark": otopark, "fiyat_bin_tl": np.rint(fiyat).astype(int)})
-    df.to_csv(os.path.join(DATA, "ev_fiyatlari.csv"), index=False)
-    arff_yaz(df, "ev_fiyatlari.arff", "ev_fiyatlari",
+    df.to_csv(os.path.join(DATA, "ev_fiyatlari.csv"), index=False)  # Python/R için CSV
+    arff_yaz(df, "ev_fiyatlari.arff", "ev_fiyatlari",             # WEKA için ARFF
              ["240 evin özellikleri ve satış fiyatı (bin TL). Yapay veri, ders notu Bölüm 6 ve 9.4.",
               "Hedef (son öznitelik): fiyat_bin_tl -> regresyon problemi."],
              nominal={"semt": ["merkez", "cevre", "banliyo"], "otopark": ["evet", "hayir"]})
@@ -105,8 +108,8 @@ def kredi_basvurulari(rng):
     df["aylik_gelir"] = df["aylik_gelir"].astype(float)
     df.loc[rng.choice(n, 30, replace=False), "aylik_gelir"] = np.nan                # %5 eksik gelir
     df.loc[rng.choice(n, 18, replace=False), "sehir"] = np.nan                      # %3 eksik şehir
-    df.to_csv(os.path.join(DATA, "kredi_basvurulari.csv"), index=False)
-    arff_yaz(df, "kredi_basvurulari.arff", "kredi_basvurulari",
+    df.to_csv(os.path.join(DATA, "kredi_basvurulari.csv"), index=False)             # Python/R için CSV
+    arff_yaz(df, "kredi_basvurulari.arff", "kredi_basvurulari",                     # WEKA için ARFF
              ["600 kredi başvurusu. Yapay veri, ders notu Bölüm 5.5-5.7, 9.3 ve 22.",
               "Hedef: risk {dusuk, yuksek}; yaklaşık %20 yüksek risk (dengesiz). Eksik değerler ? ile gösterilir."],
              nominal={"sehir": ["istanbul", "ankara", "izmir", "diger"], "gecmis_gecikme": ["evet", "hayir"],
@@ -125,14 +128,14 @@ def musteri_segmentleri(rng):
                (40, 650, 50, 70),    # Ortalama müşteri
                (63, 360, 22, 55)]    # Emekli, düşük gelir, az harcıyor
     parca = []
-    for y, g, h, k in gruplar:
-        parca.append(pd.DataFrame({
+    for y, g, h, k in gruplar:       # Her gruptan k müşteri üret
+        parca.append(pd.DataFrame({  # Grubun müşterilerini listeye ekle
             "yas": np.clip(np.rint(rng.normal(y, 4.5, k)), 18, 80).astype(int),
             "yillik_gelir_bin_tl": np.clip(np.rint(rng.normal(g, 90, k)), 150, 1600).astype(int),
             "harcama_puani": np.clip(np.rint(rng.normal(h, 8, k)), 1, 100).astype(int)}))
     df = pd.concat(parca).sample(frac=1, random_state=7).reset_index(drop=True)      # Satırları karıştır
-    df.to_csv(os.path.join(DATA, "musteri_segmentleri.csv"), index=False)
-    arff_yaz(df, "musteri_segmentleri.arff", "musteri_segmentleri",
+    df.to_csv(os.path.join(DATA, "musteri_segmentleri.csv"), index=False)            # Python/R için CSV
+    arff_yaz(df, "musteri_segmentleri.arff", "musteri_segmentleri",                  # WEKA için ARFF
              ["300 müşteri: yaş, yıllık gelir (bin TL), harcama puanı (1-100). Yapay veri, ders notu Bölüm 17.",
               "Sınıf etiketi YOKTUR: kaç grup olduğunu kümeleme ile bulmak gerekir."])
     return df
@@ -158,7 +161,7 @@ def market_sepeti(rng):
     df.to_csv(os.path.join(DATA, "market_sepeti.csv"), index=False)  # 0/1 tablo (Python/R)
     # WEKA sepet biçimi: ürün alındıysa t, alınmadıysa ? (supermarket.arff ile aynı mantık)
     tf = df.apply(lambda s: s.map({1: "t", 0: np.nan}))
-    arff_yaz(tf, "market_sepeti.arff", "market_sepeti",
+    arff_yaz(tf, "market_sepeti.arff", "market_sepeti",              # WEKA sepet biçiminde ARFF
              [f"{len(df)} alışveriş sepeti. Yapay veri, ders notu Bölüm 18.",
               "Her öznitelik bir ürün: t = sepette var, ? = sepette yok."],
              nominal={u: ["t"] for u in urunler})
@@ -195,18 +198,19 @@ overcast,mild,high,TRUE,yes
 overcast,hot,normal,FALSE,yes
 rainy,mild,high,TRUE,no
 """
+    # Dosyayı UTF-8 olarak yaz
     with open(os.path.join(DATA, "weather.nominal.arff"), "w", encoding="utf-8", newline="\n") as f:
         f.write(icerik)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":                                           # Betik doğrudan çalıştırılırsa
     rng = np.random.default_rng(2026)                 # Tüm veri setleri için tek, sabit tohum
     n = notlar_csv()
     e = ev_fiyatlari(rng)
     k = kredi_basvurulari(rng)
     m = musteri_segmentleri(rng)
     s = market_sepeti(rng)
-    weather_nominal()
+    weather_nominal()                                 # weather.nominal.arff dosyasını yaz
     print(f"notlar.csv           : {len(n)} satır, gecti={int((n.durum == 'gecti').sum())}")
     print(f"ev_fiyatlari         : {len(e)} satır, fiyat {e.fiyat_bin_tl.min()}–{e.fiyat_bin_tl.max()} bin TL")
     print(f"kredi_basvurulari    : {len(k)} satır, yuksek risk oranı={(k.risk == 'yuksek').mean():.3f}, "

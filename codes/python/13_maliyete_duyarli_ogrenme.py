@@ -79,9 +79,9 @@ maliyet_raporu(f"3a) Teorik eşik t*={t_teorik:.3f}", y_test, (p_test >= t_teori
 p_val = m0.predict_proba(X_val)[:, 1]
 esikler = np.linspace(0.02, 0.9, 45)
 val_maliyet = []
-for t in esikler:
+for t in esikler:                                    # Her eşikte doğrulama maliyeti
     TN, FP, FN, TP = confusion_matrix(y_val, (p_val >= t).astype(int), labels=[0, 1]).ravel()
-    val_maliyet.append(FP * C_FP + FN * C_FN)
+    val_maliyet.append(FP * C_FP + FN * C_FN)        # Toplam maliyeti kaydet
 t_best = esikler[int(np.argmin(val_maliyet))]
 maliyet_raporu(f"3b) Doğrulamada seçilen eşik={t_best:.2f}", y_test, (p_test >= t_best).astype(int))
 print("\n→ Doğruluk (accuracy) düşse bile toplam maliyet belirgin şekilde azalır.")

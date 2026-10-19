@@ -77,13 +77,13 @@ def bilgi_kazanci(sutun_indeksi):
     degerler = Counter(satir[sutun_indeksi] for satir in veri)       # Özniteliğin değerleri ve sıklıkları
     agirlikli_entropi = 0.0                                          # Bölme sonrası kalan belirsizlik
     split_info = 0.0                                                 # Bölmenin kendi "dağınıklığı"
-    for deger, adet in degerler.items():
+    for deger, adet in degerler.items():                             # Her değer için alt küme S_v
         alt_kume = [satir[-1] for satir in veri if satir[sutun_indeksi] == deger]   # S_v: bu değere sahip satırların sınıfları
         oran = adet / n                                              # |S_v| / |S|
         agirlikli_entropi += oran * entropi(alt_kume)                # Ağırlıklı ortalama entropi
         split_info -= oran * log2(oran)
     ig = H_S - agirlikli_entropi                                     # Belirsizlikteki azalma
-    return ig, ig / split_info
+    return ig, ig / split_info                                       # Bilgi kazancı ve kazanç oranı
 
 
 print("=== 2) Her öznitelik için bilgi kazancı ===")
@@ -102,21 +102,21 @@ print("=== 3) Naive Bayes ile tahmin ===")
 print(f"Yeni gün: {yeni_gun}")
 
 skorlar = {}                                          # Her sınıf için normalize edilmemiş skor
-for sinif in ["yes", "no"]:
+for sinif in ["yes", "no"]:                           # Her sınıf için skor
     sinif_satirlari = [s for s in veri if s[-1] == sinif]            # Bu sınıfa ait günler
     oncul = len(sinif_satirlari) / len(veri)                         # Önsel olasılık P(sınıf)
     skor = oncul
     aciklama = [f"P({sinif})={len(sinif_satirlari)}/{len(veri)}"]
-    for ad, deger in yeni_gun.items():
+    for ad, deger in yeni_gun.items():                               # Yeni günün her özniteliği
         j = sutunlar.index(ad)                                       # Özniteliğin sütun numarası
         adet = sum(1 for s in sinif_satirlari if s[j] == deger)      # Bu sınıfta bu değer kaç kez geçmiş
         olabilirlik = adet / len(sinif_satirlari)                    # P(x_i | sınıf)
         skor *= olabilirlik                                          # "Naive" varsayım: bağımsız → çarp
-        aciklama.append(f"P({deger}|{sinif})={adet}/{len(sinif_satirlari)}")
+        aciklama.append(f"P({deger}|{sinif})={adet}/{len(sinif_satirlari)}")  # Hesabı yazdırmak için sakla
     skorlar[sinif] = skor
     print(f"{sinif:>3}: " + " · ".join(aciklama) + f" = {skor:.4f}")
 
 toplam = sum(skorlar.values())                       # Normalizasyon için toplam
-for sinif, skor in skorlar.items():
+for sinif, skor in skorlar.items():                  # Normalize edilmiş sonsal olasılıklar
     print(f"P({sinif} | yeni gün) = {skor:.4f} / {toplam:.4f} = {skor / toplam:.3f}")
 print(f"Tahmin: play = {max(skorlar, key=skorlar.get)}")

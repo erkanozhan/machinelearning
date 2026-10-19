@@ -22,7 +22,7 @@ from sklearn.decomposition import PCA                         # Temel bileşen a
 from sklearn.pipeline import make_pipeline                    # Sızıntısız zincir
 from sklearn.tree import DecisionTreeClassifier               # Karşılaştırma için sınıflandırıcı
 from sklearn.linear_model import LogisticRegression           # RFE ve L1 için
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import cross_val_score, StratifiedKFold  # CV ve tabakalı bölme
 from sklearn.feature_selection import mutual_info_classif, RFE   # Filtre ve sarmalayıcı yöntemler
 
 iris = load_iris()
@@ -62,7 +62,7 @@ cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 print("=== 3) J48 benzeri karar ağacı: PCA'sız vs PCA'lı ===")
 s_ham = cross_val_score(DecisionTreeClassifier(random_state=42), X, y, cv=cv)
 print(f"4 orijinal öznitelik     : {s_ham.mean():.3f} ± {s_ham.std():.3f}")
-for k in [1, 2, 3]:
+for k in [1, 2, 3]:                                           # 1, 2, 3 bileşenle dene
     pipe = make_pipeline(StandardScaler(), PCA(n_components=k), DecisionTreeClassifier(random_state=42))
     s = cross_val_score(pipe, X, y, cv=cv)
     print(f"PCA ile {k} bileşen         : {s.mean():.3f} ± {s.std():.3f}")
@@ -73,7 +73,7 @@ print()
 # ---------------------------------------------------------------------------
 mi = mutual_info_classif(X, y, random_state=0)
 print("=== 4) Filtre: karşılıklı bilgi puanları ===")
-for ad, puan in sorted(zip(iris.feature_names, mi), key=lambda t: -t[1]):
+for ad, puan in sorted(zip(iris.feature_names, mi), key=lambda t: -t[1]):  # Puanları büyükten küçüğe yazdır
     print(f"  {ad:<20}: {puan:.3f}")
 print()
 
@@ -99,10 +99,11 @@ print("  ", [str(a) for a in adlar[sifir_olmayan]])
 
 # --- Grafik: Iris'in 2 boyutlu PCA izdüşümü ---
 Z = pca.transform(StandardScaler().fit_transform(X))
-for k, renk in zip(range(3), ["tab:blue", "tab:orange", "tab:green"]):
+for k, renk in zip(range(3), ["tab:blue", "tab:orange", "tab:green"]):  # Her türü kendi renginde çiz
+    # PC1–PC2 düzleminde noktalar
     plt.scatter(Z[y == k, 0], Z[y == k, 1], c=renk, label=iris.target_names[k], s=18)
 plt.xlabel(f"PC1 (%{pca.explained_variance_ratio_[0] * 100:.1f})")
 plt.ylabel(f"PC2 (%{pca.explained_variance_ratio_[1] * 100:.1f})")
 plt.title("Iris veri setinin PCA ile 2 boyuta indirgenmesi")
 plt.legend()
-plt.show()
+plt.show()                                                    # Grafik penceresini aç

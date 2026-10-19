@@ -61,7 +61,7 @@ for derinlik in [1, 2, 3, 4, 5, 8, None]:                     # Aday hiperparame
     m = DecisionTreeClassifier(max_depth=derinlik, random_state=0).fit(X_egitim, y_egitim)
     skor = accuracy_score(y_dogr, m.predict(X_dogr))          # Seçimi DOĞRULAMA setine göre yap
     print(f"max_depth={str(derinlik):<5} → doğrulama doğruluğu {skor:.3f}")
-    if skor > en_iyi_skor:
+    if skor > en_iyi_skor:                                    # Daha iyi derinlik bulunduysa sakla
         en_iyi_derinlik, en_iyi_skor = derinlik, skor
 son_model = DecisionTreeClassifier(max_depth=en_iyi_derinlik, random_state=0).fit(X_gecici, y_gecici)  # Eğitim+doğrulama ile yeniden eğit
 print(f"Seçilen max_depth={en_iyi_derinlik}; TEST doğruluğu (tek sefer): {accuracy_score(y_test, son_model.predict(X_test)):.3f}")
@@ -71,6 +71,7 @@ print()
 # 4) K-katlı ve tabakalı K-katlı çapraz doğrulama
 # ---------------------------------------------------------------------------
 print("=== 4) Çapraz doğrulama ===")
+# Farklı kat sayılarını karşılaştır
 for k in [2, 5, 10]:
     kf = KFold(n_splits=k, shuffle=True, random_state=0)                  # Sınıf oranlarını gözetmez
     skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=0)       # Her katmanda sınıf oranı korunur
@@ -97,7 +98,7 @@ oob_oranlari, oob_skorlari = [], []
 for _ in range(200):                                          # 200 bootstrap örneklemi
     idx = rng.integers(0, n, size=n)                          # Yerine koyarak n adet indeks çek
     oob = np.setdiff1d(np.arange(n), idx)                     # Hiç seçilmeyenler = torba dışı (OOB)
-    oob_oranlari.append(len(oob) / n)
+    oob_oranlari.append(len(oob) / n)                         # Bu örneklemdeki OOB oranı
     m = DecisionTreeClassifier(random_state=0).fit(X[idx], y[idx])       # Bootstrap örneğiyle eğit
     oob_skorlari.append(accuracy_score(y[oob], m.predict(X[oob])))       # OOB örneklerde test et
 print("=== 6) Bootstrap ===")

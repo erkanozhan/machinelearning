@@ -61,10 +61,11 @@ def siniflandirma_modelleri():
 
 cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)   # Tüm modeller için aynı bölmeler
 
+# Her veri setinde aynı karşılaştırma
 for veri_adi, yukleyici in [("Iris", load_iris), ("Meme Kanseri", load_breast_cancer)]:
     X, y = yukleyici(return_X_y=True)                         # Veriyi yükle
     print(f"=== A) {veri_adi} — 10 katlı CV doğruluğu ===")
-    for ad, model in siniflandirma_modelleri().items():
+    for ad, model in siniflandirma_modelleri().items():       # Her modeli 10 katlı CV ile değerlendir
         s = cross_val_score(model, X, y, cv=cv, scoring="accuracy", n_jobs=-1)   # n_jobs=-1: tüm çekirdekleri kullan
         print(f"{ad:<22}: {s.mean():.3f} ± {s.std():.3f}")
     print()
@@ -87,7 +88,7 @@ reg_modeller = {
 }
 print("=== B) Diyabet (regresyon) — 10 katlı CV ===")
 print(f"{'Model':<20} {'MAE':>7} {'RMSE':>7} {'R²':>6}")
-for ad, model in reg_modeller.items():
+for ad, model in reg_modeller.items():                        # Her regresyon modelini değerlendir
     sonuc = cross_validate(model, X, y, cv=cv_r, n_jobs=-1,
                            scoring=("neg_mean_absolute_error", "neg_root_mean_squared_error", "r2"))
     # sklearn "büyük daha iyi" kuralı için hata metriklerini negatif döndürür → başına eksi koyuyoruz

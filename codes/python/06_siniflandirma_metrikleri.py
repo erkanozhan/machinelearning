@@ -46,6 +46,7 @@ kappa = (p_o - p_e) / (1 - p_e)                               # Cohen's Kappa
 mcc = (TP * TN - FP * FN) / np.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))  # Matthews korelasyon katsayısı
 
 print("=== A) Ders notundaki örnek (elle) ===")
+# Her ölçütü adıyla yazdır
 for ad, deger in [("Accuracy", accuracy), ("Precision", precision), ("Recall (TPR)", recall),
                   ("Specificity (TNR)", specificity), ("FPR", fpr), ("F1", f1),
                   ("Pe (şans uyumu)", p_e), ("Kappa", kappa), ("MCC", mcc)]:
@@ -85,32 +86,34 @@ print(f"PR-AUC (Average Precision) = {average_precision_score(y_te, y_skor):.3f}
 
 # Eşiği değiştirince precision/recall nasıl değişir?
 print("\nEşik   Precision  Recall")
-for esik in [0.2, 0.3, 0.5, 0.7]:
+for esik in [0.2, 0.3, 0.5, 0.7]:                             # Eşik değiştikçe precision/recall
     t = (y_skor >= esik).astype(int)                          # Olasılığı eşikle karşılaştırıp sınıfa çevir
     print(f"{esik:<6} {precision_score(y_te, t, zero_division=0):>9.3f} {recall_score(y_te, t):>7.3f}")
 
 # --- Grafikler ---
 fig, ax = plt.subplots(1, 3, figsize=(15, 4.5))
+# Karışıklık matrisi ısı haritası
 ConfusionMatrixDisplay(confusion_matrix(y_te, y_pred), display_labels=["Negatif", "Pozitif"]).plot(ax=ax[0], cmap="Blues", colorbar=False)
 ax[0].set_title("Karışıklık Matrisi")
 ax[0].set_xlabel("Tahmin edilen")
 ax[0].set_ylabel("Gerçek")
 
 fpr_e, tpr_e, _ = roc_curve(y_te, y_skor)                     # Tüm eşikler için FPR ve TPR
-ax[1].plot(fpr_e, tpr_e, lw=2, label=f"Model (AUC = {roc_auc_score(y_te, y_skor):.2f})")
-ax[1].plot([0, 1], [0, 1], "--", color="gray", label="Rastgele (AUC = 0.5)")
+ax[1].plot(fpr_e, tpr_e, lw=2, label=f"Model (AUC = {roc_auc_score(y_te, y_skor):.2f})")  # Modelin ROC eğrisi
+ax[1].plot([0, 1], [0, 1], "--", color="gray", label="Rastgele (AUC = 0.5)")  # Rastgele modelin köşegeni
 ax[1].set_xlabel("Sahte Pozitif Oranı (FPR)")
 ax[1].set_ylabel("Gerçek Pozitif Oranı (TPR)")
 ax[1].set_title("ROC Eğrisi")
 ax[1].legend(loc="lower right")
 
 prec_e, rec_e, _ = precision_recall_curve(y_te, y_skor)       # Tüm eşikler için precision ve recall
+# Modelin PR eğrisi
 ax[2].plot(rec_e, prec_e, lw=2, label=f"Model (AP = {average_precision_score(y_te, y_skor):.2f})")
-ax[2].axhline(y_te.mean(), ls="--", color="gray", label="Rastgele")
+ax[2].axhline(y_te.mean(), ls="--", color="gray", label="Rastgele")  # Rastgele model: pozitif oranı
 ax[2].set_xlabel("Recall")
 ax[2].set_ylabel("Precision")
 ax[2].set_title("Precision-Recall Eğrisi")
 ax[2].legend()
 
-plt.tight_layout()
-plt.show()
+plt.tight_layout()                                            # Grafikler üst üste binmesin
+plt.show()                                                    # Grafik penceresini aç

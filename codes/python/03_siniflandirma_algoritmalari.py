@@ -71,7 +71,7 @@ lr = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X, y
 ornek = X[[0, 60, 120]]                              # Her sınıftan birer çiçek
 olasiliklar = lr.predict_proba(ornek)                # Her sınıf için olasılık (satır toplamı = 1)
 print("=== 3) Lojistik regresyonun olasılık çıktıları ===")
-for i, p in enumerate(olasiliklar):
+for i, p in enumerate(olasiliklar):                  # Her örneğin sınıf olasılıkları
     print(f"Örnek {i}: " + ", ".join(f"{iris.target_names[k]}={p[k]:.3f}" for k in range(3)))
 print()
 
@@ -92,5 +92,5 @@ agac = DecisionTreeClassifier(criterion="entropy", max_depth=3, random_state=42)
 print("=== 5) Karar ağacının kuralları (max_depth=3) ===")
 print(export_text(agac, feature_names=list(oznitelik_adlari)))   # Ağacı okunabilir if-else kuralları olarak yazdırır
 print("Öznitelik önemleri:")
-for ad, onem in zip(oznitelik_adlari, agac.feature_importances_):
+for ad, onem in zip(oznitelik_adlari, agac.feature_importances_):  # Her özniteliğin önem puanı
     print(f"  {ad:<20}: {onem:.3f}")

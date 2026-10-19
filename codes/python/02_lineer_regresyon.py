@@ -100,9 +100,9 @@ fig, eksen = plt.subplots(1, 2, figsize=(11, 4))     # Yan yana iki grafik
 
 eksen[0].scatter(x, y, color="tab:blue", label="Gerçek veri")          # Veri noktaları
 xx = np.linspace(0, 6, 50)                                             # Doğru için x değerleri
-eksen[0].plot(xx, theta0 + theta1 * xx, color="tab:red", label="ŷ = θ0 + θ1·x")
+eksen[0].plot(xx, theta0 + theta1 * xx, color="tab:red", label="ŷ = θ0 + θ1·x")  # Öğrenilen regresyon doğrusu
 for xi, yi in zip(x, y):                                               # Artıkları (residual) dikey çizgiyle göster
-    eksen[0].plot([xi, xi], [yi, theta0 + theta1 * xi], "k--", lw=0.8)
+    eksen[0].plot([xi, xi], [yi, theta0 + theta1 * xi], "k--", lw=0.8)  # Artık çizgisi
 eksen[0].set_xlabel("Çalışma süresi (saat)")
 eksen[0].set_ylabel("Sınav notu")
 eksen[0].set_title("En iyi uyan doğru ve artıklar")

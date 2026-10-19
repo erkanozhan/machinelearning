@@ -497,9 +497,9 @@ Veri: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/ma
 **Python**
 
 ```python
-import pandas as pd
+import pandas as pd                                        # Tablo (DataFrame) işlemleri
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
 df = pd.read_csv(VERI + "notlar.csv")                     # 200 öğrenci: vize, final, durum
 
 print(df.head())                                           # İlk 5 satır
@@ -588,7 +588,7 @@ WEKA'da: `filters → unsupervised → attribute → NominalToBinary`. Python'da
 ```python
 import pandas as pd                                          # Tablo işlemleri için pandas
 
-df = pd.DataFrame({"sehir": ["İstanbul", "Ankara", "İzmir", "Ankara"]})
+df = pd.DataFrame({"sehir": ["İstanbul", "Ankara", "İzmir", "Ankara"]})   # Tek sütunlu örnek tablo
 print(pd.get_dummies(df, columns=["sehir"], dtype=int))     # Her şehir için 0/1 sütunu üretir
 ```
 
@@ -703,7 +703,7 @@ $$
 
 ```python
 import numpy as np                                          # Sayısal diziler
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler   # Min-Max ve Z-skoru ölçekleyiciler
 
 notlar = np.array([[60], [70], [80], [100]])                # sklearn 2 boyutlu dizi ister: (örnek, öznitelik)
 
@@ -740,7 +740,7 @@ Notlar verisinin ilk iki öğrencisi: (vize 60, final 75) ve (vize 45, final 50)
 **Python**
 
 ```python
-import numpy as np
+import numpy as np                             # Vektör (dizi) işlemleri
 
 a = np.array([60, 75])                         # 1. öğrenci: vize 60, final 75
 b = np.array([45, 50])                         # 2. öğrenci: vize 45, final 50
@@ -772,18 +772,18 @@ Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearn
 **Python**
 
 ```python
-import pandas as pd
+import pandas as pd                                          # Tablo işlemleri
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
 df = pd.read_csv(VERI + "kredi_basvurulari.csv")            # 600 kredi başvurusu
 
 print(df.isna().sum())                                       # Sütun başına eksik değer sayısı
 df["aylik_gelir"] = df["aylik_gelir"].fillna(df["aylik_gelir"].median())   # Sayısal → medyan
 df["sehir"] = df["sehir"].fillna(df["sehir"].mode()[0])                    # Kategorik → en sık değer
 
-df["gelir_grubu"] = pd.cut(df["aylik_gelir"], bins=[0, 25000, 45000, float("inf")],
+df["gelir_grubu"] = pd.cut(df["aylik_gelir"], bins=[0, 25000, 45000, float("inf")],   # Aralık sınırları (TL)
                            labels=["dusuk", "orta", "yuksek"])            # Gruplama (binning)
-X = pd.get_dummies(df.drop(columns="risk"), columns=["sehir", "gecmis_gecikme", "gelir_grubu"],
+X = pd.get_dummies(df.drop(columns="risk"), columns=["sehir", "gecmis_gecikme", "gelir_grubu"],   # Hedef hariç
                    dtype=int)                                              # One-hot kodlama
 print(X.shape)                                               # (600, 13): kategorikler 0/1 sütunlarına açıldı
 print(pd.crosstab(df["gecmis_gecikme"], df["risk"], normalize="index").round(2))   # Gecikme–risk ilişkisi
@@ -981,21 +981,21 @@ Veri: [`data/ev_fiyatlari.arff`](https://github.com/erkanozhan/machinelearning/b
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import cross_val_score
+import pandas as pd                                                 # Tablo işlemleri
+from sklearn.linear_model import LinearRegression                  # Lineer regresyon modeli
+from sklearn.model_selection import cross_val_score                # Çapraz doğrulama skoru
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
 df = pd.read_csv(VERI + "ev_fiyatlari.csv")                         # 240 ev
 X = pd.get_dummies(df.drop(columns="fiyat_bin_tl"), drop_first=True, dtype=int)   # semt, otopark → 0/1
-y = df["fiyat_bin_tl"]
+y = df["fiyat_bin_tl"]                                              # Hedef: fiyat (bin TL)
 
-model = LinearRegression().fit(X, y)
-print("θ0 (kesişim):", round(model.intercept_))
+model = LinearRegression().fit(X, y)                                # En küçük kareler ile θ'ları öğren
+print("θ0 (kesişim):", round(model.intercept_))                     # Sabit terim
 for ad, k in zip(X.columns, model.coef_):                           # Her özniteliğin katsayısı (θ)
-    print(f"{ad:<14}: {k:8.1f}")
-r2 = cross_val_score(LinearRegression(), X, y, cv=10, scoring="r2")
-print(f"10 katlı CV R²: {r2.mean():.3f} ± {r2.std():.3f}")
+    print(f"{ad:<14}: {k:8.1f}")                                    # Öznitelik adı ve katsayısı
+r2 = cross_val_score(LinearRegression(), X, y, cv=10, scoring="r2") # 10 katmanın her birinde R²
+print(f"10 katlı CV R²: {r2.mean():.3f} ± {r2.std():.3f}")          # Ortalama ± standart sapma
 ```
 
 | Öznitelik | Katsayı ($\theta$) | Yorum |
@@ -1092,16 +1092,16 @@ $$
 **Python**
 
 ```python
-import numpy as np
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+import numpy as np                                             # Sayısal işlemler
+from sklearn.datasets import load_breast_cancer                # 569 hastalık meme kanseri verisi
+from sklearn.model_selection import train_test_split           # Eğitim/test bölme
+from sklearn.pipeline import make_pipeline                     # Ölçekleme + model zinciri
+from sklearn.preprocessing import StandardScaler               # Z-skoru ölçekleme
+from sklearn.linear_model import LogisticRegression            # Lojistik regresyon
 
 X, y = load_breast_cancer(return_X_y=True)                     # y: 1 = iyi huylu, 0 = kötü huylu
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
-model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)   # %70 / %30
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)  # Ölçekle ve eğit
 p = model.predict_proba(X_te[:5])[:, 1]                         # İlk 5 hasta için P(iyi huylu)
 print(np.round(p, 3))                                          # [0.    0.872 0.001 0.985 0.   ]
 print("Tahmin:", (p >= 0.5).astype(int), "Gerçek:", y_te[:5])   # 2. hasta: model %87 emin ama yanılıyor!
@@ -1121,20 +1121,20 @@ Notlar verisindeki `durum`, **dönem ortalaması = 0.4·vize + 0.6·final ≥ 60
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score
+import pandas as pd                                                  # Tablo işlemleri
+from sklearn.linear_model import LogisticRegression                 # Lojistik regresyon
+from sklearn.model_selection import cross_val_score                 # Çapraz doğrulama
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
-df = pd.read_csv(VERI + "notlar.csv")
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+df = pd.read_csv(VERI + "notlar.csv")                                # 200 öğrenci
 X, y = df[["vize", "final"]], (df["durum"] == "gecti").astype(int)   # gecti = 1, kaldi = 0
 
 model = LogisticRegression(C=1000, max_iter=10000).fit(X, y)        # Büyük C: neredeyse cezasız
-t0, (t1, t2) = model.intercept_[0], model.coef_[0]
-print(f"z = {t0:.2f} + {t1:.3f}·vize + {t2:.3f}·final")
-print(f"θ1/θ2 = {t1 / t2:.2f}   (gerçek kuralda 0.4/0.6 = 0.67)")
-print(f"Karar sınırı: final = {-t0 / t2:.1f} − {t1 / t2:.2f}·vize")
-print("10 katlı CV doğruluğu:", round(cross_val_score(model, X, y, cv=10).mean(), 3))
+t0, (t1, t2) = model.intercept_[0], model.coef_[0]                   # θ0, θ1 (vize), θ2 (final)
+print(f"z = {t0:.2f} + {t1:.3f}·vize + {t2:.3f}·final")             # Öğrenilen doğrusal skor
+print(f"θ1/θ2 = {t1 / t2:.2f}   (gerçek kuralda 0.4/0.6 = 0.67)")  # Ağırlıkların oranı
+print(f"Karar sınırı: final = {-t0 / t2:.1f} − {t1 / t2:.2f}·vize")  # z = 0 doğrusu
+print("10 katlı CV doğruluğu:", round(cross_val_score(model, X, y, cv=10).mean(), 3))   # Genelleme başarısı
 ```
 
 Çıktı: $\theta_1/\theta_2 = 0.69$ (gerçek: 0.67) ve karar sınırı **final ≈ 101.3 − 0.69·vize**. Gerçek kural ise final = 100 − 0.67·vize'dir; model kuralı neredeyse aynen bulmuştur.
@@ -1316,16 +1316,16 @@ Meme kanseri verisi, karar ağacı:
 **Python**
 
 ```python
-from sklearn.datasets import load_iris
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.datasets import load_iris                         # 150 çiçeklik Iris verisi
+from sklearn.tree import DecisionTreeClassifier                # Karar ağacı
+from sklearn.model_selection import train_test_split, cross_val_score   # Holdout ve çapraz doğrulama
 
-X, y = load_iris(return_X_y=True)
-agac = DecisionTreeClassifier(random_state=0)
+X, y = load_iris(return_X_y=True)                              # Öznitelikler ve türler
+agac = DecisionTreeClassifier(random_state=0)                  # Sınırsız (budanmamış) ağaç
 print("Eğitim verisinde:", agac.fit(X, y).score(X, y))                        # 1.0 → yanıltıcı!
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.34, stratify=y, random_state=1)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.34, stratify=y, random_state=1)   # %66 / %34
 print("Holdout %66/%34 :", round(agac.fit(X_tr, y_tr).score(X_te, y_te), 3))   # 0.942
-s = cross_val_score(agac, X, y, cv=10)
+s = cross_val_score(agac, X, y, cv=10)                         # 10 katmanın doğrulukları
 print(f"10 katlı CV     : {s.mean():.3f} ± {s.std():.3f}")                    # 0.960 ± 0.044
 ```
 
@@ -1535,14 +1535,14 @@ Pozitif sınıf **çok nadirse** (ör. %1 dolandırıcılık), ROC eğrisi iyims
 %90 negatif, %10 pozitif yapay veri; lojistik regresyon:
 
 ```python
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, roc_auc_score, average_precision_score
+from sklearn.datasets import make_classification               # Yapay veri üretici
+from sklearn.model_selection import train_test_split           # Eğitim/test bölme
+from sklearn.linear_model import LogisticRegression            # Sınıflandırıcı
+from sklearn.metrics import classification_report, roc_auc_score, average_precision_score   # Ölçütler
 
-X, y = make_classification(n_samples=1000, n_features=2, n_informative=2, n_redundant=0,
+X, y = make_classification(n_samples=1000, n_features=2, n_informative=2, n_redundant=0,   # 1000 örnek, 2 öznitelik
                            weights=[0.9, 0.1], flip_y=0, random_state=42)   # %90 / %10 dengesiz veri
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=42)   # Oranları koru
 
 model = LogisticRegression().fit(X_tr, y_tr)                 # Modeli eğit
 y_pred = model.predict(X_te)                                 # Sınıf tahmini (eşik 0.5)
@@ -1600,31 +1600,32 @@ Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearn
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.compose import make_column_transformer
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score, precision_score, recall_score
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import pandas as pd                                                      # Tablo işlemleri
+from sklearn.compose import make_column_transformer                     # Sütun türüne göre farklı ön işleme
+from sklearn.impute import SimpleImputer                                # Eksik değer doldurma
+from sklearn.linear_model import LogisticRegression                     # Sınıflandırıcı
+from sklearn.metrics import roc_auc_score, precision_score, recall_score   # Ölçütler
+from sklearn.model_selection import train_test_split                    # Eğitim/test bölme
+from sklearn.pipeline import make_pipeline                              # Adımları zincirleme
+from sklearn.preprocessing import OneHotEncoder, StandardScaler         # One-hot ve Z-skoru
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
-df = pd.read_csv(VERI + "kredi_basvurulari.csv")
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+df = pd.read_csv(VERI + "kredi_basvurulari.csv")                         # 600 başvuru
 X, y = df.drop(columns="risk"), (df["risk"] == "yuksek").astype(int)    # Pozitif sınıf: yüksek risk
-sayisal = ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]
-kategorik = ["sehir", "gecmis_gecikme"]
+sayisal = ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]    # Sayısal sütunlar
+kategorik = ["sehir", "gecmis_gecikme"]                                 # Kategorik sütunlar
 
 on_isleme = make_column_transformer(                                     # Eksik doldurma + ölçekleme + one-hot
-    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), sayisal),
-    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), kategorik))
-model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000))
+    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), sayisal),            # Sayısal: medyan + ölçek
+    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), kategorik))   # Kategorik: mod + 0/1
+model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000))      # Ön işleme + model tek parça
 
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)   # %70 / %30
 p = model.fit(X_tr, y_tr).predict_proba(X_te)[:, 1]                     # P(yüksek risk)
-print("ROC-AUC:", round(roc_auc_score(y_te, p), 3))
+print("ROC-AUC:", round(roc_auc_score(y_te, p), 3))                     # Eşikten bağımsız başarı
 for esik in [0.5, 0.3, 0.2]:                                            # Eşik düştükçe recall artar
-    t = (p >= esik).astype(int)
+    t = (p >= esik).astype(int)                                         # Olasılığı eşikle sınıfa çevir
+    # Bu eşikteki precision ve recall değerlerini yazdır
     print(f"eşik={esik}: precision={precision_score(y_te, t):.2f}  recall={recall_score(y_te, t):.2f}")
 ```
 
@@ -1776,21 +1777,22 @@ Ev fiyatı modelinin ([Bölüm 6.8](#b6)) hatalarını, bu bölümdeki formülle
 **Python**
 
 ```python
-import numpy as np, pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import cross_val_predict
+import numpy as np, pandas as pd                               # Sayısal işlemler ve tablolar
+from sklearn.linear_model import LinearRegression              # Lineer regresyon
+from sklearn.model_selection import cross_val_predict          # CV ile her örneğe tahmin
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
-df = pd.read_csv(VERI + "ev_fiyatlari.csv")
-X = pd.get_dummies(df.drop(columns="fiyat_bin_tl"), drop_first=True, dtype=int)
-y = df["fiyat_bin_tl"].to_numpy()
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+df = pd.read_csv(VERI + "ev_fiyatlari.csv")                    # 240 ev
+X = pd.get_dummies(df.drop(columns="fiyat_bin_tl"), drop_first=True, dtype=int)   # Kategorikler → 0/1
+y = df["fiyat_bin_tl"].to_numpy()                              # Gerçek fiyatlar (NumPy dizisi)
 
 y_hat = cross_val_predict(LinearRegression(), X, y, cv=10)    # Her ev, görmediği katmanda tahmin edilir
 e = y - y_hat                                                  # Artıklar
-mae  = np.abs(e).mean()
-rmse = np.sqrt((e ** 2).mean())
-r2   = 1 - (e ** 2).sum() / ((y - y.mean()) ** 2).sum()
-r    = np.corrcoef(y, y_hat)[0, 1]
+mae  = np.abs(e).mean()                                        # Ortalama mutlak hata
+rmse = np.sqrt((e ** 2).mean())                                # Kök ortalama karesel hata
+r2   = 1 - (e ** 2).sum() / ((y - y.mean()) ** 2).sum()        # 1 − SS_res / SS_tot
+r    = np.corrcoef(y, y_hat)[0, 1]                             # Gerçek–tahmin korelasyonu
+# Dört ölçütü birlikte yazdır
 print(f"MAE={mae:.0f}  RMSE={rmse:.0f}  R²={r2:.3f}  r={r:.3f}  (bin TL)")
 ```
 
@@ -1810,17 +1812,17 @@ print(f"MAE={mae:.0f}  RMSE={rmse:.0f}  R²={r2:.3f}  r={r:.3f}  (bin TL)")
 **Python**
 
 ```python
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.datasets import load_breast_cancer                  # Meme kanseri verisi
+from sklearn.model_selection import train_test_split             # Eğitim/test bölme
+from sklearn.naive_bayes import GaussianNB                       # Sayısal öznitelikler için Naive Bayes
+from sklearn.metrics import confusion_matrix, classification_report   # Karışıklık matrisi ve rapor
 
-X, y = load_breast_cancer(return_X_y=True)
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
-y_pred = GaussianNB().fit(X_tr, y_tr).predict(X_te)
+X, y = load_breast_cancer(return_X_y=True)                       # y: 1 = iyi huylu, 0 = kötü huylu
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)   # %70 / %30
+y_pred = GaussianNB().fit(X_tr, y_tr).predict(X_te)              # Eğit ve test setinde tahmin et
 print(confusion_matrix(y_te, y_pred, labels=[1, 0]))             # Satır: gerçek, sütun: tahmin → [[101 6] [7 57]]
-print(classification_report(y_te, y_pred, labels=[1, 0], digits=3,
-                            target_names=["iyi huylu (1)", "kötü huylu (0)"]))
+print(classification_report(y_te, y_pred, labels=[1, 0], digits=3,   # Sınıf bazında precision, recall, F1
+                            target_names=["iyi huylu (1)", "kötü huylu (0)"]))   # Sınıfların görünen adları
 ```
 
 **Gözlem soruları**
@@ -1881,18 +1883,19 @@ Iris verisinde (standartlaştırılmış, 10 katlı çapraz doğrulama) ölçül
 **Python**
 
 ```python
-from sklearn.datasets import load_wine
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
+from sklearn.datasets import load_wine                # Şarap verisi
+from sklearn.neighbors import KNeighborsClassifier    # k-NN sınıflandırıcı
+from sklearn.pipeline import make_pipeline            # Ölçekleme + model zinciri
+from sklearn.preprocessing import StandardScaler      # Z-skoru ölçekleme
+from sklearn.model_selection import cross_val_score   # Çapraz doğrulama
 
 X, y = load_wine(return_X_y=True)                     # 178 şarap, 13 öznitelik (prolin ≈ 1000, diğerleri ≈ 1–10)
-for olcek in [False, True]:
-    for k in [1, 5, 15]:
-        m = KNeighborsClassifier(n_neighbors=k)
-        if olcek:
+for olcek in [False, True]:                           # Önce ölçeklemesiz, sonra ölçeklemeli
+    for k in [1, 5, 15]:                              # Denenecek komşu sayıları
+        m = KNeighborsClassifier(n_neighbors=k)       # k komşulu model
+        if olcek:                                     # Ölçekleme isteniyorsa
             m = make_pipeline(StandardScaler(), m)      # Ölçekleme + k-NN
+        # 10 katlı CV doğruluğunu yazdır
         print(f"ölçekleme={olcek!s:5} k={k:<2} doğruluk={cross_val_score(m, X, y, cv=10).mean():.3f}")
 ```
 
@@ -1985,22 +1988,22 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.naive_bayes import CategoricalNB
-from sklearn.preprocessing import OrdinalEncoder
+import pandas as pd                                             # Tablo işlemleri
+from sklearn.naive_bayes import CategoricalNB                   # Kategorik öznitelikler için Naive Bayes
+from sklearn.preprocessing import OrdinalEncoder                # Kategori → sayı dönüştürücü
 
-veri = pd.DataFrame([["sunny","hot","high","false","no"], ["sunny","hot","high","true","no"],
+veri = pd.DataFrame([["sunny","hot","high","false","no"], ["sunny","hot","high","true","no"],   # 14 günlük veri
     ["overcast","hot","high","false","yes"], ["rainy","mild","high","false","yes"], ["rainy","cool","normal","false","yes"],
     ["rainy","cool","normal","true","no"], ["overcast","cool","normal","true","yes"], ["sunny","mild","high","false","no"],
     ["sunny","cool","normal","false","yes"], ["rainy","mild","normal","false","yes"], ["sunny","mild","normal","true","yes"],
     ["overcast","mild","high","true","yes"], ["overcast","hot","normal","false","yes"], ["rainy","mild","high","true","no"]],
-    columns=["outlook", "temperature", "humidity", "windy", "play"])
+    columns=["outlook", "temperature", "humidity", "windy", "play"])   # Sütun adları
 kod = OrdinalEncoder()                                          # Kategorileri 0, 1, 2… sayılarına çevirir
-X, y = kod.fit_transform(veri.iloc[:, :4]), veri["play"]
-yeni = kod.transform(pd.DataFrame([["sunny", "cool", "high", "true"]], columns=veri.columns[:4]))
+X, y = kod.fit_transform(veri.iloc[:, :4]), veri["play"]       # İlk 4 sütun öznitelik, play hedef
+yeni = kod.transform(pd.DataFrame([["sunny", "cool", "high", "true"]], columns=veri.columns[:4]))   # Tahmin edilecek gün
 for alfa in [1e-10, 1.0]:                                       # alpha: Laplace düzeltmesi (≈0: yok, 1: var)
-    nb = CategoricalNB(alpha=alfa).fit(X, y)
-    print(f"alpha={alfa}:", dict(zip(nb.classes_, nb.predict_proba(yeni)[0].round(3))))
+    nb = CategoricalNB(alpha=alfa).fit(X, y)                    # Olasılık tablolarını öğren
+    print(f"alpha={alfa}:", dict(zip(nb.classes_, nb.predict_proba(yeni)[0].round(3))))   # Sınıf olasılıkları
 # alpha=1e-10 → no: 0.795 (elle hesapla aynı)   alpha=1.0 → no: 0.720
 ```
 
@@ -2134,16 +2137,16 @@ Tek ağacın kararsızlığı, **Random Forest** ve **Gradient Boosting** gibi g
 **Python**
 
 ```python
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_breast_cancer                  # Meme kanseri verisi
+from sklearn.model_selection import train_test_split             # Eğitim/test bölme
+from sklearn.tree import DecisionTreeClassifier                  # Karar ağacı
 
-X, y = load_breast_cancer(return_X_y=True)
-X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+X, y = load_breast_cancer(return_X_y=True)                       # 569 hasta, 30 öznitelik
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)   # %70 / %30
 for d in [1, 2, 3, 5, 10, None]:                                # None: sınırsız derinlik
-    a = DecisionTreeClassifier(max_depth=d, random_state=0).fit(X_tr, y_tr)
-    print(f"max_depth={str(d):<4} eğitim={a.score(X_tr, y_tr):.3f} "
-          f"test={a.score(X_te, y_te):.3f} yaprak={a.get_n_leaves()}")
+    a = DecisionTreeClassifier(max_depth=d, random_state=0).fit(X_tr, y_tr)   # d derinlikli ağaç
+    print(f"max_depth={str(d):<4} eğitim={a.score(X_tr, y_tr):.3f} "         # Eğitim doğruluğu
+          f"test={a.score(X_te, y_te):.3f} yaprak={a.get_n_leaves()}")       # Test doğruluğu, yaprak sayısı
 ```
 
 | max_depth | 1 | 2 | 3 | 5 | 10 | sınırsız |
@@ -2164,12 +2167,12 @@ Notlar verisinde gerçek karar sınırı **çapraz bir doğrudur** (0.4·vize + 
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.tree import DecisionTreeClassifier, export_text
+import pandas as pd                                            # Tablo işlemleri
+from sklearn.tree import DecisionTreeClassifier, export_text   # Karar ağacı ve kurallarını yazdırma
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
-df = pd.read_csv(VERI + "notlar.csv")
-agac = DecisionTreeClassifier(max_depth=3, random_state=0).fit(df[["vize", "final"]], df["durum"])
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+df = pd.read_csv(VERI + "notlar.csv")                          # 200 öğrenci
+agac = DecisionTreeClassifier(max_depth=3, random_state=0).fit(df[["vize", "final"]], df["durum"])   # En fazla 3 seviye
 print(export_text(agac, feature_names=["vize", "final"]))     # Öğrenilen EĞER-İSE kuralları
 ```
 
@@ -2273,13 +2276,13 @@ Bu dönüşümü açıkça yapmak çok pahalı olabilir (boyut sonsuza bile çı
 **Python:**
 
 ```python
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_iris                         # Iris verisi
 from sklearn.pipeline import make_pipeline                     # Ölçekleme + model zinciri
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler               # Z-skoru ölçekleme
 from sklearn.svm import SVC                                    # Support Vector Classifier
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score            # Çapraz doğrulama
 
-X, y = load_iris(return_X_y=True)
+X, y = load_iris(return_X_y=True)                              # 150 çiçek, 4 öznitelik
 model = make_pipeline(StandardScaler(),                        # SVM için ölçekleme şart
                       SVC(kernel="rbf", C=10, gamma=0.01))     # RBF çekirdek, C ve gamma
 print(cross_val_score(model, X, y, cv=5).mean())               # ≈ 0.96 (5 katlı CV doğruluğu)
@@ -2350,16 +2353,17 @@ Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** (Yun. *epokhē*: "dö
 **Python**
 
 ```python
-from sklearn.datasets import load_iris
-from sklearn.neural_network import MLPClassifier
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
+from sklearn.datasets import load_iris                             # Iris verisi
+from sklearn.neural_network import MLPClassifier                   # Çok katmanlı yapay sinir ağı
+from sklearn.pipeline import make_pipeline                         # Ölçekleme + model zinciri
+from sklearn.preprocessing import StandardScaler                   # Z-skoru ölçekleme
+from sklearn.model_selection import cross_val_score                # Çapraz doğrulama
 
-X, y = load_iris(return_X_y=True)
+X, y = load_iris(return_X_y=True)                                  # 150 çiçek, 4 öznitelik
 for gizli in [(1,), (3,), (10,), (10, 10)]:                        # (10, 10): iki gizli katman, her birinde 10 nöron
-    m = make_pipeline(StandardScaler(),
-                      MLPClassifier(hidden_layer_sizes=gizli, max_iter=3000, random_state=0))
+    m = make_pipeline(StandardScaler(),                            # Önce ölçekle
+                      MLPClassifier(hidden_layer_sizes=gizli, max_iter=3000, random_state=0))   # Sonra ağı eğit
+    # 10 katlı CV doğruluğunu yazdır
     print(f"gizli katman={str(gizli):<8} doğruluk={cross_val_score(m, X, y, cv=10).mean():.3f}")
 # (1,): 0.953   (3,): 0.973   (10,): 0.960   (10, 10): 0.967
 ```
@@ -2629,15 +2633,15 @@ Topluluk algoritmaları Classify → Choose → **`meta`** klasöründedir.
 **Python:**
 
 ```python
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, StackingClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, StackingClassifier   # Topluluk modelleri
+from sklearn.tree import DecisionTreeClassifier                 # Temel öğrenici: karar ağacı
+from sklearn.linear_model import LogisticRegression             # Meta-model
+from sklearn.naive_bayes import GaussianNB                      # Temel öğrenici: Naive Bayes
 
 rf = RandomForestClassifier(n_estimators=100, random_state=42)             # 100 ağaçlık orman
 ada = AdaBoostClassifier(estimator=DecisionTreeClassifier(max_depth=1),    # Zayıf öğrenici: karar kütüğü
                          n_estimators=100, random_state=42)                 # (eski sürümlerde 'base_estimator')
-stack = StackingClassifier(
+stack = StackingClassifier(                                                 # Yığınlama modeli
     estimators=[("nb", GaussianNB()), ("dt", DecisionTreeClassifier(max_depth=4))],  # Seviye-0
     final_estimator=LogisticRegression(max_iter=1000),                                # Seviye-1
     cv=5)                                                                             # Out-of-fold tahminler
@@ -2834,20 +2838,20 @@ Bir mağaza zinciri müşterilerini gruplara ayırıp her gruba farklı kampanya
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import StandardScaler
+import pandas as pd                                           # Tablo işlemleri
+from sklearn.cluster import KMeans                            # K-Means kümeleme
+from sklearn.metrics import silhouette_score                  # Siluet skoru
+from sklearn.preprocessing import StandardScaler              # Z-skoru ölçekleme
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
 df = pd.read_csv(VERI + "musteri_segmentleri.csv")            # 300 müşteri, etiket yok
 X = StandardScaler().fit_transform(df)                        # Gelir (yüzler) yaşı (onlar) ezmesin
 
 for k in range(2, 9):                                         # Dirsek ve siluet ile K seçimi
-    km = KMeans(n_clusters=k, n_init=10, random_state=0).fit(X)
-    print(f"K={k}  SSE={km.inertia_:7.1f}  siluet={silhouette_score(X, km.labels_):.3f}")
+    km = KMeans(n_clusters=k, n_init=10, random_state=0).fit(X)   # 10 farklı başlangıç, en iyisi
+    print(f"K={k}  SSE={km.inertia_:7.1f}  siluet={silhouette_score(X, km.labels_):.3f}")   # SSE ve siluet
 
-df["kume"] = KMeans(n_clusters=5, n_init=10, random_state=0).fit_predict(X)
+df["kume"] = KMeans(n_clusters=5, n_init=10, random_state=0).fit_predict(X)   # Seçilen K=5 ile etiketle
 print(df.groupby("kume").mean().round(0))                     # Her segmentin ortalama profili
 ```
 
@@ -2983,20 +2987,21 @@ Veri: [`data/market_sepeti.arff`](https://github.com/erkanozhan/machinelearning/
 **Python** (iki ürünlü tüm kuralları hesaplar)
 
 ```python
-import pandas as pd
-from itertools import combinations
+import pandas as pd                                           # Tablo işlemleri
+from itertools import combinations                            # İkili kombinasyonlar üretmek için
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
 S = pd.read_csv(VERI + "market_sepeti.csv")                   # Her satır bir sepet, 1 = ürün alındı
 
-kurallar = []
+kurallar = []                                                 # Bulunan kurallar burada birikir
 for a, b in combinations(S.columns, 2):                       # Tüm ürün çiftleri
     for x, y in [(a, b), (b, a)]:                             # İki yönlü kural: x → y
         destek = (S[x] & S[y]).mean()                         # supp(x ∪ y)
         guven = destek / S[x].mean()                          # conf(x → y)
         lift = guven / S[y].mean()                            # lift(x → y)
-        kurallar.append((f"{x} → {y}", destek, guven, lift))
-tablo = pd.DataFrame(kurallar, columns=["kural", "destek", "guven", "lift"])
+        kurallar.append((f"{x} → {y}", destek, guven, lift))  # Kuralı listeye ekle
+tablo = pd.DataFrame(kurallar, columns=["kural", "destek", "guven", "lift"])   # Kuralları tabloya çevir
+# Destek ≥ 0.05 ve güven ≥ 0.6 olanları, lift'e göre büyükten küçüğe yazdır
 print(tablo[(tablo.destek >= 0.05) & (tablo.guven >= 0.6)].sort_values("lift", ascending=False).round(3))
 ```
 
@@ -3087,11 +3092,11 @@ Hipotez: *Öznitelik sayısını azaltsak da sınıflandırma başarısı fazla 
 #### Python ile PCA
 
 ```python
-from sklearn.datasets import load_iris
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris                      # Iris verisi
+from sklearn.preprocessing import StandardScaler            # Z-skoru ölçekleme
+from sklearn.decomposition import PCA                       # Temel bileşen analizi
 
-X, y = load_iris(return_X_y=True)
+X, y = load_iris(return_X_y=True)                           # 150 çiçek, 4 öznitelik
 X_std = StandardScaler().fit_transform(X)                   # 1) Standartlaştır (PCA için şart)
 pca = PCA(n_components=2).fit(X_std)                        # 2) İlk 2 bileşeni bul
 X_pca = pca.transform(X_std)                                # 3) 4 boyut → 2 boyut
@@ -3242,15 +3247,15 @@ Hiperparametre sayısı arttıkça kombinasyon sayısı **çarpımsal olarak** (
 **Python:**
 
 ```python
-from sklearn.datasets import load_breast_cancer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import load_breast_cancer          # Meme kanseri verisi
+from sklearn.pipeline import Pipeline                    # İsimli adımlardan oluşan zincir
+from sklearn.preprocessing import StandardScaler         # Z-skoru ölçekleme
+from sklearn.svm import SVC                              # Destek vektör sınıflandırıcı
+from sklearn.model_selection import GridSearchCV         # Izgara araması + çapraz doğrulama
 
-X, y = load_breast_cancer(return_X_y=True)
+X, y = load_breast_cancer(return_X_y=True)               # 569 hasta, 30 öznitelik
 pipe = Pipeline([("olcek", StandardScaler()),            # Ölçekleme her CV katmanında yeniden öğrenilir
-                 ("svm", SVC(kernel="rbf"))])
+                 ("svm", SVC(kernel="rbf"))])            # RBF çekirdekli SVM
 izgara = {"svm__C": [0.1, 1, 10, 100],                   # 'adımadı__parametre' söz dizimi
           "svm__gamma": [0.001, 0.01, 0.1, 1]}           # 4 x 4 = 16 kombinasyon
 arama = GridSearchCV(pipe, izgara, cv=5, scoring="accuracy").fit(X, y)   # 16 x 5 = 80 eğitim
@@ -3265,11 +3270,11 @@ Tüm ızgara yerine, belirlenen **dağılımlardan rastgele** $N$ kombinasyon de
 
 ```python
 from scipy.stats import loguniform                      # Log ölçekte düzgün dağılım (C, gamma, lambda için ideal)
-from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV  # Rastgele arama + çapraz doğrulama
 
 dagilim = {"svm__C": loguniform(1e-2, 1e3),              # 0.01 – 1000 arası
-           "svm__gamma": loguniform(1e-4, 1e1)}
-rand = RandomizedSearchCV(pipe, dagilim, n_iter=16, cv=5, random_state=0).fit(X, y)
+           "svm__gamma": loguniform(1e-4, 1e1)}          # 0.0001 – 10 arası
+rand = RandomizedSearchCV(pipe, dagilim, n_iter=16, cv=5, random_state=0).fit(X, y)   # 16 rastgele deneme
 print(rand.best_params_, rand.best_score_)               # ≈ C=4.07, gamma=0.0118 → 0.981
 ```
 
@@ -3290,7 +3295,7 @@ Dış döngüdeki her turun kendi bağımsız hiperparametre araması vardır. R
 > **Animasyon:** [Nested Cross-Validation Animasyonu](https://erkanozhan.github.io/machinelearning/animation/nested_cv_animation.html)
 
 ```python
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import cross_val_score, StratifiedKFold   # Dış CV ve tabakalı bölme
 
 ic_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)     # İç döngü
 dis_cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=2)   # Dış döngü
@@ -3514,28 +3519,29 @@ Veri: [`data/kredi_basvurulari.arff`](https://github.com/erkanozhan/machinelearn
 **Python**
 
 ```python
-import pandas as pd
-from sklearn.compose import make_column_transformer
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import cross_val_predict
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import pandas as pd                                           # Tablo işlemleri
+from sklearn.compose import make_column_transformer          # Sütun türüne göre ön işleme
+from sklearn.impute import SimpleImputer                     # Eksik değer doldurma
+from sklearn.linear_model import LogisticRegression          # Sınıflandırıcı
+from sklearn.metrics import confusion_matrix                 # Karışıklık matrisi
+from sklearn.model_selection import cross_val_predict        # CV ile her örneğe tahmin
+from sklearn.pipeline import make_pipeline                   # Adımları zincirleme
+from sklearn.preprocessing import OneHotEncoder, StandardScaler   # One-hot ve Z-skoru
 
-VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"
-df = pd.read_csv(VERI + "kredi_basvurulari.csv")
-X, y = df.drop(columns="risk"), (df["risk"] == "yuksek").astype(int)
-on_isleme = make_column_transformer(
-    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()),
-     ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]),
-    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), ["sehir", "gecmis_gecikme"]))
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+df = pd.read_csv(VERI + "kredi_basvurulari.csv")              # 600 başvuru
+X, y = df.drop(columns="risk"), (df["risk"] == "yuksek").astype(int)   # Pozitif sınıf: yüksek risk
+on_isleme = make_column_transformer(                          # Eksik doldurma + ölçekleme + one-hot
+    (make_pipeline(SimpleImputer(strategy="median"), StandardScaler()),   # Sayısal: medyan + ölçek
+     ["yas", "aylik_gelir", "borc_gelir_orani", "calisma_yili"]),          # Sayısal sütunlar
+    (make_pipeline(SimpleImputer(strategy="most_frequent"), OneHotEncoder()), ["sehir", "gecmis_gecikme"]))   # Kategorik
 
 C_FP, C_FN = 1, 5                                             # Riskliyi kaçırmak 5 kat pahalı
 for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs maliyete duyarlı
-    model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000, class_weight=agirlik))
-    tahmin = cross_val_predict(model, X, y, cv=10)
-    TN, FP, FN, TP = confusion_matrix(y, tahmin).ravel()
+    model = make_pipeline(on_isleme, LogisticRegression(max_iter=1000, class_weight=agirlik))   # Sınıf ağırlıklı model
+    tahmin = cross_val_predict(model, X, y, cv=10)            # Her başvuru, görmediği katmanda tahmin edilir
+    TN, FP, FN, TP = confusion_matrix(y, tahmin).ravel()      # Karışıklık matrisinin 4 hücresi
+    # Hata sayılarını ve toplam maliyeti yazdır
     print(f"class_weight={agirlik}: FP={FP} FN={FN} → toplam maliyet = {FP * C_FP + FN * C_FN}")
 ```
 

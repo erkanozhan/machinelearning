@@ -28,7 +28,7 @@ def kmeans_elle(X, K, max_iter=100, tohum=0):
     """Basit K-Means: rastgele merkez → atama → güncelleme → tekrar."""
     rng = np.random.default_rng(tohum)                                        # Tekrarlanabilir rastgelelik
     merkezler = X[rng.choice(len(X), size=K, replace=False)]                  # 1. K rastgele noktayı merkez seç
-    for adim in range(max_iter):
+    for adim in range(max_iter):                                              # Atama + güncelleme döngüsü
         mesafeler = np.linalg.norm(X[:, None, :] - merkezler[None, :, :], axis=2)   # Her nokta-merkez Öklid mesafesi (n x K)
         etiketler = mesafeler.argmin(axis=1)                                  # 2. Atama: en yakın merkez
         yeni = np.array([X[etiketler == k].mean(axis=0) for k in range(K)])   # 3. Güncelleme: küme ortalaması
@@ -37,7 +37,7 @@ def kmeans_elle(X, K, max_iter=100, tohum=0):
         if np.allclose(yeni, merkezler):                                      # 4. Merkezler değişmediyse dur
             break
         merkezler = yeni
-    return etiketler, merkezler, sse
+    return etiketler, merkezler, sse                                          # Kümeler, merkezler ve son SSE
 
 
 iris = load_iris()
@@ -52,7 +52,7 @@ print()
 print("=== 2) K seçimi ===")
 print(f"{'K':>2} {'SSE (inertia)':>14} {'Siluet':>8}")
 sse_listesi = []
-for K in range(1, 9):
+for K in range(1, 9):                                         # K = 1..8 için SSE ve siluet
     km = KMeans(n_clusters=K, n_init=10, random_state=0).fit(X)             # n_init=10: 10 farklı başlangıç, en iyisi
     sse_listesi.append(km.inertia_)                                         # inertia_ = SSE
     sil = silhouette_score(X, km.labels_) if K > 1 else float("nan")        # Siluet K=1 için tanımsız
@@ -93,15 +93,15 @@ print(f"DBSCAN  ARI = {adjusted_rand_score(ym, db_m.labels_):.3f}, bulunan küme
 
 # --- Grafikler ---
 fig, ax = plt.subplots(1, 4, figsize=(18, 4.2))
-ax[0].plot(range(1, 9), sse_listesi, "o-")
+ax[0].plot(range(1, 9), sse_listesi, "o-")                    # Dirsek grafiği
 ax[0].set_xlabel("K")
 ax[0].set_ylabel("SSE")
 ax[0].set_title("Dirsek yöntemi (Iris)")
 dendrogram(Z, ax=ax[1], truncate_mode="lastp", p=20, no_labels=True)   # Son 20 birleşmeyi göster
 ax[1].set_title("Dendrogram (Ward)")
-ax[2].scatter(Xm[:, 0], Xm[:, 1], c=km_m.labels_, cmap="coolwarm", s=12)
+ax[2].scatter(Xm[:, 0], Xm[:, 1], c=km_m.labels_, cmap="coolwarm", s=12)  # K-Means kümeleri
 ax[2].set_title("K-Means (K=2) – başarısız")
-ax[3].scatter(Xm[:, 0], Xm[:, 1], c=db_m.labels_, cmap="coolwarm", s=12)
+ax[3].scatter(Xm[:, 0], Xm[:, 1], c=db_m.labels_, cmap="coolwarm", s=12)  # DBSCAN kümeleri
 ax[3].set_title("DBSCAN – başarılı")
-plt.tight_layout()
-plt.show()
+plt.tight_layout()                                                     # Grafikler üst üste binmesin
+plt.show()                                                             # Grafik penceresini aç

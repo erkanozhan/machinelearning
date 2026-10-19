@@ -17,7 +17,7 @@ import numpy as np                                            # Rastgele veri ü
 from sklearn.feature_selection import SelectKBest, f_classif  # En iyi k özniteliği seçen filtre
 from sklearn.linear_model import LogisticRegression           # Sınıflandırıcı
 from sklearn.pipeline import make_pipeline                    # Sızıntıyı önleyen zincir
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import cross_val_score, StratifiedKFold  # CV ve tabakalı bölme
 
 rng = np.random.default_rng(0)                                # Tekrarlanabilir rastgelelik
 X = rng.normal(size=(100, 10_000))                            # 100 örnek, 10.000 anlamsız öznitelik
