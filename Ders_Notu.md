@@ -2961,11 +2961,67 @@ En yüksek lift'li kurallar:
 | {çay} ⇒ {süt} | 0.375 | 1.000 | 1.33 |
 | {ekmek} ⇒ {süt} | 0.500 | 0.667 | 0.89 |
 
-**Kod:** Ek kütüphane gerektirmeyen Apriori kodu: [`codes/python/11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py) (hazır kütüphane: `pip install mlxtend`)
+**Kod:** Ek kütüphane gerektirmeyen Apriori kodu: [`codes/python/11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py). Hazır kütüphane (`mlxtend`) ile Apriori ve FP-Growth: [`codes/python/11b_apriori_ve_fpgrowth_mlxtend.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11b_apriori_ve_fpgrowth_mlxtend.py)
 
-> **FP-Growth**, veritabanını bir önek ağacına (FP-tree) sıkıştırarak aday üretmeden sık öğe kümelerini bulur; büyük veride Apriori'den çok daha hızlıdır. WEKA'da `FPGrowth` olarak bulunur.
+### 18.4 FP-Growth Algoritması
 
-### 18.4 WEKA ile Birliktelik Kuralları
+Apriori'nin iki maliyeti vardır: Çok sayıda **aday küme** üretir ve her seviye için **veritabanını baştan tarar**. **FP-Growth** (İng. *Frequent Pattern Growth*: "sık örüntü büyütme"; Han, Pei ve Yin, 2000) aday üretmez ve veritabanını yalnızca **iki kez** tarar. Fikir, sepetleri ortak önekleri paylaşan sıkıştırılmış bir ağaçta, **FP-ağacında** (İng. *FP-tree*) saklamak ve sık kümeleri bu ağaçtan "büyüterek" bulmaktır.
+
+**Adım 1: İlk tarama.** Her ürünün desteği sayılır, eşiğin altındakiler atılır ve kalanlar **desteği azalan sırada** dizilir. 8 sepette (min. destek = 0.25, yani 2 sepet): ekmek 6, süt 6, tereyağı 5, çay 3, yumurta 2. Hepsi eşiği geçer. Eşit desteklerde sabit bir sıra seçilir (burada önce ekmek).
+
+**Adım 2: İkinci tarama ve ağacın kurulması.** Her sepet bu sıraya göre dizilip ağaca bir yol olarak eklenir. Aynı önekle başlayan sepetler aynı düğümleri paylaşır, yalnızca sayaçlar artar:
+
+| Sepet | Sıralanmış ürünler |
+| :---: | :--- |
+| 1 | ekmek, süt |
+| 2 | ekmek, tereyağı, yumurta |
+| 3 | süt, tereyağı, çay |
+| 4 | ekmek, süt, tereyağı |
+| 5 | ekmek, süt, tereyağı, çay |
+| 6 | süt, çay |
+| 7 | ekmek, tereyağı |
+| 8 | ekmek, süt, yumurta |
+
+```text
+(kök)
+├── ekmek:6
+│   ├── süt:4
+│   │   ├── tereyağı:2
+│   │   │   └── çay:1
+│   │   └── yumurta:1
+│   └── tereyağı:2
+│       └── yumurta:1
+└── süt:2
+    ├── tereyağı:1
+    │   └── çay:1
+    └── çay:1
+```
+
+8 sepetteki 22 ürün kaydı 11 düğüme sığdı. Gerçek market verisinde sepetlerin çoğu ortak ürünlerle başladığından sıkıştırma çok daha belirgindir. Ağacın yanında, her ürünün ağaçtaki tüm düğümlerini birbirine bağlayan bir **başlık tablosu** (İng. *header table*) tutulur.
+
+**Adım 3: Ağaçtan sık kümeleri çıkarma.** En seyrek üründen başlanır. Her ürün için, köke kadar uzanan yolların öneklerinden **koşullu örüntü tabanı** (İng. *conditional pattern base*) toplanır ve bu tabanda eşiği geçen ürünler o ürünle birleştirilir:
+
+| Ürün | Koşullu örüntü tabanı | Tabandaki sayımlar | Bulunan sık kümeler |
+| :--- | :--- | :--- | :--- |
+| yumurta | {ekmek, süt}: 1, {ekmek, tereyağı}: 1 | ekmek 2, süt 1, tereyağı 1 | {ekmek, yumurta} (2) |
+| çay | {ekmek, süt, tereyağı}: 1, {süt, tereyağı}: 1, {süt}: 1 | süt 3, tereyağı 2, ekmek 1 | {süt, çay} (3), {tereyağı, çay} (2), {süt, tereyağı, çay} (2) |
+| tereyağı | {ekmek, süt}: 2, {ekmek}: 2, {süt}: 1 | ekmek 4, süt 3 | {ekmek, tereyağı} (4), {süt, tereyağı} (3), {ekmek, süt, tereyağı} (2) |
+| süt | {ekmek}: 4 | ekmek 4 | {ekmek, süt} (4) |
+| ekmek | (kökün hemen altında, öneki yok) | | |
+
+Sonuç, Apriori'nin Seviye 2 ve 3'te bulduğu kümelerin aynısıdır: 6 ikili, 2 üçlü küme. Fark, bunlara **aday üretmeden** ve veriyi **yalnızca iki kez okuyarak** ulaşılmasıdır. Büyük veride her koşullu örüntü tabanından küçük bir **koşullu FP-ağacı** kurulur ve aynı işlem özyinelemeli olarak tekrarlanır.
+
+| | **Apriori** | **FP-Growth** |
+| :--- | :--- | :--- |
+| Aday üretimi | Var (seviye seviye) | Yok |
+| Veritabanı taraması | Her seviye için bir kez | 2 kez |
+| Bellek | Aday kümeler | FP-ağacı (veri belleğe sığmazsa sorun) |
+| Güçlü olduğu durum | Az ürün, yüksek destek eşiği | Çok ürün, düşük destek eşiği, uzun örüntüler |
+| Sonuç | Aynı sık kümeler, aynı kurallar | Aynı sık kümeler, aynı kurallar |
+
+Spark MLlib gibi büyük veri kütüphaneleri bu yüzden Apriori'yi değil, FP-Growth'u sunar.
+
+### 18.5 WEKA ile Birliktelik Kuralları
 
 1. Explorer → Preprocess → `weather.nominal.arff` (veya büyük bir örnek için `supermarket.arff`). Apriori **kategorik** veri ister; sayısal öznitelikler varsa önce `Discretize` filtresi uygulanmalıdır.
 2. **Associate** sekmesi → Choose → `Apriori`.
@@ -2978,13 +3034,24 @@ En yüksek lift'li kurallar:
 
 Okunuşu: "outlook = overcast olan 4 günün 4'ünde de play = yes; güven = 1, lift = 1.56."
 
-### 18.5 Kısa Uygulama: Market Sepeti Analizi
+5. **FP-Growth için:** Choose → `FPGrowth`. Parametreler Apriori'ninkilere benzer (`lowerBoundMinSupport`, `minMetric`, `metricType`, `numRulesToFind`). Belirli bir destek eşiğindeki **tüm** kuralları görmek için `findAllRulesForSupportLevel = True` yapın. Çıktıda ürünler köşeli parantez içinde yazılır:
+
+```text
+ 1. [yumurta=t, zeytin=t]: 59 ==> [peynir=t]: 51   <conf:(0.86)> lift:(3.07) lev:(0.09) conv:(4.71)
+```
+
+> **Dikkat:** WEKA'nın `FPGrowth`'u yalnızca **sepet biçimli** (ikili) verilerle çalışır: Her öznitelik ya tek değerli (`{t}`, yoksa `?`) ya da iki değerli olmalıdır. `weather.nominal.arff` gibi çok değerli nominal veride *"Cannot handle multi-valued nominal attributes!"* hatası verir. Bu yüzden FP-Growth'u aşağıdaki `market_sepeti.arff` ile deneyin.
+
+### 18.6 Kısa Uygulama: Market Sepeti Analizi
 
 Veri: [`data/market_sepeti.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.arff) (WEKA) ve [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv) (Python). 391 alışveriş sepeti, 12 ürün. Veride birkaç **gizli** birliktelik vardır; bunları bulmaya çalışın.
 
 **WEKA**
 1. `market_sepeti.arff` → **Associate** → `Apriori`. Ayarlar: `lowerBoundMinSupport = 0.1`, `minMetric = 0.6` (güven), `numRules = 20` → **Start**.
 2. Bulunan kuralları inceleyin. Sonra `metricType = Lift`, `minMetric = 1.5` yapıp tekrar çalıştırın; listede hangi kurallar kaldı?
+3. Aynı veride Choose → `FPGrowth` seçin: `lowerBoundMinSupport = 0.1`, `minMetric = 0.6`, `findAllRulesForSupportLevel = True` → **Start**. FPGrowth **22 kural** bulur. Apriori'de `numRules = 100` yaparsanız **23 kural** görürsünüz.
+
+> **Bir kural fark nereden geliyor?** Apriori çıktısının başında *"Minimum support: 0.1 (39 instances)"* yazar: 0.1 × 391 = 39.1 sepet, Apriori'de 39'a yuvarlanır. FPGrowth (ve Python'daki `mlxtend`) ise desteğin gerçekten en az 0.1 olmasını, yani en az 40 sepet ister. {ekmek, süt, domates} tam 39 sepette geçer (destek 0.0997). Bu yüzden {süt, domates} → ekmek kuralı yalnızca Apriori'nin listesinde çıkar. Eşiğin tam sınırındaki kümelerde araçlar böyle küçük farklar gösterebilir; algoritmaların kendisi aynı sonucu üretir.
 
 **Python** (iki ürünlü tüm kuralları hesaplar)
 
@@ -3016,10 +3083,41 @@ print(tablo[(tablo.destek >= 0.05) & (tablo.guven >= 0.6)].sort_values("lift", a
 | domates → ekmek | 0.276 | 0.675 | 1.08 |
 | peynir → ekmek | 0.174 | 0.618 | **0.99** |
 
+**Python: mlxtend ile Apriori ve FP-Growth** (üç ürünlü kurallar dahil; tam kod: [`codes/python/11b_apriori_ve_fpgrowth_mlxtend.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11b_apriori_ve_fpgrowth_mlxtend.py))
+
+```python
+import pandas as pd                                                    # Tablo işlemleri
+from mlxtend.frequent_patterns import apriori, fpgrowth, association_rules   # pip install mlxtend
+
+VERI = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/"   # Veri klasörünün adresi
+S = pd.read_csv(VERI + "market_sepeti.csv").astype(bool)               # mlxtend True/False tablo ister
+
+sik_a = apriori(S, min_support=0.10, use_colnames=True)                # Apriori: seviye seviye aday üretir
+sik_f = fpgrowth(S, min_support=0.10, use_colnames=True)               # FP-Growth: FP-ağacı kurar, aday üretmez
+print(len(sik_a), len(sik_f), set(sik_a.itemsets) == set(sik_f.itemsets))   # 42 42 True → aynı sık kümeler
+
+kurallar = association_rules(sik_f, num_itemsets=len(S),               # Sık kümelerden kural üret
+                             metric="confidence", min_threshold=0.6)   # Güven ≥ 0.6 → 22 kural
+print(kurallar[["antecedents", "consequents", "support", "confidence", "lift"]]
+      .sort_values("lift", ascending=False).round(3))                  # Lift'e göre büyükten küçüğe
+```
+
+İki algoritma aynı 42 sık kümeyi (12 tekli, 26 ikili, 4 üçlü) ve WEKA `FPGrowth` ile aynı 22 kuralı bulur. İlk Python kodunun göremediği üç ürünlü kurallar:
+
+| Kural | Destek | Güven | Lift |
+| :--- | :---: | :---: | :---: |
+| {yumurta, zeytin} → peynir | 0.130 | 0.864 | **3.07** |
+| {peynir, yumurta} → zeytin | 0.130 | 0.810 | **3.07** |
+| {ekmek, peynir} → zeytin | 0.128 | 0.735 | 2.79 |
+| {ekmek, zeytin} → peynir | 0.128 | 0.781 | 2.78 |
+| {peynir, zeytin} → yumurta | 0.130 | 0.699 | 1.79 |
+| {peynir, zeytin} → ekmek | 0.128 | 0.685 | 1.09 |
+
 **Gözlem soruları**
 - `peynir → ekmek` kuralının güveni (%62) yüksek görünüyor, ama lift'i 1'in altında. Bu kural market için neden **değersizdir**? (İpucu: Sepetlerin %63'ünde zaten ekmek var.)
 - Bulduğunuz kurallara göre market raflarını veya kampanyalarını nasıl düzenlersiniz?
-- Üç ürünlü kural `{peynir, zeytin} → yumurta`'yı WEKA buldu mu? Python kodu neden bulamıyor?
+- Üç ürünlü kural `{peynir, zeytin} → yumurta`'yı WEKA buldu mu? İlk Python kodu neden bulamıyor, `mlxtend` neden buluyor?
+- Apriori ve FP-Growth aynı kuralları bulduğuna göre FP-Growth'u hangi durumlarda tercih edersiniz?
 
 ---
 
@@ -3938,7 +4036,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | [`data/ev_fiyatlari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/ev_fiyatlari.csv), `.arff` | CSV, ARFF | 240 | Regresyon (fiyat) | 6.8, 9.4 |
 | [`data/kredi_basvurulari.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/kredi_basvurulari.csv), `.arff` | CSV, ARFF | 600 | Dengesiz sınıflandırma, eksik değerli | 5.7, 5.10, 9.3, 22.6 |
 | [`data/musteri_segmentleri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_segmentleri.csv), `.arff` | CSV, ARFF | 300 | Kümeleme (etiketsiz) | 17.6 |
-| [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv), `.arff` | CSV, ARFF | 391 | Birliktelik kuralları | 18.5 |
+| [`data/market_sepeti.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/market_sepeti.csv), `.arff` | CSV, ARFF | 391 | Birliktelik kuralları | 18.6 |
 | [`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff) | ARFF | 14 | Sınıflandırma (elle hesap) | 11.3, 11.5, 12.2, 12.5 |
 | [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) | ARFF | 1 | Naive Bayes ile yeni tahmin | 11.5 |
 | [`data/meme_kanseri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/meme_kanseri.csv), `.arff` | CSV, ARFF | 569 | Sınıflandırma (gerçek veri; Python'da `load_breast_cancer()`) | 7.4, 8, 9.5, 12.5, 16.5, 19.3, 20.5, 20.6 |

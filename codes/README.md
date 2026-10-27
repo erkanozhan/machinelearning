@@ -5,7 +5,7 @@ Bu klasör, [Ders Notu](../Ders_Notu.md)'nda anlatılan konuların uygulama ders
 ## Kurulum
 
 ```bash
-pip install -r requirements.txt     # numpy, scipy, scikit-learn, matplotlib
+pip install -r requirements.txt     # numpy, scipy, scikit-learn, matplotlib, mlxtend
 ```
 
 Kurulum yapmadan çalıştırmak için dosya içeriğini [Google Colab](https://colab.research.google.com)'a yapıştırabilirsiniz.
@@ -26,6 +26,7 @@ Kurulum yapmadan çalıştırmak için dosya içeriğini [Google Colab](https://
 | `09_svm.py` | Marj, C parametresi, çekirdekler, karar sınırları | 13 |
 | `10_kumeleme.py` | Sıfırdan K-Means, dirsek, siluet, hiyerarşik, DBSCAN | 17 |
 | `11_birliktelik_kurallari_apriori.py` | Apriori algoritması (kütüphanesiz) | 18 |
+| `11b_apriori_ve_fpgrowth_mlxtend.py` | `mlxtend` ile Apriori ve FP-Growth; üç ürünlü kurallar, lift ile süzme | 18 |
 | `12_pca_ve_oznitelik_secimi.py` | Sıfırdan PCA, filtre / sarmalayıcı / gömülü öznitelik seçimi | 19 |
 | `13_maliyete_duyarli_ogrenme.py` | Sınıf ağırlığı, oversampling, maliyete göre eşik | 22 |
 | `14_hiperparametre_optimizasyonu.py` | Grid Search, Random Search, Nested CV, erken durdurma | 20 |

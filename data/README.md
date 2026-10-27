@@ -13,7 +13,7 @@ Bu klasördeki veriler [Ders Notu](../Ders_Notu.md)'ndaki kısa uygulamalarda ku
 | `ev_fiyatlari.csv`, `.arff` | 240 | `metrekare`, `oda_sayisi`, `bina_yasi`, `kat`, `semt` {merkez, cevre, banliyo}, `otopark` {evet, hayir}, `fiyat_bin_tl` | Regresyon | 6.8, 9.4 |
 | `kredi_basvurulari.csv`, `.arff` | 600 | `yas`, `aylik_gelir`, `borc_gelir_orani`, `calisma_yili`, `sehir`, `gecmis_gecikme`, `risk` {dusuk, yuksek} | Dengesiz sınıflandırma (~%20 yüksek risk). **Eksik değer içerir:** 30 gelir, 18 şehir | 5.7, 5.10, 9.3, 22.6 |
 | `musteri_segmentleri.csv`, `.arff` | 300 | `yas`, `yillik_gelir_bin_tl`, `harcama_puani` | Kümeleme (etiket yok; 5 doğal grup) | 17.6 |
-| `market_sepeti.csv`, `.arff` | 391 | 12 ürün (CSV: 1/0, ARFF: t/?) | Birliktelik kuralları | 18.5 |
+| `market_sepeti.csv`, `.arff` | 391 | 12 ürün (CSV: 1/0, ARFF: t/?) | Birliktelik kuralları | 18.6 |
 | `weather.nominal.arff` | 14 | `outlook`, `temperature`, `humidity`, `windy`, `play` | Elle hesaplanan Naive Bayes ve karar ağacı örnekleri (Quinlan, 1986; WEKA ile de gelir) | 11, 12 |
 | `weather_yeni_gun.arff` | 1 | (yukarıdakiyle aynı) | Naive Bayes ile yeni günü tahmin etmek | 11.5 |
 | `meme_kanseri.csv`, `.arff` | 569 | 30 sayısal öznitelik (`mean_radius` … `worst_fractal_dimension`), `tani` {kotu_huylu, iyi_huylu} | Sınıflandırma (212 kötü huylu, 357 iyi huylu). **Gerçek veri:** Wisconsin Diagnostic Breast Cancer (Wolberg vd., 1995; UCI, CC BY 4.0). Python'da `load_breast_cancer()` ile aynı | 7.4, 8, 9.5, 12.5, 16.5, 19.3, 20 |
