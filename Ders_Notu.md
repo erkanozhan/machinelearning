@@ -2767,7 +2767,7 @@ $\displaystyle F_t(\mathbf{x}) = F_ {t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mat
 
 <img src="images/formuller/43.png" alt="Açıklamalı formül. Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." width="444">
 
-**Nasıl okunur?** "Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." $h_t \approx \text{argmin}_h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
+**Nasıl okunur?** "Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." $h_t \approx \text{argmin}_ h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
 
 </details>
 
@@ -4213,7 +4213,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | $\varphi$ | fi | Özellik dönüşümü | 13.4 |
 | $\hat{y}^{(b)}$ | ye şapka üst be | $b$. modelin tahmini (parantezli üst indis kuvvet değildir) | 16.2 |
 | $\mathrm{mod}$ | mod | En sık görülen değer (çoğunluk oyu) | 16.2 |
-| $\text{argmin}_h$ | arg min ha | Sağdaki ifadeyi en küçük yapan $h$'nin kendisi (en küçük değer değil) | 16.3 |
+| $\text{argmin}_ h$ | arg min ha | Sağdaki ifadeyi en küçük yapan $h$'nin kendisi (en küçük değer değil) | 16.3 |
 | $\max\lbrace a, b \rbrace$ | a ile be'nin büyüğü | İki değerden büyük olanı | 17.1 |
 | $\varepsilon$ | epsilon | DBSCAN komşuluk yarıçapı | 17.3 |
 | $\cup$ | birleşim | Küme birleşimi | 18.2 |
