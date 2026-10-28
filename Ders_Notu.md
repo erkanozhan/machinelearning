@@ -2756,7 +2756,7 @@ graph LR
 <details>
 <summary><b>Derinleşme (İleri Seviye): Gradient Boosting'in güncelleme adımı</b></summary>
 
-$\displaystyle F_t(\mathbf{x}) = F_ {t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_ {i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_ {F = F_ {t-1}(\mathbf{x}_i)}$
+$\displaystyle F_t(\mathbf{x}) = F_ {t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_ h \sum_i \big(r_ {i}^{(t)} - h(\mathbf{x}_ i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_ {F = F_ {t-1}(\mathbf{x}_ i)}$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -4071,7 +4071,7 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
-$\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_ {test}}{n_ {train}}\right)\hat{\sigma}_d^2}}$
+$\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_ {test}}{n_ {train}}\right)\hat{\sigma}_ d^2}}$
 
 <img src="images/formuller/55.png" alt="Açıklamalı formül. Te eşittir, de bar bölü, bir bölü ka ar artı en test bölü en train, çarpı sigma şapka de kare'nin karekökü." width="327">
 
