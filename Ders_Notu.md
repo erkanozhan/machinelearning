@@ -418,13 +418,13 @@ Makine öğrenmesinde veri genellikle bir **tablo** olarak düşünülür:
 
 Matematiksel gösterimde $n$ örnek ve $d$ öznitelik varsa veri bir $X$ matrisiyle (İng. *matrix*; Lat. *matrix*: "ana rahmi, kaynak"), hedef ise bir $y$ vektörüyle gösterilir:
 
-$$
+```math
 X = \begin{bmatrix} x_{11} & x_{12} & \cdots & x_{1d} \\ x_{21} & x_{22} & \cdots & x_{2d} \\ \vdots & \vdots & \ddots & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{nd} \end{bmatrix}, \qquad y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix}
-$$
+```
 
-$$
+```math
 \underbrace{X}_{\substack{\text{öznitelik matrisi}\\ n \times d}} = \Big[\; \underbrace{x_{ij}}_{\substack{\text{i. satır (örnek),}\\[2pt]\text{j. sütun (öznitelik)}}} \;\Big], \qquad \underbrace{y}_{\text{hedef vektörü}} = \Big[\; \overbrace{y_i}^{\text{i. örneğin hedefi}} \;\Big]
-$$
+```
 
 **Nasıl okunur?** "Büyük iks, n satırlı ve d sütunlu bir matristir; i'nci satırının j'nci elemanı iks alt i j'dir. Ye ise n elemanlı bir sütun vektörüdür; i'nci elemanı ye alt i'dir." Yukarıdaki tabloda öznitelikler Yaş, Gelir, Şehir ve Geçmiş gecikme sütunlarıdır. Buna göre $x_{21} = 22$ (2. müşterinin yaşı), $x_{13} =$ İstanbul (1. müşterinin şehri) ve $y_2 =$ Yüksek'tir.
 
@@ -445,9 +445,9 @@ $$
 y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m
 $$
 
-$$
+```math
 \underbrace{y}_{\text{hedef}} = \overbrace{\theta_0}^{\text{sabit terim}} + \underbrace{\theta_1 x_1}_{\substack{\text{1. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \overbrace{\theta_2 x_2}^{\substack{\text{2. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \dots + \underbrace{\theta_m x_m}_{\substack{\text{m. öznitelik}\\[2pt]\text{çarpı katsayısı}}}
-$$
+```
 
 **Nasıl okunur?** "Ye eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki artı … artı teta em iks em." Yani: Her öznitelik kendi katsayısıyla çarpılır, çarpımlar sabit terimle birlikte toplanır. Katsayılar ($\theta$) veriden öğrenilir; öznitelikler ($x$) ise her örnekte veriden okunur.
 
@@ -484,9 +484,9 @@ $$
 \bar{x} = \mu = \frac{1}{n}\sum_{i=1}^{n} x_i
 $$
 
-$$
+```math
 \underbrace{\bar{x} = \mu}_{\text{ortalama}} = \overbrace{\frac{1}{n}}^{\substack{\text{toplamı}\\[2pt]\text{n'ye böl}}} \; \underbrace{\sum_{i=1}^{n}}_{\substack{\text{i = 1'den n'ye kadar}\\[2pt]\text{hepsini topla}}} \overbrace{x_i}^{\text{i. değer}}
-$$
+```
 
 **Nasıl okunur?** "İks bar eşittir mü eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i'lerin toplamı." Yani: Bütün değerleri topla, değer sayısına böl.
 
@@ -496,9 +496,9 @@ $$
 \sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\mu)^2 \qquad\qquad s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2
 $$
 
-$$
+```math
 \underbrace{\sigma^2}_{\text{kitle varyansı}} = \underbrace{\frac{1}{n}\sum_{i=1}^{n}}_{\substack{\text{n değerin}\\[2pt]\text{ortalamasını al}}} \underbrace{\big(\overbrace{x_i-\mu}^{\text{ortalamadan sapma}}\big)^2}_{\text{sapmanın karesi}} \qquad\qquad \underbrace{s^2}_{\text{örneklem varyansı}} = \overbrace{\frac{1}{n-1}}^{\substack{\text{n yerine}\\ n-1 \text{ ile böl}}} \sum_{i=1}^{n}(x_i-\bar{x})^2
-$$
+```
 
 **Nasıl okunur?** "Sigma kare eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i eksi mü'nün karelerinin toplamı. Es kare eşittir, bir bölü en eksi bir çarpı, i eşittir 1'den n'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı." Yani: Her değerin ortalamadan sapmasını bul, karesini al (ortalamanın altındaki ve üstündeki sapmalar birbirini götürmesin diye) ve bu karelerin ortalamasını al. Standart sapma bunun kareköküdür ($\sigma = \sqrt{\sigma^2}$, $s = \sqrt{s^2}$); karekök, birimi verinin birimine geri döndürür (puan² → puan). $n-1$'e bölmek, ortalama da aynı örneklemden hesaplandığı için yayılımın olduğundan küçük çıkmasını düzeltir.
 
@@ -665,9 +665,9 @@ $$
 x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
 $$
 
-$$
+```math
 \underbrace{x'}_{\text{yeni değer}} = \frac{\overbrace{x - x_{\min}}^{\substack{\text{değerin en küçük}\\[2pt]\text{değerden uzaklığı}}}}{\underbrace{x_{\max} - x_{\min}}_{\substack{\text{özniteliğin}\\[2pt]\text{değişim aralığı}}}}
-$$
+```
 
 **Nasıl okunur?** "İks üssü eşittir, iks eksi iks min, bölü iks maks eksi iks min." Yani: Değer, en küçükten en büyüğe giden yolun kaçta kaçında? En küçük değer 0'a, en büyük değer 1'e dönüşür.
 
@@ -689,9 +689,9 @@ $$
 z = \frac{x - \mu}{\sigma}
 $$
 
-$$
+```math
 \underbrace{z}_{\text{z-skoru}} = \frac{\overbrace{x - \mu}^{\text{ortalamadan sapma}}}{\underbrace{\sigma}_{\substack{\text{standart sapma}\\[2pt]\text{(ölçü birimi)}}}}
-$$
+```
 
 **Nasıl okunur?** "Zet eşittir, iks eksi mü, bölü sigma." Yani: Sapma, standart sapma cinsinden ölçülür. $z = 2$ "ortalamanın iki standart sapma üstünde", $z = -0.5$ "yarım standart sapma altında" demektir; işaret yönü, büyüklük uzaklığı gösterir.
 
@@ -713,9 +713,9 @@ $$
 x' = \frac{x - \text{medyan}(x)}{IQR}, \qquad IQR = Q_3 - Q_1
 $$
 
-$$
+```math
 \underbrace{x'}_{\text{yeni değer}} = \frac{\overbrace{x - \text{medyan}(x)}^{\text{ortancadan uzaklık}}}{\underbrace{IQR}_{\substack{\text{ortadaki \%50'nin}\\[2pt]\text{genişliği}}}}, \qquad IQR = \underbrace{Q_3}_{\substack{\text{\%75}\\[2pt]\text{noktası}}} - \underbrace{Q_1}_{\substack{\text{\%25}\\[2pt]\text{noktası}}}
-$$
+```
 
 **Nasıl okunur?** "İks üssü eşittir, iks eksi iks'in medyanı, bölü IQR. IQR eşittir ku üç eksi ku bir." Yani: z-skorundaki ortalamanın yerine medyan, standart sapmanın yerine IQR kullanılır; ikisi de uç değerlerden neredeyse etkilenmez. Örnek: $[60, 70, 80, 100]$ için medyan 75, $Q_1 = 67.5$, $Q_3 = 85$ (NumPy ve scikit-learn'ün varsayılan hesabı), $IQR = 17.5$. 70 için $x' = (70 - 75)/17.5 \approx -0.29$ olur.
 
@@ -729,9 +729,9 @@ $$
 x' = \frac{x}{10^{j}}, \qquad j:\ \max_i \lvert x'_i \rvert < 1 \text{ koşulunu sağlayan en küçük tam sayı}
 $$
 
-$$
+```math
 \underbrace{x'}_{\text{yeni değer}} = \frac{x}{\underbrace{10^{j}}_{\substack{\text{virgülü j basamak}\\[2pt]\text{sola kaydır}}}}, \qquad \overbrace{j}^{\substack{\text{en küçük}\\[2pt]\text{tam sayı}}}:\ \underbrace{\max_i \lvert x'_i \rvert < 1}_{\substack{\text{ölçeklenmiş değerlerin en büyük}\\[2pt]\text{mutlak değeri 1'den küçük olsun}}}
-$$
+```
 
 **Nasıl okunur?** "İks üssü eşittir, iks bölü on üzeri j. Burada j, ölçeklenmiş değerlerin mutlak değerce en büyüğünü 1'in altına indiren en küçük tam sayıdır."
 
@@ -778,9 +778,9 @@ $$
 d_{\text{Öklid}}(\mathbf{a},\mathbf{b}) = \sqrt{\sum_{j=1}^{d}(a_j-b_j)^2} \qquad d_{\text{Manhattan}}(\mathbf{a},\mathbf{b}) = \sum_{j=1}^{d}\lvert a_j-b_j \rvert
 $$
 
-$$
+```math
 \underbrace{d_{\text{Öklid}}(\mathbf{a},\mathbf{b})}_{\text{kuş uçuşu uzaklık}} = \sqrt{\underbrace{\sum_{j=1}^{d}}_{\substack{\text{tüm öznitelikler}\\[2pt]\text{için topla}}} \overbrace{(a_j-b_j)^2}^{\substack{\text{j. öznitelikteki}\\[2pt]\text{farkın karesi}}}} \qquad \underbrace{d_{\text{Manhattan}}(\mathbf{a},\mathbf{b})}_{\text{blok blok yürüme uzaklığı}} = \sum_{j=1}^{d}\overbrace{\lvert a_j-b_j \rvert}^{\substack{\text{j. öznitelikteki}\\[2pt]\text{farkın mutlak değeri}}}
-$$
+```
 
 **Nasıl okunur?** "a ile be arasındaki Öklid uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin karelerinin toplamının karekökü. Manhattan uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin mutlak değerlerinin toplamı." Öklid uzaklığı, Pisagor teoreminin $d$ boyuta genişletilmiş hâlidir.
 
@@ -793,7 +793,7 @@ $$
 
 **Örnek:** $\mathbf{a}=(1, 2)$, $\mathbf{b}=(4, 6)$ → Öklid: $\sqrt{3^2+4^2}=5$ (kuş uçuşu) · Manhattan: $3+4=7$ (şehir blokları boyunca yürüyerek).
 
-> **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
+> **Minkowski mesafesi** ikisini genelleştirir: $d_p = \left(\sum_j \lvert a_j-b_j\rvert^p\right)^{1/p}$. $p=1$ Manhattan, $p=2$ Öklid'dir. Metin verisinde sıklıkla **kosinüs benzerliği** kullanılır: $\cos(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\thinspace \lVert\mathbf{b}\rVert}$. Kategorik verilerde ise farklı olan öznitelik sayısını sayan **Hamming mesafesi** kullanılabilir.
 
 
 #### Kısa Uygulama: İki Öğrenci Arasındaki Mesafe
@@ -875,9 +875,9 @@ $$
 \hat{y} = h_\theta(x) = \theta_0 + \theta_1 x
 $$
 
-$$
+```math
 \underbrace{\hat{y}}_{\text{tahmin}} = \underbrace{h_\theta(x)}_{\substack{\text{teta parametreli}\\[2pt]\text{model}}} = \overbrace{\theta_0}^{\text{kesişim}} + \overbrace{\theta_1}^{\text{eğim}} \underbrace{x}_{\text{girdi}}
-$$
+```
 
 **Nasıl okunur?** "Ye şapka eşittir, h alt teta iks eşittir, teta sıfır artı teta bir iks." $h_\theta(x)$, "teta parametreleriyle çalışan h fonksiyonunun x'teki değeri" demektir: Alt indisteki $\theta$ bir çarpan değil, fonksiyonun hangi parametrelerle çalıştığını gösteren bir etikettir.
 
@@ -901,9 +901,9 @@ $$
 J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^{m}\left(\hat{y}_i - y_i\right)^2 = \frac{1}{2m}\sum_{i=1}^{m}\left(\theta_0 + \theta_1 x_i - y_i\right)^2
 $$
 
-$$
+```math
 \underbrace{J(\theta_0,\theta_1)}_{\substack{\text{maliyet: bu parametreler}\\[2pt]\text{ne kadar kötü?}}} = \overbrace{\frac{1}{2m}}^{\substack{\text{ortalama al;}\\[2pt]\text{1/2 türev için}}} \underbrace{\sum_{i=1}^{m}}_{\substack{\text{tüm eğitim}\\[2pt]\text{örnekleri için topla}}} \overbrace{\big(\underbrace{\hat{y}_i - y_i}_{\text{hata}}\big)^2}^{\text{hatanın karesi}}
-$$
+```
 
 **Nasıl okunur?** "Ce teta sıfır, teta bir eşittir, bir bölü iki em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'nin karelerinin toplamı." İkinci eşitlikte yalnızca $\hat{y}_i$ yerine modelin kendisi ($\theta_0 + \theta_1 x_i$) yazılmıştır. $J$, $\theta$'ların fonksiyonudur: Veri sabittir; parametreler değiştikçe maliyet değişir. Örnek (Bölüm 6.3'teki 5 öğrenci): $\theta_0 = \theta_1 = 0$ (herkese 0 tahmini) için $J = 2159.3$, en iyi doğru $\hat{y} = 44.6 + 6.8x$ için $J = 0.56$.
 
@@ -920,13 +920,13 @@ $$
 
 Basit lineer regresyonda $J$'yi en küçük yapan değerler doğrudan hesaplanabilir:
 
-$$
+```math
 \theta_1 = \frac{\sum_{i=1}^{m}(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^{m}(x_i-\bar{x})^2}, \qquad \theta_0 = \bar{y} - \theta_1\,\bar{x}
-$$
+```
 
-$$
+```math
 \underbrace{\theta_1}_{\text{eğim}} = \frac{\overbrace{\sum_{i=1}^{m}(x_i-\bar{x})(y_i-\bar{y})}^{\substack{\text{x ile y'nin ortalamadan}\\[2pt]\text{birlikte sapması}}}}{\underbrace{\sum_{i=1}^{m}(x_i-\bar{x})^2}_{\substack{\text{x'in kendi sapmalarının}\\[2pt]\text{kareleri}}}}, \qquad \underbrace{\theta_0}_{\text{kesişim}} = \overbrace{\bar{y} - \theta_1\,\bar{x}}^{\substack{\text{doğru, ortalama noktadan}\\[2pt]\text{geçsin diye}}}
-$$
+```
 
 **Nasıl okunur?** "Teta bir eşittir, i eşittir 1'den m'ye kadar iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü i eşittir 1'den m'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı. Teta sıfır eşittir ye bar eksi teta bir çarpı iks bar." Yani: $\theta_0$ formülü, doğrunun $(\bar{x}, \bar{y})$ ortalama noktasından geçmesini sağlar.
 
@@ -965,21 +965,21 @@ $$
 \theta_j := \theta_j - \alpha \frac{\partial J}{\partial \theta_j}
 $$
 
-$$
+```math
 \underbrace{\theta_j}_{\text{yeni değer}} \overbrace{:=}^{\text{atanır}} \underbrace{\theta_j}_{\text{eski değer}} - \overbrace{\alpha}^{\substack{\text{adım}\\[2pt]\text{büyüklüğü}}} \underbrace{\frac{\partial J}{\partial \theta_j}}_{\substack{\text{eğim: teta j artınca}\\[2pt]\text{J ne kadar değişir?}}}
-$$
+```
 
 **Nasıl okunur?** "Teta j'ye, teta j eksi alfa çarpı ce'nin teta j'ye göre kısmi türevi atanır." **Dikkat:** $:=$ eşitlik değil atamadır. Bir denklem gibi okunursa ($\theta_j = \theta_j - \dots$) türevin sıfır olması gerekirdi; oysa kural, eski değerden yeni değeri hesaplayıp tekrar tekrar uygulanır. Eğim pozitifse $\theta_j$ küçülür, negatifse büyür: Her iki durumda da yokuş aşağı gidilir.
 
 Lineer regresyon için türevler:
 
-$$
+```math
 \frac{\partial J}{\partial \theta_0} = \frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i - y_i), \qquad \frac{\partial J}{\partial \theta_1} = \frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i - y_i)\,x_i
-$$
+```
 
-$$
+```math
 \underbrace{\frac{\partial J}{\partial \theta_0}}_{\substack{\text{teta sıfıra}\\[2pt]\text{göre eğim}}} = \overbrace{\frac{1}{m}\sum_{i=1}^{m}}^{\text{ortalama}}\underbrace{(\hat{y}_i - y_i)}_{\text{hata}}, \qquad \underbrace{\frac{\partial J}{\partial \theta_1}}_{\substack{\text{teta bire}\\[2pt]\text{göre eğim}}} = \frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i - y_i)\,\overbrace{x_i}^{\substack{\text{hata, girdiyle}\\[2pt]\text{ağırlıklandırılır}}}
-$$
+```
 
 **Nasıl okunur?** "Ce'nin teta sıfıra göre kısmi türevi eşittir, bir bölü em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'lerin toplamı. Ce'nin teta bire göre kısmi türevi eşittir, bir bölü em çarpı, aynı hataların iks alt i ile çarpılarak toplamı." $J$'deki $\frac{1}{2m}$'nin 2'si, karenin türevinden gelen 2 ile sadeleşmiş; geriye $\frac{1}{m}$ kalmıştır. Örnek (Bölüm 6.3'teki veri, $\theta_0 = \theta_1 = 0$, $\alpha = 0.05$): Tüm tahminler 0 olduğundan $\frac{\partial J}{\partial \theta_0} = -65$ ve $\frac{\partial J}{\partial \theta_1} = -208.6$ çıkar. İlk adımda $\theta_0 := 0 - 0.05 \cdot (-65) = 3.25$ ve $\theta_1 := 0 - 0.05 \cdot (-208.6) = 10.43$ olur.
 
@@ -1010,9 +1010,9 @@ $$
 \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_d x_d = \theta_0 + \sum_{j=1}^{d}\theta_j x_j
 $$
 
-$$
+```math
 \underbrace{\hat{y}}_{\text{tahmin}} = \underbrace{\theta_0}_{\text{sabit terim}} + \underbrace{\sum_{j=1}^{d}}_{\substack{\text{j = 1'den d'ye kadar}\\[2pt]\text{tüm öznitelikler}}} \overbrace{\theta_j x_j}^{\substack{\text{j. öznitelik çarpı}\\[2pt]\text{katsayısı}}}
-$$
+```
 
 **Nasıl okunur?** "Ye şapka eşittir teta sıfır artı, j eşittir 1'den d'ye kadar teta alt j çarpı iks alt j'lerin toplamı." Toplam sembolü, $\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_d x_d$ uzun toplamının kısa yazılışıdır.
 
@@ -1029,13 +1029,9 @@ Tek öznitelikte model bir **doğru**, iki öznitelikte bir **düzlem**, daha fa
 
 Her örneğe sabit terim için $x_0 = 1$ eklenirse model vektörlerle yazılır: $\hat{y} = \boldsymbol{\theta}^{T}\mathbf{x}$. Tüm veri için $\hat{\mathbf{y}} = X\boldsymbol{\theta}$ olur. Maliyeti sıfıra eşitleyerek bulunan kapalı form çözüme **normal denklem** denir:
 
-```math
-\boldsymbol{\theta} = \left(X^{T}X\right)^{-1}X^{T}\mathbf{y}
-```
+$\displaystyle \boldsymbol{\theta} = \left(X^{T}X\right)^{-1}X^{T}\mathbf{y}$
 
-```math
-\underbrace{\boldsymbol{\theta}}_{\substack{\text{tüm parametreler}\\[2pt]\text{tek seferde}}} = \underbrace{\left(X^{T}X\right)^{-1}}_{\substack{\text{özniteliklerin kendi aralarındaki}\\[2pt]\text{ilişkinin tersi}}}\overbrace{X^{T}\mathbf{y}}^{\substack{\text{öznitelikler ile hedefin}\\[2pt]\text{ilişkisi}}}
-```
+$\displaystyle \underbrace{\boldsymbol{\theta}}_{\substack{\text{tüm parametreler}\cr \text{tek seferde}}} = \underbrace{\left(X^{T}X\right)^{-1}}_{\substack{\text{özniteliklerin kendi aralarındaki}\cr \text{ilişkinin tersi}}}\overbrace{X^{T}\mathbf{y}}^{\substack{\text{öznitelikler ile hedefin}\cr \text{ilişkisi}}}$
 
 **Nasıl okunur?** "Teta vektörü eşittir, iks transpoz iks'in tersi çarpı iks transpoz çarpı ye vektörü." Yani: Bölüm 6.3'teki $\theta_1$ = pay / payda formülünün matris karşılığıdır. $X^T\mathbf{y}$ paya, $X^TX$ paydaya karşılık gelir; matrislerde bölme olmadığı için ters matrisle çarpılır.
 
@@ -1053,13 +1049,13 @@ Normal denklem $d$ küçükken çok hızlıdır. $d$ büyüdükçe $(X^TX)^{-1}$
 
 Lineer modeller şaşırtıcı derecede esnektir. İlişki eğrisel olsa bile yeni öznitelikler türetip modeli **parametrelere göre doğrusal** tutabiliriz:
 
-$$
+```math
 \hat{y} = \theta_0 + \theta_1 x + \theta_2 x^2 \quad\xrightarrow{\;x_2 \,:=\, x^2\;}\quad \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2
-$$
+```
 
-$$
+```math
 \underbrace{\hat{y} = \theta_0 + \theta_1 x + \theta_2 x^2}_{\text{x'e göre eğri (parabol)}} \quad\underbrace{\xrightarrow{\;x_2 \,:=\, x^2\;}}_{\text{yeni sütun ekle}}\quad \underbrace{\hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2}_{\substack{\text{tetalara göre doğrusal:}\\[2pt]\text{çoklu lineer regresyon}}}
-$$
+```
 
 **Nasıl okunur?** "Ye şapka eşittir teta sıfır artı teta bir iks artı teta iki iks kare. İks iki'ye iks kare atanırsa: ye şapka eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki." Yani: $x^2$ veri tablosunda yeni bir sütun olur; model $x$'e göre eğridir ama $\theta$'lara göre hâlâ doğrusaldır.
 
@@ -1153,9 +1149,9 @@ $$
 z = \theta_0 + \theta_1 x_1 + \cdots + \theta_d x_d, \qquad \hat{p} = P(y=1 \mid \mathbf{x}) = \sigma(z) = \frac{1}{1+e^{-z}}
 $$
 
-$$
+```math
 \underbrace{z}_{\substack{\text{doğrusal skor}\\[2pt]\text{(logit)}}} = \theta_0 + \theta_1 x_1 + \cdots + \theta_d x_d, \qquad \underbrace{\hat{p}}_{\substack{\text{tahmin edilen}\\[2pt]\text{olasılık}}} = \overbrace{P(y=1 \mid \mathbf{x})}^{\substack{\text{x verildiğinde sınıfın}\\[2pt]\text{1 olma olasılığı}}} = \underbrace{\sigma(z)}_{\text{sigmoid}} = \frac{1}{1+\underbrace{e^{-z}}_{\substack{\text{z büyüdükçe}\\[2pt]\text{0'a yaklaşır}}}}
-$$
+```
 
 **Nasıl okunur?** "Zet eşittir teta sıfır artı teta bir iks bir artı … artı teta de iks de. Pe şapka eşittir, iks vektörü verildiğinde ye'nin bir olma olasılığı, eşittir sigma zet, eşittir bir bölü bir artı e üzeri eksi zet." Buradaki $\sigma$ standart sapma değil, sigmoid fonksiyonunun adıdır. $z$ herhangi bir sayı olabilir; sigmoid onu 0 ile 1 arasına sıkıştırır:
 
@@ -1187,13 +1183,13 @@ $$
 
 Lojistik regresyonda karesel hata yerine **log-loss** (ikili çapraz entropi; İng. *cross-entropy*; Yun. *entropia*: "içe dönüş, dönüşüm") kullanılır:
 
-$$
+```math
 J(\boldsymbol{\theta}) = -\frac{1}{m}\sum_{i=1}^{m}\Big[\,y_i \log(\hat{p}_i) + (1-y_i)\log(1-\hat{p}_i)\Big]
-$$
+```
 
-$$
+```math
 \underbrace{J(\boldsymbol{\theta})}_{\text{ortalama kayıp}} = \overbrace{-\frac{1}{m}\sum_{i=1}^{m}}^{\substack{\text{eksi işaretli}\\[2pt]\text{ortalama}}}\Big[\,\underbrace{y_i \log(\hat{p}_i)}_{\substack{\text{gerçek sınıf 1 ise}\\[2pt]\text{çalışan terim}}} + \underbrace{(1-y_i)\log(1-\hat{p}_i)}_{\substack{\text{gerçek sınıf 0 ise}\\[2pt]\text{çalışan terim}}}\Big]
-$$
+```
 
 **Nasıl okunur?** "Ce teta eşittir eksi bir bölü em çarpı, i eşittir 1'den m'ye kadar, ye alt i çarpı log pe şapka alt i artı bir eksi ye alt i çarpı log bir eksi pe şapka alt i'lerin toplamı." Yani: $y_i$ yalnızca 0 ya da 1 olduğundan her örnekte iki terimden biri sıfırlanır. Gerçek sınıf 1 ise ceza $-\log \hat{p}_i$, 0 ise $-\log(1-\hat{p}_i)$ olur. 1'den küçük sayıların logaritması negatif olduğu için baştaki eksi işareti cezayı pozitife çevirir. Buradaki $\log$ doğal logaritmadır (taban $e$).
 
@@ -1310,9 +1306,7 @@ Model karmaşıklaştıkça yanlılık azalır ama varyans artar. Amaç, **test 
 
 Karesel hata için beklenen test hatası üç parçaya ayrılır:
 
-```math
-E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(x)\big)^2}_{\text{Yanlılık}^2} + \underbrace{E\big[(\hat{f}(x) - E[\hat{f}(x)])^2\big]}_{\text{Varyans}} + \underbrace{\sigma_\varepsilon^2}_{\text{Gürültü}}
-```
+$\displaystyle E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(x)\big)^2}_{\text{Yanlılık}^2} + \underbrace{E\big[(\hat{f}(x) - E[\hat{f}(x)])^2\big]}_{\text{Varyans}} + \underbrace{\sigma_\varepsilon^2}_{\text{Gürültü}}$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1397,13 +1391,13 @@ Makine öğrenmesinde $n$ satırlık veriden yine $n$ satırlık bir **eğitim s
 
 **Bir örneğin hiç seçilmeme olasılığı:** Her çekişte seçilmeme olasılığı $1 - \frac{1}{n}$, $n$ çekişte:
 
-$$
+```math
 P(\text{seçilmeme}) = \left(1-\frac{1}{n}\right)^{n} \xrightarrow{\;n\to\infty\;} e^{-1} \approx 0.368
-$$
+```
 
-$$
+```math
 \underbrace{P(\text{seçilmeme})}_{\substack{\text{bir örneğin hiç}\\[2pt]\text{seçilmeme olasılığı}}} = \underbrace{\Big(\overbrace{1-\frac{1}{n}}^{\substack{\text{tek çekişte}\\[2pt]\text{seçilmeme}}}\Big)^{n}}_{\substack{\text{n çekişin hepsinde}\\[2pt]\text{seçilmeme}}} \xrightarrow{\;n\to\infty\;} \underbrace{e^{-1} \approx 0.368}_{\substack{\text{n büyüdükçe}\\[2pt]\text{yaklaşılan değer}}}
-$$
+```
 
 **Nasıl okunur?** "Seçilmeme olasılığı eşittir, bir eksi bir bölü en'in en'inci kuvveti; en sonsuza giderken e üzeri eksi bire, yani yaklaşık 0.368'e yaklaşır." Bağımsız olayların olasılıkları çarpıldığı için tek çekişteki olasılığın $n$'inci kuvveti alınır. Değer $n$ büyüdükçe hızla sabitlenir: $n = 10$ için $0.349$, $n = 100$ için $0.366$, $n = 1000$ için $0.368$.
 
@@ -1530,9 +1524,9 @@ $$
 \text{Precision} = \frac{TP}{TP + FP}
 $$
 
-$$
+```math
 \text{Precision} = \frac{\overbrace{TP}^{\text{doğru pozitifler}}}{\underbrace{TP + FP}_{\substack{\text{pozitif dediğimiz}\\[2pt]\text{tüm örnekler}}}}
-$$
+```
 
 **Nasıl okunur?** "Kesinlik eşittir, te pe bölü te pe artı ef pe." Payda, karışıklık matrisinin **Tahmin: Pozitif** sütunudur.
 
@@ -1546,9 +1540,9 @@ $$
 \text{Recall} = \text{TPR} = \frac{TP}{TP + FN}
 $$
 
-$$
+```math
 \text{Recall} = \text{TPR} = \frac{\overbrace{TP}^{\text{yakalanan pozitifler}}}{\underbrace{TP + FN}_{\substack{\text{gerçekte pozitif}\\[2pt]\text{olanların hepsi}}}}
-$$
+```
 
 **Nasıl okunur?** "Duyarlılık eşittir te pe er eşittir, te pe bölü te pe artı ef en." Payda, **Gerçek: Pozitif** satırıdır. Precision ile recall'un payı aynıdır; farkları yalnızca paydadadır (precision'da FP, recall'da FN).
 
@@ -1562,9 +1556,9 @@ $$
 \text{Specificity} = \text{TNR} = \frac{TN}{TN + FP}, \qquad \text{FPR} = \frac{FP}{FP + TN} = 1 - \text{Specificity}
 $$
 
-$$
+```math
 \text{Specificity} = \frac{\overbrace{TN}^{\substack{\text{doğru bilinen}\\[2pt]\text{negatifler}}}}{\underbrace{TN + FP}_{\substack{\text{gerçekte negatif}\\[2pt]\text{olanların hepsi}}}}, \qquad \text{FPR} = \frac{\overbrace{FP}^{\substack{\text{yanlış}\\[2pt]\text{alarmlar}}}}{\underbrace{FP + TN}_{\substack{\text{gerçekte negatif}\\[2pt]\text{olanların hepsi}}}}
-$$
+```
 
 **Nasıl okunur?** "Özgüllük eşittir te en er eşittir, te en bölü te en artı ef pe. Ef pe er eşittir, ef pe bölü ef pe artı te en; bu da bir eksi özgüllüktür." İki oranın paydası aynıdır (**Gerçek: Negatif** satırı); bu yüzden toplamları 1'dir.
 
@@ -1574,13 +1568,13 @@ $$
 
 Precision ile recall genellikle birbiriyle çelişir: Biri artarken diğeri azalma eğilimindedir. F1 ikisinin **harmonik ortalamasıdır**; ikisinden biri düşükse F1 de düşük çıkar:
 
-$$
+```math
 F_1 = 2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2\,TP}{2\,TP + FP + FN}
-$$
+```
 
-$$
+```math
 F_1 = \overbrace{2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision} + \text{Recall}}}^{\substack{\text{precision ile recall'un}\\[2pt]\text{harmonik ortalaması}}} = \underbrace{\frac{2\,TP}{2\,TP + FP + FN}}_{\substack{\text{aynı değerin karışıklık}\\[2pt]\text{matrisiyle yazılışı}}}
-$$
+```
 
 **Nasıl okunur?** "Ef bir eşittir, iki çarpı precision çarpı recall, bölü precision artı recall; bu da iki te pe bölü iki te pe artı ef pe artı ef en'e eşittir." Harmonik ortalama küçük olan değere yakın durur: Precision = 1.0 ve recall = 0.1 olan bir modelin aritmetik ortalaması 0.55 iken $F_1 = \frac{2 \cdot 1.0 \cdot 0.1}{1.1} \approx 0.18$'dir.
 
@@ -1596,9 +1590,9 @@ $$
 \kappa = \frac{p_o - p_e}{1 - p_e}
 $$
 
-$$
+```math
 \underbrace{\kappa}_{\text{kappa}} = \frac{\overbrace{p_o - p_e}^{\substack{\text{şansın üstündeki}\\[2pt]\text{gerçek başarı}}}}{\underbrace{1 - p_e}_{\substack{\text{şansın üstünde ulaşılabilecek}\\[2pt]\text{en büyük başarı}}}}
-$$
+```
 
 **Nasıl okunur?** "Kappa eşittir, pe o eksi pe e, bölü bir eksi pe e." Model şans düzeyinde ise ($p_o = p_e$) $\kappa = 0$, kusursuz ise ($p_o = 1$) $\kappa = 1$ olur.
 
@@ -1634,9 +1628,9 @@ $$
 MCC = \frac{TP\cdot TN - FP\cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 $$
 
-$$
+```math
 MCC = \frac{\overbrace{TP\cdot TN}^{\text{doğruların çarpımı}} - \overbrace{FP\cdot FN}^{\text{hataların çarpımı}}}{\underbrace{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}_{\substack{\text{iki satır ve iki sütun toplamı;}\\[2pt]\text{sonucu } [-1, +1] \text{ aralığına taşır}}}}
-$$
+```
 
 **Nasıl okunur?** "Em ce ce eşittir, te pe çarpı te en eksi ef pe çarpı ef en, bölü te pe artı ef pe, te pe artı ef en, te en artı ef pe ve te en artı ef en'in çarpımının karekökü." Paydadaki dört çarpan, karışıklık matrisinin satır ve sütun toplamlarıdır (örnekte 600, 500, 500 ve 400).
 
@@ -1842,9 +1836,9 @@ $$
 MAE = \frac{1}{n}\sum_{i=1}^{n}\lvert y_i - \hat{y}_i \rvert
 $$
 
-$$
+```math
 MAE = \underbrace{\frac{1}{n}\sum_{i=1}^{n}}_{\text{ortalaması}}\overbrace{\lvert y_i - \hat{y}_i \rvert}^{\substack{\text{i. örnekteki hatanın}\\[2pt]\text{mutlak değeri}}}
-$$
+```
 
 **Nasıl okunur?** "Em a e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin mutlak değerlerinin toplamı."
 
@@ -1856,9 +1850,9 @@ $$
 MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2, \qquad RMSE = \sqrt{MSE}
 $$
 
-$$
+```math
 MSE = \frac{1}{n}\sum_{i=1}^{n}\overbrace{(y_i - \hat{y}_i)^2}^{\text{hatanın karesi}}, \qquad \underbrace{RMSE}_{\substack{\text{hedefle aynı}\\[2pt]\text{birimde}}} = \overbrace{\sqrt{MSE}}^{\substack{\text{karekök birimi}\\[2pt]\text{geri getirir}}}
-$$
+```
 
 **Nasıl okunur?** "Em es e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin karelerinin toplamı. Ar em es e eşittir karekök em es e." MSE, Bölüm 6.2'deki maliyet fonksiyonunun $\frac{1}{2}$'siz hâlidir: $J = MSE / 2$.
 
@@ -1887,9 +1881,9 @@ $$
 R^2 = 1 - \frac{SS_{res}}{SS_{tot}} = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
 $$
 
-$$
+```math
 R^2 = 1 - \frac{\overbrace{SS_{res}}^{\substack{\text{modelin}\\[2pt]\text{hatası}}}}{\underbrace{SS_{tot}}_{\substack{\text{ortalama tahmininin}\\[2pt]\text{hatası}}}} = 1 - \frac{\overbrace{\sum_i (y_i - \hat{y}_i)^2}^{\text{tahmine göre sapmalar}}}{\underbrace{\sum_i (y_i - \bar{y})^2}_{\text{ortalamaya göre sapmalar}}}
-$$
+```
 
 **Nasıl okunur?** "Ar kare eşittir, bir eksi es es res bölü es es tot; yani bir eksi, ye alt i eksi ye şapka alt i'nin karelerinin toplamı bölü ye alt i eksi ye bar'ın karelerinin toplamı." Yani: Kesir, modelin hatasının "herkese ortalamayı söyle" stratejisinin hatasına oranıdır. Model bu stratejiden ne kadar iyiyse kesir o kadar küçük, $R^2$ o kadar 1'e yakın olur.
 
@@ -1899,8 +1893,8 @@ $$
 | $SS_{tot}$ | "es es tot" | **Toplam kareler:** her tahmine sadece ortalamayı ($\bar{y}$) söyleyen "en aptal" modelin hatası |
 | $\bar{y}$ | "ye bar" | Gerçek değerlerin ortalaması |
 
-**Örnek:** $\bar{y} = 334$; $SS_{tot} = 84^2 + 34^2 + 134^2 + 166^2 + 86^2 = 61\,120$; $SS_{res} = 1725$.
-$R^2 = 1 - 1725/61\,120 \approx 0.972$ → "Fiyatlardaki değişkenliğin **%97.2'si** model tarafından açıklanıyor."
+**Örnek:** $\bar{y} = 334$; $SS_{tot} = 84^2 + 34^2 + 134^2 + 166^2 + 86^2 = 61\thinspace 120$; $SS_{res} = 1725$.
+$R^2 = 1 - 1725/61\thinspace 120 \approx 0.972$ → "Fiyatlardaki değişkenliğin **%97.2'si** model tarafından açıklanıyor."
 
 - $R^2 = 1$: Mükemmel uyum.
 - $R^2 = 0$: Model, herkese ortalamayı söylemekten daha iyi değil.
@@ -1914,9 +1908,9 @@ $$
 R^2_{adj} = 1 - \frac{(1-R^2)(n-1)}{n-k-1}
 $$
 
-$$
+```math
 R^2_{adj} = 1 - \frac{\overbrace{(1-R^2)}^{\substack{\text{açıklanamayan}\\[2pt]\text{pay}}}\quad\overbrace{(n-1)}^{\substack{\text{örnek sayısı}\\[2pt]\text{eksi 1}}}}{\underbrace{n-k-1}_{\substack{\text{öznitelik eklendikçe}\\[2pt]\text{küçülür}}}}
-$$
+```
 
 **Nasıl okunur?** "Ar kare düzeltilmiş eşittir, bir eksi, bir eksi ar kare çarpı en eksi bir, bölü en eksi ka eksi bir." Yani: $k$ arttıkça payda küçülür, kesir büyür ve $R^2_{adj}$ düşer. Yeni öznitelik $R^2$'yi bu cezayı aşacak kadar artırmazsa $R^2_{adj}$ azalır.
 
@@ -1931,15 +1925,15 @@ Eklenen öznitelik açıklayıcılığa anlamlı katkı yapmıyorsa $R^2_{adj}$ 
 
 Korelasyon (İng. *correlation*; Lat. *com-*: "birlikte" + *relatio*: "ilişki"), iki sayısal değişkenin **doğrusal** olarak birlikte ne kadar hareket ettiğini ölçer ($-1 \le r \le +1$):
 
-$$
+```math
 r = \frac{\sum_i (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i (x_i-\bar{x})^2}\,\sqrt{\sum_i (y_i-\bar{y})^2}}
-$$
+```
 
-$$
+```math
 r = \frac{\overbrace{\sum_i (x_i - \bar{x})(y_i - \bar{y})}^{\substack{\text{x ile y ortalamadan}\\[2pt]\text{aynı yönde mi sapıyor?}}}}{\underbrace{\sqrt{\sum_i (x_i-\bar{x})^2}}_{\text{x'in yayılımı}}\,\underbrace{\sqrt{\sum_i (y_i-\bar{y})^2}}_{\text{y'nin yayılımı}}}
-$$
+```
 
-**Nasıl okunur?** "Ar eşittir, iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü iks alt i eksi iks bar'ın karelerinin toplamının karekökü çarpı ye alt i eksi ye bar'ın karelerinin toplamının karekökü." Pay, Bölüm 6.3'teki $\theta_1$ formülünün payıyla aynıdır; payda iki değişkenin yayılımına bölerek sonucu birimsiz yapar. Örnek (Bölüm 6.3'teki 5 öğrenci): $r = \frac{68}{\sqrt{10}\,\sqrt{468}} \approx 0.994$.
+**Nasıl okunur?** "Ar eşittir, iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü iks alt i eksi iks bar'ın karelerinin toplamının karekökü çarpı ye alt i eksi ye bar'ın karelerinin toplamının karekökü." Pay, Bölüm 6.3'teki $\theta_1$ formülünün payıyla aynıdır; payda iki değişkenin yayılımına bölerek sonucu birimsiz yapar. Örnek (Bölüm 6.3'teki 5 öğrenci): $r = \frac{68}{\sqrt{10}\thinspace \sqrt{468}} \approx 0.994$.
 
 - $r = +1$: Mükemmel pozitif doğrusal ilişki · $r = -1$: Mükemmel negatif · $r = 0$: **Doğrusal** ilişki yok. (Doğrusal olmayan bir ilişki yine de olabilir, ör. $y = x^2$.)
 
@@ -2128,13 +2122,13 @@ for olcek in [False, True]:                           # Önce ölçeklemesiz, so
 
 Naive Bayes, olasılık teorisine dayanan, hızlı ve şaşırtıcı derecede etkili bir sınıflandırıcıdır. Temeli **Bayes teoremidir**:
 
-$$
+```math
 P(C \mid \mathbf{x}) = \frac{P(\mathbf{x} \mid C)\; P(C)}{P(\mathbf{x})}
-$$
+```
 
-$$
+```math
 \underbrace{P(C \mid \mathbf{x})}_{\substack{\text{sonsal: x görüldükten}\\[2pt]\text{sonra sınıfın olasılığı}}} = \frac{\overbrace{P(\mathbf{x} \mid C)}^{\text{olabilirlik}}\;\overbrace{P(C)}^{\text{önsel}}}{\underbrace{P(\mathbf{x})}_{\substack{\text{kanıt: tüm sınıflar}\\[2pt]\text{için aynı}}}}
-$$
+```
 
 **Nasıl okunur?** "İks verildiğinde ce'nin olasılığı eşittir, ce verildiğinde iks'in olasılığı çarpı ce'nin olasılığı, bölü iks'in olasılığı." **Dikkat:** $P(C \mid \mathbf{x})$ ile $P(\mathbf{x} \mid C)$ farklı şeylerdir. "Yağmur yağıyorsa gökyüzü bulutludur" neredeyse kesindir; "Gökyüzü bulutluysa yağmur yağar" ise çok daha az olasıdır. Bayes teoremi bu ikisi arasında geçiş yapmayı sağlar.
 
@@ -2151,13 +2145,13 @@ $$
 
 $P(\mathbf{x} \mid C)$'yi doğrudan tahmin etmek için her öznitelik kombinasyonundan bol örnek gerekir; bu pratikte imkânsızdır. Naive Bayes, **sınıf bilindiğinde özniteliklerin birbirinden bağımsız olduğunu** varsayar. Böylece olasılık, tek tek özniteliklerin olasılıklarının **çarpımına** dönüşür:
 
-$$
+```math
 P(C \mid x_1,\dots,x_d) \;\propto\; P(C)\prod_{j=1}^{d} P(x_j \mid C)
-$$
+```
 
-$$
+```math
 \underbrace{P(C \mid x_1,\dots,x_d)}_{\substack{\text{tüm öznitelikler verildiğinde}\\[2pt]\text{sınıfın olasılığı}}} \;\overbrace{\propto}^{\text{orantılıdır}}\; \underbrace{P(C)}_{\text{önsel}}\,\underbrace{\prod_{j=1}^{d} \overbrace{P(x_j \mid C)}^{\substack{\text{her özniteliğin}\\[2pt]\text{tek başına olasılığı}}}}_{\text{hepsinin çarpımı}}
-$$
+```
 
 **Nasıl okunur?** "İks bir'den iks de'ye kadar öznitelikler verildiğinde ce'nin olasılığı, ce'nin olasılığı çarpı, j eşittir 1'den d'ye kadar ce verildiğinde iks alt j'nin olasılıklarının çarpımı ile orantılıdır." Bölüm 11.3'teki "yes" hesabı, $\frac{9}{14}\cdot\frac{2}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}$, tam olarak bu formüldür: Önsel çarpı dört özniteliğin olasılığı.
 
@@ -2194,12 +2188,12 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 
 - **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + k}$ ($k$: özniteliğin farklı değer sayısı). WEKA bunu otomatik yapar.
 
-  $$\underbrace{P(x_j = v \mid C)}_{\substack{\text{C sınıfında özniteliğin}\\[2pt]\text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\\[2pt]\text{1 eklenir}}}}{\underbrace{n_C + k}_{\substack{\text{sınıftaki örnek sayısı}\\[2pt]\text{artı farklı değer sayısı}}}}$$
+  $\displaystyle \underbrace{P(x_j = v \mid C)}_{\substack{\text{C sınıfında özniteliğin}\cr \text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\cr \text{1 eklenir}}}}{\underbrace{n_C + k}_{\substack{\text{sınıftaki örnek sayısı}\cr \text{artı farklı değer sayısı}}}}$
 
   **Nasıl okunur?** "Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ka." Örnek: outlook'un 3 değeri vardır, "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
 - **Sayısal öznitelikler:** Her sınıfta özniteliğin **normal (Gauss) dağıldığı** varsayılır ve olasılık yoğunluğu $\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ ile hesaplanır (Gaussian Naive Bayes). WEKA'da alternatif olarak `useKernelEstimator` veya `useSupervisedDiscretization` seçilebilir.
 
-  $$\underbrace{f(x)}_{\substack{\text{olasılık}\\[2pt]\text{yoğunluğu}}} = \overbrace{\frac{1}{\sqrt{2\pi}\,\sigma}}^{\substack{\text{eğrinin altındaki alan}\\[2pt]\text{1 olsun diye}}}\; \underbrace{e^{-\frac{(x-\mu)^2}{2\sigma^2}}}_{\substack{\text{x, ortalamadan uzaklaştıkça}\\[2pt]\text{hızla küçülür}}}$$
+  $\displaystyle \underbrace{f(x)}_{\substack{\text{olasılık}\cr \text{yoğunluğu}}} = \overbrace{\frac{1}{\sqrt{2\pi}\thinspace \sigma}}^{\substack{\text{eğrinin altındaki alan}\cr \text{1 olsun diye}}}\thickspace  \underbrace{e^{-\frac{(x-\mu)^2}{2\sigma^2}}}_{\substack{\text{x, ortalamadan uzaklaştıkça}\cr \text{hızla küçülür}}}$
 
   **Nasıl okunur?** "Ef iks eşittir, bir bölü karekök iki pi çarpı sigma, çarpı e üzeri eksi, iks eksi mü'nün karesi bölü iki sigma kare." Burada $\mu$ ve $\sigma$, özniteliğin **o sınıftaki** ortalaması ve standart sapmasıdır. Yoğunluk bir olasılık değildir ve 1'den büyük çıkabilir; ama Naive Bayes'te sınıfları karşılaştırmak için olasılık yerine kullanılabilir.
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
@@ -2268,9 +2262,9 @@ $$
 H(S) = -\sum_{i=1}^{c} p_i \log_2 p_i
 $$
 
-$$
+```math
 \underbrace{H(S)}_{\substack{\text{S'deki belirsizlik}\\[2pt]\text{(bit)}}} = \overbrace{-}^{\substack{\text{sonucu pozitif}\\[2pt]\text{yapar}}} \underbrace{\sum_{i=1}^{c}}_{\substack{\text{c sınıfın}\\[2pt]\text{hepsi için topla}}} \overbrace{p_i}^{\substack{\text{i. sınıfın oranı}\\[2pt]\text{(ağırlık)}}} \; \underbrace{\log_2 p_i}_{\substack{\text{i. sınıfın sürpriz}\\[2pt]\text{değeri (negatif)}}}
-$$
+```
 
 **Nasıl okunur?** "Ha es eşittir eksi, i eşittir 1'den c'ye kadar pe alt i çarpı log iki tabanında pe alt i'lerin toplamı."
 
@@ -2290,13 +2284,13 @@ $$
 
 **Bilgi Kazancı (Information Gain):** Bir $A$ özniteliğine göre bölmenin belirsizliği ne kadar azalttığı:
 
-$$
+```math
 IG(S, A) = H(S) - \sum_{v \,\in\, \text{Değerler}(A)} \frac{\lvert S_v \rvert}{\lvert S \rvert}\, H(S_v)
-$$
+```
 
-$$
+```math
 \underbrace{IG(S, A)}_{\substack{\text{A ile bölmenin}\\[2pt]\text{kazancı}}} = \underbrace{H(S)}_{\text{bölmeden önce}} - \underbrace{\sum_{v \,\in\, \text{Değerler}(A)} \overbrace{\frac{\lvert S_v \rvert}{\lvert S \rvert}}^{\substack{\text{v dalına düşen}\\[2pt]\text{örnek oranı}}}\, \overbrace{H(S_v)}^{\text{v dalının entropisi}}}_{\text{bölmeden sonra: dalların ağırlıklı ortalama entropisi}}
-$$
+```
 
 **Nasıl okunur?** "Ay ci es a eşittir, ha es eksi, A'nın değerlerindeki her v için es alt v'nin eleman sayısı bölü es'in eleman sayısı çarpı ha es alt v'lerin toplamı." $v \in \text{Değerler}(A)$, "v, A'nın değerlerinden biri" diye okunur: A = outlook ise v sırasıyla sunny, overcast ve rainy olur. Buradaki dikey çizgiler mutlak değer değil, **kümenin eleman sayısıdır**: $\lvert S \rvert = 14$, $\lvert S_{\text{sunny}} \rvert = 5$.
 
@@ -2342,9 +2336,7 @@ En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem 
   $GainRatio(S,A) = \frac{IG(S,A)}{SplitInfo(S,A)}$, $SplitInfo(S,A) = -\sum_v \frac{\lvert S_v\rvert}{\lvert S\rvert}\log_2\frac{\lvert S_v\rvert}{\lvert S\rvert}$
 - **Gini Safsızlığı:** CART algoritması ve scikit-learn'ün varsayılanı: $Gini(S) = 1 - \sum_i p_i^2$. Entropiye çok benzer davranır, logaritma içermediği için biraz daha hızlıdır.
 
-  ```math
-  \underbrace{Gini(S)}_{\text{safsızlık}} = 1 - \underbrace{\sum_i p_i^2}_{\substack{\text{rastgele seçilen iki örneğin}\\[2pt]\text{aynı sınıftan olma olasılığı}}}
-  ```
+  $\displaystyle \underbrace{Gini(S)}_{\text{safsızlık}} = 1 - \underbrace{\sum_i p_i^2}_{\substack{\text{rastgele seçilen iki örneğin}\cr \text{aynı sınıftan olma olasılığı}}}$
 
   **Nasıl okunur?** "Gini es eşittir, bir eksi pe alt i'lerin karelerinin toplamı." Yani: Gini, yerine koyarak rastgele seçilen iki örneğin **farklı** sınıflardan çıkma olasılığıdır. Kök düğüm (9 yes, 5 no) için $1 - (9/14)^2 - (5/14)^2 = 1 - 0.413 - 0.128 \approx 0.459$ olur.
 - **Sayısal öznitelikler:** Değerler sıralanır ve ardışık değerlerin ortasındaki eşikler denenir ("petal length ≤ 2.45?"). En yüksek kazancı veren eşik seçilir.
@@ -2466,13 +2458,13 @@ SVM'nin cevabı: **İki sınıfa da en uzak olan**, yani aradaki "güvenlik şer
 
 Hiperdüzlem $\mathbf{w}\cdot\mathbf{x} + b = 0$ ile tanımlanır. Sınıf etiketleri $y_i \in \lbrace -1, +1 \rbrace$ olsun. Marj sınırları $\mathbf{w}\cdot\mathbf{x}+b = \pm 1$ doğrularıdır ve aralarındaki uzaklık $\frac{2}{\lVert\mathbf{w}\rVert}$'dir. Marjı en büyük yapmak, $\lVert\mathbf{w}\rVert$'yi en küçük yapmakla aynı şeydir:
 
-$$
+```math
 \min_{\mathbf{w},\,b}\; \frac{1}{2}\lVert\mathbf{w}\rVert^2 \quad \text{koşul:}\quad y_i\,(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1 \quad (i = 1,\dots,n)
-$$
+```
 
-$$
+```math
 \underbrace{\min_{\mathbf{w},\,b}}_{\substack{\text{w ve b'yi öyle seç ki}\\[2pt]\text{şu en küçük olsun}}}\; \overbrace{\frac{1}{2}\lVert\mathbf{w}\rVert^2}^{\substack{\text{küçükse}\\[2pt]\text{marj geniş}}} \quad \text{koşul:}\quad \underbrace{y_i\,(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1}_{\substack{\text{her örnek kendi tarafında}\\[2pt]\text{ve marjın dışında}}} \quad \overbrace{(i = 1,\dots,n)}^{\text{tüm örnekler için}}
-$$
+```
 
 **Nasıl okunur?** "Dabılyu ve be üzerinden, bir bölü iki çarpı dabılyu'nun normunun karesini en küçük yap; koşul: her i için ye alt i çarpı, dabılyu nokta iks alt i artı be, birden büyük veya eşit olsun." Marj genişliği $\frac{2}{\lVert\mathbf{w}\rVert}$ olduğundan $\lVert\mathbf{w}\rVert$'yi küçültmek marjı genişletir; kare ve $\frac{1}{2}$ yalnızca türevi kolaylaştırmak içindir. $y_i \in \lbrace -1, +1 \rbrace$ olduğu için çarpım, örnek doğru taraftaysa pozitif, yanlış taraftaysa negatif çıkar.
 
@@ -2488,13 +2480,13 @@ $$
 
 Gerçek veride sınıflar genellikle iç içe geçer; hiçbir doğru onları kusursuz ayıramaz. **Yumuşak marj (soft margin)** yaklaşımında bazı örneklerin marjın içine düşmesine veya yanlış tarafta kalmasına izin verilir, ama her ihlal cezalandırılır:
 
-$$
+```math
 \min_{\mathbf{w},\,b,\,\xi}\; \frac{1}{2}\lVert\mathbf{w}\rVert^2 + C\sum_{i=1}^{n}\xi_i
-$$
+```
 
-$$
+```math
 \min_{\mathbf{w},\,b,\,\xi}\; \underbrace{\frac{1}{2}\lVert\mathbf{w}\rVert^2}_{\text{marjı genişlet}} + \overbrace{C}^{\substack{\text{ihlallerin}\\[2pt]\text{ceza katsayısı}}}\underbrace{\sum_{i=1}^{n}\xi_i}_{\substack{\text{toplam marj}\\[2pt]\text{ihlali}}}
-$$
+```
 
 **Nasıl okunur?** "Dabılyu, be ve ksi üzerinden, bir bölü iki dabılyu'nun normunun karesi artı ce çarpı, i eşittir 1'den n'ye kadar ksi alt i'lerin toplamını en küçük yap." Koşul da gevşer: $y_i(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1 - \xi_i$ ve $\xi_i \ge 0$. $\xi_i = 0$ ise örnek marjın dışında ve doğru taraftadır; $0 < \xi_i \le 1$ ise marjın içindedir ama hâlâ doğru taraftadır; $\xi_i > 1$ ise yanlış taraftadır.
 
@@ -2580,9 +2572,9 @@ $$
 z = \sum_{j=1}^{d} w_j x_j + b, \qquad \hat{y} = f(z)
 $$
 
-$$
+```math
 \underbrace{z}_{\text{ağırlıklı toplam}} = \underbrace{\sum_{j=1}^{d} \overbrace{w_j}^{\text{ağırlık}}\quad\overbrace{x_j}^{\text{girdi}}}_{\substack{\text{her girdiyi ağırlığıyla}\\[2pt]\text{çarpıp topla}}} + \underbrace{b}_{\text{sapma}}, \qquad \underbrace{\hat{y}}_{\text{çıktı}} = \overbrace{f}^{\substack{\text{aktivasyon}\\[2pt]\text{fonksiyonu}}}(z)
-$$
+```
 
 **Nasıl okunur?** "Zet eşittir, j eşittir 1'den d'ye kadar dabılyu alt j çarpı iks alt j'lerin toplamı artı be; ye şapka eşittir ef zet." Yapı lineer regresyonla aynıdır: $\theta_j$ yerine $w_j$, $\theta_0$ yerine $b$ yazılmıştır. Örnek: $\mathbf{x} = (2, 3)$, $\mathbf{w} = (0.5, -0.2)$, $b = 0.1$ ise $z = 1 - 0.6 + 0.1 = 0.5$ olur. ReLU ile çıktı $\max(0, 0.5) = 0.5$, sigmoid ile $\sigma(0.5) \approx 0.62$'dir.
 
@@ -2802,9 +2794,9 @@ $$
 \hat{y}_{\text{sınıf}} = \mathrm{mod}\big\lbrace \hat{y}^{(1)}, \dots, \hat{y}^{(B)} \big\rbrace, \qquad \hat{y}_{\text{regresyon}} = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^{(b)}
 $$
 
-$$
+```math
 \underbrace{\hat{y}_{\text{sınıf}}}_{\substack{\text{sınıflandırmada}\\[2pt]\text{nihai tahmin}}} = \overbrace{\mathrm{mod}}^{\substack{\text{en sık}\\[2pt]\text{görülen}}}\big\lbrace \underbrace{\hat{y}^{(1)}, \dots, \hat{y}^{(B)}}_{\text{B modelin tahminleri}} \big\rbrace, \qquad \underbrace{\hat{y}_{\text{regresyon}}}_{\substack{\text{regresyonda}\\[2pt]\text{nihai tahmin}}} = \overbrace{\frac{1}{B}\sum_{b=1}^{B}}^{\text{ortalama}}\hat{y}^{(b)}
-$$
+```
 
 **Nasıl okunur?** "Ye şapka sınıf eşittir, ye şapka üst bir'den ye şapka üst be'ye kadar tahminlerin modu. Ye şapka regresyon eşittir, bir bölü be çarpı, b eşittir 1'den B'ye kadar ye şapka üst b'lerin toplamı." **Dikkat:** $\hat{y}^{(b)}$'deki parantezli üst indis bir kuvvet değil, $b$. modelin tahminidir. Örnek: Beş ağacın oyları (A, B, A, A, B) ise sınıf tahmini A olur; üç ağacın fiyat tahminleri 210, 230 ve 250 ise regresyon tahmini 230 olur.
 
@@ -2840,9 +2832,7 @@ graph LR
 <details>
 <summary><b>Derinleşme (İleri Seviye): Gradient Boosting'in güncelleme adımı</b></summary>
 
-```math
-F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \, h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_{i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_{F = F_{t-1}(\mathbf{x}_i)}
-```
+$\displaystyle F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_{i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_{F = F_{t-1}(\mathbf{x}_i)}$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2851,9 +2841,7 @@ F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \, h_t(\mathbf{x}), \qquad h_t \appr
 | $\nu$ | "nü" | Öğrenme oranı (shrinkage), ör. 0.1 |
 | $r_i^{(t)}$ | "ar i" | Sözde artık: kaybın negatif gradyanı. Karesel kayıpta tam olarak $y_i - F_{t-1}(\mathbf{x}_i)$, yani gerçek artıktır |
 
-```math
-\underbrace{F_t(\mathbf{x})}_{\text{yeni topluluk}} = \underbrace{F_{t-1}(\mathbf{x})}_{\text{şimdiye kadarki topluluk}} + \overbrace{\nu}^{\substack{\text{küçük}\\[2pt]\text{adım}}}\, \underbrace{h_t(\mathbf{x})}_{\substack{\text{artıkları tahmin eden}\\[2pt]\text{yeni küçük ağaç}}}
-```
+$\displaystyle \underbrace{F_t(\mathbf{x})}_{\text{yeni topluluk}} = \underbrace{F_{t-1}(\mathbf{x})}_{\text{şimdiye kadarki topluluk}} + \overbrace{\nu}^{\substack{\text{küçük}\cr \text{adım}}}\thinspace  \underbrace{h_t(\mathbf{x})}_{\substack{\text{artıkları tahmin eden}\cr \text{yeni küçük ağaç}}}$
 
 **Nasıl okunur?** "Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." $h_t \approx \text{argmin}_h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
 
@@ -2963,13 +2951,13 @@ Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gerek
 
 K-Means'in en küçük yapmaya çalıştığı amaç fonksiyonu **küme içi kareler toplamıdır** (SSE / WCSS / inertia):
 
-$$
+```math
 SSE = \sum_{k=1}^{K}\;\sum_{\mathbf{x}\in C_k}\lVert \mathbf{x} - \boldsymbol{\mu}_k \rVert^2
-$$
+```
 
-$$
+```math
 \underbrace{SSE}_{\substack{\text{küme içi}\\[2pt]\text{kareler toplamı}}} = \underbrace{\sum_{k=1}^{K}}_{\substack{\text{tüm kümeler}\\[2pt]\text{için topla}}}\;\overbrace{\sum_{\mathbf{x}\in C_k}}^{\substack{\text{k. kümedeki her}\\[2pt]\text{nokta için topla}}}\underbrace{\lVert \mathbf{x} - \boldsymbol{\mu}_k \rVert^2}_{\substack{\text{noktanın kendi merkezine}\\[2pt]\text{uzaklığının karesi}}}
-$$
+```
 
 **Nasıl okunur?** "Es es e eşittir, ka eşittir 1'den büyük ka'ya kadar, ce alt ka kümesindeki her iks için iks eksi mü alt ka'nın normunun karesinin toplamı." İç içe iki toplam, iç içe iki döngü gibidir: Dıştaki kümeleri, içteki o kümenin noktalarını dolaşır. $\mathbf{x} \in C_k$, "iks, ce alt ka'nın elemanı" diye okunur. Örnek (tek boyut): $C_1 = \lbrace 1, 2, 3 \rbrace$ (merkez 2) ve $C_2 = \lbrace 8, 10 \rbrace$ (merkez 9) ise $SSE = (1 + 0 + 1) + (1 + 1) = 4$.
 
@@ -2999,13 +2987,13 @@ Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20
 
 **Siluet skoru (Silhouette)** (İleri Seviye): Her nokta için "kendi kümesine ne kadar yakın, en yakın komşu kümeye ne kadar uzak?" sorusunu ölçer:
 
-$$
+```math
 s(i) = \frac{b(i) - a(i)}{\max\lbrace a(i),\, b(i) \rbrace}
-$$
+```
 
-$$
+```math
 \underbrace{s(i)}_{\substack{\text{i. noktanın}\\[2pt]\text{siluet değeri}}} = \frac{\overbrace{b(i)}^{\substack{\text{en yakın diğer}\\[2pt]\text{kümeye uzaklık}}} - \overbrace{a(i)}^{\substack{\text{kendi kümesine}\\[2pt]\text{uzaklık}}}}{\underbrace{\max\lbrace a(i),\, b(i) \rbrace}_{\substack{\text{ikisinden büyüğü:}\\[2pt]\text{sonucu } [-1, +1] \text{ aralığına sıkıştırır}}}}
-$$
+```
 
 **Nasıl okunur?** "Es i eşittir, be i eksi a i, bölü a i ile be i'nin büyüğü." Örnek: $a(i) = 2$ ve $b(i) = 8$ ise $s = (8 - 2)/8 = 0.75$; nokta doğru kümededir. Tersine $a(i) = 8$ ve $b(i) = 2$ ise $s = (2 - 8)/8 = -0.75$; nokta komşu kümeye daha yakındır.
 
@@ -3222,12 +3210,12 @@ $$
 \text{supp}(X) = \frac{\text{count}(X)}{N}, \qquad \text{conf}(X \Rightarrow Y) = \frac{\text{supp}(X \cup Y)}{\text{supp}(X)}, \qquad \text{lift}(X \Rightarrow Y) = \frac{\text{conf}(X\Rightarrow Y)}{\text{supp}(Y)}
 $$
 
-$$
+```math
 \begin{gathered}
 \underbrace{\text{supp}(X)}_{\text{destek}} = \frac{\overbrace{\text{count}(X)}^{\substack{\text{X'i içeren}\\[2pt]\text{sepet sayısı}}}}{\underbrace{N}_{\substack{\text{toplam}\\[2pt]\text{sepet sayısı}}}} \qquad \underbrace{\text{conf}(X \Rightarrow Y)}_{\text{güven}} = \frac{\overbrace{\text{supp}(X \cup Y)}^{\text{X ve Y birlikte}}}{\underbrace{\text{supp}(X)}_{\substack{\text{yalnızca X'li sepetlere}\\[2pt]\text{bakılır}}}} \\[1.5em]
 \underbrace{\text{lift}(X \Rightarrow Y)}_{\text{kaldıraç}} = \frac{\overbrace{\text{conf}(X\Rightarrow Y)}^{\substack{\text{X alanlarda}\\[2pt]\text{Y oranı}}}}{\underbrace{\text{supp}(Y)}_{\substack{\text{tüm sepetlerde}\\[2pt]\text{Y oranı}}}}
 \end{gathered}
-$$
+```
 
 **Nasıl okunur?** "İks'in desteği eşittir, iks'in sayımı bölü en. İks ise ye kuralının güveni eşittir, iks birleşim ye'nin desteği bölü iks'in desteği. İks ise ye kuralının lift'i eşittir, güven bölü ye'nin desteği." **Dikkat:** Buradaki $X \cup Y$ "X veya Y" anlamına gelmez; sepetin $X$'teki ve $Y$'deki ürünlerin **hepsini birlikte** içermesi gerekir. Güven, $P(Y \mid X)$'tir: Bütün sepetler bırakılır, yalnızca $X$'i içeren sepetlere bakılır.
 
@@ -3470,7 +3458,7 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 
 1. Veri **standartlaştırılır** (her sütun ortalama 0, std 1).
 2. **Kovaryans** (İng. *covariance*; Lat. *co-*: "birlikte" + *variantia*: "değişim") **matrisi** hesaplanır: $\Sigma = \frac{1}{n-1}X^{T}X$ ($d \times d$).
-3. $\Sigma$'nın **özdeğer–özvektör** (İng. *eigenvalue–eigenvector*; Alm. *eigen*: "kendine özgü") ayrışımı yapılır: $\Sigma\,\mathbf{v}_k = \lambda_k\,\mathbf{v}_k$.
+3. $\Sigma$'nın **özdeğer–özvektör** (İng. *eigenvalue–eigenvector*; Alm. *eigen*: "kendine özgü") ayrışımı yapılır: $\Sigma\thinspace \mathbf{v}_k = \lambda_k\thinspace \mathbf{v}_k$.
 4. Özvektörler özdeğere göre büyükten küçüğe sıralanır. İlk $k$ özvektör bir $W_k$ matrisi oluşturur ve veri bu yönlere izdüşürülür: $Z = X W_k$.
 5. $k$. bileşenin açıkladığı varyans oranı: $\frac{\lambda_k}{\sum_j \lambda_j}$.
 
@@ -3481,11 +3469,9 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 | $\lambda_k$ | "lamda ka" | $k$. özdeğer = o yöndeki varyans miktarı |
 | $Z$ | "zet" | Yeni koordinatlardaki veri (bileşen skorları) |
 
-**Iris için:** Özdeğerler $[2.938,\ 0.920,\ 0.148,\ 0.021]$ → açıklanan varyans $[72.96\%,\ 22.85\%,\ 3.67\%,\ 0.52\%]$. PC1 yükleri: sepal length −0.52, sepal width +0.27, petal length −0.58, petal width −0.57. PC1 esas olarak **"çiçeğin genel büyüklüğü"** eksenidir.
+**Iris için:** Özdeğerler $[2.938,\ 0.920,\ 0.148,\ 0.021]$ → açıklanan varyans [%72.96, %22.85, %3.67, %0.52]. PC1 yükleri: sepal length −0.52, sepal width +0.27, petal length −0.58, petal width −0.57. PC1 esas olarak **"çiçeğin genel büyüklüğü"** eksenidir.
 
-```math
-\underbrace{\Sigma}_{\substack{\text{kovaryans}\\[2pt]\text{matrisi}}}\,\underbrace{\mathbf{v}_k}_{\text{yön}} = \overbrace{\lambda_k}^{\substack{\text{o yöndeki}\\[2pt]\text{varyans}}}\,\mathbf{v}_k, \qquad \underbrace{\frac{\lambda_k}{\sum_j \lambda_j}}_{\substack{\text{k. bileşenin açıkladığı}\\[2pt]\text{varyans oranı}}}
-```
+$\displaystyle \underbrace{\Sigma}_{\substack{\text{kovaryans}\cr \text{matrisi}}}\thinspace \underbrace{\mathbf{v}_k}_{\text{yön}} = \overbrace{\lambda_k}^{\substack{\text{o yöndeki}\cr \text{varyans}}}\thinspace \mathbf{v}_k, \qquad \underbrace{\frac{\lambda_k}{\sum_j \lambda_j}}_{\substack{\text{k. bileşenin açıkladığı}\cr \text{varyans oranı}}}$
 
 **Nasıl okunur?** "Büyük sigma çarpı ve alt ka eşittir lamda alt ka çarpı ve alt ka. Açıklanan varyans oranı eşittir, lamda alt ka bölü bütün lamda alt j'lerin toplamı." Yani: $\Sigma$ ile çarpıldığında yönü değişmeyen, yalnızca $\lambda_k$ kat uzayan vektör bir özvektördür. Buradaki $\Sigma$ toplam değil, kovaryans matrisidir; toplam sembolü paydadaki $\sum_j$'dir. Iris için PC1: $2.938 / (2.938 + 0.920 + 0.148 + 0.021) = 2.938 / 4.027 \approx 0.7296$, yani %72.96.
 
@@ -3599,7 +3585,7 @@ En yaygın yöntem **gradyan inişidir** ([Bölüm 6.4](#b6)). Varyantları:
 
 **Öğrenme oranı zamanlaması (learning rate scheduling):** Eğitimin başında büyük adımlar atılır, ilerledikçe adımlar küçültülür. Yeni bir şehre taşındığınızda önce hızlıca genel bir keşif yapar, sonra ayrıntılara inersiniz.
 - **Step decay:** Belirli aralıklarla sabit bir oranda düşürülür.
-- **Exponential decay:** $\alpha_t = \alpha_0\,e^{-kt}$
+- **Exponential decay:** $\alpha_t = \alpha_0\thinspace e^{-kt}$
 - **Uyarlamalı yöntemler (Adam vb.):** Her parametre için öğrenme oranını otomatik ayarlar.
 
 ### 20.3 Ölçeklendirme ve Gradyan İnişi
@@ -3614,9 +3600,9 @@ $$
 J_{\text{L2}}(\theta) = J(\theta) + \lambda\sum_{j=1}^{d}\theta_j^2 \qquad\qquad J_{\text{L1}}(\theta) = J(\theta) + \lambda\sum_{j=1}^{d}\lvert\theta_j\rvert
 $$
 
-$$
+```math
 \underbrace{J_{\text{L2}}(\theta)}_{\text{Ridge maliyeti}} = \overbrace{J(\theta)}^{\text{eski maliyet}} + \underbrace{\lambda}_{\substack{\text{ceza}\\[2pt]\text{şiddeti}}}\overbrace{\sum_{j=1}^{d}\theta_j^2}^{\substack{\text{katsayıların}\\[2pt]\text{kareleri}}} \qquad\qquad \underbrace{J_{\text{L1}}(\theta)}_{\text{Lasso maliyeti}} = J(\theta) + \lambda\overbrace{\sum_{j=1}^{d}\lvert\theta_j\rvert}^{\substack{\text{katsayıların}\\[2pt]\text{mutlak değerleri}}}
-$$
+```
 
 **Nasıl okunur?** "Ce L2 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin karelerinin toplamı. Ce L1 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin mutlak değerlerinin toplamı." Toplam $j = 1$'den başlar; sabit terim $\theta_0$ cezalandırılmaz. Örnek: $\theta_1 = 4$, $\theta_2 = 0.5$ için L2 cezası $16 + 0.25 = 16.25$, L1 cezası $4 + 0.5 = 4.5$'tir. L2, büyük katsayıyı orantısız biçimde cezalandırır (4 → 16) ama küçüğe neredeyse dokunmaz (0.5 → 0.25).
 
@@ -3634,13 +3620,13 @@ $$
 
 L2 ile gradyan inişi güncellemesi (sabitler $\lambda$'nın içine katılarak):
 
-$$
+```math
 \theta_j \leftarrow \theta_j - \eta\left(\frac{\partial J}{\partial \theta_j} + \lambda\,\theta_j\right)
-$$
+```
 
-$$
+```math
 \underbrace{\theta_j}_{\text{yeni değer}} \overbrace{\leftarrow}^{\text{atanır}} \theta_j - \underbrace{\eta}_{\substack{\text{öğrenme}\\[2pt]\text{oranı}}}\Big(\overbrace{\frac{\partial J}{\partial \theta_j}}^{\substack{\text{hatayı azaltan}\\[2pt]\text{eğim}}} + \underbrace{\lambda\,\theta_j}_{\substack{\text{katsayıyı sıfıra}\\[2pt]\text{çeken ceza}}}\Big)
-$$
+```
 
 **Nasıl okunur?** "Teta j'ye, teta j eksi eta çarpı, ce'nin teta j'ye göre kısmi türevi artı lamda teta j atanır." Yani: Gradyan sıfır olsa bile her adımda $\theta_j$, $(1 - \eta\lambda)$ ile çarpılarak biraz küçülür. $\eta = 0.1$ ve $\lambda = 0.01$ ise her adımda katsayının binde biri silinir.
 
@@ -3841,9 +3827,9 @@ $$
 \text{Hata} = \sum_{i=1}^{N} \mathbb{I}(y_i \neq \hat{y}_i)
 $$
 
-$$
+```math
 \underbrace{\text{Hata}}_{\text{hata sayısı}} = \underbrace{\sum_{i=1}^{N}}_{\substack{\text{tüm örnekler}\\[2pt]\text{için topla}}} \overbrace{\mathbb{I}(\underbrace{y_i \neq \hat{y}_i}_{\text{yanlış tahmin mi?}})}^{\substack{\text{evet ise 1,}\\[2pt]\text{hayır ise 0}}}
-$$
+```
 
 **Nasıl okunur?** "Hata eşittir, i eşittir 1'den büyük en'e kadar, ye alt i ye şapka alt i'ye eşit değilse 1, eşitse 0 veren gösterge fonksiyonunun toplamı." Yani: Yanlış tahminler sayılır. Bölüm 9.1'deki örnekte $FP + FN = 250 + 150 = 400$ hata vardır; hangisinin daha pahalı olduğu hesaba girmez.
 
@@ -3862,13 +3848,13 @@ Bu durum özellikle **dengesiz veri setlerinde** (dolandırıcılık %0.1, nadir
 
 Karışıklık matrisindeki her hücreye bir **maliyet** atanır. Satırlar **gerçek**, sütunlar **tahmin edilen** sınıftır:
 
-$$
+```math
 C = \begin{bmatrix} C_{00} & C_{01} \\ C_{10} & C_{11} \end{bmatrix} = \begin{bmatrix} 0 & C_{FP} \\ C_{FN} & 0 \end{bmatrix}
-$$
+```
 
-$$
+```math
 \underbrace{C}_{\text{maliyet matrisi}} = \begin{bmatrix} C_{00} & C_{01} \\ C_{10} & C_{11} \end{bmatrix} = \begin{bmatrix} \overbrace{0}^{\substack{\text{TN: doğru,}\\[2pt]\text{bedelsiz}}} & \overbrace{C_{FP}}^{\substack{\text{gerçek 0, tahmin 1:}\\[2pt]\text{yanlış alarm}}} \\[1.2em] \underbrace{C_{FN}}_{\substack{\text{gerçek 1, tahmin 0:}\\[2pt]\text{kaçırılan pozitif}}} & \underbrace{0}_{\substack{\text{TP: doğru,}\\[2pt]\text{bedelsiz}}} \end{bmatrix}
-$$
+```
 
 **Nasıl okunur?** "Ce eşittir, ce sıfır sıfır, ce sıfır bir, ce bir sıfır, ce bir bir matrisi; bu da sıfır, ce ef pe, ce ef en, sıfır matrisine eşittir." Alt indisin ilk rakamı gerçek sınıfı (satır), ikinci rakamı tahmini (sütun) gösterir; 0 negatif, 1 pozitif sınıftır. **Dikkat:** Bölüm 9.1'deki karışıklık matrisinde pozitif sınıf ilk satırdaydı; burada sınıf 0 (negatif) ilk satırdadır.
 
@@ -3878,9 +3864,9 @@ $$
 \text{Maliyet}_{\text{toplam}} = \sum_{i=1}^{N} C(y_i, \hat{y}_i) = FP \cdot C_{FP} + FN \cdot C_{FN}
 $$
 
-$$
+```math
 \underbrace{\text{Maliyet}_{\text{toplam}}}_{\text{toplam bedel}} = \underbrace{\sum_{i=1}^{N} C(y_i, \hat{y}_i)}_{\substack{\text{her örneğin hücresindeki}\\[2pt]\text{bedeli topla}}} = \overbrace{FP \cdot C_{FP}}^{\substack{\text{yanlış alarm sayısı}\\[2pt]\text{çarpı birim bedeli}}} + \overbrace{FN \cdot C_{FN}}^{\substack{\text{kaçırılan sayısı}\\[2pt]\text{çarpı birim bedeli}}}
-$$
+```
 
 **Nasıl okunur?** "Toplam maliyet eşittir, i eşittir 1'den büyük en'e kadar ce ye alt i, ye şapka alt i'lerin toplamı; bu da ef pe çarpı ce ef pe artı ef en çarpı ce ef en'e eşittir." Örnek (Bölüm 22.4'teki standart lojistik regresyon): $FP = 2$, $FN = 65$, $C_{FP} = 1$, $C_{FN} = 10$ → $2 \cdot 1 + 65 \cdot 10 = 652$.
 
@@ -3901,18 +3887,18 @@ $$
 2. **Algoritma seviyesi – sınıf ağırlıkları:** Kayıp fonksiyonunda pahalı sınıfın hataları daha ağır sayılır:
    $L = -\sum_{i} w_{y_i} \log \hat{p}_{i,y_i}$. Burada $w$, örneğin gerçek sınıfının ağırlığı; $\hat{p}$ ise modelin gerçek sınıfa verdiği olasılıktır. scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
 
-   $$\underbrace{L}_{\text{toplam kayıp}} = -\sum_{i} \underbrace{w_{y_i}}_{\substack{\text{örneğin gerçek}\\[2pt]\text{sınıfının ağırlığı}}} \overbrace{\log \hat{p}_{i,y_i}}^{\substack{\text{modelin gerçek sınıfa verdiği}\\[2pt]\text{olasılığın logaritması}}}$$
+   $\displaystyle \underbrace{L}_{\text{toplam kayıp}} = -\sum_{i} \underbrace{w_{y_i}}_{\substack{\text{örneğin gerçek}\cr \text{sınıfının ağırlığı}}} \overbrace{\log \hat{p}_{i,y_i}}^{\substack{\text{modelin gerçek sınıfa verdiği}\cr \text{olasılığın logaritması}}}$
 
    **Nasıl okunur?** "Le eşittir eksi, tüm i'ler için dabılyu alt ye i çarpı log pe şapka alt i ye i'lerin toplamı." Bu, Bölüm 7.3'teki log-loss'un sınıf ağırlıklı hâlidir. Pozitif sınıfın ağırlığı 10 ise, modelin gerçek sınıfa yalnızca 0.1 olasılık verdiği bir pozitif örneğin cezası $-\log 0.1 \approx 2.30$ yerine $10 \cdot 2.30 = 23.0$ olur.
 3. **Karar eşiğini kaydırma (threshold moving):** Model eğitildikten sonra 0.5 eşiği değiştirilir. Olasılıklar iyi kalibre edilmişse, pozitif demenin beklenen maliyeti negatif demenin beklenen maliyetinden küçük olduğunda pozitif denmelidir:
 
-$$
+```math
 \hat{p}\cdot 0 + (1-\hat{p})\,C_{FP} \;<\; \hat{p}\,C_{FN} \quad\Longrightarrow\quad \hat{p} > t^{*} = \frac{C_{FP}}{C_{FP} + C_{FN}}
-$$
+```
 
-$$
+```math
 \underbrace{\hat{p}\cdot 0 + (1-\hat{p})\,C_{FP}}_{\substack{\text{pozitif dersek}\\[2pt]\text{beklenen maliyet}}} \;<\; \underbrace{\hat{p}\,C_{FN}}_{\substack{\text{negatif dersek}\\[2pt]\text{beklenen maliyet}}} \quad\Longrightarrow\quad \hat{p} > \overbrace{t^{*}}^{\substack{\text{en iyi}\\[2pt]\text{eşik}}} = \frac{C_{FP}}{C_{FP} + C_{FN}}
-$$
+```
 
 **Nasıl okunur?** "Pe şapka çarpı sıfır artı bir eksi pe şapka çarpı ce ef pe, pe şapka çarpı ce ef en'den küçükse; pe şapka, te yıldızdan büyüktür. Te yıldız eşittir, ce ef pe bölü ce ef pe artı ce ef en." Sol taraf: Pozitif dersek örnek $\hat{p}$ olasılıkla gerçekten pozitiftir (bedel 0), $1 - \hat{p}$ olasılıkla negatiftir (bedel $C_{FP}$). Sağ taraf: Negatif dersek $\hat{p}$ olasılıkla bir pozitifi kaçırırız (bedel $C_{FN}$). $\Longrightarrow$ "ise" diye okunur. İki hata eşit pahalıysa ($C_{FP} = C_{FN}$) $t^* = 0.5$ olur.
 
@@ -4182,13 +4168,9 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
-```math
-t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\,r} + \frac{n_{test}}{n_{train}}\right)\hat{\sigma}_d^2}}
-```
+$\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_{test}}{n_{train}}\right)\hat{\sigma}_d^2}}$
 
-```math
-\underbrace{t}_{\text{test istatistiği}} = \frac{\overbrace{\bar{d}}^{\substack{\text{ortalama}\\[2pt]\text{skor farkı}}}}{\underbrace{\sqrt{\Big(\overbrace{\tfrac{1}{k\,r}}^{\substack{\text{standart}\\[2pt]\text{terim}}} + \overbrace{\tfrac{n_{test}}{n_{train}}}^{\substack{\text{örtüşme}\\[2pt]\text{düzeltmesi}}}\Big)\hat{\sigma}_d^2}}_{\text{farkın standart hatası}}}
-```
+$\displaystyle \underbrace{t}_{\text{test istatistiği}} = \frac{\overbrace{\bar{d}}^{\substack{\text{ortalama}\cr \text{skor farkı}}}}{\underbrace{\sqrt{\Big(\overbrace{\tfrac{1}{k\thinspace r}}^{\substack{\text{standart}\cr \text{terim}}} + \overbrace{\tfrac{n_{test}}{n_{train}}}^{\substack{\text{örtüşme}\cr \text{düzeltmesi}}}\Big)\hat{\sigma}_d^2}}_{\text{farkın standart hatası}}}$
 
 **Nasıl okunur?** "Te eşittir, de bar bölü, bir bölü ka ar artı en test bölü en train, çarpı sigma şapka de kare'nin karekökü." Standart eşleştirilmiş t-testinde parantez içinde yalnızca $\frac{1}{kr}$ olurdu. 10 tekrar × 10 katlı CV'de bu $\frac{1}{100} = 0.01$'dir; düzeltmeyle $0.01 + \frac{1}{9} \approx 0.121$ olur. Varyans yaklaşık 12 kat büyür, $t$ küçülür ve "anlamlı fark" bulmak zorlaşır.
 
