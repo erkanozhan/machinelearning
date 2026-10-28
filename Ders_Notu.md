@@ -1815,6 +1815,9 @@ $$
 | MSE | Hedefin karesi | Zor | Çok yüksek |
 | RMSE | Hedefle aynı | Kolay | Yüksek |
 
+> [!CAUTION]
+> **VİZE SINIRI (2 Kasım 2026):** Vize sınavı, ders notunun başından **buraya kadar** olan konuları kapsar (Bölüm 9.4'teki MAE, MSE ve RMSE dahil). Aşağıdaki **Belirlilik Katsayısı (R²) ve sonrasındaki tüm konular vizeye dahil değildir.**
+
 #### Belirlilik Katsayısı ($R^2$)
 
 "Hedefteki değişkenliğin yüzde kaçını model açıklıyor?"
