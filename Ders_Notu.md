@@ -1031,7 +1031,7 @@ Her örneğe sabit terim için $x_0 = 1$ eklenirse model vektörlerle yazılır:
 
 $\displaystyle \boldsymbol{\theta} = \left(X^{T}X\right)^{-1}X^{T}\mathbf{y}$
 
-$\displaystyle \underbrace{\boldsymbol{\theta}}_{\substack{\text{tüm parametreler}\cr \text{tek seferde}}} = \underbrace{\left(X^{T}X\right)^{-1}}_{\substack{\text{özniteliklerin kendi aralarındaki}\cr \text{ilişkinin tersi}}}\overbrace{X^{T}\mathbf{y}}^{\substack{\text{öznitelikler ile hedefin}\cr \text{ilişkisi}}}$
+$\displaystyle \underbrace{\boldsymbol{\theta}}_ {\substack{\text{tüm parametreler}\cr \text{tek seferde}}} = \underbrace{\left(X^{T}X\right)^{-1}}_ {\substack{\text{özniteliklerin kendi aralarındaki}\cr \text{ilişkinin tersi}}}\overbrace{X^{T}\mathbf{y}}^{\substack{\text{öznitelikler ile hedefin}\cr \text{ilişkisi}}}$
 
 **Nasıl okunur?** "Teta vektörü eşittir, iks transpoz iks'in tersi çarpı iks transpoz çarpı ye vektörü." Yani: Bölüm 6.3'teki $\theta_1$ = pay / payda formülünün matris karşılığıdır. $X^T\mathbf{y}$ paya, $X^TX$ paydaya karşılık gelir; matrislerde bölme olmadığı için ters matrisle çarpılır.
 
@@ -1306,7 +1306,7 @@ Model karmaşıklaştıkça yanlılık azalır ama varyans artar. Amaç, **test 
 
 Karesel hata için beklenen test hatası üç parçaya ayrılır:
 
-$\displaystyle E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(x)\big)^2}_{\text{Yanlılık}^2} + \underbrace{E\big[(\hat{f}(x) - E[\hat{f}(x)])^2\big]}_{\text{Varyans}} + \underbrace{\sigma_\varepsilon^2}_{\text{Gürültü}}$
+$\displaystyle E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(x)\big)^2}_ {\text{Yanlılık}^2} + \underbrace{E\big[(\hat{f}(x) - E[\hat{f}(x)])^2\big]}_ {\text{Varyans}} + \underbrace{\sigma_ \varepsilon^2}_ {\text{Gürültü}}$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2188,12 +2188,12 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 
 - **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + k}$ ($k$: özniteliğin farklı değer sayısı). WEKA bunu otomatik yapar.
 
-  $\displaystyle \underbrace{P(x_j = v \mid C)}_{\substack{\text{C sınıfında özniteliğin}\cr \text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\cr \text{1 eklenir}}}}{\underbrace{n_C + k}_{\substack{\text{sınıftaki örnek sayısı}\cr \text{artı farklı değer sayısı}}}}$
+  $\displaystyle \underbrace{P(x_j = v \mid C)}_ {\substack{\text{C sınıfında özniteliğin}\cr \text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\cr \text{1 eklenir}}}}{\underbrace{n_C + k}_ {\substack{\text{sınıftaki örnek sayısı}\cr \text{artı farklı değer sayısı}}}}$
 
   **Nasıl okunur?** "Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ka." Örnek: outlook'un 3 değeri vardır, "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
 - **Sayısal öznitelikler:** Her sınıfta özniteliğin **normal (Gauss) dağıldığı** varsayılır ve olasılık yoğunluğu $\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ ile hesaplanır (Gaussian Naive Bayes). WEKA'da alternatif olarak `useKernelEstimator` veya `useSupervisedDiscretization` seçilebilir.
 
-  $\displaystyle \underbrace{f(x)}_{\substack{\text{olasılık}\cr \text{yoğunluğu}}} = \overbrace{\frac{1}{\sqrt{2\pi}\thinspace \sigma}}^{\substack{\text{eğrinin altındaki alan}\cr \text{1 olsun diye}}}\thickspace  \underbrace{e^{-\frac{(x-\mu)^2}{2\sigma^2}}}_{\substack{\text{x, ortalamadan uzaklaştıkça}\cr \text{hızla küçülür}}}$
+  $\displaystyle \underbrace{f(x)}_ {\substack{\text{olasılık}\cr \text{yoğunluğu}}} = \overbrace{\frac{1}{\sqrt{2\pi}\thinspace \sigma}}^{\substack{\text{eğrinin altındaki alan}\cr \text{1 olsun diye}}}\thickspace  \underbrace{e^{-\frac{(x-\mu)^2}{2\sigma^2}}}_ {\substack{\text{x, ortalamadan uzaklaştıkça}\cr \text{hızla küçülür}}}$
 
   **Nasıl okunur?** "Ef iks eşittir, bir bölü karekök iki pi çarpı sigma, çarpı e üzeri eksi, iks eksi mü'nün karesi bölü iki sigma kare." Burada $\mu$ ve $\sigma$, özniteliğin **o sınıftaki** ortalaması ve standart sapmasıdır. Yoğunluk bir olasılık değildir ve 1'den büyük çıkabilir; ama Naive Bayes'te sınıfları karşılaştırmak için olasılık yerine kullanılabilir.
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
@@ -2336,7 +2336,7 @@ En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem 
   $GainRatio(S,A) = \frac{IG(S,A)}{SplitInfo(S,A)}$, $SplitInfo(S,A) = -\sum_v \frac{\lvert S_v\rvert}{\lvert S\rvert}\log_2\frac{\lvert S_v\rvert}{\lvert S\rvert}$
 - **Gini Safsızlığı:** CART algoritması ve scikit-learn'ün varsayılanı: $Gini(S) = 1 - \sum_i p_i^2$. Entropiye çok benzer davranır, logaritma içermediği için biraz daha hızlıdır.
 
-  $\displaystyle \underbrace{Gini(S)}_{\text{safsızlık}} = 1 - \underbrace{\sum_i p_i^2}_{\substack{\text{rastgele seçilen iki örneğin}\cr \text{aynı sınıftan olma olasılığı}}}$
+  $\displaystyle \underbrace{Gini(S)}_ {\text{safsızlık}} = 1 - \underbrace{\sum_i p_i^2}_ {\substack{\text{rastgele seçilen iki örneğin}\cr \text{aynı sınıftan olma olasılığı}}}$
 
   **Nasıl okunur?** "Gini es eşittir, bir eksi pe alt i'lerin karelerinin toplamı." Yani: Gini, yerine koyarak rastgele seçilen iki örneğin **farklı** sınıflardan çıkma olasılığıdır. Kök düğüm (9 yes, 5 no) için $1 - (9/14)^2 - (5/14)^2 = 1 - 0.413 - 0.128 \approx 0.459$ olur.
 - **Sayısal öznitelikler:** Değerler sıralanır ve ardışık değerlerin ortasındaki eşikler denenir ("petal length ≤ 2.45?"). En yüksek kazancı veren eşik seçilir.
@@ -2832,7 +2832,7 @@ graph LR
 <details>
 <summary><b>Derinleşme (İleri Seviye): Gradient Boosting'in güncelleme adımı</b></summary>
 
-$\displaystyle F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_{i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_{F = F_{t-1}(\mathbf{x}_i)}$
+$\displaystyle F_t(\mathbf{x}) = F_ {t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mathbf{x}), \qquad h_t \approx \text{argmin}_h \sum_i \big(r_ {i}^{(t)} - h(\mathbf{x}_i)\big)^2, \quad r_i^{(t)} = -\frac{\partial L(y_i, F)}{\partial F}\Big\vert_ {F = F_ {t-1}(\mathbf{x}_i)}$
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2841,7 +2841,7 @@ $\displaystyle F_t(\mathbf{x}) = F_{t-1}(\mathbf{x}) + \nu \thinspace  h_t(\math
 | $\nu$ | "nü" | Öğrenme oranı (shrinkage), ör. 0.1 |
 | $r_i^{(t)}$ | "ar i" | Sözde artık: kaybın negatif gradyanı. Karesel kayıpta tam olarak $y_i - F_{t-1}(\mathbf{x}_i)$, yani gerçek artıktır |
 
-$\displaystyle \underbrace{F_t(\mathbf{x})}_{\text{yeni topluluk}} = \underbrace{F_{t-1}(\mathbf{x})}_{\text{şimdiye kadarki topluluk}} + \overbrace{\nu}^{\substack{\text{küçük}\cr \text{adım}}}\thinspace  \underbrace{h_t(\mathbf{x})}_{\substack{\text{artıkları tahmin eden}\cr \text{yeni küçük ağaç}}}$
+$\displaystyle \underbrace{F_t(\mathbf{x})}_ {\text{yeni topluluk}} = \underbrace{F_ {t-1}(\mathbf{x})}_ {\text{şimdiye kadarki topluluk}} + \overbrace{\nu}^{\substack{\text{küçük}\cr \text{adım}}}\thinspace  \underbrace{h_t(\mathbf{x})}_ {\substack{\text{artıkları tahmin eden}\cr \text{yeni küçük ağaç}}}$
 
 **Nasıl okunur?** "Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." $h_t \approx \text{argmin}_h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
 
@@ -3471,7 +3471,7 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 
 **Iris için:** Özdeğerler $[2.938,\ 0.920,\ 0.148,\ 0.021]$ → açıklanan varyans [%72.96, %22.85, %3.67, %0.52]. PC1 yükleri: sepal length −0.52, sepal width +0.27, petal length −0.58, petal width −0.57. PC1 esas olarak **"çiçeğin genel büyüklüğü"** eksenidir.
 
-$\displaystyle \underbrace{\Sigma}_{\substack{\text{kovaryans}\cr \text{matrisi}}}\thinspace \underbrace{\mathbf{v}_k}_{\text{yön}} = \overbrace{\lambda_k}^{\substack{\text{o yöndeki}\cr \text{varyans}}}\thinspace \mathbf{v}_k, \qquad \underbrace{\frac{\lambda_k}{\sum_j \lambda_j}}_{\substack{\text{k. bileşenin açıkladığı}\cr \text{varyans oranı}}}$
+$\displaystyle \underbrace{\Sigma}_ {\substack{\text{kovaryans}\cr \text{matrisi}}}\thinspace \underbrace{\mathbf{v}_k}_ {\text{yön}} = \overbrace{\lambda_k}^{\substack{\text{o yöndeki}\cr \text{varyans}}}\thinspace \mathbf{v}_k, \qquad \underbrace{\frac{\lambda_k}{\sum_j \lambda_j}}_ {\substack{\text{k. bileşenin açıkladığı}\cr \text{varyans oranı}}}$
 
 **Nasıl okunur?** "Büyük sigma çarpı ve alt ka eşittir lamda alt ka çarpı ve alt ka. Açıklanan varyans oranı eşittir, lamda alt ka bölü bütün lamda alt j'lerin toplamı." Yani: $\Sigma$ ile çarpıldığında yönü değişmeyen, yalnızca $\lambda_k$ kat uzayan vektör bir özvektördür. Buradaki $\Sigma$ toplam değil, kovaryans matrisidir; toplam sembolü paydadaki $\sum_j$'dir. Iris için PC1: $2.938 / (2.938 + 0.920 + 0.148 + 0.021) = 2.938 / 4.027 \approx 0.7296$, yani %72.96.
 
@@ -3887,7 +3887,7 @@ $$
 2. **Algoritma seviyesi – sınıf ağırlıkları:** Kayıp fonksiyonunda pahalı sınıfın hataları daha ağır sayılır:
    $L = -\sum_{i} w_{y_i} \log \hat{p}_{i,y_i}$. Burada $w$, örneğin gerçek sınıfının ağırlığı; $\hat{p}$ ise modelin gerçek sınıfa verdiği olasılıktır. scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
 
-   $\displaystyle \underbrace{L}_{\text{toplam kayıp}} = -\sum_{i} \underbrace{w_{y_i}}_{\substack{\text{örneğin gerçek}\cr \text{sınıfının ağırlığı}}} \overbrace{\log \hat{p}_{i,y_i}}^{\substack{\text{modelin gerçek sınıfa verdiği}\cr \text{olasılığın logaritması}}}$
+   $\displaystyle \underbrace{L}_ {\text{toplam kayıp}} = -\sum_ {i} \underbrace{w_ {y_i}}_ {\substack{\text{örneğin gerçek}\cr \text{sınıfının ağırlığı}}} \overbrace{\log \hat{p}_ {i,y_i}}^{\substack{\text{modelin gerçek sınıfa verdiği}\cr \text{olasılığın logaritması}}}$
 
    **Nasıl okunur?** "Le eşittir eksi, tüm i'ler için dabılyu alt ye i çarpı log pe şapka alt i ye i'lerin toplamı." Bu, Bölüm 7.3'teki log-loss'un sınıf ağırlıklı hâlidir. Pozitif sınıfın ağırlığı 10 ise, modelin gerçek sınıfa yalnızca 0.1 olasılık verdiği bir pozitif örneğin cezası $-\log 0.1 \approx 2.30$ yerine $10 \cdot 2.30 = 23.0$ olur.
 3. **Karar eşiğini kaydırma (threshold moving):** Model eğitildikten sonra 0.5 eşiği değiştirilir. Olasılıklar iyi kalibre edilmişse, pozitif demenin beklenen maliyeti negatif demenin beklenen maliyetinden küçük olduğunda pozitif denmelidir:
@@ -4168,9 +4168,9 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
-$\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_{test}}{n_{train}}\right)\hat{\sigma}_d^2}}$
+$\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_ {test}}{n_ {train}}\right)\hat{\sigma}_d^2}}$
 
-$\displaystyle \underbrace{t}_{\text{test istatistiği}} = \frac{\overbrace{\bar{d}}^{\substack{\text{ortalama}\cr \text{skor farkı}}}}{\underbrace{\sqrt{\Big(\overbrace{\tfrac{1}{k\thinspace r}}^{\substack{\text{standart}\cr \text{terim}}} + \overbrace{\tfrac{n_{test}}{n_{train}}}^{\substack{\text{örtüşme}\cr \text{düzeltmesi}}}\Big)\hat{\sigma}_d^2}}_{\text{farkın standart hatası}}}$
+$\displaystyle \underbrace{t}_ {\text{test istatistiği}} = \frac{\overbrace{\bar{d}}^{\substack{\text{ortalama}\cr \text{skor farkı}}}}{\underbrace{\sqrt{\Big(\overbrace{\tfrac{1}{k\thinspace r}}^{\substack{\text{standart}\cr \text{terim}}} + \overbrace{\tfrac{n_ {test}}{n_ {train}}}^{\substack{\text{örtüşme}\cr \text{düzeltmesi}}}\Big)\hat{\sigma}_d^2}}_ {\text{farkın standart hatası}}}$
 
 **Nasıl okunur?** "Te eşittir, de bar bölü, bir bölü ka ar artı en test bölü en train, çarpı sigma şapka de kare'nin karekökü." Standart eşleştirilmiş t-testinde parantez içinde yalnızca $\frac{1}{kr}$ olurdu. 10 tekrar × 10 katlı CV'de bu $\frac{1}{100} = 0.01$'dir; düzeltmeyle $0.01 + \frac{1}{9} \approx 0.121$ olur. Varyans yaklaşık 12 kat büyür, $t$ küçülür ve "anlamlı fark" bulmak zorlaşır.
 
