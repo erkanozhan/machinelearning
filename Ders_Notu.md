@@ -19,7 +19,7 @@ Notta bazı kısımlar şu etiketlerle işaretlenmiştir:
 
 **Terimler hakkında:** Türkçe kavramların ilk geçtiği yerde parantez içinde İngilizce karşılığı ve varsa kelimenin kökeni verilmiştir. Örnek: **Model** (İng. *model*; Lat. *modulus*: "küçük ölçü"). Kısaltmalar: *İng.* İngilizce, *Lat.* Latince, *Yun.* Yunanca, *Alm.* Almanca, *Fr.* Fransızca. Tüm terimlerin listesi [Ek B](#ekB)'dedir.
 
-**Formüller hakkında:** Her önemli formülün altında, formüldeki sembollerin **nasıl okunduğunu** ve **ne anlama geldiğini** gösteren bir tablo bulunur. Tüm semboller ayrıca [Ek A: Sembol Sözlüğü](#ekA) bölümünde toplanmıştır.
+**Formüller hakkında:** Her önemli formülün altında, formülün **ne anlattığını** açıklayan kısa bir paragraf ve sembollerin **nasıl okunduğunu** ve **ne anlama geldiğini** gösteren bir tablo bulunur. Tüm semboller ayrıca [Ek A: Sembol Sözlüğü](#ekA) bölümünde toplanmıştır.
 
 **Kodlar hakkında:** Kısa kodlar anlatımın içinde verilmiştir. Uzun ve uygulama dersinde çalıştırılacak kodlar [`codes/`](https://github.com/erkanozhan/machinelearning/tree/main/codes) klasöründedir. Her kod satırında Türkçe açıklama vardır. Kurulum:
 
@@ -407,7 +407,7 @@ Makine öğrenmesinde veri genellikle bir **tablo** olarak düşünülür:
 | **Hedef / Etiket / Sınıf** (target, label, class) | Tahmin etmek istediğimiz değer | Son sütun (Risk) |
 | **Öznitelik vektörü** (İng. *feature vector*; Lat. *vector*: "taşıyıcı") | Bir örneğin tüm öznitelik değerleri | Bir satırın hedef dışındaki kısmı |
 
-> **Formülleri okuma rehberi.** Bu notta önemli formüllerin hemen altında aynı formülün **açıklamalı** bir kopyası vardır: Üst ve alt parantezler (︷ ︸), formülün hangi parçasının ne anlama geldiğini gösterir. **"Nasıl okunur?"** satırı formülün sesli okunuşunu verir; ardından gelen tablo sembolleri tek tek açıklar. Tüm semboller ve okunuşları [Ek A: Sembol Sözlüğü](#ekA)'nde toplanmıştır. Formül okurken en sık takılınan noktalar:
+> **Formülleri okuma rehberi.** Bu notta önemli formüllerin hemen altında aynı formülün **açıklamalı** bir kopyası vardır: Üst ve alt parantezler (︷ ︸), formülün hangi parçasının ne anlama geldiğini gösterir. **"Ne anlatıyor?"** satırı formülün sezgisel anlamını açıklar; ardından gelen tablo sembolleri tek tek okunuşları ve anlamlarıyla verir. Tüm semboller ve okunuşları [Ek A: Sembol Sözlüğü](#ekA)'nde toplanmıştır. Formül okurken en sık takılınan noktalar:
 >
 > - **Alt indis bir sıra numarasıdır:** $x_i$ "iks alt i" diye okunur ve $i$. örneği gösterir. $x_{ij}$, $i$. örneğin $j$. özniteliğidir; $\theta_j$ ise $j$. parametredir.
 > - **Şapka tahmin, çizgi ortalama demektir:** $y$ gerçek değer, $\hat{y}$ ("ye şapka") modelin tahminidir. $\bar{x}$ ("iks bar") ise $x$ değerlerinin ortalamasıdır.
@@ -422,9 +422,9 @@ Matematiksel gösterimde $n$ örnek ve $d$ öznitelik varsa veri bir $X$ matrisi
 X = \begin{bmatrix} x_{11} & x_{12} & \cdots & x_{1d} \\ x_{21} & x_{22} & \cdots & x_{2d} \\ \vdots & \vdots & \ddots & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{nd} \end{bmatrix}, \qquad y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix}
 ```
 
-<p align="center"><img src="images/formuller/01.png" alt="Açıklamalı formül. Büyük iks, n satırlı ve d sütunlu bir matristir; i'nci satırının j'nci elemanı iks alt i j'dir. Ye ise n elemanlı bir sütun vektörüdür; i'nci elemanı ye alt i'dir." width="536"></p>
+<p align="center"><img src="images/formuller/01.png" alt="Açıklamalı formül: Veri matrisi X ve hedef vektörü y" width="536"></p>
 
-**Nasıl okunur?** "Büyük iks, n satırlı ve d sütunlu bir matristir; i'nci satırının j'nci elemanı iks alt i j'dir. Ye ise n elemanlı bir sütun vektörüdür; i'nci elemanı ye alt i'dir." Yukarıdaki tabloda öznitelikler Yaş, Gelir, Şehir ve Geçmiş gecikme sütunlarıdır. Buna göre $x_{21} = 22$ (2. müşterinin yaşı), $x_{13} =$ İstanbul (1. müşterinin şehri) ve $y_2 =$ Yüksek'tir.
+**Ne anlatıyor?** Her satır bir örnek, her sütun bir özniteliktir; $y$ her örneğin hedef değerini tutar. Yukarıdaki tabloda öznitelikler Yaş, Gelir, Şehir ve Geçmiş gecikme sütunlarıdır. Buna göre $x_{21} = 22$ (2. müşterinin yaşı), $x_{13} =$ İstanbul (1. müşterinin şehri) ve $y_2 =$ Yüksek'tir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -443,9 +443,9 @@ $$
 y = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_m x_m
 $$
 
-<p align="center"><img src="images/formuller/02.png" alt="Açıklamalı formül. Ye eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki artı … artı teta em iks em." width="496"></p>
+<p align="center"><img src="images/formuller/02.png" alt="Açıklamalı formül: Lineer model" width="496"></p>
 
-**Nasıl okunur?** "Ye eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki artı … artı teta em iks em." Yani: Her öznitelik kendi katsayısıyla çarpılır, çarpımlar sabit terimle birlikte toplanır. Katsayılar ($\theta$) veriden öğrenilir; öznitelikler ($x$) ise her örnekte veriden okunur.
+**Ne anlatıyor?** Her öznitelik kendi katsayısıyla çarpılır, çarpımlar sabit terimle birlikte toplanır. Katsayılar ($\theta$) veriden öğrenilir; öznitelikler ($x$) ise her örnekte veriden okunur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -480,9 +480,9 @@ $$
 \bar{x} = \mu = \frac{1}{n}\sum_{i=1}^{n} x_i
 $$
 
-<p align="center"><img src="images/formuller/03.png" alt="Açıklamalı formül. İks bar eşittir mü eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i'lerin toplamı." width="308"></p>
+<p align="center"><img src="images/formuller/03.png" alt="Açıklamalı formül: Ortalama" width="308"></p>
 
-**Nasıl okunur?** "İks bar eşittir mü eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i'lerin toplamı." Yani: Bütün değerleri topla, değer sayısına böl.
+**Ne anlatıyor?** Bütün değerleri topla, değer sayısına böl.
 
 **Varyans** (İng. *variance*; Lat. *variantia*: "değişkenlik") **ve standart sapma** (İng. *standard deviation*; Lat. *deviare*: "yoldan çıkmak") (değerlerin ortalama etrafında ne kadar yayıldığı):
 
@@ -490,9 +490,9 @@ $$
 \sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\mu)^2 \qquad\qquad s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2
 $$
 
-<p align="center"><img src="images/formuller/04.png" alt="Açıklamalı formül. Sigma kare eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i eksi mü'nün karelerinin toplamı. Es kare eşittir, bir bölü en eksi bir çarpı, i eşittir 1'den n'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı." width="704"></p>
+<p align="center"><img src="images/formuller/04.png" alt="Açıklamalı formül: Kitle ve örneklem varyansı" width="704"></p>
 
-**Nasıl okunur?** "Sigma kare eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar iks alt i eksi mü'nün karelerinin toplamı. Es kare eşittir, bir bölü en eksi bir çarpı, i eşittir 1'den n'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı." Yani: Her değerin ortalamadan sapmasını bul, karesini al (ortalamanın altındaki ve üstündeki sapmalar birbirini götürmesin diye) ve bu karelerin ortalamasını al. Standart sapma bunun kareköküdür ($\sigma = \sqrt{\sigma^2}$, $s = \sqrt{s^2}$); karekök, birimi verinin birimine geri döndürür (puan² → puan). $n-1$'e bölmek, ortalama da aynı örneklemden hesaplandığı için yayılımın olduğundan küçük çıkmasını düzeltir.
+**Ne anlatıyor?** Her değerin ortalamadan sapmasını bul, karesini al (ortalamanın altındaki ve üstündeki sapmalar birbirini götürmesin diye) ve bu karelerin ortalamasını al. Standart sapma bunun kareköküdür ($\sigma = \sqrt{\sigma^2}$, $s = \sqrt{s^2}$); karekök, birimi verinin birimine geri döndürür (puan² → puan). $n-1$'e bölmek, ortalama da aynı örneklemden hesaplandığı için yayılımın olduğundan küçük çıkmasını düzeltir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -657,9 +657,9 @@ $$
 x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
 $$
 
-<p align="center"><img src="images/formuller/05.png" alt="Açıklamalı formül. İks üssü eşittir, iks eksi iks min, bölü iks maks eksi iks min." width="216"></p>
+<p align="center"><img src="images/formuller/05.png" alt="Açıklamalı formül: Min-Max normalizasyonu" width="216"></p>
 
-**Nasıl okunur?** "İks üssü eşittir, iks eksi iks min, bölü iks maks eksi iks min." Yani: Değer, en küçükten en büyüğe giden yolun kaçta kaçında? En küçük değer 0'a, en büyük değer 1'e dönüşür.
+**Ne anlatıyor?** Değer, en küçükten en büyüğe giden yolun kaçta kaçında? En küçük değer 0'a, en büyük değer 1'e dönüşür.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -679,9 +679,9 @@ $$
 z = \frac{x - \mu}{\sigma}
 $$
 
-<p align="center"><img src="images/formuller/06.png" alt="Açıklamalı formül. Zet eşittir, iks eksi mü, bölü sigma." width="213"></p>
+<p align="center"><img src="images/formuller/06.png" alt="Açıklamalı formül: Z-skoru standardizasyonu" width="213"></p>
 
-**Nasıl okunur?** "Zet eşittir, iks eksi mü, bölü sigma." Yani: Sapma, standart sapma cinsinden ölçülür. $z = 2$ "ortalamanın iki standart sapma üstünde", $z = -0.5$ "yarım standart sapma altında" demektir; işaret yönü, büyüklük uzaklığı gösterir.
+**Ne anlatıyor?** Sapma, standart sapma cinsinden ölçülür. $z = 2$ "ortalamanın iki standart sapma üstünde", $z = -0.5$ "yarım standart sapma altında" demektir; işaret yönü, büyüklük uzaklığı gösterir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -701,9 +701,9 @@ $$
 x' = \frac{x - \text{medyan}(x)}{IQR}, \qquad IQR = Q_3 - Q_1
 $$
 
-<p align="center"><img src="images/formuller/07.png" alt="Açıklamalı formül. İks üssü eşittir, iks eksi iks'in medyanı, bölü IQR. IQR eşittir ku üç eksi ku bir." width="448"></p>
+<p align="center"><img src="images/formuller/07.png" alt="Açıklamalı formül: Dayanıklı (robust) ölçekleme" width="448"></p>
 
-**Nasıl okunur?** "İks üssü eşittir, iks eksi iks'in medyanı, bölü IQR. IQR eşittir ku üç eksi ku bir." Yani: z-skorundaki ortalamanın yerine medyan, standart sapmanın yerine IQR kullanılır; ikisi de uç değerlerden neredeyse etkilenmez. Örnek: $[60, 70, 80, 100]$ için medyan 75, $Q_1 = 67.5$, $Q_3 = 85$ (NumPy ve scikit-learn'ün varsayılan hesabı), $IQR = 17.5$. 70 için $x' = (70 - 75)/17.5 \approx -0.29$ olur.
+**Ne anlatıyor?** Z-skorundaki ortalamanın yerine medyan, standart sapmanın yerine IQR kullanılır; ikisi de uç değerlerden neredeyse etkilenmez. Örnek: $[60, 70, 80, 100]$ için medyan 75, $Q_1 = 67.5$, $Q_3 = 85$ (NumPy ve scikit-learn'ün varsayılan hesabı), $IQR = 17.5$. 70 için $x' = (70 - 75)/17.5 \approx -0.29$ olur.
 
 scikit-learn'de: `RobustScaler`.
 
@@ -715,9 +715,7 @@ $$
 x' = \frac{x}{10^{j}}, \qquad j:\ \max_i \lvert x'_i \rvert < 1 \text{ koşulunu sağlayan en küçük tam sayı}
 $$
 
-<p align="center"><img src="images/formuller/08.png" alt="Açıklamalı formül. İks üssü eşittir, iks bölü on üzeri j. Burada j, ölçeklenmiş değerlerin mutlak değerce en büyüğünü 1'in altına indiren en küçük tam sayıdır." width="508"></p>
-
-**Nasıl okunur?** "İks üssü eşittir, iks bölü on üzeri j. Burada j, ölçeklenmiş değerlerin mutlak değerce en büyüğünü 1'in altına indiren en küçük tam sayıdır."
+<p align="center"><img src="images/formuller/08.png" alt="Açıklamalı formül: Onluk ölçekleme" width="508"></p>
 
 **Örnek:** $[-986, 450, 120, -50]$ → en büyük mutlak değer 986 → $j = 3$ → $[-0.986,\ 0.450,\ 0.120,\ -0.050]$. Basittir ama verinin dağılımını hiç kullanmadığından pratikte az tercih edilir.
 
@@ -762,9 +760,9 @@ $$
 d_{\text{Öklid}}(\mathbf{a},\mathbf{b}) = \sqrt{\sum_{j=1}^{d}(a_j-b_j)^2} \qquad d_{\text{Manhattan}}(\mathbf{a},\mathbf{b}) = \sum_{j=1}^{d}\lvert a_j-b_j \rvert
 $$
 
-<p align="center"><img src="images/formuller/09.png" alt="Açıklamalı formül. a ile be arasındaki Öklid uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin karelerinin toplamının karekökü. Manhattan uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin mutlak değerlerinin toplamı." width="684"></p>
+<p align="center"><img src="images/formuller/09.png" alt="Açıklamalı formül: Öklid ve Manhattan uzaklığı" width="684"></p>
 
-**Nasıl okunur?** "a ile be arasındaki Öklid uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin karelerinin toplamının karekökü. Manhattan uzaklığı eşittir, j eşittir 1'den d'ye kadar a alt j eksi be alt j'nin mutlak değerlerinin toplamı." Öklid uzaklığı, Pisagor teoreminin $d$ boyuta genişletilmiş hâlidir.
+**Ne anlatıyor?** Öklid uzaklığı, Pisagor teoreminin $d$ boyuta genişletilmiş hâlidir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -857,9 +855,9 @@ $$
 \hat{y} = h_\theta(x) = \theta_0 + \theta_1 x
 $$
 
-<p align="center"><img src="images/formuller/10.png" alt="Açıklamalı formül. Ye şapka eşittir, h alt teta iks eşittir, teta sıfır artı teta bir iks." width="333"></p>
+<p align="center"><img src="images/formuller/10.png" alt="Açıklamalı formül: Basit lineer regresyon hipotezi" width="333"></p>
 
-**Nasıl okunur?** "Ye şapka eşittir, h alt teta iks eşittir, teta sıfır artı teta bir iks." $h_\theta(x)$, "teta parametreleriyle çalışan h fonksiyonunun x'teki değeri" demektir: Alt indisteki $\theta$ bir çarpan değil, fonksiyonun hangi parametrelerle çalıştığını gösteren bir etikettir.
+**Ne anlatıyor?** $h_\theta(x)$, "teta parametreleriyle çalışan h fonksiyonunun x'teki değeri" demektir: Alt indisteki $\theta$ bir çarpan değil, fonksiyonun hangi parametrelerle çalıştığını gösteren bir etikettir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -881,9 +879,9 @@ $$
 J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^{m}\left(\hat{y}_i - y_i\right)^2 = \frac{1}{2m}\sum_{i=1}^{m}\left(\theta_0 + \theta_1 x_i - y_i\right)^2
 $$
 
-<p align="center"><img src="images/formuller/11.png" alt="Açıklamalı formül. Ce teta sıfır, teta bir eşittir, bir bölü iki em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'nin karelerinin toplamı." width="451"></p>
+<p align="center"><img src="images/formuller/11.png" alt="Açıklamalı formül: Maliyet fonksiyonu J" width="451"></p>
 
-**Nasıl okunur?** "Ce teta sıfır, teta bir eşittir, bir bölü iki em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'nin karelerinin toplamı." İkinci eşitlikte yalnızca $\hat{y}_i$ yerine modelin kendisi ($\theta_0 + \theta_1 x_i$) yazılmıştır. $J$, $\theta$'ların fonksiyonudur: Veri sabittir; parametreler değiştikçe maliyet değişir. Örnek (Bölüm 6.3'teki 5 öğrenci): $\theta_0 = \theta_1 = 0$ (herkese 0 tahmini) için $J = 2159.3$, en iyi doğru $\hat{y} = 44.6 + 6.8x$ için $J = 0.56$.
+**Ne anlatıyor?** İkinci eşitlikte yalnızca $\hat{y}_i$ yerine modelin kendisi ($\theta_0 + \theta_1 x_i$) yazılmıştır. $J$, $\theta$'ların fonksiyonudur: Veri sabittir; parametreler değiştikçe maliyet değişir. Örnek (Bölüm 6.3'teki 5 öğrenci): $\theta_0 = \theta_1 = 0$ (herkese 0 tahmini) için $J = 2159.3$, en iyi doğru $\hat{y} = 44.6 + 6.8x$ için $J = 0.56$.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -902,9 +900,9 @@ Basit lineer regresyonda $J$'yi en küçük yapan değerler doğrudan hesaplanab
 \theta_1 = \frac{\sum_{i=1}^{m}(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^{m}(x_i-\bar{x})^2}, \qquad \theta_0 = \bar{y} - \theta_1\,\bar{x}
 ```
 
-<p align="center"><img src="images/formuller/12.png" alt="Açıklamalı formül. Teta bir eşittir, i eşittir 1'den m'ye kadar iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü i eşittir 1'den m'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı. Teta sıfır eşittir ye bar eksi teta bir çarpı iks bar." width="494"></p>
+<p align="center"><img src="images/formuller/12.png" alt="Açıklamalı formül: Kapalı form çözümde teta bir ve teta sıfır" width="494"></p>
 
-**Nasıl okunur?** "Teta bir eşittir, i eşittir 1'den m'ye kadar iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü i eşittir 1'den m'ye kadar iks alt i eksi iks bar'ın karelerinin toplamı. Teta sıfır eşittir ye bar eksi teta bir çarpı iks bar." Yani: $\theta_0$ formülü, doğrunun $(\bar{x}, \bar{y})$ ortalama noktasından geçmesini sağlar.
+**Ne anlatıyor?** $\theta_0$ formülü, doğrunun $(\bar{x}, \bar{y})$ ortalama noktasından geçmesini sağlar.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -941,9 +939,9 @@ $$
 \theta_j := \theta_j - \alpha \frac{\partial J}{\partial \theta_j}
 $$
 
-<p align="center"><img src="images/formuller/13.png" alt="Açıklamalı formül. Teta j'ye, teta j eksi alfa çarpı ce'nin teta j'ye göre kısmi türevi atanır." width="363"></p>
+<p align="center"><img src="images/formuller/13.png" alt="Açıklamalı formül: Gradyan inişi güncelleme kuralı" width="363"></p>
 
-**Nasıl okunur?** "Teta j'ye, teta j eksi alfa çarpı ce'nin teta j'ye göre kısmi türevi atanır." **Dikkat:** $:=$ eşitlik değil atamadır. Bir denklem gibi okunursa ($\theta_j = \theta_j - \dots$) türevin sıfır olması gerekirdi; oysa kural, eski değerden yeni değeri hesaplayıp tekrar tekrar uygulanır. Eğim pozitifse $\theta_j$ küçülür, negatifse büyür: Her iki durumda da yokuş aşağı gidilir.
+**Dikkat:** $:=$ eşitlik değil atamadır. Bir denklem gibi okunursa ($\theta_j = \theta_j - \dots$) türevin sıfır olması gerekirdi; oysa kural, eski değerden yeni değeri hesaplayıp tekrar tekrar uygulanır. Eğim pozitifse $\theta_j$ küçülür, negatifse büyür: Her iki durumda da yokuş aşağı gidilir.
 
 Lineer regresyon için türevler:
 
@@ -951,9 +949,9 @@ Lineer regresyon için türevler:
 \frac{\partial J}{\partial \theta_0} = \frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i - y_i), \qquad \frac{\partial J}{\partial \theta_1} = \frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i - y_i)\,x_i
 ```
 
-<p align="center"><img src="images/formuller/14.png" alt="Açıklamalı formül. Ce'nin teta sıfıra göre kısmi türevi eşittir, bir bölü em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'lerin toplamı. Ce'nin teta bire göre kısmi türevi eşittir, bir bölü em çarpı, aynı hataların iks alt i ile çarpılarak toplamı." width="549"></p>
+<p align="center"><img src="images/formuller/14.png" alt="Açıklamalı formül: Maliyetin kısmi türevleri" width="549"></p>
 
-**Nasıl okunur?** "Ce'nin teta sıfıra göre kısmi türevi eşittir, bir bölü em çarpı, i eşittir 1'den m'ye kadar ye şapka alt i eksi ye alt i'lerin toplamı. Ce'nin teta bire göre kısmi türevi eşittir, bir bölü em çarpı, aynı hataların iks alt i ile çarpılarak toplamı." $J$'deki $\frac{1}{2m}$'nin 2'si, karenin türevinden gelen 2 ile sadeleşmiş; geriye $\frac{1}{m}$ kalmıştır. Örnek (Bölüm 6.3'teki veri, $\theta_0 = \theta_1 = 0$, $\alpha = 0.05$): Tüm tahminler 0 olduğundan $\frac{\partial J}{\partial \theta_0} = -65$ ve $\frac{\partial J}{\partial \theta_1} = -208.6$ çıkar. İlk adımda $\theta_0 := 0 - 0.05 \cdot (-65) = 3.25$ ve $\theta_1 := 0 - 0.05 \cdot (-208.6) = 10.43$ olur.
+**Ne anlatıyor?** $J$'deki $\frac{1}{2m}$'nin 2'si, karenin türevinden gelen 2 ile sadeleşmiş; geriye $\frac{1}{m}$ kalmıştır. Örnek (Bölüm 6.3'teki veri, $\theta_0 = \theta_1 = 0$, $\alpha = 0.05$): Tüm tahminler 0 olduğundan $\frac{\partial J}{\partial \theta_0} = -65$ ve $\frac{\partial J}{\partial \theta_1} = -208.6$ çıkar. İlk adımda $\theta_0 := 0 - 0.05 \cdot (-65) = 3.25$ ve $\theta_1 := 0 - 0.05 \cdot (-208.6) = 10.43$ olur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -982,9 +980,9 @@ $$
 \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_d x_d = \theta_0 + \sum_{j=1}^{d}\theta_j x_j
 $$
 
-<p align="center"><img src="images/formuller/15.png" alt="Açıklamalı formül. Ye şapka eşittir teta sıfır artı, j eşittir 1'den d'ye kadar teta alt j çarpı iks alt j'lerin toplamı." width="380"></p>
+<p align="center"><img src="images/formuller/15.png" alt="Açıklamalı formül: Çoklu lineer regresyon" width="380"></p>
 
-**Nasıl okunur?** "Ye şapka eşittir teta sıfır artı, j eşittir 1'den d'ye kadar teta alt j çarpı iks alt j'lerin toplamı." Toplam sembolü, $\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_d x_d$ uzun toplamının kısa yazılışıdır.
+**Ne anlatıyor?** Toplam sembolü, $\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_d x_d$ uzun toplamının kısa yazılışıdır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1001,9 +999,9 @@ Her örneğe sabit terim için $x_0 = 1$ eklenirse model vektörlerle yazılır:
 
 $\displaystyle \boldsymbol{\theta} = \left(X^{T}X\right)^{-1}X^{T}\mathbf{y}$
 
-<img src="images/formuller/16.png" alt="Açıklamalı formül. Teta vektörü eşittir, iks transpoz iks'in tersi çarpı iks transpoz çarpı ye vektörü." width="451">
+<img src="images/formuller/16.png" alt="Açıklamalı formül: Normal denklem" width="451">
 
-**Nasıl okunur?** "Teta vektörü eşittir, iks transpoz iks'in tersi çarpı iks transpoz çarpı ye vektörü." Yani: Bölüm 6.3'teki $\theta_1$ = pay / payda formülünün matris karşılığıdır. $X^T\mathbf{y}$ paya, $X^TX$ paydaya karşılık gelir; matrislerde bölme olmadığı için ters matrisle çarpılır.
+**Ne anlatıyor?** Bölüm 6.3'teki $\theta_1$ = pay / payda formülünün matris karşılığıdır. $X^T\mathbf{y}$ paya, $X^TX$ paydaya karşılık gelir; matrislerde bölme olmadığı için ters matrisle çarpılır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1023,9 +1021,9 @@ Lineer modeller şaşırtıcı derecede esnektir. İlişki eğrisel olsa bile ye
 \hat{y} = \theta_0 + \theta_1 x + \theta_2 x^2 \quad\xrightarrow{\;x_2 \,:=\, x^2\;}\quad \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2
 ```
 
-<p align="center"><img src="images/formuller/17.png" alt="Açıklamalı formül. Ye şapka eşittir teta sıfır artı teta bir iks artı teta iki iks kare. İks iki'ye iks kare atanırsa: ye şapka eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki." width="469"></p>
+<p align="center"><img src="images/formuller/17.png" alt="Açıklamalı formül: Polinom regresyon" width="469"></p>
 
-**Nasıl okunur?** "Ye şapka eşittir teta sıfır artı teta bir iks artı teta iki iks kare. İks iki'ye iks kare atanırsa: ye şapka eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki." Yani: $x^2$ veri tablosunda yeni bir sütun olur; model $x$'e göre eğridir ama $\theta$'lara göre hâlâ doğrusaldır.
+**Ne anlatıyor?** $x^2$ veri tablosunda yeni bir sütun olur; model $x$'e göre eğridir ama $\theta$'lara göre hâlâ doğrusaldır.
 
 Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönüşümler veri setine yeni sütunlar olarak eklenebilir. Buna **polinom regresyon** veya **temel fonksiyon genişletmesi** denir. Ancak derece arttıkça model veriyi ezberleyebilir (aşırı öğrenme, İng. *overfitting*) ([Bölüm 8.1](#b8)).
 
@@ -1117,9 +1115,9 @@ $$
 z = \theta_0 + \theta_1 x_1 + \cdots + \theta_d x_d, \qquad \hat{p} = P(y=1 \mid \mathbf{x}) = \sigma(z) = \frac{1}{1+e^{-z}}
 $$
 
-<p align="center"><img src="images/formuller/18.png" alt="Açıklamalı formül. Zet eşittir teta sıfır artı teta bir iks bir artı … artı teta de iks de. Pe şapka eşittir, iks vektörü verildiğinde ye'nin bir olma olasılığı, eşittir sigma zet, eşittir bir bölü bir artı e üzeri eksi zet." width="754"></p>
+<p align="center"><img src="images/formuller/18.png" alt="Açıklamalı formül: Lojistik regresyon ve sigmoid" width="754"></p>
 
-**Nasıl okunur?** "Zet eşittir teta sıfır artı teta bir iks bir artı … artı teta de iks de. Pe şapka eşittir, iks vektörü verildiğinde ye'nin bir olma olasılığı, eşittir sigma zet, eşittir bir bölü bir artı e üzeri eksi zet." Buradaki $\sigma$ standart sapma değil, sigmoid fonksiyonunun adıdır. $z$ herhangi bir sayı olabilir; sigmoid onu 0 ile 1 arasına sıkıştırır:
+**Ne anlatıyor?** Buradaki $\sigma$ standart sapma değil, sigmoid fonksiyonunun adıdır. $z$ herhangi bir sayı olabilir; sigmoid onu 0 ile 1 arasına sıkıştırır:
 
 | $z$ | −4 | −2 | 0 | 2 | 4 |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -1153,9 +1151,9 @@ Lojistik regresyonda karesel hata yerine **log-loss** (ikili çapraz entropi; İ
 J(\boldsymbol{\theta}) = -\frac{1}{m}\sum_{i=1}^{m}\Big[\,y_i \log(\hat{p}_i) + (1-y_i)\log(1-\hat{p}_i)\Big]
 ```
 
-<p align="center"><img src="images/formuller/19.png" alt="Açıklamalı formül. Ce teta eşittir eksi bir bölü em çarpı, i eşittir 1'den m'ye kadar, ye alt i çarpı log pe şapka alt i artı bir eksi ye alt i çarpı log bir eksi pe şapka alt i'lerin toplamı." width="483"></p>
+<p align="center"><img src="images/formuller/19.png" alt="Açıklamalı formül: Log-loss (çapraz entropi) maliyeti" width="483"></p>
 
-**Nasıl okunur?** "Ce teta eşittir eksi bir bölü em çarpı, i eşittir 1'den m'ye kadar, ye alt i çarpı log pe şapka alt i artı bir eksi ye alt i çarpı log bir eksi pe şapka alt i'lerin toplamı." Yani: $y_i$ yalnızca 0 ya da 1 olduğundan her örnekte iki terimden biri sıfırlanır. Gerçek sınıf 1 ise ceza $-\log \hat{p}_i$, 0 ise $-\log(1-\hat{p}_i)$ olur. 1'den küçük sayıların logaritması negatif olduğu için baştaki eksi işareti cezayı pozitife çevirir. Buradaki $\log$ doğal logaritmadır (taban $e$).
+**Ne anlatıyor?** $y_i$ yalnızca 0 ya da 1 olduğundan her örnekte iki terimden biri sıfırlanır. Gerçek sınıf 1 ise ceza $-\log \hat{p}_i$, 0 ise $-\log(1-\hat{p}_i)$ olur. 1'den küçük sayıların logaritması negatif olduğu için baştaki eksi işareti cezayı pozitife çevirir. Buradaki $\log$ doğal logaritmadır (taban $e$).
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1279,7 +1277,7 @@ $\displaystyle E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(
 | $E[\cdot]$ | "beklenen değer" | Farklı eğitim setleri üzerinden ortalama |
 | $\sigma_\varepsilon^2$ | "sigma epsilon kare" | İndirgenemez gürültü; hiçbir model bunu yok edemez |
 
-**Nasıl okunur?** "Ye eksi ef şapka iks'in karesinin beklenen değeri eşittir: ef şapka iks'in beklenen değeri eksi ef iks'in karesi, artı ef şapka iks ile kendi beklenen değeri arasındaki farkın karesinin beklenen değeri, artı sigma epsilon kare." Yani: Yanlılık, farklı eğitim setlerinde öğrenilen modellerin **ortalamasının** gerçek ilişkiden ne kadar uzak olduğudur. Varyans, modelin eğitim setine göre ne kadar **oynadığıdır**. Gürültü ise verinin kendisinden gelir.
+**Ne anlatıyor?** Yanlılık, farklı eğitim setlerinde öğrenilen modellerin **ortalamasının** gerçek ilişkiden ne kadar uzak olduğudur. Varyans, modelin eğitim setine göre ne kadar **oynadığıdır**. Gürültü ise verinin kendisinden gelir.
 
 </details>
 
@@ -1359,9 +1357,9 @@ Makine öğrenmesinde $n$ satırlık veriden yine $n$ satırlık bir **eğitim s
 P(\text{seçilmeme}) = \left(1-\frac{1}{n}\right)^{n} \xrightarrow{\;n\to\infty\;} e^{-1} \approx 0.368
 ```
 
-<p align="center"><img src="images/formuller/20.png" alt="Açıklamalı formül. Seçilmeme olasılığı eşittir, bir eksi bir bölü en'in en'inci kuvveti; en sonsuza giderken e üzeri eksi bire, yani yaklaşık 0.368'e yaklaşır." width="422"></p>
+<p align="center"><img src="images/formuller/20.png" alt="Açıklamalı formül: Bootstrap'ta seçilmeme olasılığı" width="422"></p>
 
-**Nasıl okunur?** "Seçilmeme olasılığı eşittir, bir eksi bir bölü en'in en'inci kuvveti; en sonsuza giderken e üzeri eksi bire, yani yaklaşık 0.368'e yaklaşır." Bağımsız olayların olasılıkları çarpıldığı için tek çekişteki olasılığın $n$'inci kuvveti alınır. Değer $n$ büyüdükçe hızla sabitlenir: $n = 10$ için $0.349$, $n = 100$ için $0.366$, $n = 1000$ için $0.368$.
+**Ne anlatıyor?** Bağımsız olayların olasılıkları çarpıldığı için tek çekişteki olasılığın $n$'inci kuvveti alınır. Değer $n$ büyüdükçe hızla sabitlenir: $n = 10$ için $0.349$, $n = 100$ için $0.366$, $n = 1000$ için $0.368$.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1472,7 +1470,7 @@ $$
 \text{Accuracy} = \frac{\overbrace{TP + TN}^{\text{doğru tahminler}}}{\underbrace{TP + TN + FP + FN}_{\text{tüm tahminler}}}
 $$
 
-**Nasıl okunur?** "Doğruluk eşittir, te pe artı te en, bölü te pe artı te en artı ef pe artı ef en." Pay, karışıklık matrisinin köşegenidir; payda tüm hücrelerin toplamıdır.
+**Ne anlatıyor?** Pay, karışıklık matrisinin köşegenidir; payda tüm hücrelerin toplamıdır.
 
 **Örnek:** $(350 + 250)/1000 = 0.60$
 
@@ -1486,9 +1484,9 @@ $$
 \text{Precision} = \frac{TP}{TP + FP}
 $$
 
-<p align="center"><img src="images/formuller/21.png" alt="Açıklamalı formül. Kesinlik eşittir, te pe bölü te pe artı ef pe." width="228"></p>
+<p align="center"><img src="images/formuller/21.png" alt="Açıklamalı formül: Kesinlik (precision)" width="228"></p>
 
-**Nasıl okunur?** "Kesinlik eşittir, te pe bölü te pe artı ef pe." Payda, karışıklık matrisinin **Tahmin: Pozitif** sütunudur.
+**Ne anlatıyor?** Payda, karışıklık matrisinin **Tahmin: Pozitif** sütunudur.
 
 **Örnek:** $350/600 \approx 0.583$. **Yanlış alarmın pahalı olduğu** durumlarda kritiktir. *Örnek:* Önemli bir e-postanın spam kutusuna düşmesi.
 
@@ -1500,9 +1498,9 @@ $$
 \text{Recall} = \text{TPR} = \frac{TP}{TP + FN}
 $$
 
-<p align="center"><img src="images/formuller/22.png" alt="Açıklamalı formül. Duyarlılık eşittir te pe er eşittir, te pe bölü te pe artı ef en." width="285"></p>
+<p align="center"><img src="images/formuller/22.png" alt="Açıklamalı formül: Duyarlılık (recall)" width="285"></p>
 
-**Nasıl okunur?** "Duyarlılık eşittir te pe er eşittir, te pe bölü te pe artı ef en." Payda, **Gerçek: Pozitif** satırıdır. Precision ile recall'un payı aynıdır; farkları yalnızca paydadadır (precision'da FP, recall'da FN).
+**Ne anlatıyor?** Payda, **Gerçek: Pozitif** satırıdır. Precision ile recall'un payı aynıdır; farkları yalnızca paydadadır (precision'da FP, recall'da FN).
 
 **Örnek:** $350/500 = 0.70$. **Kaçırmanın pahalı olduğu** durumlarda kritiktir. *Örnek:* Kanser taraması, dolandırıcılık tespiti.
 
@@ -1514,9 +1512,9 @@ $$
 \text{Specificity} = \text{TNR} = \frac{TN}{TN + FP}, \qquad \text{FPR} = \frac{FP}{FP + TN} = 1 - \text{Specificity}
 $$
 
-<p align="center"><img src="images/formuller/23.png" alt="Açıklamalı formül. Özgüllük eşittir te en er eşittir, te en bölü te en artı ef pe. Ef pe er eşittir, ef pe bölü ef pe artı te en; bu da bir eksi özgüllüktür." width="430"></p>
+<p align="center"><img src="images/formuller/23.png" alt="Açıklamalı formül: Özgüllük ve sahte pozitif oranı" width="430"></p>
 
-**Nasıl okunur?** "Özgüllük eşittir te en er eşittir, te en bölü te en artı ef pe. Ef pe er eşittir, ef pe bölü ef pe artı te en; bu da bir eksi özgüllüktür." İki oranın paydası aynıdır (**Gerçek: Negatif** satırı); bu yüzden toplamları 1'dir.
+**Ne anlatıyor?** İki oranın paydası aynıdır (**Gerçek: Negatif** satırı); bu yüzden toplamları 1'dir.
 
 **Örnek:** Specificity $= 250/500 = 0.50$, FPR $= 0.50$. (Tıpta "duyarlılık" ve "özgüllük" birlikte raporlanır.)
 
@@ -1528,9 +1526,9 @@ Precision ile recall genellikle birbiriyle çelişir: Biri artarken diğeri azal
 F_1 = 2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2\,TP}{2\,TP + FP + FN}
 ```
 
-<p align="center"><img src="images/formuller/24.png" alt="Açıklamalı formül. Ef bir eşittir, iki çarpı precision çarpı recall, bölü precision artı recall; bu da iki te pe bölü iki te pe artı ef pe artı ef en'e eşittir." width="412"></p>
+<p align="center"><img src="images/formuller/24.png" alt="Açıklamalı formül: F1-skoru" width="412"></p>
 
-**Nasıl okunur?** "Ef bir eşittir, iki çarpı precision çarpı recall, bölü precision artı recall; bu da iki te pe bölü iki te pe artı ef pe artı ef en'e eşittir." Harmonik ortalama küçük olan değere yakın durur: Precision = 1.0 ve recall = 0.1 olan bir modelin aritmetik ortalaması 0.55 iken $F_1 = \frac{2 \cdot 1.0 \cdot 0.1}{1.1} \approx 0.18$'dir.
+**Ne anlatıyor?** Harmonik ortalama küçük olan değere yakın durur: Precision = 1.0 ve recall = 0.1 olan bir modelin aritmetik ortalaması 0.55 iken $F_1 = \frac{2 \cdot 1.0 \cdot 0.1}{1.1} \approx 0.18$'dir.
 
 **Örnek:** $\frac{2 \cdot 0.583 \cdot 0.70}{0.583 + 0.70} \approx 0.636$
 
@@ -1544,9 +1542,9 @@ $$
 \kappa = \frac{p_o - p_e}{1 - p_e}
 $$
 
-<p align="center"><img src="images/formuller/25.png" alt="Açıklamalı formül. Kappa eşittir, pe o eksi pe e, bölü bir eksi pe e." width="255"></p>
+<p align="center"><img src="images/formuller/25.png" alt="Açıklamalı formül: Cohen'in Kappa katsayısı" width="255"></p>
 
-**Nasıl okunur?** "Kappa eşittir, pe o eksi pe e, bölü bir eksi pe e." Model şans düzeyinde ise ($p_o = p_e$) $\kappa = 0$, kusursuz ise ($p_o = 1$) $\kappa = 1$ olur.
+**Ne anlatıyor?** Model şans düzeyinde ise ($p_o = p_e$) $\kappa = 0$, kusursuz ise ($p_o = 1$) $\kappa = 1$ olur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1580,9 +1578,9 @@ $$
 MCC = \frac{TP\cdot TN - FP\cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 $$
 
-<p align="center"><img src="images/formuller/26.png" alt="Açıklamalı formül. Em ce ce eşittir, te pe çarpı te en eksi ef pe çarpı ef en, bölü te pe artı ef pe, te pe artı ef en, te en artı ef pe ve te en artı ef en'in çarpımının karekökü." width="485"></p>
+<p align="center"><img src="images/formuller/26.png" alt="Açıklamalı formül: Matthews korelasyon katsayısı" width="485"></p>
 
-**Nasıl okunur?** "Em ce ce eşittir, te pe çarpı te en eksi ef pe çarpı ef en, bölü te pe artı ef pe, te pe artı ef en, te en artı ef pe ve te en artı ef en'in çarpımının karekökü." Paydadaki dört çarpan, karışıklık matrisinin satır ve sütun toplamlarıdır (örnekte 600, 500, 500 ve 400).
+**Ne anlatıyor?** Paydadaki dört çarpan, karışıklık matrisinin satır ve sütun toplamlarıdır (örnekte 600, 500, 500 ve 400).
 
 **Örnek:** $\frac{350\cdot 250 - 250\cdot 150}{\sqrt{600\cdot 500\cdot 500\cdot 400}} \approx 0.204$. WEKA'da `MCC` sütunu olarak görünür.
 
@@ -1786,9 +1784,7 @@ $$
 MAE = \frac{1}{n}\sum_{i=1}^{n}\lvert y_i - \hat{y}_i \rvert
 $$
 
-<p align="center"><img src="images/formuller/27.png" alt="Açıklamalı formül. Em a e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin mutlak değerlerinin toplamı." width="273"></p>
-
-**Nasıl okunur?** "Em a e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin mutlak değerlerinin toplamı."
+<p align="center"><img src="images/formuller/27.png" alt="Açıklamalı formül: Ortalama mutlak hata (MAE)" width="273"></p>
 
 **Örnek:** $85/5 = 17$ → "Tahminler gerçek fiyattan **ortalama 17 bin TL** sapıyor." Hedefle aynı birimdedir ve yorumlaması en kolay olanıdır.
 
@@ -1798,9 +1794,9 @@ $$
 MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2, \qquad RMSE = \sqrt{MSE}
 $$
 
-<p align="center"><img src="images/formuller/28.png" alt="Açıklamalı formül. Em es e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin karelerinin toplamı. Ar em es e eşittir karekök em es e." width="442"></p>
+<p align="center"><img src="images/formuller/28.png" alt="Açıklamalı formül: MSE ve RMSE" width="442"></p>
 
-**Nasıl okunur?** "Em es e eşittir, bir bölü en çarpı, i eşittir 1'den n'ye kadar ye alt i eksi ye şapka alt i'nin karelerinin toplamı. Ar em es e eşittir karekök em es e." MSE, Bölüm 6.2'deki maliyet fonksiyonunun $\frac{1}{2}$'siz hâlidir: $J = MSE / 2$.
+**Ne anlatıyor?** MSE, Bölüm 6.2'deki maliyet fonksiyonunun $\frac{1}{2}$'siz hâlidir: $J = MSE / 2$.
 
 **Örnek:** $MSE = 1725/5 = 345$ (bin TL)², $RMSE = \sqrt{345} \approx 18.57$ bin TL.
 
@@ -1827,9 +1823,9 @@ $$
 R^2 = 1 - \frac{SS_{res}}{SS_{tot}} = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
 $$
 
-<p align="center"><img src="images/formuller/29.png" alt="Açıklamalı formül. Ar kare eşittir, bir eksi es es res bölü es es tot; yani bir eksi, ye alt i eksi ye şapka alt i'nin karelerinin toplamı bölü ye alt i eksi ye bar'ın karelerinin toplamı." width="432"></p>
+<p align="center"><img src="images/formuller/29.png" alt="Açıklamalı formül: Belirlilik katsayısı R kare" width="432"></p>
 
-**Nasıl okunur?** "Ar kare eşittir, bir eksi es es res bölü es es tot; yani bir eksi, ye alt i eksi ye şapka alt i'nin karelerinin toplamı bölü ye alt i eksi ye bar'ın karelerinin toplamı." Yani: Kesir, modelin hatasının "herkese ortalamayı söyle" stratejisinin hatasına oranıdır. Model bu stratejiden ne kadar iyiyse kesir o kadar küçük, $R^2$ o kadar 1'e yakın olur.
+**Ne anlatıyor?** Kesir, modelin hatasının "herkese ortalamayı söyle" stratejisinin hatasına oranıdır. Model bu stratejiden ne kadar iyiyse kesir o kadar küçük, $R^2$ o kadar 1'e yakın olur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1852,9 +1848,9 @@ $$
 R^2_{adj} = 1 - \frac{(1-R^2)(n-1)}{n-k-1}
 $$
 
-<p align="center"><img src="images/formuller/30.png" alt="Açıklamalı formül. Ar kare düzeltilmiş eşittir, bir eksi, bir eksi ar kare çarpı en eksi bir, bölü en eksi ka eksi bir." width="295"></p>
+<p align="center"><img src="images/formuller/30.png" alt="Açıklamalı formül: Düzeltilmiş R kare" width="295"></p>
 
-**Nasıl okunur?** "Ar kare düzeltilmiş eşittir, bir eksi, bir eksi ar kare çarpı en eksi bir, bölü en eksi ka eksi bir." Yani: $k$ arttıkça payda küçülür, kesir büyür ve $R^2_{adj}$ düşer. Yeni öznitelik $R^2$'yi bu cezayı aşacak kadar artırmazsa $R^2_{adj}$ azalır.
+**Ne anlatıyor?** $k$ arttıkça payda küçülür, kesir büyür ve $R^2_{adj}$ düşer. Yeni öznitelik $R^2$'yi bu cezayı aşacak kadar artırmazsa $R^2_{adj}$ azalır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -1871,9 +1867,9 @@ Korelasyon (İng. *correlation*; Lat. *com-*: "birlikte" + *relatio*: "ilişki")
 r = \frac{\sum_i (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i (x_i-\bar{x})^2}\,\sqrt{\sum_i (y_i-\bar{y})^2}}
 ```
 
-<p align="center"><img src="images/formuller/31.png" alt="Açıklamalı formül. Ar eşittir, iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü iks alt i eksi iks bar'ın karelerinin toplamının karekökü çarpı ye alt i eksi ye bar'ın karelerinin toplamının karekökü." width="302"></p>
+<p align="center"><img src="images/formuller/31.png" alt="Açıklamalı formül: Korelasyon katsayısı r" width="302"></p>
 
-**Nasıl okunur?** "Ar eşittir, iks alt i eksi iks bar çarpı ye alt i eksi ye bar'ların toplamı, bölü iks alt i eksi iks bar'ın karelerinin toplamının karekökü çarpı ye alt i eksi ye bar'ın karelerinin toplamının karekökü." Pay, Bölüm 6.3'teki $\theta_1$ formülünün payıyla aynıdır; payda iki değişkenin yayılımına bölerek sonucu birimsiz yapar. Örnek (Bölüm 6.3'teki 5 öğrenci): $r = \frac{68}{\sqrt{10}\thinspace \sqrt{468}} \approx 0.994$.
+**Ne anlatıyor?** Pay, Bölüm 6.3'teki $\theta_1$ formülünün payıyla aynıdır; payda iki değişkenin yayılımına bölerek sonucu birimsiz yapar. Örnek (Bölüm 6.3'teki 5 öğrenci): $r = \frac{68}{\sqrt{10}\thinspace \sqrt{468}} \approx 0.994$.
 
 - $r = +1$: Mükemmel pozitif doğrusal ilişki · $r = -1$: Mükemmel negatif · $r = 0$: **Doğrusal** ilişki yok. (Doğrusal olmayan bir ilişki yine de olabilir, ör. $y = x^2$.)
 
@@ -2066,9 +2062,9 @@ Naive Bayes, olasılık teorisine dayanan, hızlı ve şaşırtıcı derecede et
 P(C \mid \mathbf{x}) = \frac{P(\mathbf{x} \mid C)\; P(C)}{P(\mathbf{x})}
 ```
 
-<p align="center"><img src="images/formuller/32.png" alt="Açıklamalı formül. İks verildiğinde ce'nin olasılığı eşittir, ce verildiğinde iks'in olasılığı çarpı ce'nin olasılığı, bölü iks'in olasılığı." width="298"></p>
+<p align="center"><img src="images/formuller/32.png" alt="Açıklamalı formül: Bayes teoremi" width="298"></p>
 
-**Nasıl okunur?** "İks verildiğinde ce'nin olasılığı eşittir, ce verildiğinde iks'in olasılığı çarpı ce'nin olasılığı, bölü iks'in olasılığı." **Dikkat:** $P(C \mid \mathbf{x})$ ile $P(\mathbf{x} \mid C)$ farklı şeylerdir. "Yağmur yağıyorsa gökyüzü bulutludur" neredeyse kesindir; "Gökyüzü bulutluysa yağmur yağar" ise çok daha az olasıdır. Bayes teoremi bu ikisi arasında geçiş yapmayı sağlar.
+**Dikkat:** $P(C \mid \mathbf{x})$ ile $P(\mathbf{x} \mid C)$ farklı şeylerdir. "Yağmur yağıyorsa gökyüzü bulutludur" neredeyse kesindir; "Gökyüzü bulutluysa yağmur yağar" ise çok daha az olasıdır. Bayes teoremi bu ikisi arasında geçiş yapmayı sağlar.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2087,9 +2083,9 @@ $P(\mathbf{x} \mid C)$'yi doğrudan tahmin etmek için her öznitelik kombinasyo
 P(C \mid x_1,\dots,x_d) \;\propto\; P(C)\prod_{j=1}^{d} P(x_j \mid C)
 ```
 
-<p align="center"><img src="images/formuller/33.png" alt="Açıklamalı formül. İks bir'den iks de'ye kadar öznitelikler verildiğinde ce'nin olasılığı, ce'nin olasılığı çarpı, j eşittir 1'den d'ye kadar ce verildiğinde iks alt j'nin olasılıklarının çarpımı ile orantılıdır." width="429"></p>
+<p align="center"><img src="images/formuller/33.png" alt="Açıklamalı formül: Naive Bayes sınıflandırıcısı" width="429"></p>
 
-**Nasıl okunur?** "İks bir'den iks de'ye kadar öznitelikler verildiğinde ce'nin olasılığı, ce'nin olasılığı çarpı, j eşittir 1'den d'ye kadar ce verildiğinde iks alt j'nin olasılıklarının çarpımı ile orantılıdır." Bölüm 11.3'teki "yes" hesabı, $\frac{9}{14}\cdot\frac{2}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}$, tam olarak bu formüldür: Önsel çarpı dört özniteliğin olasılığı.
+**Ne anlatıyor?** Bölüm 11.3'teki "yes" hesabı, $\frac{9}{14}\cdot\frac{2}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}\cdot\frac{3}{9}$, tam olarak bu formüldür: Önsel çarpı dört özniteliğin olasılığı.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2124,14 +2120,14 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 
 - **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + k}$ ($k$: özniteliğin farklı değer sayısı). WEKA bunu otomatik yapar.
 
-  <img src="images/formuller/34.png" alt="Açıklamalı formül. Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ka." width="311">
+  <img src="images/formuller/34.png" alt="Açıklamalı formül: Laplace düzeltmesi" width="311">
 
-  **Nasıl okunur?** "Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ka." Örnek: outlook'un 3 değeri vardır, "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
+  **Örnek:** outlook'un 3 değeri vardır, "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
 - **Sayısal öznitelikler:** Her sınıfta özniteliğin **normal (Gauss) dağıldığı** varsayılır ve olasılık yoğunluğu $\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ ile hesaplanır (Gaussian Naive Bayes). WEKA'da alternatif olarak `useKernelEstimator` veya `useSupervisedDiscretization` seçilebilir.
 
-  <img src="images/formuller/35.png" alt="Açıklamalı formül. Ef iks eşittir, bir bölü karekök iki pi çarpı sigma, çarpı e üzeri eksi, iks eksi mü'nün karesi bölü iki sigma kare." width="394">
+  <img src="images/formuller/35.png" alt="Açıklamalı formül: Gauss olasılık yoğunluğu" width="394">
 
-  **Nasıl okunur?** "Ef iks eşittir, bir bölü karekök iki pi çarpı sigma, çarpı e üzeri eksi, iks eksi mü'nün karesi bölü iki sigma kare." Burada $\mu$ ve $\sigma$, özniteliğin **o sınıftaki** ortalaması ve standart sapmasıdır. Yoğunluk bir olasılık değildir ve 1'den büyük çıkabilir; ama Naive Bayes'te sınıfları karşılaştırmak için olasılık yerine kullanılabilir.
+  **Ne anlatıyor?** Burada $\mu$ ve $\sigma$, özniteliğin **o sınıftaki** ortalaması ve standart sapmasıdır. Yoğunluk bir olasılık değildir ve 1'den büyük çıkabilir; ama Naive Bayes'te sınıfları karşılaştırmak için olasılık yerine kullanılabilir.
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
 
 **WEKA:** `bayes → NaiveBayes`. `NaiveBayesUpdateable` sürümü veriyi satır satır öğrenebilir ([Bölüm 23](#b23)). **Python:** `GaussianNB` (sayısal), `MultinomialNB` (kelime sayıları), `CategoricalNB` (kategorik). Iris'te 10 katlı CV doğruluğu ≈ **0.953**.
@@ -2198,9 +2194,7 @@ $$
 H(S) = -\sum_{i=1}^{c} p_i \log_2 p_i
 $$
 
-<p align="center"><img src="images/formuller/36.png" alt="Açıklamalı formül. Ha es eşittir eksi, i eşittir 1'den c'ye kadar pe alt i çarpı log iki tabanında pe alt i'lerin toplamı." width="474"></p>
-
-**Nasıl okunur?** "Ha es eşittir eksi, i eşittir 1'den c'ye kadar pe alt i çarpı log iki tabanında pe alt i'lerin toplamı."
+<p align="center"><img src="images/formuller/36.png" alt="Açıklamalı formül: Entropi" width="474"></p>
 
 * $\log_2 p_i$: "2'nin kaçıncı kuvveti $p_i$ eder?" sorusunun cevabı. $p_i$ 1'den küçük olduğu için bu değer **negatiftir**. Sınıf ne kadar nadirse mutlak değeri o kadar büyüktür: Nadir bir sonuç gerçekleştiğinde daha çok "şaşırırız". Taban 2 olduğu için birim **bit**'tir.
 * Baştaki eksi işareti negatif logaritmaları pozitife çevirir. Entropi, sınıf oranlarıyla ağırlıklandırılmış **ortalama sürprizdir**.
@@ -2222,9 +2216,9 @@ $$
 IG(S, A) = H(S) - \sum_{v \,\in\, \text{Değerler}(A)} \frac{\lvert S_v \rvert}{\lvert S \rvert}\, H(S_v)
 ```
 
-<p align="center"><img src="images/formuller/37.png" alt="Açıklamalı formül. Ay ci es a eşittir, ha es eksi, A'nın değerlerindeki her v için es alt v'nin eleman sayısı bölü es'in eleman sayısı çarpı ha es alt v'lerin toplamı." width="527"></p>
+<p align="center"><img src="images/formuller/37.png" alt="Açıklamalı formül: Bilgi kazancı" width="527"></p>
 
-**Nasıl okunur?** "Ay ci es a eşittir, ha es eksi, A'nın değerlerindeki her v için es alt v'nin eleman sayısı bölü es'in eleman sayısı çarpı ha es alt v'lerin toplamı." $v \in \text{Değerler}(A)$, "v, A'nın değerlerinden biri" diye okunur: A = outlook ise v sırasıyla sunny, overcast ve rainy olur. Buradaki dikey çizgiler mutlak değer değil, **kümenin eleman sayısıdır**: $\lvert S \rvert = 14$, $\lvert S_{\text{sunny}} \rvert = 5$.
+**Ne anlatıyor?** $v \in \text{Değerler}(A)$, "v, A'nın değerlerinden biri" diye okunur: A = outlook ise v sırasıyla sunny, overcast ve rainy olur. Buradaki dikey çizgiler mutlak değer değil, **kümenin eleman sayısıdır**: $\lvert S \rvert = 14$, $\lvert S_{\text{sunny}} \rvert = 5$.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2268,9 +2262,9 @@ En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem 
   $GainRatio(S,A) = \frac{IG(S,A)}{SplitInfo(S,A)}$, $SplitInfo(S,A) = -\sum_v \frac{\lvert S_v\rvert}{\lvert S\rvert}\log_2\frac{\lvert S_v\rvert}{\lvert S\rvert}$
 - **Gini Safsızlığı:** CART algoritması ve scikit-learn'ün varsayılanı: $Gini(S) = 1 - \sum_i p_i^2$. Entropiye çok benzer davranır, logaritma içermediği için biraz daha hızlıdır.
 
-  <img src="images/formuller/38.png" alt="Açıklamalı formül. Gini es eşittir, bir eksi pe alt i'lerin karelerinin toplamı." width="299">
+  <img src="images/formuller/38.png" alt="Açıklamalı formül: Gini safsızlığı" width="299">
 
-  **Nasıl okunur?** "Gini es eşittir, bir eksi pe alt i'lerin karelerinin toplamı." Yani: Gini, yerine koyarak rastgele seçilen iki örneğin **farklı** sınıflardan çıkma olasılığıdır. Kök düğüm (9 yes, 5 no) için $1 - (9/14)^2 - (5/14)^2 = 1 - 0.413 - 0.128 \approx 0.459$ olur.
+  **Ne anlatıyor?** Gini, yerine koyarak rastgele seçilen iki örneğin **farklı** sınıflardan çıkma olasılığıdır. Kök düğüm (9 yes, 5 no) için $1 - (9/14)^2 - (5/14)^2 = 1 - 0.413 - 0.128 \approx 0.459$ olur.
 - **Sayısal öznitelikler:** Değerler sıralanır ve ardışık değerlerin ortasındaki eşikler denenir ("petal length ≤ 2.45?"). En yüksek kazancı veren eşik seçilir.
 - **Algoritma ailesi:** ID3 (bilgi kazancı, yalnızca kategorik), C4.5/J48 (kazanç oranı, sayısal + eksik veri + budama), CART (Gini, ikili bölmeler, regresyon ağaçları da kurar).
 
@@ -2394,9 +2388,9 @@ Hiperdüzlem $\mathbf{w}\cdot\mathbf{x} + b = 0$ ile tanımlanır. Sınıf etike
 \min_{\mathbf{w},\,b}\; \frac{1}{2}\lVert\mathbf{w}\rVert^2 \quad \text{koşul:}\quad y_i\,(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1 \quad (i = 1,\dots,n)
 ```
 
-<p align="center"><img src="images/formuller/39.png" alt="Açıklamalı formül. Dabılyu ve be üzerinden, bir bölü iki çarpı dabılyu'nun normunun karesini en küçük yap; koşul: her i için ye alt i çarpı, dabılyu nokta iks alt i artı be, birden büyük veya eşit olsun." width="549"></p>
+<p align="center"><img src="images/formuller/39.png" alt="Açıklamalı formül: Sert marjlı SVM optimizasyon problemi" width="549"></p>
 
-**Nasıl okunur?** "Dabılyu ve be üzerinden, bir bölü iki çarpı dabılyu'nun normunun karesini en küçük yap; koşul: her i için ye alt i çarpı, dabılyu nokta iks alt i artı be, birden büyük veya eşit olsun." Marj genişliği $\frac{2}{\lVert\mathbf{w}\rVert}$ olduğundan $\lVert\mathbf{w}\rVert$'yi küçültmek marjı genişletir; kare ve $\frac{1}{2}$ yalnızca türevi kolaylaştırmak içindir. $y_i \in \lbrace -1, +1 \rbrace$ olduğu için çarpım, örnek doğru taraftaysa pozitif, yanlış taraftaysa negatif çıkar.
+**Ne anlatıyor?** Marj genişliği $\frac{2}{\lVert\mathbf{w}\rVert}$ olduğundan $\lVert\mathbf{w}\rVert$'yi küçültmek marjı genişletir; kare ve $\frac{1}{2}$ yalnızca türevi kolaylaştırmak içindir. $y_i \in \lbrace -1, +1 \rbrace$ olduğu için çarpım, örnek doğru taraftaysa pozitif, yanlış taraftaysa negatif çıkar.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2414,9 +2408,9 @@ Gerçek veride sınıflar genellikle iç içe geçer; hiçbir doğru onları kus
 \min_{\mathbf{w},\,b,\,\xi}\; \frac{1}{2}\lVert\mathbf{w}\rVert^2 + C\sum_{i=1}^{n}\xi_i
 ```
 
-<p align="center"><img src="images/formuller/40.png" alt="Açıklamalı formül. Dabılyu, be ve ksi üzerinden, bir bölü iki dabılyu'nun normunun karesi artı ce çarpı, i eşittir 1'den n'ye kadar ksi alt i'lerin toplamını en küçük yap." width="317"></p>
+<p align="center"><img src="images/formuller/40.png" alt="Açıklamalı formül: Yumuşak marjlı SVM optimizasyon problemi" width="317"></p>
 
-**Nasıl okunur?** "Dabılyu, be ve ksi üzerinden, bir bölü iki dabılyu'nun normunun karesi artı ce çarpı, i eşittir 1'den n'ye kadar ksi alt i'lerin toplamını en küçük yap." Koşul da gevşer: $y_i(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1 - \xi_i$ ve $\xi_i \ge 0$. $\xi_i = 0$ ise örnek marjın dışında ve doğru taraftadır; $0 < \xi_i \le 1$ ise marjın içindedir ama hâlâ doğru taraftadır; $\xi_i > 1$ ise yanlış taraftadır.
+**Ne anlatıyor?** Koşul da gevşer: $y_i(\mathbf{w}\cdot\mathbf{x}_i + b) \ge 1 - \xi_i$ ve $\xi_i \ge 0$. $\xi_i = 0$ ise örnek marjın dışında ve doğru taraftadır; $0 < \xi_i \le 1$ ise marjın içindedir ama hâlâ doğru taraftadır; $\xi_i > 1$ ise yanlış taraftadır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2500,9 +2494,9 @@ $$
 z = \sum_{j=1}^{d} w_j x_j + b, \qquad \hat{y} = f(z)
 $$
 
-<p align="center"><img src="images/formuller/41.png" alt="Açıklamalı formül. Zet eşittir, j eşittir 1'den d'ye kadar dabılyu alt j çarpı iks alt j'lerin toplamı artı be; ye şapka eşittir ef zet." width="497"></p>
+<p align="center"><img src="images/formuller/41.png" alt="Açıklamalı formül: Yapay nöronun çıktısı" width="497"></p>
 
-**Nasıl okunur?** "Zet eşittir, j eşittir 1'den d'ye kadar dabılyu alt j çarpı iks alt j'lerin toplamı artı be; ye şapka eşittir ef zet." Yapı lineer regresyonla aynıdır: $\theta_j$ yerine $w_j$, $\theta_0$ yerine $b$ yazılmıştır. Örnek: $\mathbf{x} = (2, 3)$, $\mathbf{w} = (0.5, -0.2)$, $b = 0.1$ ise $z = 1 - 0.6 + 0.1 = 0.5$ olur. ReLU ile çıktı $\max(0, 0.5) = 0.5$, sigmoid ile $\sigma(0.5) \approx 0.62$'dir.
+**Ne anlatıyor?** Yapı lineer regresyonla aynıdır: $\theta_j$ yerine $w_j$, $\theta_0$ yerine $b$ yazılmıştır. Örnek: $\mathbf{x} = (2, 3)$, $\mathbf{w} = (0.5, -0.2)$, $b = 0.1$ ise $z = 1 - 0.6 + 0.1 = 0.5$ olur. ReLU ile çıktı $\max(0, 0.5) = 0.5$, sigmoid ile $\sigma(0.5) \approx 0.62$'dir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2720,9 +2714,9 @@ $$
 \hat{y}_{\text{sınıf}} = \mathrm{mod}\big\lbrace \hat{y}^{(1)}, \dots, \hat{y}^{(B)} \big\rbrace, \qquad \hat{y}_{\text{regresyon}} = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^{(b)}
 $$
 
-<p align="center"><img src="images/formuller/42.png" alt="Açıklamalı formül. Ye şapka sınıf eşittir, ye şapka üst bir'den ye şapka üst be'ye kadar tahminlerin modu. Ye şapka regresyon eşittir, bir bölü be çarpı, b eşittir 1'den B'ye kadar ye şapka üst b'lerin toplamı." width="539"></p>
+<p align="center"><img src="images/formuller/42.png" alt="Açıklamalı formül: Bagging ile tahminlerin birleştirilmesi" width="539"></p>
 
-**Nasıl okunur?** "Ye şapka sınıf eşittir, ye şapka üst bir'den ye şapka üst be'ye kadar tahminlerin modu. Ye şapka regresyon eşittir, bir bölü be çarpı, b eşittir 1'den B'ye kadar ye şapka üst b'lerin toplamı." **Dikkat:** $\hat{y}^{(b)}$'deki parantezli üst indis bir kuvvet değil, $b$. modelin tahminidir. Örnek: Beş ağacın oyları (A, B, A, A, B) ise sınıf tahmini A olur; üç ağacın fiyat tahminleri 210, 230 ve 250 ise regresyon tahmini 230 olur.
+**Dikkat:** $\hat{y}^{(b)}$'deki parantezli üst indis bir kuvvet değil, $b$. modelin tahminidir. Örnek: Beş ağacın oyları (A, B, A, A, B) ise sınıf tahmini A olur; üç ağacın fiyat tahminleri 210, 230 ve 250 ise regresyon tahmini 230 olur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2765,9 +2759,9 @@ $\displaystyle F_t(\mathbf{x}) = F_ {t-1}(\mathbf{x}) + \nu \thinspace  h_t(\mat
 | $\nu$ | "nü" | Öğrenme oranı (shrinkage), ör. 0.1 |
 | $r_i^{(t)}$ | "ar i" | Sözde artık: kaybın negatif gradyanı. Karesel kayıpta tam olarak $y_i - F_{t-1}(\mathbf{x}_i)$, yani gerçek artıktır |
 
-<img src="images/formuller/43.png" alt="Açıklamalı formül. Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." width="444">
+<img src="images/formuller/43.png" alt="Açıklamalı formül: Gradient boosting güncellemesi" width="444">
 
-**Nasıl okunur?** "Ef alt te iks eşittir, ef alt te eksi bir iks artı nü çarpı ha alt te iks." $h_t \approx \text{argmin}_ h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
+**Ne anlatıyor?** $h_t \approx \text{argmin}_ h \dots$ ise "artıklarla ağacın tahminleri arasındaki farkların karelerinin toplamını en küçük yapan ağaç h" diye okunur: argmin en küçük **değeri** değil, o değeri veren **ağacın kendisini** döndürür. Örnek (karesel kayıp): Gerçek değer 100, mevcut tahmin $F_{t-1} = 80$ ise artık $r = 20$'dir. Yeni ağaç bu 20'yi tam tahmin etse bile $\nu = 0.1$ ile tahmin yalnızca $80 + 0.1 \cdot 20 = 82$'ye çıkar. Bu, gradyan inişindeki küçük adımın fonksiyonlar dünyasındaki karşılığıdır.
 
 </details>
 
@@ -2879,9 +2873,9 @@ K-Means'in en küçük yapmaya çalıştığı amaç fonksiyonu **küme içi kar
 SSE = \sum_{k=1}^{K}\;\sum_{\mathbf{x}\in C_k}\lVert \mathbf{x} - \boldsymbol{\mu}_k \rVert^2
 ```
 
-<p align="center"><img src="images/formuller/44.png" alt="Açıklamalı formül. Es es e eşittir, ka eşittir 1'den büyük ka'ya kadar, ce alt ka kümesindeki her iks için iks eksi mü alt ka'nın normunun karesinin toplamı." width="447"></p>
+<p align="center"><img src="images/formuller/44.png" alt="Açıklamalı formül: K-Means hata kareler toplamı (SSE)" width="447"></p>
 
-**Nasıl okunur?** "Es es e eşittir, ka eşittir 1'den büyük ka'ya kadar, ce alt ka kümesindeki her iks için iks eksi mü alt ka'nın normunun karesinin toplamı." İç içe iki toplam, iç içe iki döngü gibidir: Dıştaki kümeleri, içteki o kümenin noktalarını dolaşır. $\mathbf{x} \in C_k$, "iks, ce alt ka'nın elemanı" diye okunur. Örnek (tek boyut): $C_1 = \lbrace 1, 2, 3 \rbrace$ (merkez 2) ve $C_2 = \lbrace 8, 10 \rbrace$ (merkez 9) ise $SSE = (1 + 0 + 1) + (1 + 1) = 4$.
+**Ne anlatıyor?** İç içe iki toplam, iç içe iki döngü gibidir: Dıştaki kümeleri, içteki o kümenin noktalarını dolaşır. $\mathbf{x} \in C_k$, "iks, ce alt ka'nın elemanı" diye okunur. Örnek (tek boyut): $C_1 = \lbrace 1, 2, 3 \rbrace$ (merkez 2) ve $C_2 = \lbrace 8, 10 \rbrace$ (merkez 9) ise $SSE = (1 + 0 + 1) + (1 + 1) = 4$.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -2913,9 +2907,9 @@ Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20
 s(i) = \frac{b(i) - a(i)}{\max\lbrace a(i),\, b(i) \rbrace}
 ```
 
-<p align="center"><img src="images/formuller/45.png" alt="Açıklamalı formül. Es i eşittir, be i eksi a i, bölü a i ile be i'nin büyüğü." width="322"></p>
+<p align="center"><img src="images/formuller/45.png" alt="Açıklamalı formül: Siluet skoru" width="322"></p>
 
-**Nasıl okunur?** "Es i eşittir, be i eksi a i, bölü a i ile be i'nin büyüğü." Örnek: $a(i) = 2$ ve $b(i) = 8$ ise $s = (8 - 2)/8 = 0.75$; nokta doğru kümededir. Tersine $a(i) = 8$ ve $b(i) = 2$ ise $s = (2 - 8)/8 = -0.75$; nokta komşu kümeye daha yakındır.
+Örnek: $a(i) = 2$ ve $b(i) = 8$ ise $s = (8 - 2)/8 = 0.75$; nokta doğru kümededir. Tersine $a(i) = 8$ ve $b(i) = 2$ ise $s = (2 - 8)/8 = -0.75$; nokta komşu kümeye daha yakındır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3130,9 +3124,9 @@ $$
 \text{supp}(X) = \frac{\text{count}(X)}{N}, \qquad \text{conf}(X \Rightarrow Y) = \frac{\text{supp}(X \cup Y)}{\text{supp}(X)}, \qquad \text{lift}(X \Rightarrow Y) = \frac{\text{conf}(X\Rightarrow Y)}{\text{supp}(Y)}
 $$
 
-<p align="center"><img src="images/formuller/46.png" alt="Açıklamalı formül. İks'in desteği eşittir, iks'in sayımı bölü en. İks ise ye kuralının güveni eşittir, iks birleşim ye'nin desteği bölü iks'in desteği. İks ise ye kuralının lift'i eşittir, güven bölü ye'nin desteği." width="498"></p>
+<p align="center"><img src="images/formuller/46.png" alt="Açıklamalı formül: Destek ve güven" width="498"></p>
 
-**Nasıl okunur?** "İks'in desteği eşittir, iks'in sayımı bölü en. İks ise ye kuralının güveni eşittir, iks birleşim ye'nin desteği bölü iks'in desteği. İks ise ye kuralının lift'i eşittir, güven bölü ye'nin desteği." **Dikkat:** Buradaki $X \cup Y$ "X veya Y" anlamına gelmez; sepetin $X$'teki ve $Y$'deki ürünlerin **hepsini birlikte** içermesi gerekir. Güven, $P(Y \mid X)$'tir: Bütün sepetler bırakılır, yalnızca $X$'i içeren sepetlere bakılır.
+**Dikkat:** Buradaki $X \cup Y$ "X veya Y" anlamına gelmez; sepetin $X$'teki ve $Y$'deki ürünlerin **hepsini birlikte** içermesi gerekir. Güven, $P(Y \mid X)$'tir: Bütün sepetler bırakılır, yalnızca $X$'i içeren sepetlere bakılır.
 
 | Sembol / Terim | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3386,9 +3380,9 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 
 **Iris için:** Özdeğerler $[2.938,\ 0.920,\ 0.148,\ 0.021]$ → açıklanan varyans [%72.96, %22.85, %3.67, %0.52]. PC1 yükleri: sepal length −0.52, sepal width +0.27, petal length −0.58, petal width −0.57. PC1 esas olarak **"çiçeğin genel büyüklüğü"** eksenidir.
 
-<img src="images/formuller/47.png" alt="Açıklamalı formül. Büyük sigma çarpı ve alt ka eşittir lamda alt ka çarpı ve alt ka. Açıklanan varyans oranı eşittir, lamda alt ka bölü bütün lamda alt j'lerin toplamı." width="385">
+<img src="images/formuller/47.png" alt="Açıklamalı formül: PCA özdeğer denklemi ve açıklanan varyans oranı" width="385">
 
-**Nasıl okunur?** "Büyük sigma çarpı ve alt ka eşittir lamda alt ka çarpı ve alt ka. Açıklanan varyans oranı eşittir, lamda alt ka bölü bütün lamda alt j'lerin toplamı." Yani: $\Sigma$ ile çarpıldığında yönü değişmeyen, yalnızca $\lambda_k$ kat uzayan vektör bir özvektördür. Buradaki $\Sigma$ toplam değil, kovaryans matrisidir; toplam sembolü paydadaki $\sum_j$'dir. Iris için PC1: $2.938 / (2.938 + 0.920 + 0.148 + 0.021) = 2.938 / 4.027 \approx 0.7296$, yani %72.96.
+**Ne anlatıyor?** $\Sigma$ ile çarpıldığında yönü değişmeyen, yalnızca $\lambda_k$ kat uzayan vektör bir özvektördür. Buradaki $\Sigma$ toplam değil, kovaryans matrisidir; toplam sembolü paydadaki $\sum_j$'dir. Iris için PC1: $2.938 / (2.938 + 0.920 + 0.148 + 0.021) = 2.938 / 4.027 \approx 0.7296$, yani %72.96.
 
 </details>
 
@@ -3515,9 +3509,9 @@ $$
 J_{\text{L2}}(\theta) = J(\theta) + \lambda\sum_{j=1}^{d}\theta_j^2 \qquad\qquad J_{\text{L1}}(\theta) = J(\theta) + \lambda\sum_{j=1}^{d}\lvert\theta_j\rvert
 $$
 
-<p align="center"><img src="images/formuller/48.png" alt="Açıklamalı formül. Ce L2 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin karelerinin toplamı. Ce L1 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin mutlak değerlerinin toplamı." width="662"></p>
+<p align="center"><img src="images/formuller/48.png" alt="Açıklamalı formül: L2 ve L1 düzenlileştirmeli maliyet" width="662"></p>
 
-**Nasıl okunur?** "Ce L2 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin karelerinin toplamı. Ce L1 teta eşittir, ce teta artı lamda çarpı, j eşittir 1'den d'ye kadar teta alt j'nin mutlak değerlerinin toplamı." Toplam $j = 1$'den başlar; sabit terim $\theta_0$ cezalandırılmaz. Örnek: $\theta_1 = 4$, $\theta_2 = 0.5$ için L2 cezası $16 + 0.25 = 16.25$, L1 cezası $4 + 0.5 = 4.5$'tir. L2, büyük katsayıyı orantısız biçimde cezalandırır (4 → 16) ama küçüğe neredeyse dokunmaz (0.5 → 0.25).
+**Ne anlatıyor?** Toplam $j = 1$'den başlar; sabit terim $\theta_0$ cezalandırılmaz. Örnek: $\theta_1 = 4$, $\theta_2 = 0.5$ için L2 cezası $16 + 0.25 = 16.25$, L1 cezası $4 + 0.5 = 4.5$'tir. L2, büyük katsayıyı orantısız biçimde cezalandırır (4 → 16) ama küçüğe neredeyse dokunmaz (0.5 → 0.25).
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3537,9 +3531,9 @@ L2 ile gradyan inişi güncellemesi (sabitler $\lambda$'nın içine katılarak):
 \theta_j \leftarrow \theta_j - \eta\left(\frac{\partial J}{\partial \theta_j} + \lambda\,\theta_j\right)
 ```
 
-<p align="center"><img src="images/formuller/49.png" alt="Açıklamalı formül. Teta j'ye, teta j eksi eta çarpı, ce'nin teta j'ye göre kısmi türevi artı lamda teta j atanır." width="412"></p>
+<p align="center"><img src="images/formuller/49.png" alt="Açıklamalı formül: Ağırlık azaltmalı (weight decay) güncelleme" width="412"></p>
 
-**Nasıl okunur?** "Teta j'ye, teta j eksi eta çarpı, ce'nin teta j'ye göre kısmi türevi artı lamda teta j atanır." Yani: Gradyan sıfır olsa bile her adımda $\theta_j$, $(1 - \eta\lambda)$ ile çarpılarak biraz küçülür. $\eta = 0.1$ ve $\lambda = 0.01$ ise her adımda katsayının binde biri silinir.
+**Ne anlatıyor?** Gradyan sıfır olsa bile her adımda $\theta_j$, $(1 - \eta\lambda)$ ile çarpılarak biraz küçülür. $\eta = 0.1$ ve $\lambda = 0.01$ ise her adımda katsayının binde biri silinir.
 
 Her adımda iki kuvvet dengelenir: hatayı azaltmak isteyen gradyan ve parametreleri sıfıra doğru çeken ceza (**ağırlık sönümü, weight decay**).
 
@@ -3738,9 +3732,9 @@ $$
 \text{Hata} = \sum_{i=1}^{N} \mathbb{I}(y_i \neq \hat{y}_i)
 $$
 
-<p align="center"><img src="images/formuller/50.png" alt="Açıklamalı formül. Hata eşittir, i eşittir 1'den büyük en'e kadar, ye alt i ye şapka alt i'ye eşit değilse 1, eşitse 0 veren gösterge fonksiyonunun toplamı." width="308"></p>
+<p align="center"><img src="images/formuller/50.png" alt="Açıklamalı formül: Hata sayısı" width="308"></p>
 
-**Nasıl okunur?** "Hata eşittir, i eşittir 1'den büyük en'e kadar, ye alt i ye şapka alt i'ye eşit değilse 1, eşitse 0 veren gösterge fonksiyonunun toplamı." Yani: Yanlış tahminler sayılır. Bölüm 9.1'deki örnekte $FP + FN = 250 + 150 = 400$ hata vardır; hangisinin daha pahalı olduğu hesaba girmez.
+**Ne anlatıyor?** Yanlış tahminler sayılır. Bölüm 9.1'deki örnekte $FP + FN = 250 + 150 = 400$ hata vardır; hangisinin daha pahalı olduğu hesaba girmez.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3761,9 +3755,9 @@ Karışıklık matrisindeki her hücreye bir **maliyet** atanır. Satırlar **ge
 C = \begin{bmatrix} C_{00} & C_{01} \\ C_{10} & C_{11} \end{bmatrix} = \begin{bmatrix} 0 & C_{FP} \\ C_{FN} & 0 \end{bmatrix}
 ```
 
-<p align="center"><img src="images/formuller/51.png" alt="Açıklamalı formül. Ce eşittir, ce sıfır sıfır, ce sıfır bir, ce bir sıfır, ce bir bir matrisi; bu da sıfır, ce ef pe, ce ef en, sıfır matrisine eşittir." width="508"></p>
+<p align="center"><img src="images/formuller/51.png" alt="Açıklamalı formül: Maliyet matrisi" width="508"></p>
 
-**Nasıl okunur?** "Ce eşittir, ce sıfır sıfır, ce sıfır bir, ce bir sıfır, ce bir bir matrisi; bu da sıfır, ce ef pe, ce ef en, sıfır matrisine eşittir." Alt indisin ilk rakamı gerçek sınıfı (satır), ikinci rakamı tahmini (sütun) gösterir; 0 negatif, 1 pozitif sınıftır. **Dikkat:** Bölüm 9.1'deki karışıklık matrisinde pozitif sınıf ilk satırdaydı; burada sınıf 0 (negatif) ilk satırdadır.
+**Ne anlatıyor?** Alt indisin ilk rakamı gerçek sınıfı (satır), ikinci rakamı tahmini (sütun) gösterir; 0 negatif, 1 pozitif sınıftır. **Dikkat:** Bölüm 9.1'deki karışıklık matrisinde pozitif sınıf ilk satırdaydı; burada sınıf 0 (negatif) ilk satırdadır.
 
 Amaç artık hata **sayısını** değil, **toplam maliyeti** en aza indirmektir:
 
@@ -3771,9 +3765,9 @@ $$
 \text{Maliyet}_{\text{toplam}} = \sum_{i=1}^{N} C(y_i, \hat{y}_i) = FP \cdot C_{FP} + FN \cdot C_{FN}
 $$
 
-<p align="center"><img src="images/formuller/52.png" alt="Açıklamalı formül. Toplam maliyet eşittir, i eşittir 1'den büyük en'e kadar ce ye alt i, ye şapka alt i'lerin toplamı; bu da ef pe çarpı ce ef pe artı ef en çarpı ce ef en'e eşittir." width="537"></p>
+<p align="center"><img src="images/formuller/52.png" alt="Açıklamalı formül: Toplam maliyet" width="537"></p>
 
-**Nasıl okunur?** "Toplam maliyet eşittir, i eşittir 1'den büyük en'e kadar ce ye alt i, ye şapka alt i'lerin toplamı; bu da ef pe çarpı ce ef pe artı ef en çarpı ce ef en'e eşittir." Örnek (Bölüm 22.4'teki standart lojistik regresyon): $FP = 2$, $FN = 65$, $C_{FP} = 1$, $C_{FN} = 10$ → $2 \cdot 1 + 65 \cdot 10 = 652$.
+Örnek (Bölüm 22.4'teki standart lojistik regresyon): $FP = 2$, $FN = 65$, $C_{FP} = 1$, $C_{FN} = 10$ → $2 \cdot 1 + 65 \cdot 10 = 652$.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3792,18 +3786,18 @@ $$
 2. **Algoritma seviyesi – sınıf ağırlıkları:** Kayıp fonksiyonunda pahalı sınıfın hataları daha ağır sayılır:
    $L = -\sum_{i} w_{y_i} \log \hat{p}_{i,y_i}$. Burada $w$, örneğin gerçek sınıfının ağırlığı; $\hat{p}$ ise modelin gerçek sınıfa verdiği olasılıktır. scikit-learn: `class_weight={0: 1, 1: 10}` veya `class_weight="balanced"`.
 
-   <img src="images/formuller/53.png" alt="Açıklamalı formül. Le eşittir eksi, tüm i'ler için dabılyu alt ye i çarpı log pe şapka alt i ye i'lerin toplamı." width="420">
+   <img src="images/formuller/53.png" alt="Açıklamalı formül: Sınıf ağırlıklı log-loss" width="420">
 
-   **Nasıl okunur?** "Le eşittir eksi, tüm i'ler için dabılyu alt ye i çarpı log pe şapka alt i ye i'lerin toplamı." Bu, Bölüm 7.3'teki log-loss'un sınıf ağırlıklı hâlidir. Pozitif sınıfın ağırlığı 10 ise, modelin gerçek sınıfa yalnızca 0.1 olasılık verdiği bir pozitif örneğin cezası $-\log 0.1 \approx 2.30$ yerine $10 \cdot 2.30 = 23.0$ olur.
+   **Ne anlatıyor?** Bu, Bölüm 7.3'teki log-loss'un sınıf ağırlıklı hâlidir. Pozitif sınıfın ağırlığı 10 ise, modelin gerçek sınıfa yalnızca 0.1 olasılık verdiği bir pozitif örneğin cezası $-\log 0.1 \approx 2.30$ yerine $10 \cdot 2.30 = 23.0$ olur.
 3. **Karar eşiğini kaydırma (threshold moving):** Model eğitildikten sonra 0.5 eşiği değiştirilir. Olasılıklar iyi kalibre edilmişse, pozitif demenin beklenen maliyeti negatif demenin beklenen maliyetinden küçük olduğunda pozitif denmelidir:
 
 ```math
 \hat{p}\cdot 0 + (1-\hat{p})\,C_{FP} \;<\; \hat{p}\,C_{FN} \quad\Longrightarrow\quad \hat{p} > t^{*} = \frac{C_{FP}}{C_{FP} + C_{FN}}
 ```
 
-<p align="center"><img src="images/formuller/54.png" alt="Açıklamalı formül. Pe şapka çarpı sıfır artı bir eksi pe şapka çarpı ce ef pe, pe şapka çarpı ce ef en'den küçükse; pe şapka, te yıldızdan büyüktür. Te yıldız eşittir, ce ef pe bölü ce ef pe artı ce ef en." width="561"></p>
+<p align="center"><img src="images/formuller/54.png" alt="Açıklamalı formül: Maliyete göre karar kuralı ve eşik" width="561"></p>
 
-**Nasıl okunur?** "Pe şapka çarpı sıfır artı bir eksi pe şapka çarpı ce ef pe, pe şapka çarpı ce ef en'den küçükse; pe şapka, te yıldızdan büyüktür. Te yıldız eşittir, ce ef pe bölü ce ef pe artı ce ef en." Sol taraf: Pozitif dersek örnek $\hat{p}$ olasılıkla gerçekten pozitiftir (bedel 0), $1 - \hat{p}$ olasılıkla negatiftir (bedel $C_{FP}$). Sağ taraf: Negatif dersek $\hat{p}$ olasılıkla bir pozitifi kaçırırız (bedel $C_{FN}$). $\Longrightarrow$ "ise" diye okunur. İki hata eşit pahalıysa ($C_{FP} = C_{FN}$) $t^* = 0.5$ olur.
+**Ne anlatıyor?** Sol taraf: Pozitif dersek örnek $\hat{p}$ olasılıkla gerçekten pozitiftir (bedel 0), $1 - \hat{p}$ olasılıkla negatiftir (bedel $C_{FP}$). Sağ taraf: Negatif dersek $\hat{p}$ olasılıkla bir pozitifi kaçırırız (bedel $C_{FN}$). $\Longrightarrow$ "ise" diye okunur. İki hata eşit pahalıysa ($C_{FP} = C_{FN}$) $t^* = 0.5$ olur.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -4073,9 +4067,9 @@ WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003)
 
 $\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_ {test}}{n_ {train}}\right)\hat{\sigma}_ d^2}}$
 
-<img src="images/formuller/55.png" alt="Açıklamalı formül. Te eşittir, de bar bölü, bir bölü ka ar artı en test bölü en train, çarpı sigma şapka de kare'nin karekökü." width="327">
+<img src="images/formuller/55.png" alt="Açıklamalı formül: Düzeltilmiş tekrarlı t-testi" width="327">
 
-**Nasıl okunur?** "Te eşittir, de bar bölü, bir bölü ka ar artı en test bölü en train, çarpı sigma şapka de kare'nin karekökü." Standart eşleştirilmiş t-testinde parantez içinde yalnızca $\frac{1}{kr}$ olurdu. 10 tekrar × 10 katlı CV'de bu $\frac{1}{100} = 0.01$'dir; düzeltmeyle $0.01 + \frac{1}{9} \approx 0.121$ olur. Varyans yaklaşık 12 kat büyür, $t$ küçülür ve "anlamlı fark" bulmak zorlaşır.
+**Ne anlatıyor?** Standart eşleştirilmiş t-testinde parantez içinde yalnızca $\frac{1}{kr}$ olurdu. 10 tekrar × 10 katlı CV'de bu $\frac{1}{100} = 0.01$'dir; düzeltmeyle $0.01 + \frac{1}{9} \approx 0.121$ olur. Varyans yaklaşık 12 kat büyür, $t$ küçülür ve "anlamlı fark" bulmak zorlaşır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
