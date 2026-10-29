@@ -127,26 +127,11 @@ Dikkat edilirse **Wisdom**, tek bir algoritmanın çıktısı değildir. Stok bi
 
 Makine öğrenmesi tek başına bir ada değildir. Temelini **istatistik** (İng. *statistics*; Yeni Lat. *statisticum*: "devlet işleriyle ilgili", Lat. *status*: "durum, devlet") ve **matematik** (İng. *mathematics*; Yun. *mathēma*: "öğrenilen şey") (özellikle lineer cebir (İng. *linear algebra*; Lat. *linearis*: "çizgiye ait"), olasılık (İng. *probability*; Lat. *probabilis*: "kanıtlanabilir, akla yatkın") ve optimizasyon) oluşturur; uygulaması **bilgisayar bilimleri** ve **mühendislik** gerektirir.
 
-```mermaid
-flowchart LR
-    subgraph AI["Yapay Zekâ"]
-        direction TB
-        ML["Makine Öğrenmesi"] --> NN["Yapay Sinir Ağları"] --> DL["Derin Öğrenme"]
-    end
-    IST["İstatistik ve Olasılık"] --- AI
-    MAT["Matematik<br/>(Lineer Cebir, Optimizasyon)"] --- AI
-    BLG["Bilgisayar ve Elektrik-Elektronik Mühendisliği"] --- AI
-    VM["Veri Madenciliği"] --- AI
-    HPC["Yüksek Başarımlı Hesaplama (HPC)"] --- AI
-    AI --> UYG["Uygulama alanları:<br/>Sağlık, Finans, Üretim, Tarım, Güvenlik..."]
-```
+<p align="center"><img src="images/diyagramlar/01_ml_ve_iliskili_disiplinler.svg" alt="Makine öğrenmesi, yapay sinir ağları ve derin öğrenmenin yapay zekâ içindeki yeri ve ilişkili disiplinler"></p>
 
 En basit hâliyle bir makine öğrenmesi sistemi, girdiyi alıp bir **model** aracılığıyla çıktıya dönüştürür:
 
-```mermaid
-graph LR
-    A["Girdi<br/>(ör. e-posta metni)"] --> B["ML Modeli"] --> C["Çıktı<br/>(ör. spam / normal)"]
-```
+<p align="center"><img src="images/diyagramlar/02_ml_girdi_model_cikti.svg" alt="Girdi, makine öğrenmesi modeli ve çıktı"></p>
 
 ### 1.5 Model Nedir? Öğrenme Nedir?
 
@@ -158,17 +143,7 @@ Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**pa
 
 ### 1.6 Avantajlar ve Dezavantajlar
 
-```mermaid
-graph TD
-    A[Makine Öğrenmesi] --> B[Avantajlar]
-    A --> C[Dezavantajlar]
-    B --> D[Uzman desteği]
-    B --> E[Uyum ve keşif]
-    B --> F[Verimlilik]
-    C --> G[Veri bağımlılığı]
-    C --> H[Belirsizlik ve açıklanabilirlik]
-    C --> I[Hesaplama ve bakım maliyeti]
-```
+<p align="center"><img src="images/diyagramlar/03_avantaj_dezavantaj.svg" alt="Makine öğrenmesinin avantajları ve dezavantajları"></p>
 
 **Avantajları**
 
@@ -190,16 +165,7 @@ graph TD
 
 Bir makine öğrenmesi projesi, tıpkı bilimsel bir araştırma gibi birbirini izleyen aşamalardan oluşur. Endüstride en yaygın kullanılan çerçeve **CRISP-DM**'dir (Cross-Industry Standard Process for Data Mining). Süreç **döngüseldir**: sonuçlar yeterli değilse önceki adımlara geri dönülür.
 
-```mermaid
-flowchart LR
-    A["1. Problemi<br/>anlama"] --> B["2. Veri toplama<br/>ve anlama"]
-    B --> C["3. Veri temizleme<br/>ve hazırlama"]
-    C --> D["4. Modelleme<br/>(eğitim ve seçim)"]
-    D --> E["5. Değerlendirme"]
-    E -->|Yeterli değil| B
-    E -->|Yeterli| F["6. Devreye alma<br/>ve izleme"]
-    F -->|Veri/dünya değişti| A
-```
+<p align="center"><img src="images/diyagramlar/04_proje_adimlari.svg" alt="Makine öğrenmesi projesinin altı adımı ve geri dönüş döngüleri"></p>
 
 ### Adım 1 – Problemi Anlamak ve Tanımlamak
 
@@ -1285,15 +1251,7 @@ $\displaystyle E\big[(y-\hat{f}(x))^2\big] = \underbrace{\big(E[\hat{f}(x)] - f(
 
 En basit yöntem: Veri **bir kez** ikiye bölünür. Büyük parça **eğitim**, küçük parça **test** için kullanılır (yaygın oranlar: 80/20, 70/30, 66/34).
 
-```mermaid
-graph LR
-    A["Tüm veri seti"] --> B["Eğitim seti (%70–80)"]
-    A --> C["Test seti (%20–30)"]
-    B --> D["Model eğitimi"]
-    D --> E{"Eğitilmiş model"}
-    C -->|"daha önce görülmemiş veri"| F(("Performans ölçümü"))
-    E --> F
-```
+<p align="center"><img src="images/diyagramlar/05_holdout.svg" alt="Holdout: veri setinin eğitim ve test setine bölünmesi"></p>
 
 **Dezavantajı:** Sonuç, bölmenin şansına bağlıdır. Aynı model ve veriyle, sadece rastgele bölme değiştirilerek (10 farklı `random_state`) elde edilen test doğrulukları **0.889 ile 0.977** arasında değişti. Küçük veri setlerinde bu risk daha da büyüktür.
 
@@ -2699,19 +2657,7 @@ Topluluk öğrenmesi (İng. *ensemble learning*; Fr. *ensemble*, Lat. *insimul*:
 2. Her set üzerinde **aynı türden** bir model (genellikle derin, budanmamış karar ağacı) bağımsız olarak eğitilir.
 3. Tahminler birleştirilir: **Sınıflandırmada çoğunluk oyu**, **regresyonda ortalama**.
 
-```mermaid
-graph TD
-    A["Orijinal veri<br/>[D1, D2, D3, D4, D5]"] --> B1["Bootstrap 1<br/>[D1, D3, D3, D5, D1]"]
-    A --> B2["Bootstrap 2<br/>[D2, D4, D1, D5, D2]"]
-    A --> BN["Bootstrap B<br/>[D4, D1, D5, D5, D3]"]
-    B1 --> M1["Ağaç 1"]
-    B2 --> M2["Ağaç 2"]
-    BN --> MN["Ağaç B"]
-    M1 --> F["Çoğunluk oyu / ortalama"]
-    M2 --> F
-    MN --> F
-    F --> S["Nihai tahmin"]
-```
+<p align="center"><img src="images/diyagramlar/06_bagging.svg" alt="Bagging: bootstrap örneklerinden ağaçların eğitilip tahminlerin birleştirilmesi"></p>
 
 $$
 \hat{y}_{\text{sınıf}} = \mathrm{mod}\big\lbrace \hat{y}^{(1)}, \dots, \hat{y}^{(B)} \big\rbrace, \qquad \hat{y}_{\text{regresyon}} = \frac{1}{B}\sum_{b=1}^{B}\hat{y}^{(b)}
@@ -2735,16 +2681,7 @@ Zor bir problemi sırayla çözen bir uzmanlar ekibi düşünün: İlk uzman gen
 
 Boosting, **zayıf öğrenicileri** (rastgeleden biraz iyi, basit modeller; ör. tek soruluk **karar kütüğü / decision stump**) **sıralı** olarak eğitip güçlü bir model oluşturur.
 
-```mermaid
-graph LR
-    A["Veri<br/>(eşit ağırlıklar)"] --> M1["Zayıf model 1"]
-    M1 -->|"hatalı örneklerin<br/>ağırlığını artır"| M2["Zayıf model 2"]
-    M2 -->|"hatalı örneklerin<br/>ağırlığını artır"| M3["..."]
-    M3 --> MN["Zayıf model T"]
-    M1 --> F["Ağırlıklı oylama / toplam"]
-    M2 --> F
-    MN --> F
-```
+<p align="center"><img src="images/diyagramlar/07_boosting.svg" alt="Boosting: zayıf modellerin hatalı örneklere odaklanarak sırayla eğitilmesi"></p>
 
 - **AdaBoost:** Her turda yanlış sınıflandırılan örneklerin **ağırlığı artırılır**. Böylece bir sonraki model onlara odaklanır. Her modelin oyu, doğruluğuna göre ağırlıklandırılır.
 - **Gradient Boosting:** Her yeni ağaç, önceki modellerin toplamının **artıklarını (residuals)**, yani hâlâ açıklanamayan kısmı tahmin etmeyi öğrenir. Bu, kayıp fonksiyonu üzerinde gradyan inişinin fonksiyon uzayındaki karşılığıdır. `learning_rate` her ağacın katkısını küçültür.
@@ -2778,17 +2715,7 @@ Bir inşaat projesinde mimar, statik mühendisi ve şehir plancısı ayrı rapor
 - **Seviye-1 (meta-model):** Temel modellerin tahminlerini **yeni öznitelikler** olarak alıp nihai kararı veren, genellikle basit bir model (lojistik/lineer regresyon).
 - **Veri sızıntısını önlemek için** meta-modelin eğitim verisi, temel modellerin **eğitimde görmediği** katmanlardaki tahminlerinden (**out-of-fold**) üretilir. scikit-learn'deki `cv=5` parametresi bunu otomatik yapar.
 
-```mermaid
-graph TD
-    A["Orijinal veri"] --> M1["SVM"]
-    A --> M2["Naive Bayes"]
-    A --> M3["Karar ağacı"]
-    M1 --> P["Yeni öznitelikler:<br/>[tahmin_SVM, tahmin_NB, tahmin_Ağaç]<br/>(out-of-fold)"]
-    M2 --> P
-    M3 --> P
-    P --> META["Meta-model<br/>(ör. Lojistik Regresyon)"]
-    META --> S["Nihai tahmin"]
-```
+<p align="center"><img src="images/diyagramlar/08_stacking.svg" alt="Stacking: temel modellerin tahminlerinden bir meta-modelin eğitilmesi"></p>
 
 ### 16.5 Deney Sonuçları
 
@@ -3682,22 +3609,7 @@ Yanlış yöntemde seçici, etiketlere bakarken test katmanlarını da gördü v
 
 ### 21.4 Doğru Yol: Pipeline
 
-```mermaid
-flowchart LR
-    subgraph Yanlis["YANLIŞ"]
-        direction TB
-        A1["Tüm veri"] --> B1["Normalize / PCA / Seçim<br/>(test bilgisi sızdı!)"] --> C1["Eğitim / test bölme"] --> D1["Model"]
-    end
-    subgraph Dogru["DOĞRU"]
-        direction TB
-        A2["Tüm veri"] --> C2["Eğitim / test bölme"]
-        C2 --> B2["Ön işlemi SADECE eğitimde fit et"]
-        B2 --> D2["Modeli eğit"]
-        B2 -.->|"aynı kurallarla transform"| T2["Test verisi"]
-        D2 --> E2["Testte değerlendir"]
-        T2 --> E2
-    end
-```
+<p align="center"><img src="images/diyagramlar/09_pipeline_ve_sizinti.svg" alt="Ön işlemede yanlış ve doğru sıra: veri sızıntısı ve pipeline"></p>
 
 - **Python:** Tüm ön işleme adımlarını `Pipeline` / `make_pipeline` içine koyun ve pipeline'ı bir bütün olarak `cross_val_score`'a veya `GridSearchCV`'ye verin. Her katmanda ön işleme yalnızca eğitim kısmından öğrenilir.
 - **WEKA Explorer:** Preprocess sekmesinde uygulanan filtre tüm veriyi değiştirir. Değerlendirme için **`meta → FilteredClassifier`** (filtre + sınıflandırıcı), öznitelik seçimi için **`meta → AttributeSelectedClassifier`** kullanın.
@@ -3942,16 +3854,7 @@ for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs mali
 
 ### 23.3 Uygulama 1: J48 ile 10 Katlı Çapraz Doğrulama
 
-```mermaid
-flowchart LR
-    A["ArffLoader<br/>(iris.arff)"] -->|dataSet| B["ClassAssigner<br/>(class = last)"]
-    B -->|dataSet| C["CrossValidationFoldMaker<br/>(folds = 10)"]
-    C -->|trainingSet| D["J48"]
-    C -->|testSet| D
-    D -->|batchClassifier| E["ClassifierPerformanceEvaluator"]
-    E -->|text| F["TextViewer"]
-    D -->|graph| G["GraphViewer"]
-```
+<p align="center"><img src="images/diyagramlar/10_knowledgeflow_j48_cv.svg" alt="WEKA KnowledgeFlow: J48 ile 10 katlı çapraz doğrulama akışı"></p>
 
 1. GUI Chooser → **KnowledgeFlow**. Solda bileşen paleti, sağda tasarım tuvali (canvas) bulunur.
 2. **DataSources → ArffLoader** tuvale bırakılır. Sağ tık (veya çift tık) → **Configure** → `iris.arff`. *(Yükleyici dosyayı hemen okumaz, akış başlayınca okur.)*
@@ -3968,16 +3871,7 @@ flowchart LR
 
 ### 23.4 Uygulama 2: J48 ve Random Forest'ın ROC Karşılaştırması
 
-```mermaid
-flowchart LR
-    A["ArffLoader"] -->|dataSet| B["ClassAssigner"] -->|dataSet| P["ClassValuePicker<br/>(pozitif sınıf)"] -->|dataSet| C["CrossValidationFoldMaker"]
-    C -->|"trainingSet + testSet"| D1["J48"]
-    C -->|"trainingSet + testSet"| D2["RandomForest"]
-    D1 -->|batchClassifier| E1["PerformanceEvaluator 1"]
-    D2 -->|batchClassifier| E2["PerformanceEvaluator 2"]
-    E1 -->|thresholdData| M["ModelPerformanceChart"]
-    E2 -->|thresholdData| M
-```
+<p align="center"><img src="images/diyagramlar/11_knowledgeflow_roc.svg" alt="WEKA KnowledgeFlow: J48 ve Random Forest ROC karşılaştırma akışı"></p>
 
 1. Uygulama 1'deki akışa **Classifiers → trees → RandomForest** ekleyin. CrossValidationFoldMaker'dan RandomForest'a da **trainingSet** ve **testSet** bağlantıları yapın. *(Bir kaynaktan çıkan veri birden çok hedefe paralel olarak akabilir.)*
 2. İkinci bir **ClassifierPerformanceEvaluator** ekleyin: RandomForest → **batchClassifier** → değerlendirici 2.
@@ -3994,13 +3888,7 @@ IoT sensörleri, finansal işlemler, web kayıtları gibi uygulamalarda veri sü
 - **IBk:** `windowSize` ile son $n$ örneği saklar.
 - **HoeffdingTree (VFDT):** Her örneği yalnızca bir kez okuyarak ağaç kuran, çok hızlı akışlar için tasarlanmış karar ağacı.
 
-```mermaid
-flowchart LR
-    A["ArffLoader"] -->|instance| B["NaiveBayesUpdateable"]
-    B -->|incrementalClassifier| C["IncrementalClassifierEvaluator"]
-    C -->|chart| D["StripChart"]
-    C -->|text| E["TextViewer"]
-```
+<p align="center"><img src="images/diyagramlar/12_knowledgeflow_artimli.svg" alt="WEKA KnowledgeFlow: NaiveBayesUpdateable ile artımlı öğrenme akışı"></p>
 
 1. ArffLoader'dan sınıflandırıcıya **instance** bağlantısı yapılır (veri satır satır akar).
 2. **Classifiers → bayes → NaiveBayesUpdateable**.

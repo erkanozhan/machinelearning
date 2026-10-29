@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph Yanlis["YANLIŞ"]
+        direction TB
+        A1["Tüm veri"] --> B1["Normalize / PCA / Seçim<br/>(test bilgisi sızdı!)"] --> C1["Eğitim / test bölme"] --> D1["Model"]
+    end
+    subgraph Dogru["DOĞRU"]
+        direction TB
+        A2["Tüm veri"] --> C2["Eğitim / test bölme"]
+        C2 --> B2["Ön işlemi SADECE eğitimde fit et"]
+        B2 --> D2["Modeli eğit"]
+        B2 -.->|"aynı kurallarla transform"| T2["Test verisi"]
+        D2 --> E2["Testte değerlendir"]
+        T2 --> E2
+    end
+    Yanlis ~~~ Dogru

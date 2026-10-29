@@ -1,0 +1,7 @@
+graph TD
+    A["Tüm veri seti"] --> B["Eğitim seti (%70–80)"]
+    A --> C["Test seti (%20–30)"]
+    B --> D["Model eğitimi"]
+    D --> E{"Eğitilmiş model"}
+    C -->|"daha önce görülmemiş veri"| F(("Performans ölçümü"))
+    E --> F

@@ -1,0 +1,9 @@
+graph TD
+    A["Orijinal veri"] --> M1["SVM"]
+    A --> M2["Naive Bayes"]
+    A --> M3["Karar ağacı"]
+    M1 --> P["Yeni öznitelikler:<br/>[tahmin_SVM, tahmin_NB, tahmin_Ağaç]<br/>(out-of-fold)"]
+    M2 --> P
+    M3 --> P
+    P --> META["Meta-model<br/>(ör. Lojistik Regresyon)"]
+    META --> S["Nihai tahmin"]

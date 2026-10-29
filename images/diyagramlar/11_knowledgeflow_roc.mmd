@@ -1,0 +1,8 @@
+flowchart TB
+    A["ArffLoader"] -->|dataSet| B["ClassAssigner"] -->|dataSet| P["ClassValuePicker<br/>(pozitif sınıf)"] -->|dataSet| C["CrossValidationFoldMaker"]
+    C -->|"trainingSet + testSet"| D1["J48"]
+    C -->|"trainingSet + testSet"| D2["RandomForest"]
+    D1 -->|batchClassifier| E1["PerformanceEvaluator 1"]
+    D2 -->|batchClassifier| E2["PerformanceEvaluator 2"]
+    E1 -->|thresholdData| M["ModelPerformanceChart"]
+    E2 -->|thresholdData| M

@@ -1,0 +1,5 @@
+flowchart TB
+    A["ArffLoader"] -->|instance| B["NaiveBayesUpdateable"]
+    B -->|incrementalClassifier| C["IncrementalClassifierEvaluator"]
+    C -->|chart| D["StripChart"]
+    C -->|text| E["TextViewer"]

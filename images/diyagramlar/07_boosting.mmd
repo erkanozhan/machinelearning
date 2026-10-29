@@ -1,0 +1,8 @@
+graph TD
+    A["Veri<br/>(eşit ağırlıklar)"] --> M1["Zayıf model 1"]
+    M1 -->|"hatalı örneklerin<br/>ağırlığını artır"| M2["Zayıf model 2"]
+    M2 -->|"hatalı örneklerin<br/>ağırlığını artır"| M3["..."]
+    M3 --> MN["Zayıf model T"]
+    M1 --> F["Ağırlıklı oylama / toplam"]
+    M2 --> F
+    MN --> F

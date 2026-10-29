@@ -1,0 +1,11 @@
+graph TD
+    A["Orijinal veri<br/>[D1, D2, D3, D4, D5]"] --> B1["Bootstrap 1<br/>[D1, D3, D3, D5, D1]"]
+    A --> B2["Bootstrap 2<br/>[D2, D4, D1, D5, D2]"]
+    A --> BN["Bootstrap B<br/>[D4, D1, D5, D5, D3]"]
+    B1 --> M1["Ağaç 1"]
+    B2 --> M2["Ağaç 2"]
+    BN --> MN["Ağaç B"]
+    M1 --> F["Çoğunluk oyu / ortalama"]
+    M2 --> F
+    MN --> F
+    F --> S["Nihai tahmin"]

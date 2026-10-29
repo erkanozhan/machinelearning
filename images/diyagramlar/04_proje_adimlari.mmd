@@ -1,0 +1,8 @@
+flowchart TD
+    A["Adım 1: Problemi<br/>anlama"] --> B["Adım 2: Veri toplama<br/>ve anlama"]
+    B --> C["Adım 3: Veri temizleme<br/>ve hazırlama"]
+    C --> D["Adım 4: Modelleme<br/>(eğitim ve seçim)"]
+    D --> E["Adım 5: Değerlendirme"]
+    E -->|Yeterli değil| B
+    E -->|Yeterli| F["Adım 6: Devreye alma<br/>ve izleme"]
+    F -->|Veri/dünya değişti| A

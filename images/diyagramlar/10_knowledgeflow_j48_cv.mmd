@@ -1,0 +1,8 @@
+flowchart TB
+    A["ArffLoader<br/>(iris.arff)"] -->|dataSet| B["ClassAssigner<br/>(class = last)"]
+    B -->|dataSet| C["CrossValidationFoldMaker<br/>(folds = 10)"]
+    C -->|trainingSet| D["J48"]
+    C -->|testSet| D
+    D -->|batchClassifier| E["ClassifierPerformanceEvaluator"]
+    E -->|text| F["TextViewer"]
+    D -->|graph| G["GraphViewer"]

@@ -1,0 +1,11 @@
+flowchart LR
+    subgraph AI["Yapay Zekâ"]
+        direction TB
+        ML["Makine Öğrenmesi"] --> NN["Yapay Sinir Ağları"] --> DL["Derin Öğrenme"]
+    end
+    IST["İstatistik ve Olasılık"] --- AI
+    MAT["Matematik<br/>(Lineer Cebir,<br/>Optimizasyon)"] --- AI
+    BLG["Bilgisayar ve<br/>Elektrik-Elektronik<br/>Mühendisliği"] --- AI
+    VM["Veri Madenciliği"] --- AI
+    HPC["Yüksek Başarımlı<br/>Hesaplama (HPC)"] --- AI
+    AI --> UYG["Uygulama alanları:<br/>Sağlık, Finans, Üretim,<br/>Tarım, Güvenlik..."]
