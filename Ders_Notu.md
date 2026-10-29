@@ -87,6 +87,31 @@ Bilgisayarlar talimatları **dijital (sayısal)** bir dille, yani 0 ve 1'lerle i
 
 Bu yaklaşımın en büyük **avantajı**, kuralları açıkça yazmanın çok zor veya imkânsız olduğu problemlerde (bir fotoğrafta kedi olup olmadığını anlamak, bir sesin kime ait olduğunu bulmak gibi) insan uzmanlığının **veri aracılığıyla** bilgisayara aktarılabilmesidir.
 
+**Karşılaştırma**
+
+| Ölçüt | Klasik programlama | Makine öğrenmesi |
+| :--- | :--- | :--- |
+| **Kuralları kim yazar?** | Programcı, kuralları tek tek kodlar. | Öğrenme algoritması, kuralları veriden çıkarır. |
+| **Girdi → çıktı** | Veri + kurallar → cevap | Veri + cevaplar → kurallar (model) |
+| **Ne gerekir?** | Problemi çözen adımların açıkça bilinmesi | Çok sayıda ve kaliteli örnek veri |
+| **Sonucun niteliği** | Kesindir (**deterministik**; Lat. *determinare*: "sınırını çizmek, belirlemek"): aynı girdi her zaman aynı, doğru olduğu kanıtlanabilen sonucu verir. | Olasılıksaldır: "%97 olasılıkla spam" gibi; bazen yanılır. |
+| **Açıklanabilirlik** | Her karar, koddaki satıra kadar izlenebilir. | Modele göre değişir; karar ağacı okunabilir, derin ağlar "kara kutu"dur. |
+| **Değişime uyum** | Koşullar değişince programcı kodu elle günceller. | Yeni veriyle yeniden eğitilir; kod değişmeden davranış değişir. |
+| **Hata nereden gelir?** | Yanlış veya eksik yazılmış kural (yazılım hatası) | Yetersiz, hatalı veya önyargılı veri; aşırı öğrenme |
+| **Nasıl sınanır?** | Birim testleriyle: beklenen çıktı biliniyor mu, verildi mi? | Daha önce görmediği test verisinde ölçülen başarıyla ([Bölüm 8](#b8)) |
+
+**Hangisi ne zaman uygundur?**
+
+| Klasik programlama uygundur, eğer... | Makine öğrenmesi uygundur, eğer... |
+| :--- | :--- |
+| Kurallar açık ve az sayıdaysa. *Örnek:* KDV hesabı, not ortalaması hesaplama | Kurallar yazılamayacak kadar karmaşıksa. *Örnek:* yüz tanıma, konuşmayı yazıya çevirme |
+| Sonucun **her zaman** doğru olması gerekiyorsa. *Örnek:* banka hesabındaki para transferi, maaş bordrosu | Küçük bir hata payı kabul edilebiliyorsa. *Örnek:* film önerisi, spam filtresi |
+| Yeterli veri yoksa. *Örnek:* yeni açılan bir işletmenin stok takibi | Bol miktarda geçmiş veri varsa. *Örnek:* yılların satış kayıtlarından talep tahmini |
+| Kurallar yasa veya yönetmelikle belirlenmişse. *Örnek:* vergi dilimleri, burs başvurusu koşulları | Kurallar zamanla kendiliğinden değişiyorsa. *Örnek:* sürekli yöntem değiştiren dolandırıcılar |
+| Kararın gerekçesi adım adım gösterilmek zorundaysa. *Örnek:* resmî bir başvurunun reddedilme nedeni | Amaç veride gizli örüntü bulmaksa. *Örnek:* benzer müşteri gruplarını keşfetmek |
+
+> **Dikkat:** İkisi birbirinin rakibi değildir. Gerçek sistemlerin çoğu ikisini birlikte kullanır: Bir bankada şüpheli işlemi makine öğrenmesi modeli **işaretler**, ama "günlük transfer limiti 50.000 TL'dir" gibi kesin kuralları klasik kod **uygular**. Makine öğrenmesi modelinin kendisi de sonuçta klasik programlamayla yazılmış bir yazılımın içinde çalışır.
+
 ### 1.3 Ham Veriden Wisdom'a: Veri Hiyerarşisi
 
 **Datum** Latince kökenli bir kelimedir ve "verilen şey" anlamına gelir. İngilizcedeki **data** kelimesi bunun çoğuludur: tek bir ölçüm *datum*, ölçümlerin bütünü *data*dır.
@@ -145,23 +170,23 @@ Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**pa
 
 <p align="center"><img src="images/diyagramlar/03_avantaj_dezavantaj.svg" alt="Makine öğrenmesinin avantajları ve dezavantajları"></p>
 
-**Avantajları**
+| Avantaj | Açıklama | Örnek |
+| :--- | :--- | :--- |
+| **Uzman desteği** | Uzman sayısının yetersiz olduğu alanlarda karar desteği sağlar. | Kırsal bölgedeki bir hastanede röntgenlerin ön incelemesi |
+| **Uyum ve keşif** | Yeni veriyle kendini güncelleyebilir; veride insanın göremeyeceği gizli örüntüleri keşfedebilir. | Bankanın, daha önce bilinmeyen bir dolandırıcılık yöntemini işlem kayıtlarından fark etmesi |
+| **Verimlilik** | 7/24 çalışır; klasik programlamayla çözülemeyen problemlere veri odaklı çözümler üretir. | Kuralları elle yazılamayan yüz tanıma; gece gündüz çalışan spam filtresi |
+| **Hız ve tutarlılık** | Milyonlarca kaydı saniyeler içinde işler ve yorulmaz; aynı girdiye her seferinde aynı kararı verir. | Bankanın binlerce kredi başvurusunu dakikalar içinde ve aynı ölçütlerle ön değerlendirmeden geçirmesi |
+| **Kişiselleştirme** (İng. *personalization*; Lat. *persona*: "kişi, maske") | Her kullanıcıya kendi geçmişine göre öneri sunar. | E-ticaretteki "bunu alanlar şunları da aldı" önerileri; müzik ve dizi önerileri |
 
-1. **Uzman desteği:** Uzman sayısının yetersiz olduğu alanlarda (ör. kırsal bölgede radyoloji) karar desteği sağlar.
-2. **Uyum ve keşif:** Yeni veriyle kendini güncelleyebilir; veride insanın göremeyeceği gizli örüntüleri keşfedebilir.
-3. **Verimlilik:** 7/24 çalışır; klasik programlamayla çözülemeyen problemlere veri odaklı çözümler üretir.
-4. **Hız ve tutarlılık:** Milyonlarca kaydı saniyeler içinde işler ve yorulmaz; aynı girdiye her seferinde aynı kararı verir. Örneğin bir banka, binlerce kredi başvurusunun ön değerlendirmesini dakikalar içinde ve aynı ölçütlerle yapabilir.
-5. **Kişiselleştirme** (İng. *personalization*; Lat. *persona*: "kişi, maske"): Her kullanıcıya kendi geçmişine göre öneri sunar. E-ticaretteki "bunu alanlar şunları da aldı" önerileri ve müzik, dizi önerileri buna örnektir.
-
-**Dezavantajları**
-
-1. **Veri bağımlılığı:** Model ancak verisi kadar iyidir ("çöp girer, çöp çıkar"). Verideki önyargılar (bias) modele de geçer. Dünya değiştikçe (ör. pandemi sonrası alışveriş alışkanlıkları) model eskir ve yeniden eğitilmelidir.
-2. **Belirsizlik ve açıklanabilirlik:** Sonuçlar olasılıksaldır. Bazı güçlü modeller (derin ağlar, büyük topluluklar) kararlarını **neden** verdiklerini açıklamakta zorlanır ("kara kutu").
-3. **Hesaplama ve bakım maliyeti:** Karmaşık modeller yüksek işlemci/bellek (GPU, HPC) gerektirebilir; gerçek zamanlı sistemlerde gecikme sorunları yaşanabilir. Model devreye alındıktan sonra da izlenmeli ve bakımı yapılmalıdır.
-4. **Etiketli veri maliyeti:** Denetimli öğrenme ([Bölüm 3](#b3)) için doğru cevabı bilinen binlerce örnek gerekir. Etiketleme pahalıdır ve çoğu zaman uzman ister; örneğin her röntgen görüntüsünü bir radyoloğun tek tek işaretlemesi gerekir.
-5. **Aşırı öğrenme** (İng. *overfitting*): Model eğitim verisini ezberleyebilir. Eğitimde çok başarılı görünür ama yeni veride başarısız olur. Bu yüzden bir model her zaman daha önce görmediği veriyle sınanmalıdır ([Bölüm 8](#b8)).
-6. **İlişki, nedensellik değildir:** Model, değişkenlerin birlikte değiştiğini öğrenir; hangisinin hangisine **neden** olduğunu bilmez (**nedensellik**; İng. *causality*; Lat. *causa*: "sebep"). Şemsiye satışları ile trafik kazaları birlikte artar, ama ikisinin ortak nedeni yağmurdur. Şemsiye satışını yasaklamak kazaları azaltmaz.
-7. **Gizlilik, güvenlik ve etik:** Kişisel verilerle çalışırken gizlilik (İng. *privacy*; Lat. *privatus*: "kendine ait") ve Kişisel Verilerin Korunması Kanunu (KVKK) kuralları gözetilmelidir. Modeller, insan gözünün fark edemeyeceği kadar küçük ve kasıtlı değişikliklerle yanıltılabilir (İng. *adversarial examples*; Lat. *adversarius*: "karşı duran"). Hatalı bir kararın sorumluluğunun kimde olduğu da çoğu zaman belirsizdir.
+| Dezavantaj | Açıklama | Örnek |
+| :--- | :--- | :--- |
+| **Veri bağımlılığı** | Model ancak verisi kadar iyidir ("çöp girer, çöp çıkar"). Verideki önyargılar (bias) modele de geçer. Dünya değiştikçe model eskir ve yeniden eğitilmelidir. | Pandemi öncesi verisiyle eğitilen bir satış tahmin modelinin, değişen alışveriş alışkanlıkları karşısında yanılması |
+| **Belirsizlik ve açıklanabilirlik** | Sonuçlar olasılıksaldır. Bazı güçlü modeller (derin ağlar, büyük topluluklar) kararlarını **neden** verdiklerini açıklamakta zorlanır ("kara kutu"). | Kredi başvurusunu reddeden bir modelin, müşteriye anlaşılır bir gerekçe sunamaması |
+| **Hesaplama ve bakım maliyeti** | Karmaşık modeller yüksek işlemci/bellek (GPU, HPC) gerektirebilir; gerçek zamanlı sistemlerde gecikme yaşanabilir. Devreye alınan model izlenmeli ve bakımı yapılmalıdır. | Büyük bir dil modelinin eğitimi için haftalarca yüzlerce GPU çalıştırılması |
+| **Etiketli veri maliyeti** | Denetimli öğrenme ([Bölüm 3](#b3)) için doğru cevabı bilinen binlerce örnek gerekir. Etiketleme pahalıdır ve çoğu zaman uzman ister. | Her röntgen görüntüsünün bir radyolog tarafından tek tek işaretlenmesi |
+| **Aşırı öğrenme** (İng. *overfitting*) | Model eğitim verisini ezberleyebilir: eğitimde çok başarılı görünür ama yeni veride başarısız olur. Bu yüzden model her zaman daha önce görmediği veriyle sınanmalıdır ([Bölüm 8](#b8)). | Soruları ezberleyen öğrencinin, sorular değişince sınavda başarısız olması |
+| **İlişki, nedensellik değildir** | Model, değişkenlerin birlikte değiştiğini öğrenir; hangisinin hangisine **neden** olduğunu bilmez (**nedensellik**; İng. *causality*; Lat. *causa*: "sebep"). | Şemsiye satışları ile trafik kazaları birlikte artar, ama ikisinin ortak nedeni yağmurdur. Şemsiye satışını yasaklamak kazaları azaltmaz. |
+| **Gizlilik, güvenlik ve etik** | Kişisel veriler gizlilik (İng. *privacy*; Lat. *privatus*: "kendine ait") ve Kişisel Verilerin Korunması Kanunu (KVKK) kurallarına uygun işlenmelidir. Modeller, küçük ve kasıtlı değişikliklerle yanıltılabilir (İng. *adversarial examples*; Lat. *adversarius*: "karşı duran"). Hatalı bir kararın sorumlusu da çoğu zaman belirsizdir. | Üzerine birkaç küçük çıkartma yapıştırılmış bir "DUR" levhasını, otonom aracın görüntü modelinin hız sınırı levhası sanması |
 
 ---
 
