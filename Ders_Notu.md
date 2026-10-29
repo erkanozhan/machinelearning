@@ -150,12 +150,18 @@ Bilgisayar için **öğrenme**, modelin içindeki ayarlanabilir sayıları (**pa
 1. **Uzman desteği:** Uzman sayısının yetersiz olduğu alanlarda (ör. kırsal bölgede radyoloji) karar desteği sağlar.
 2. **Uyum ve keşif:** Yeni veriyle kendini güncelleyebilir; veride insanın göremeyeceği gizli örüntüleri keşfedebilir.
 3. **Verimlilik:** 7/24 çalışır; klasik programlamayla çözülemeyen problemlere veri odaklı çözümler üretir.
+4. **Hız ve tutarlılık:** Milyonlarca kaydı saniyeler içinde işler ve yorulmaz; aynı girdiye her seferinde aynı kararı verir. Örneğin bir banka, binlerce kredi başvurusunun ön değerlendirmesini dakikalar içinde ve aynı ölçütlerle yapabilir.
+5. **Kişiselleştirme** (İng. *personalization*; Lat. *persona*: "kişi, maske"): Her kullanıcıya kendi geçmişine göre öneri sunar. E-ticaretteki "bunu alanlar şunları da aldı" önerileri ve müzik, dizi önerileri buna örnektir.
 
 **Dezavantajları**
 
 1. **Veri bağımlılığı:** Model ancak verisi kadar iyidir ("çöp girer, çöp çıkar"). Verideki önyargılar (bias) modele de geçer. Dünya değiştikçe (ör. pandemi sonrası alışveriş alışkanlıkları) model eskir ve yeniden eğitilmelidir.
 2. **Belirsizlik ve açıklanabilirlik:** Sonuçlar olasılıksaldır. Bazı güçlü modeller (derin ağlar, büyük topluluklar) kararlarını **neden** verdiklerini açıklamakta zorlanır ("kara kutu").
 3. **Hesaplama ve bakım maliyeti:** Karmaşık modeller yüksek işlemci/bellek (GPU, HPC) gerektirebilir; gerçek zamanlı sistemlerde gecikme sorunları yaşanabilir. Model devreye alındıktan sonra da izlenmeli ve bakımı yapılmalıdır.
+4. **Etiketli veri maliyeti:** Denetimli öğrenme ([Bölüm 3](#b3)) için doğru cevabı bilinen binlerce örnek gerekir. Etiketleme pahalıdır ve çoğu zaman uzman ister; örneğin her röntgen görüntüsünü bir radyoloğun tek tek işaretlemesi gerekir.
+5. **Aşırı öğrenme** (İng. *overfitting*): Model eğitim verisini ezberleyebilir. Eğitimde çok başarılı görünür ama yeni veride başarısız olur. Bu yüzden bir model her zaman daha önce görmediği veriyle sınanmalıdır ([Bölüm 8](#b8)).
+6. **İlişki, nedensellik değildir:** Model, değişkenlerin birlikte değiştiğini öğrenir; hangisinin hangisine **neden** olduğunu bilmez (**nedensellik**; İng. *causality*; Lat. *causa*: "sebep"). Şemsiye satışları ile trafik kazaları birlikte artar, ama ikisinin ortak nedeni yağmurdur. Şemsiye satışını yasaklamak kazaları azaltmaz.
+7. **Gizlilik, güvenlik ve etik:** Kişisel verilerle çalışırken gizlilik (İng. *privacy*; Lat. *privatus*: "kendine ait") ve Kişisel Verilerin Korunması Kanunu (KVKK) kuralları gözetilmelidir. Modeller, insan gözünün fark edemeyeceği kadar küçük ve kasıtlı değişikliklerle yanıltılabilir (İng. *adversarial examples*; Lat. *adversarius*: "karşı duran"). Hatalı bir kararın sorumluluğunun kimde olduğu da çoğu zaman belirsizdir.
 
 ---
 

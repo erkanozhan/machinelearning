@@ -1,9 +1,15 @@
-graph LR
-    A[Makine Öğrenmesi] --> B[Avantajlar]
-    A --> C[Dezavantajlar]
-    B --> D[Uzman desteği]
-    B --> E[Uyum ve keşif]
-    B --> F[Verimlilik]
-    C --> G[Veri bağımlılığı]
-    C --> H[Belirsizlik ve açıklanabilirlik]
-    C --> I[Hesaplama ve bakım maliyeti]
+%%{init: {"flowchart": {"rankSpacing": 18, "nodeSpacing": 40}}}%%
+flowchart TB
+    A[Makine Öğrenmesi]
+    A --> AV
+    A --> DZ
+    subgraph AV["Avantajlar"]
+        direction TB
+        a1[Uzman desteği] ~~~ a2[Uyum ve keşif] ~~~ a3[Verimlilik] ~~~ a4[Hız ve tutarlılık] ~~~ a5[Kişiselleştirme]
+    end
+    subgraph DZ["Dezavantajlar"]
+        direction TB
+        d1[Veri bağımlılığı] ~~~ d2[Belirsizlik ve açıklanabilirlik] ~~~ d3[Hesaplama ve bakım maliyeti] ~~~ d4[Etiketli veri maliyeti] ~~~ d5[Aşırı öğrenme] ~~~ d6[İlişki, nedensellik değildir] ~~~ d7[Gizlilik, güvenlik ve etik]
+    end
+    style AV fill:#e8f5e9,stroke:#2e7d32
+    style DZ fill:#ffebee,stroke:#c62828
