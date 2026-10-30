@@ -1,0 +1,21 @@
+# Java / IDE derleme çıktıları
+out/
+target/
+*.class
+.idea/
+*.iml.bak
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# R
+.Rhistory
+.RData
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
