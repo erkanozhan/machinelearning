@@ -236,10 +236,10 @@ R^2 = 1 - \frac{\overbrace{SS_{res}}^{\substack{\text{modelin}\\[2pt]\text{hatas
 
 ## 30.png
 
-*Ar kare düzeltilmiş eşittir, bir eksi, bir eksi ar kare çarpı en eksi bir, bölü en eksi ka eksi bir.*
+*Ar kare düzeltilmiş eşittir, bir eksi, bir eksi ar kare çarpı en eksi bir, bölü en eksi de eksi bir.*
 
 ```math
-R^2_{adj} = 1 - \frac{\overbrace{(1-R^2)}^{\substack{\text{açıklanamayan}\\[2pt]\text{pay}}}\quad\overbrace{(n-1)}^{\substack{\text{örnek sayısı}\\[2pt]\text{eksi 1}}}}{\underbrace{n-k-1}_{\substack{\text{öznitelik eklendikçe}\\[2pt]\text{küçülür}}}}
+R^2_{adj} = 1 - \frac{\overbrace{(1-R^2)}^{\substack{\text{açıklanamayan}\\[2pt]\text{pay}}}\quad\overbrace{(n-1)}^{\substack{\text{örnek sayısı}\\[2pt]\text{eksi 1}}}}{\underbrace{n-d-1}_{\substack{\text{öznitelik eklendikçe}\\[2pt]\text{küçülür}}}}
 ```
 
 ## 31.png
@@ -268,10 +268,10 @@ r = \frac{\overbrace{\sum_i (x_i - \bar{x})(y_i - \bar{y})}^{\substack{\text{x i
 
 ## 34.png
 
-*Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ka.*
+*Ce verildiğinde iks alt j'nin ve'ye eşit olma olasılığı eşittir, sayım artı bir, bölü en alt ce artı ve alt j'nin eleman sayısı.*
 
 ```math
-\underbrace{P(x_j = v \mid C)}_ {\substack{\text{C sınıfında özniteliğin}\\\text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\\\text{1 eklenir}}}}{\underbrace{n_C + k}_ {\substack{\text{sınıftaki örnek sayısı}\\\text{artı farklı değer sayısı}}}}
+\underbrace{P(x_j = v \mid C)}_ {\substack{\text{C sınıfında özniteliğin}\\\text{v değerini alma olasılığı}}} = \frac{\overbrace{\text{sayım} + 1}^{\substack{\text{her sayıma}\\\text{1 eklenir}}}}{\underbrace{n_C + \lvert V_j \rvert}_ {\substack{\text{sınıftaki örnek sayısı}\\\text{artı farklı değer sayısı}}}}
 ```
 
 ## 35.png

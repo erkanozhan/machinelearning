@@ -1887,19 +1887,19 @@ $R^2 = 1 - 1725/61\thinspace 120 \approx 0.972$ → "Fiyatlardaki değişkenliğ
 Modele **anlamsız** bir öznitelik bile eklense (ev sahibinin ayakkabı numarası gibi), eğitim verisindeki $R^2$ artar ya da en kötü ihtimalle aynı kalır; asla azalmaz. Düzeltilmiş $R^2$ öznitelik sayısını cezalandırır:
 
 $$
-R^2_{adj} = 1 - \frac{(1-R^2)(n-1)}{n-k-1}
+R^2_{adj} = 1 - \frac{(1-R^2)(n-1)}{n-d-1}
 $$
 
-<p align="center"><img src="images/formuller/30.png" alt="Açıklamalı formül: Düzeltilmiş R kare" width="295"></p>
+<p align="center"><img src="images/formuller/30.png" alt="Açıklamalı formül: Düzeltilmiş R kare" width="285"></p>
 
-**Ne anlatıyor?** $k$ arttıkça payda küçülür, kesir büyür ve $R^2_{adj}$ düşer. Yeni öznitelik $R^2$'yi bu cezayı aşacak kadar artırmazsa $R^2_{adj}$ azalır.
+**Ne anlatıyor?** $d$ arttıkça payda küçülür, kesir büyür ve $R^2_{adj}$ düşer. Yeni öznitelik $R^2$'yi bu cezayı aşacak kadar artırmazsa $R^2_{adj}$ azalır.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
 | $n$ | "en" | Örnek sayısı |
-| $k$ | "ka" | Modeldeki öznitelik (bağımsız değişken) sayısı |
+| $d$ | "de" | Modeldeki öznitelik (bağımsız değişken) sayısı |
 
-Eklenen öznitelik açıklayıcılığa anlamlı katkı yapmıyorsa $R^2_{adj}$ artmaz, hatta düşer. **Örnek:** $n = 5$, $k = 1$ için $R^2_{adj} = 1 - \frac{0.0282 \cdot 4}{3} \approx 0.962$.
+Eklenen öznitelik açıklayıcılığa anlamlı katkı yapmıyorsa $R^2_{adj}$ artmaz, hatta düşer. **Örnek:** $n = 5$, $d = 1$ için $R^2_{adj} = 1 - \frac{0.0282 \cdot 4}{3} \approx 0.962$.
 
 #### Korelasyon Katsayısı ($r$)
 
@@ -2178,11 +2178,13 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
 
 ### 11.4 Sıfır Frekans Sorunu ve Sayısal Öznitelikler (İleri Seviye)
 
-- **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + k}$ ($k$: özniteliğin farklı değer sayısı). WEKA bunu otomatik yapar.
+- **Sıfır frekans:** Eğitim verisinde "outlook = overcast" hiç "no" ile görülmemiştir; $P(overcast \mid no) = 0/5 = 0$. Çarpımda tek bir sıfır tüm sonucu sıfırlar. Çözüm **Laplace düzeltmesidir**: her sayıma 1 eklenir, $P(x_j = v \mid C) = \frac{\text{sayım} + 1}{n_C + \lvert V_j \rvert}$ ($\lvert V_j \rvert$: $j$. özniteliğin alabileceği farklı değer sayısı). WEKA bunu otomatik yapar.
 
-  <img src="images/formuller/34.png" alt="Açıklamalı formül: Laplace düzeltmesi" width="311">
+  <img src="images/formuller/34.png" alt="Açıklamalı formül: Laplace düzeltmesi" width="302">
 
-  **Örnek:** outlook'un 3 değeri vardır, "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
+  **Ne anlatıyor?** Özniteliğin her değeri için baştan bir "sanal" gözlem eklenmiş gibi davranılır; böylece eğitimde hiç görülmemiş bir değer de küçük ama sıfır olmayan bir olasılık alır. Paydaya değer sayısı ($\lvert V_j \rvert$) eklenmesi, olasılıkların toplamının yine 1 olmasını sağlar.
+
+  **Örnek:** outlook'un 3 değeri vardır ($\lvert V_j \rvert = 3$), "no" sınıfında 5 örnek bulunur: $P(\text{overcast} \mid \text{no}) = (0 + 1)/(5 + 3) = 0.125$. Olasılık artık sıfır değildir.
 - **Sayısal öznitelikler:** Her sınıfta özniteliğin **normal (Gauss) dağıldığı** varsayılır ve olasılık yoğunluğu $\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ ile hesaplanır (Gaussian Naive Bayes). WEKA'da alternatif olarak `useKernelEstimator` veya `useSupervisedDiscretization` seçilebilir.
 
   <img src="images/formuller/35.png" alt="Açıklamalı formül: Gauss olasılık yoğunluğu" width="394">
