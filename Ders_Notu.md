@@ -24,7 +24,7 @@ Notta bazı kısımlar şu etiketlerle işaretlenmiştir:
 **Kodlar hakkında:** Kısa kodlar anlatımın içinde verilmiştir. Uzun ve uygulama dersinde çalıştırılacak kodlar [`codes/`](https://github.com/erkanozhan/machinelearning/tree/main/codes) klasöründedir. Her kod satırında Türkçe açıklama vardır. Kurulum:
 
 ```bash
-pip install numpy scipy scikit-learn matplotlib   # Gerekli Python kütüphaneleri
+pip install numpy scipy pandas scikit-learn matplotlib   # Gerekli Python kütüphaneleri
 ```
 
 > **İpucu:** Bilgisayarınıza hiçbir şey kurmadan [Google Colab](https://colab.research.google.com) üzerinde de tüm Python kodlarını çalıştırabilirsiniz.
@@ -317,7 +317,7 @@ Bu derste iki araç birlikte kullanılır:
 | :--- | :--- |
 | **Explorer** | Veri yükleme, ön işleme (İng. *preprocessing*; Lat. *processus*: "ilerleyiş, süreç"), model kurma ve değerlendirme. Derste en çok kullanacağımız ekran. |
 | **Experimenter** | Birden çok algoritmayı birden çok veri setinde, tekrarlı deneylerle ve istatistiksel testlerle karşılaştırma ([Bölüm 24](#b24)). |
-| **KnowledgeFlow** | Sürükle-bırak ile veri akış şeması (pipeline) tasarlama ([Bölüm 23](#b23)). |
+| **KnowledgeFlow** | Sürükle-bırak ile veri akışı (İng. *flow*) tasarlama ([Bölüm 23](#b23)). |
 | **Workbench** | Yukarıdakilerin tümünü tek pencerede toplayan arayüz. |
 | **Simple CLI** | Komut satırından WEKA komutları çalıştırma. |
 
@@ -362,7 +362,7 @@ WEKA'nın kendi dosya biçimi **ARFF**'dir (*Attribute-Relation File Format*). D
 
 Bu dosyanın **200 öğrencilik** genişletilmiş hâli depoda hazırdır: [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff). Öğrencinin durumu, dönem ortalamasına göre belirlenmiştir: $\text{ortalama} = 0.4 \cdot \text{vize} + 0.6 \cdot \text{final}$; ortalaması **60 ve üstü** olanlar `gecti`, diğerleri `kaldi` (117 geçen, 83 kalan).
 
-Derse özel, Türkçe veri setleri depodaki [`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data) klasöründedir; her biri hem CSV (Python/R) hem ARFF (WEKA) biçimindedir (liste: [Ek C](#ekC)). Ayrıca WEKA'nın kurulum klasöründeki `data/` dizininde derste kullanacağımız hazır veri setleri bulunur: `iris.arff`, `weather.nominal.arff`, `cpu.arff`, `diabetes.arff`, `credit-g.arff`, `supermarket.arff` vb.
+Derse özel, Türkçe veri setleri depodaki [`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data) klasöründedir; çoğu hem CSV (Python/R) hem ARFF (WEKA) biçimindedir (liste: [Ek C](#ekC)). Ayrıca WEKA'nın kurulum klasöründeki `data/` dizininde derste kullanacağımız hazır veri setleri bulunur: `iris.arff`, `weather.nominal.arff`, `cpu.arff`, `diabetes.arff`, `credit-g.arff`, `supermarket.arff` vb.
 
 ### 4.3 Python ve scikit-learn
 
@@ -2429,7 +2429,7 @@ Gerçek veride sınıflar genellikle iç içe geçer; hiçbir doğru onları kus
 
 ### 13.4 Çekirdek Hilesi (Kernel Trick)
 
-Veri doğrusal olarak hiç ayrılamıyorsa ne olur? SVM'nin buradaki çözümü zekicedir: Veriyi, doğrusal olarak **ayrılabileceği daha yüksek boyutlu bir uzaya** taşımak.
+Veri doğrusal olarak hiç ayrılamıyorsa ne olur? SVM'nin buradaki çözümü zarif bir fikre dayanır: Veriyi, doğrusal olarak **ayrılabileceği daha yüksek boyutlu bir uzaya** taşımak.
 
 <p align="center"><img src="./images/svm_cekirdek.svg" alt="Tek boyutta ayrılamayan verinin x kare eklenerek iki boyutta doğru ile ayrılması" width="820"></p>
 
@@ -2720,7 +2720,7 @@ $$
 
 Zor bir problemi sırayla çözen bir uzmanlar ekibi düşünün: İlk uzman genel bir çözüm önerir. İkincisi, ilkinin **hata yaptığı** noktalara odaklanır. Üçüncüsü, hâlâ çözülemeyen kısımlarla uğraşır… Sonunda bu sıralı ve odaklı çaba, tek bir uzmanın ulaşabileceğinden çok daha iyi bir sonuç verir.
 
-Boosting, **zayıf öğrenicileri** (rastgeleden biraz iyi, basit modeller; ör. tek soruluk **karar kütüğü / decision stump**) **sıralı** olarak eğitip güçlü bir model oluşturur.
+Boosting, **zayıf öğrenicileri** (rastgele tahminden biraz daha iyi, basit modeller; ör. tek soruluk **karar kütüğü / decision stump**) **sıralı** olarak eğitip güçlü bir model oluşturur.
 
 <p align="center"><img src="images/diyagramlar/07_boosting.svg" alt="Boosting: zayıf modellerin hatalı örneklere odaklanarak sırayla eğitilmesi"></p>
 
@@ -2782,7 +2782,7 @@ Regresyon (diyabet verisi, 10 katlı CV):
 | Stacking | 45.38 | 55.66 | 0.446 |
 
 **Yorum:**
-- Topluluklar tek ağaca göre **her zaman** daha iyi ve daha kararlı (düşük ±).
+- Bu deneylerde topluluklar tek ağaçtan daha doğru çıktı. Ancak ± değerleri her durumda daha düşük değildir; topluluk, ortalama başarıyı artırırken sonuçların oynaklığını her zaman azaltmaz.
 - Iris çok kolay bir veri seti olduğu için modeller arasındaki farklar standart sapmanın içinde kalıyor; **istatistiksel olarak anlamlı değil** ([Bölüm 24](#b24)).
 - Diyabet verisinde en iyi model **basit lineer regresyon** çıktı. Karmaşık model her zaman kazanmaz; ilişki doğrusala yakınsa ve veri azsa basit modeller güçlüdür. Bu yüzden her projede **basit bir referans modelle (baseline)** başlanmalıdır.
 
@@ -2811,7 +2811,8 @@ rf = RandomForestClassifier(n_estimators=100, random_state=42)             # 100
 ada = AdaBoostClassifier(estimator=DecisionTreeClassifier(max_depth=1),    # Zayıf öğrenici: karar kütüğü
                          n_estimators=100, random_state=42)                 # (eski sürümlerde 'base_estimator')
 stack = StackingClassifier(                                                 # Yığınlama modeli
-    estimators=[("nb", GaussianNB()), ("dt", DecisionTreeClassifier(max_depth=4))],  # Seviye-0
+    estimators=[("svc", make_pipeline(StandardScaler(), SVC(probability=True))),     # Seviye-0: farklı
+                ("nb", GaussianNB()), ("dt", DecisionTreeClassifier(max_depth=4))],  # türde temel modeller
     final_estimator=LogisticRegression(max_iter=1000),                                # Seviye-1
     cv=5)                                                                             # Out-of-fold tahminler
 ```
@@ -2834,7 +2835,7 @@ Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gerek
 1. **Başlangıç:** $K$ adet küme merkezi (**centroid**; Lat. *centrum*: "merkez") seçilir (genellikle rastgele veri noktaları).
 2. **Atama:** Her nokta, **en yakın** merkezin kümesine atanır (Öklid mesafesi).
 3. **Güncelleme:** Her merkez, kendi kümesindeki noktaların **ortalamasına** taşınır.
-4. **Tekrar:** Hiçbir nokta küme değiştirmeyene (veya merkezler kıpırdamayana) kadar 2–3 tekrarlanır.
+4. **Tekrar:** Hiçbir nokta küme değiştirmeyene (veya merkezler yer değiştirmeyene) kadar 2–3 tekrarlanır.
 
 <p align="center"><img src="./images/kmeans_adimlari.svg" alt="K-Means algoritmasının başlangıç, atama, güncelleme ve yakınsama adımları" width="900"></p>
 
@@ -2868,7 +2869,7 @@ Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20
 
 #### K Nasıl Seçilir? Dirsek Yöntemi ve Siluet Skoru
 
-**Dirsek yöntemi (Elbow method):** $K = 1, 2, \dots$ için SSE hesaplanıp çizilir. $K$ arttıkça SSE **her zaman** azalır ($K = n$ olursa SSE = 0). Aranan nokta, düşüşün belirgin biçimde **yavaşladığı** kırılma noktasıdır ("dirsek").
+**Dirsek yöntemi (Elbow method):** $K = 1, 2, \dots$ için SSE hesaplanıp çizilir. $K$ arttıkça (en iyi çözümde) SSE **artmaz**; $K = n$ olursa SSE = 0 olur. Aranan nokta, düşüşün belirgin biçimde **yavaşladığı** kırılma noktasıdır ("dirsek").
 
 <p align="center"><img src="./images/dirsek_yontemi.svg" alt="Iris verisinde K arttıkça SSE'nin azalması ve K=3'te dirsek oluşması" width="580"></p>
 
@@ -2928,7 +2929,7 @@ K-Means küresel kümeleri iyi bulur. Peki kümeler hilal ya da halka biçiminde
 - **minPts:** Bir noktanın "yoğun bölgede" sayılması için $\varepsilon$ yarıçapında bulunması gereken en az nokta sayısı (kendisi dahil).
 
 **Nokta türleri:**
-- **Çekirdek nokta (core):** $\varepsilon$ içinde en az minPts komşusu var.
+- **Çekirdek nokta (core):** $\varepsilon$ komşuluğunda (kendisi dahil) en az minPts nokta var.
 - **Sınır noktası (border):** Kendisi çekirdek değil, ama bir çekirdek noktanın komşuluğunda.
 - **Gürültü (noise):** İkisi de değil → hiçbir kümeye atanmaz (**aykırı değer**).
 
@@ -2967,26 +2968,33 @@ Amaç: Bilgisayara çiçek türlerini söylemeden, sadece ölçülere bakarak 15
 **Çıktı – Küme merkezleri:**
 
 ```text
-Attribute      Full Data   Cluster 0   Cluster 1   Cluster 2
-               (150.0)     (50.0)      (61.0)      (39.0)
+                           Cluster#
+Attribute      Full Data          0          1          2
+                 (150.0)     (61.0)     (50.0)     (39.0)
 =========================================================
-sepallength    5.8433      5.006       5.9016      6.8538
-sepalwidth     3.0573      3.428       2.7484      3.0769
-petallength    3.758       1.462       4.3934      5.7423
-petalwidth     1.1993      0.246       1.4344      2.0718
+sepallength       5.8433     5.8885      5.006     6.8462
+sepalwidth         3.054     2.7377      3.418     3.0821
+petallength       3.7587     4.3967      1.464     5.7026
+petalwidth        1.1987      1.418      0.244     2.0795
 ```
 
-- **Cluster 0:** Petal ölçüleri çok küçük (1.46 / 0.25) → *Iris-setosa*.
-- **Cluster 2:** En büyük petal ölçüleri (5.74 / 2.07) → *Iris-virginica*.
-- **Cluster 1:** Ara değerler → *Iris-versicolor*.
+- **Cluster 1:** Petal ölçüleri çok küçük (1.46 / 0.24) → *Iris-setosa*.
+- **Cluster 2:** En büyük petal ölçüleri (5.70 / 2.08) → *Iris-virginica*.
+- **Cluster 0:** Ara değerler → *Iris-versicolor*.
+
+> **Not:** Yukarıdaki çıktı WEKA 3.8'in varsayılan ayarlarıyla (`initializationMethod = Random`, `seed = 10`) elde edilmiştir. Küme numaraları başlangıç noktalarına bağlıdır; `seed` veya başlangıç yöntemi değiştirildiğinde aynı kümeler farklı numaralarla gelebilir. Önemli olan numara değil, kümenin hangi türle eşleştiğidir.
 
 **Çıktı – Kümeler ve sınıflar:**
 
 ```text
   0  1  2  <-- assigned to cluster
- 50  0  0 | Iris-setosa
-  0 47  3 | Iris-versicolor
-  0 14 36 | Iris-virginica
+  0 50  0 | Iris-setosa
+ 47  0  3 | Iris-versicolor
+ 14  0 36 | Iris-virginica
+
+Cluster 0 <-- Iris-versicolor
+Cluster 1 <-- Iris-setosa
+Cluster 2 <-- Iris-virginica
 
 Incorrectly clustered instances :   17.0    11.3333 %
 Within cluster sum of squared errors: 6.998114004826762
@@ -3097,7 +3105,7 @@ $$
 
 <p align="center"><img src="images/formuller/46.png" alt="Açıklamalı formül: Destek ve güven" width="498"></p>
 
-**Dikkat:** Buradaki $X \cup Y$ "X veya Y" anlamına gelmez; sepetin $X$'teki ve $Y$'deki ürünlerin **hepsini birlikte** içermesi gerekir. Güven, $P(Y \mid X)$'tir: Bütün sepetler bırakılır, yalnızca $X$'i içeren sepetlere bakılır.
+**Dikkat:** Buradaki $X \cup Y$ "X veya Y" anlamına gelmez; sepetin $X$'teki ve $Y$'deki ürünlerin **hepsini birlikte** içermesi gerekir. Güven, $P(Y \mid X)$'tir: $X$'i içermeyen sepetler bir kenara bırakılır, yalnızca $X$'i içeren sepetlere bakılır.
 
 | Sembol / Terim | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
@@ -3108,7 +3116,7 @@ $$
 | $X \cup Y$ | "iks birleşim ye" | $X$ ve $Y$'deki ürünlerin **hepsini** içeren sepetler |
 | **Destek (support)** | | Kuralın ne kadar **yaygın** olduğu |
 | **Güven** (İng. *confidence*; Lat. *confidentia*: "güven", *fidere*: "güvenmek") | | $X$ alındığında $Y$'nin de alınma olasılığı: $P(Y \mid X)$ |
-| **Kaldıraç (lift)** | | $X$'in varlığı $Y$'nin olasılığını kaç kat artırıyor? **> 1:** pozitif ilişki · **= 1:** bağımsız · **< 1:** birbirini dışlıyor |
+| **Kaldıraç (lift)** | | $X$'in varlığı $Y$'nin olasılığını kaç kat artırıyor? **> 1:** pozitif ilişki · **= 1:** bağımsız · **< 1:** negatif ilişki (birlikte beklenenden az görülüyor) |
 
 **Örnek: {çay} ⇒ {süt}**
 - destek(çay) = 3/8 = 0.375 (sepet 3, 5, 6)
@@ -3230,7 +3238,7 @@ Veri: [`data/market_sepeti.arff`](https://github.com/erkanozhan/machinelearning/
 2. Bulunan kuralları inceleyin. Sonra `metricType = Lift`, `minMetric = 1.5` yapıp tekrar çalıştırın; listede hangi kurallar kaldı?
 3. Aynı veride Choose → `FPGrowth` seçin: `lowerBoundMinSupport = 0.1`, `minMetric = 0.6`, `findAllRulesForSupportLevel = True` → **Start**. FPGrowth **22 kural** bulur. Apriori'de `numRules = 100` yaparsanız **23 kural** görürsünüz.
 
-> **Bir kural fark nereden geliyor?** Apriori çıktısının başında *"Minimum support: 0.1 (39 instances)"* yazar: 0.1 × 391 = 39.1 sepet, Apriori'de 39'a yuvarlanır. FPGrowth (ve Python'daki `mlxtend`) ise desteğin gerçekten en az 0.1 olmasını, yani en az 40 sepet ister. {ekmek, süt, domates} tam 39 sepette geçer (destek 0.0997). Bu yüzden {süt, domates} → ekmek kuralı yalnızca Apriori'nin listesinde çıkar. Eşiğin tam sınırındaki kümelerde araçlar böyle küçük farklar gösterebilir; algoritmaların kendisi aynı sonucu üretir.
+> **Bir kurallık fark nereden geliyor?** Apriori çıktısının başında *"Minimum support: 0.1 (39 instances)"* yazar: 0.1 × 391 = 39.1 sepet, Apriori'de 39'a yuvarlanır. FPGrowth (ve Python'daki `mlxtend`) ise desteğin gerçekten en az 0.1 olmasını, yani en az 40 sepet ister. {ekmek, süt, domates} tam 39 sepette geçer (destek 0.0997). Bu yüzden {süt, domates} → ekmek kuralı yalnızca Apriori'nin listesinde çıkar. Eşiğin tam sınırındaki kümelerde araçlar böyle küçük farklar gösterebilir; algoritmaların kendisi aynı sonucu üretir.
 
 **Python** (iki ürünlü tüm kuralları hesaplar)
 
@@ -3430,11 +3438,11 @@ Selected attributes: 3,4 : 2
 
 Bireysel olarak iyi öznitelikleri bir araya getirmek her zaman en iyi takımı kurmak anlamına gelmez; önemli olan birlikte ne kadar iyi çalıştıklarıdır. CFS, iki sepal ölçüsünün **ek bilgi getirmediğine** karar verdi.
 
-**Python karşılıkları** (aynı kod dosyasında): Filtre → `mutual_info_classif` (Iris: petal length 0.99, petal width 0.98, sepal length 0.47, sepal width 0.29); sarmalayıcı → `RFE`; gömülü → `LogisticRegression(penalty="l1")`. Meme kanseri verisinde L1 cezası 30 katsayının 23'ünü **tam sıfır** yaptı ve 7 öznitelik bıraktı.
+**Python karşılıkları** (aynı kod dosyasında): Filtre → `mutual_info_classif` (Iris: petal length 0.99, petal width 0.98, sepal length 0.47, sepal width 0.29); sarmalayıcı → `RFE`; gömülü → `LogisticRegression(penalty="l1", solver="liblinear")` (varsayılan `lbfgs` çözücüsü L1 cezasını desteklemez). Meme kanseri verisinde L1 cezası 30 katsayının 23'ünü **tam sıfır** yaptı ve 7 öznitelik bıraktı.
 
 | | **PCA** | **Öznitelik Seçimi** |
 | :--- | :--- | :--- |
-| Ne yapar? | Veriyi yeni eksenlere **döndürür / bükerek** dönüştürür | Orijinal sütunlardan **işe yarayanları seçer** |
+| Ne yapar? | Eksenleri **döndürerek** veriyi yeni (doğrusal) eksenlere taşır | Orijinal sütunlardan **işe yarayanları seçer** |
 | Yorumlanabilirlik | Düşük (PC1 = karışım) | Yüksek (hangi ölçüm önemli, açıkça görülür) |
 | Sınıf etiketini kullanır mı? | Hayır | Genellikle evet |
 
@@ -3470,7 +3478,7 @@ En yaygın yöntem **gradyan inişidir** ([Bölüm 6.4](#b6)). Varyantları:
 
 ### 20.3 Ölçeklendirme ve Gradyan İnişi
 
-Bir öznitelik 0–1, diğeri 0–10 000 aralığındaysa maliyet yüzeyi çok uzamış bir vadi gibidir ve gradyan inişi zikzaklar çizerek çok yavaş ilerler. Ölçeklendirilmemiş veriyle gradyan inişi, bir bacağı uzun diğeri kısa biriyle yürümeye benzer. Standardizasyon ($z = \frac{x-\mu}{\sigma}$) veya normalizasyon ($\frac{x - x_{\min}}{x_{\max}-x_{\min}}$) yüzeyi yuvarlaklaştırır ve yakınsamayı hızlandırır ([Bölüm 5.8](#b5)).
+Bir öznitelik 0–1, diğeri 0–10 000 aralığındaysa maliyet yüzeyi çok uzamış bir vadi gibidir ve gradyan inişi zikzaklar çizerek çok yavaş ilerler. Ölçeklendirilmemiş veriyle gradyan inişi, bir bacağı uzun, diğeri kısa olan birinin yürümeye benzer. Standardizasyon ($z = \frac{x-\mu}{\sigma}$) veya normalizasyon ($\frac{x - x_{\min}}{x_{\max}-x_{\min}}$) yüzeyi yuvarlaklaştırır ve yakınsamayı hızlandırır ([Bölüm 5.8](#b5)).
 
 ### 20.4 Düzenlileştirme (Regularization): Modeli Dizginlemek
 
@@ -3533,7 +3541,7 @@ Hiperparametre kavramı [Bölüm 8.4](#b8)'te tanımlanmıştı. Izgara araması
            └───────────┴───────────┘
 ```
 
-Hiperparametre sayısı arttıkça kombinasyon sayısı **çarpımsal olarak** (üstel) büyür: 4 hiperparametre × 5 değer = 625 kombinasyon. Buna **kombinatoryal patlama** denir.
+Hiperparametre sayısı arttıkça kombinasyon sayısı **çarpımsal olarak** (üstel) büyür: her biri 5 değer alan 4 hiperparametre için $5^4 = 625$ kombinasyon gerekir. Buna **kombinatorik patlama** denir.
 
 **Python:**
 
@@ -3633,7 +3641,7 @@ Tamamen **rastgele** 10 000 öznitelik ve **rastgele** etiketlerden oluşan 100 
 
 | Yöntem | 5 katlı CV doğruluğu |
 | :--- | :---: |
-| **Yanlış:** En iyi 20 özniteliği **tüm veriye** bakarak seç, sonra CV yap | **0.870** (sahte başarı!) |
+| **Yanlış:** En iyi 20 özniteliği **tüm veriye** bakarak seç, sonra CV yap | **0.870** (sahte başarı) |
 | **Doğru:** Öznitelik seçimini Pipeline içine koy (her katta yalnızca eğitim kısmına bakar) | **0.470** (≈ şans) |
 
 Yanlış yöntemde seçici, etiketlere bakarken test katlarını da gördü ve **tesadüfen** test etiketleriyle ilişkili görünen gürültü sütunlarını seçti.
@@ -3699,7 +3707,7 @@ $$
 
 Oysa gerçek hayatta:
 - Hasta birine "sağlıklısın" demek (**FN**) hastanın tedavi şansını yok edebilir. Sağlıklı birine "bir test daha yapalım" demek (**FP**) ise yalnızca zaman ve para kaybıdır.
-- Batacak bir krediyi onaylamak (bankanın parası gider), iyi bir müşteriyi reddetmekten (potansiyel kâr kaybı) çok daha pahalıdır.
+- Geri ödenmeyecek bir krediyi onaylamak (banka anaparayı kaybeder), iyi bir müşteriyi reddetmekten (potansiyel kâr kaybı) çok daha pahalıdır.
 
 Bu durum özellikle **dengesiz veri setlerinde** (dolandırıcılık %0.1, nadir hastalık %1, üretim hattındaki kusurlu parça %0.5) kritiktir. Algoritma nadir ama önemli sınıfı görmezden gelip çoğunluk sınıfını tahmin ederek yüksek doğruluk elde edebilir ([Bölüm 9.2](#b9)).
 
@@ -3858,7 +3866,7 @@ for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs mali
 
 ### 23.1 Nedir? Explorer'dan Farkı
 
-**KnowledgeFlow**, veri madenciliği sürecini **sürükle-bırak** bileşenlerden oluşan bir **akış şeması (pipeline)** olarak tasarlamayı sağlayan WEKA arayüzüdür. Her kutu (WEKA 3.8'de **step**, eski sürümlerde **bean**) bir işlemi temsil eder: veri yükleme, filtre, sınıflandırıcı, değerlendirme, görselleştirme. Oklar ise verinin akış yolunu gösterir. Veri akışı (data-flow) programlamada bir bileşen, girdisi hazır olduğunda çalışır. Bu yüzden birbirinden bağımsız dallar **paralel** yürütülebilir.
+**KnowledgeFlow**, veri madenciliği sürecini **sürükle-bırak** bileşenlerden oluşan bir **akış** (İng. *flow*) olarak tasarlamayı sağlayan WEKA arayüzüdür. Her kutu (WEKA 3.8'de **step**, eski sürümlerde **bean**) bir işlemi temsil eder: veri yükleme, filtre, sınıflandırıcı, değerlendirme, görselleştirme. Oklar ise verinin akış yolunu gösterir. Veri akışı (data-flow) programlamada bir bileşen, girdisi hazır olduğunda çalışır. Bu yüzden birbirinden bağımsız dallar **paralel** yürütülebilir.
 
 | Özellik | Explorer | KnowledgeFlow |
 | :--- | :--- | :--- |
@@ -3886,7 +3894,7 @@ for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs mali
 | `dataSet` | Tüm veri seti (toplu) |
 | `instance` | Tek tek örnekler (artımlı akış) |
 | `trainingSet` / `testSet` | Bölünmüş eğitim ve test verisi |
-| `batchClassifier` | Eğitilmiş model + tahminler (toplu) |
+| `batchClassifier` | Eğitilmiş model + ilgili test verisi (toplu) |
 | `incrementalClassifier` | Artımlı model güncellemeleri |
 | `text` | Metin sonuçları (özet, karışıklık matrisi) |
 | `graph` | Ağaç/graf yapısı |
@@ -3906,7 +3914,7 @@ for agirlik in [None, {0: C_FP, 1: C_FN}]:                    # Standart vs mali
 7. **Visualization → TextViewer**: Değerlendirici → **text** → TextViewer.
 8. **Visualization → GraphViewer**: **J48 → graph** → GraphViewer. *(Bu bağlantı değerlendiriciden değil doğrudan J48'den alınır, çünkü gösterilecek şey modelin kendisidir.)*
 9. Araç çubuğundaki **Run** (oynat) düğmesine basılır. Alttaki *Status* alanında ilerleme izlenir.
-10. TextViewer → sağ tık → **Show results**: doğruluk, Kappa, karışıklık matrisi. GraphViewer → **Show results**: karar ağacının görüntüsü.
+10. TextViewer → sağ tık → **Show results**: doğruluk, Kappa, karışıklık matrisi. GraphViewer → sağ tık → **Show plots**: karar ağacının görüntüsü.
 
 > **İpucu:** J48, C4.5 algoritmasının Java uygulamasıdır. Bölmeleri **kazanç oranına** (gain ratio) göre seçer ve budama yapar ([Bölüm 12](#b12)).
 
@@ -3990,12 +3998,12 @@ diabetes    (100)      74.49       |   75.75          76.02 v
 
 *(Yukarıdaki sayılar okumayı göstermek için verilmiş bir örnektir; kendi deneyinizde değerler farklı olacaktır.)*
 
-> **ZeroR**'u her deneye ekleyin. Her örneğe en sık sınıfı söyleyen bu "hiçbir şey öğrenmeyen" model, **alt sınırdır**. Modeliniz ZeroR'dan anlamlı biçimde iyi değilse hiçbir şey öğrenmemiştir.
+> **ZeroR**'u her deneye ekleyin. Her örneğe en sık sınıfı söyleyen bu "hiçbir şey öğrenmeyen" model, **alt sınırdır**. Modeliniz ZeroR'dan anlamlı biçimde iyi değilse işe yarar bir şey öğrendiği gösterilemez.
 
 <details>
 <summary><b>Derinleşme (İleri Seviye): Neden "düzeltilmiş" t-testi?</b></summary>
 
-WEKA varsayılan olarak **Corrected Paired T-Tester**'ı (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
+WEKA varsayılan olarak **Paired T-Tester (corrected)** testini (Nadeau & Bengio, 2003) kullanır. Çapraz doğrulamada eğitim setleri büyük ölçüde örtüştüğü için skorlar birbirinden **bağımsız değildir**. Standart t-testi bu durumda varyansı olduğundan küçük tahmin eder ve gerçekte olmayan farkları "anlamlı" bulur. Düzeltilmiş test, varyansa bir düzeltme terimi ekler:
 
 $\displaystyle t = \frac{\bar{d}}{\sqrt{\left(\frac{1}{k\thinspace r} + \frac{n_ {test}}{n_ {train}}\right)\hat{\sigma}_ d^2}}$
 
@@ -4036,7 +4044,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 | :--- | :--- | :--- |
 | **Genelleme** | Görülmemiş veride tutarlı tahmin yapabilme | Asıl hedef eğitim verisinde değil, yeni veride başarıdır |
 | **Aşırı öğrenme** | Eğitim verisini ezberleme | Eğitim hatası düşerken doğrulama hatası yükseliyorsa alarm |
-| **Eksik öğrenme** | Ne eğitimde ne testte yeterli öğrenememe | Model kapasitesini veya öznitelikleri artırın |
+| **Eksik öğrenme** | Ne eğitim ne de test verisinde yeterli başarı gösterememe | Model kapasitesini veya öznitelikleri artırın |
 | **Düzenlileştirme (L1/L2)** | Parametre büyüklüğünü cezalandırma | Aşırı öğrenmeyi azaltır; L1 öznitelik seçer |
 | **Erken durdurma** | Doğrulama hatası yükselince durma | Daha kısa eğitim, daha iyi genelleme |
 | **Öğrenme oranı** | Gradyan inişinde adım büyüklüğü | Çok büyük: ıraksama; çok küçük: yavaş yakınsama |
@@ -4054,7 +4062,7 @@ Akademik bir çalışmada yalnızca "en iyi parametreler şunlardır" demek yete
 2. **Test verisini koruyun:** Test setine yalnızca en sonda, bir kez bakın.
 3. **Veriye dayalı karar verin:** Hiperparametreleri sezgiyle değil, aramayla seçin.
 4. **İstatistik kullanın:** Tekrarlı CV ve anlamlılık testi yapın.
-5. **Şeffaf raporlayın:** Seed, parametre aralıkları, doğrulama stratejisi ve testler yazılsın.
+5. **Şeffaf raporlayın:** Seed'i, parametre aralıklarını, doğrulama stratejisini ve kullanılan testleri raporda açıkça belirtin.
 
 | Yanlış | Doğru |
 | :--- | :--- |
@@ -4084,7 +4092,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 4. **Sınıflandırma:** `cluster` sütununu hedef seçin. **Classify** sekmesinde 10 katlı çapraz doğrulamayla en az 5 algoritma deneyin (ZeroR, J48, NaiveBayes, IBk, SMO, RandomForest, MultilayerPerceptron…). Doğruluk, **Kappa**, F1 ve ROC Area değerlerini bir tabloda karşılaştırın. En yüksek Kappa değerini veren algoritmayı belirleyin.
 5. **İstatistiksel karşılaştırma:** Aynı algoritmaları **Experimenter**'da (10 tekrar × 10 kat) çalıştırıp farkların anlamlı olup olmadığını test edin.
 6. **Öznitelik seçimi:** **Select attributes** sekmesinde `InfoGainAttributeEval + Ranker` ve `CfsSubsetEval + BestFirst` ile en önemli öznitelikleri bulun. Seçilen özniteliklerle en iyi modeli yeniden çalıştırın; başarı değişti mi?
-7. **Eleştirel düşünme:** Kümeleri K-Means ile ürettiğimiz için etiketler öznitelik uzayında **küresel bölgelere** karşılık gelir. Hangi algoritmaların bu yapıyı öğrenmeye daha yatkın olduğunu tartışın. Bu yöntemin (kümeleme → sınıflandırma) gerçek bir tahmin probleminden farkı nedir?
+7. **Eleştirel düşünme:** Kümeleri K-Means ile ürettiğimiz için etiketler, en yakın merkeze göre belirlendiği için öznitelik uzayında **doğrusal sınırlarla ayrılmış bölgelere** (Voronoi hücreleri) karşılık gelir. Hangi algoritmaların bu yapıyı öğrenmeye daha yatkın olduğunu tartışın. Bu yöntemin (kümeleme → sınıflandırma) gerçek bir tahmin probleminden farkı nedir?
 8. **Raporlama:** [Bölüm 24.3](#b24)'teki yapıya uygun kısa bir rapor yazın ve sonuçlarınızı paylaşın.
 
 **Ek alıştırma (Python):** Aynı adımları `pandas` + `scikit-learn` ile tekrarlayın (`KMeans` → etiket, `cross_val_score` ile model karşılaştırma, `SelectKBest` ile seçim). Ön işlemenin Pipeline içinde olmasına dikkat edin. İkinci bir veri seti olarak [`data/musteri_ticaret.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_ticaret.csv) (kategorik sütunlar içerir: eğitim durumu, ödeme yöntemi) ile one-hot kodlamayı da uygulayın.
@@ -4199,6 +4207,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 
 | Dosya | Konu | Bölüm |
 | :--- | :--- | :---: |
+| [`00_veri_setlerini_uret.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/00_veri_setlerini_uret.py) | Derse özel yapay veri setlerini üretir (`data/` klasörü) | — |
 | [`01_istatistik_ve_olceklendirme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/01_istatistik_ve_olceklendirme.py) | Temel istatistikler, Min-Max, Z-skoru, Robust, onluk ölçekleme | 5 |
 | [`02_lineer_regresyon.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/02_lineer_regresyon.py) | En küçük kareler, sıfırdan gradyan inişi, öğrenme oranı deneyi | 6 |
 | [`03_siniflandirma_algoritmalari.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/03_siniflandirma_algoritmalari.py) | Lojistik regresyon, k-NN, Naive Bayes, karar ağacı, MLP | 7, 10–12, 14 |
@@ -4210,14 +4219,15 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | [`09_svm.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/09_svm.py) | Marj, C etkisi, çekirdekler, karar sınırları | 13 |
 | [`10_kumeleme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/10_kumeleme.py) | Sıfırdan K-Means, dirsek, siluet, hiyerarşik, DBSCAN | 17 |
 | [`11_birliktelik_kurallari_apriori.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11_birliktelik_kurallari_apriori.py) | Apriori (kütüphanesiz) | 18 |
+| [`11b_apriori_ve_fpgrowth_mlxtend.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/11b_apriori_ve_fpgrowth_mlxtend.py) | `mlxtend` ile Apriori ve FP-Growth | 18 |
 | [`12_pca_ve_oznitelik_secimi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/12_pca_ve_oznitelik_secimi.py) | Sıfırdan PCA, filtre/sarmalayıcı/gömülü seçim | 19 |
 | [`13_maliyete_duyarli_ogrenme.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/13_maliyete_duyarli_ogrenme.py) | Sınıf ağırlığı, oversampling, eşik ayarı | 22 |
 | [`14_hiperparametre_optimizasyonu.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/14_hiperparametre_optimizasyonu.py) | Grid, random, nested CV, erken durdurma | 20 |
 | [`15_veri_sizintisi.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/15_veri_sizintisi.py) | Sızıntı deneyi (yanlış vs doğru) | 21 |
 
-**R kodları** ([`codes/R/`](https://github.com/erkanozhan/machinelearning/tree/main/codes/R)): `grid_ve_random_search.R`, `nested_cv.R`
+**R kodları** ([`codes/R/`](https://github.com/erkanozhan/machinelearning/tree/main/codes/R)): `grid_ve_random_search.R`, `nested_cv.R`. Kurulum: `install.packages(c("caret", "mlbench"))`
 
-**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)). Python ve R kodları veriyi `https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/` adresinden doğrudan okur. Derse özel veriler yapaydır (sentetiktir); nasıl üretildikleri [`codes/python/00_veri_setlerini_uret.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/00_veri_setlerini_uret.py) dosyasında açıkça yazılıdır.
+**Veri dosyaları** ([`data/`](https://github.com/erkanozhan/machinelearning/tree/main/data)). Not içindeki kısa kodlar bu verileri `https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/` adresinden doğrudan okur; `codes/` klasöründeki betiklerin çoğu ise scikit-learn ile gelen hazır veri setlerini kullanır. Derse özel veriler yapaydır (sentetiktir); nasıl üretildikleri [`codes/python/00_veri_setlerini_uret.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/00_veri_setlerini_uret.py) dosyasında açıkça yazılıdır.
 
 | Veri seti | Biçim | Satır | Görev | Kullanıldığı bölüm |
 | :--- | :--- | :---: | :--- | :--- |
@@ -4230,7 +4240,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | [`data/weather_yeni_gun.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather_yeni_gun.arff) | ARFF | 1 | Naive Bayes ile yeni tahmin | 11.5 |
 | [`data/meme_kanseri.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/meme_kanseri.csv), `.arff` | CSV, ARFF | 569 | Sınıflandırma (gerçek veri; Python'da `load_breast_cancer()`) | 7.4, 8, 9.5, 12.5, 16.5, 19.3, 20.5, 20.6 |
 | [`data/iris_yeni_test.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/iris_yeni_test.arff) | ARFF | 5 | Kaydedilmiş modelle tahmin | 15 |
-| [`data/insanlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/insanlar.csv), [`data/musteri_ticaret.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_ticaret.csv) | CSV | 50, 90 | Proje ödevi | 25 |
+| [`data/insanlar.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/insanlar.csv), [`data/musteri_ticaret.csv`](https://github.com/erkanozhan/machinelearning/blob/main/data/musteri_ticaret.csv) | CSV | 47, 90 | Proje ödevi | 25 |
 
 
 **Etkileşimli animasyonlar** (tarayıcıda açılır):
@@ -4249,7 +4259,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 
 **Temel kitaplar**
 1. Witten, I. H., Frank, E., Hall, M. A., & Pal, C. J. (2016). *Data Mining: Practical Machine Learning Tools and Techniques* (4th ed.). Morgan Kaufmann. (WEKA geliştiricilerinin kitabı)
-2. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2023). *An Introduction to Statistical Learning* (2nd ed.). Springer. Ücretsiz: [statlearning.com](https://www.statlearning.com)
+2. James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). *An Introduction to Statistical Learning* (2nd ed.). Springer. Ücretsiz: [statlearning.com](https://www.statlearning.com)
 3. Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning* (2nd ed.). Springer.
 4. Géron, A. (2022). *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow* (3rd ed.). O'Reilly.
 5. Mitchell, T. M. (1997). *Machine Learning*. McGraw-Hill.

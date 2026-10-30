@@ -59,7 +59,7 @@ print()
 # 3) PCA sınıflandırmayı nasıl etkiliyor? (Pipeline → PCA her katmanda sadece eğitimle fit edilir)
 # ---------------------------------------------------------------------------
 cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
-print("=== 3) J48 benzeri karar ağacı: PCA'sız vs PCA'lı ===")
+print("=== 3) Karar ağacı (CART): PCA'sız vs PCA'lı ===")
 s_ham = cross_val_score(DecisionTreeClassifier(random_state=42), X, y, cv=cv)
 print(f"4 orijinal öznitelik     : {s_ham.mean():.3f} ± {s_ham.std():.3f}")
 for k in [1, 2, 3]:                                           # 1, 2, 3 bileşenle dene

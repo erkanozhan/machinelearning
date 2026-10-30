@@ -5,7 +5,7 @@ Bu klasör, [Ders Notu](../Ders_Notu.md)'nda anlatılan konuların uygulama ders
 ## Kurulum
 
 ```bash
-pip install -r requirements.txt     # numpy, scipy, scikit-learn, matplotlib, mlxtend
+pip install -r requirements.txt     # numpy, scipy, pandas, scikit-learn, matplotlib, mlxtend
 ```
 
 Kurulum yapmadan çalıştırmak için dosya içeriğini [Google Colab](https://colab.research.google.com)'a yapıştırabilirsiniz.

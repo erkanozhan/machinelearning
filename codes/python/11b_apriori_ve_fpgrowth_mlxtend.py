@@ -78,7 +78,10 @@ kurallari_yazdir(kurallar8.sort_values("lift", ascending=False))
 print("\n" + "=" * 70)
 print("2) data/market_sepeti.csv (min. destek = 0.10, min. güven = 0.60)")
 print("=" * 70)
-KOK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # Depo kök klasörü
+try:                                                          # Betik olarak çalışıyorsa depo kökünü bul
+    KOK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+except NameError:                                             # Colab/Jupyter: __file__ tanımlı değil
+    KOK = ""
 YOL = os.path.join(KOK, "data", "market_sepeti.csv")           # Yerel veri dosyası
 if not os.path.exists(YOL):                                   # Colab vb. ortamda dosya yoksa GitHub'dan oku
     YOL = "https://raw.githubusercontent.com/erkanozhan/machinelearning/main/data/market_sepeti.csv"

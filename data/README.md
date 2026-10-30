@@ -18,7 +18,7 @@ Bu klasördeki veriler [Ders Notu](../Ders_Notu.md)'ndaki kısa uygulamalarda ku
 | `weather_yeni_gun.arff` | 1 | (yukarıdakiyle aynı) | Naive Bayes ile yeni günü tahmin etmek | 11.5 |
 | `meme_kanseri.csv`, `.arff` | 569 | 30 sayısal öznitelik (`mean_radius` … `worst_fractal_dimension`), `tani` {kotu_huylu, iyi_huylu} | Sınıflandırma (212 kötü huylu, 357 iyi huylu). **Gerçek veri:** Wisconsin Diagnostic Breast Cancer (Wolberg vd., 1995; UCI, CC BY 4.0). Python'da `load_breast_cancer()` ile aynı | 7.4, 8, 9.5, 12.5, 16.5, 19.3, 20 |
 | `iris_yeni_test.arff` | 5 | Iris öznitelikleri | Kaydedilmiş WEKA modeliyle tahmin | 15 |
-| `insanlar.csv` | 50 | `ad`, `yas`, `boy`, `kilo`, `ayak_no` | Proje ödevi | 25 |
+| `insanlar.csv` | 47 | `ad`, `yas`, `boy`, `kilo`, `ayak_no` | Proje ödevi | 25 |
 | `musteri_ticaret.csv` | 90 | Boy, kilo, yaş, harcama, eğitim, ödeme yöntemi | Proje ödevi (ek alıştırma) | 25 |
 
 Iris ve diyabet gibi diğer klasik veri setleri kodlarda doğrudan `scikit-learn` içinden (`load_iris()` vb.) veya WEKA'nın kendi `data/` klasöründen kullanılır; bu yüzden burada ayrıca bulunmazlar. Meme kanseri verisi WEKA ile gelmediği için (WEKA'daki `breast-cancer.arff` farklı bir veridir) WEKA ve R kullananlar için buraya eklenmiştir.
