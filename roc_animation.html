@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ROC Eğrisi Oluşumu | ROC Curve Animation</title>
+  <title>ROC Eğrisinin Oluşumu</title>
   <style>
     html, body {
       height: 100%;
@@ -97,8 +97,8 @@
 </head>
 <body>
   <div class="header">
-    <h1>ROC Eğrisi Otomatik Animasyon (ROC Curve Automatic Animation / Courbe ROC Animation Automatique / ROC-Kurven-Automatik-Animation)</h1>
-    <p>İkili Sınıflandırma Performans Analizi - Eğitim Aracı (Binary Classification Performance Analysis - Educational Tool / Analyse des performances de classification binaire - Outil pédagogique / Binäre Klassifikationsleistungsanalyse - Lehrmittel)</p>
+    <h1>ROC Eğrisinin Oluşumu</h1>
+    <p>İkili sınıflandırmada eşik değiştikçe TPR ve FPR'nin nasıl değiştiğini gösteren eğitim aracı</p>
   </div>
 
   <div class="container">
@@ -133,9 +133,9 @@
         <div class="card-header">Performans Metrikleri</div>
         <div class="metrics-grid">
           <div class="metric-box"><div class="metric-label">TPR (Duyarlılık)</div><div class="metric-value" id="tprValue">0.00</div></div>
-          <div class="metric-box"><div class="metric-label">FPR</div><div class="metric-value" id="fprValue">0.00</div></div>
-          <div class="metric-box"><div class="metric-label">Precision</div><div class="metric-value" id="precisionValue">0.00</div></div>
-          <div class="metric-box"><div class="metric-label">Specificity</div><div class="metric-value" id="specificityValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">FPR (Yanlış alarm)</div><div class="metric-value" id="fprValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">Kesinlik</div><div class="metric-value" id="precisionValue">0.00</div></div>
+          <div class="metric-box"><div class="metric-label">Özgüllük</div><div class="metric-value" id="specificityValue">0.00</div></div>
         </div>
         <div class="metrics-grid" style="margin-top: 10px;">
           <div class="metric-box" style="background: #dcfce7;"><div class="metric-label">Gerçek Pozitif</div><div class="metric-value" id="tpCount">0</div></div>
@@ -237,12 +237,12 @@
       const xAxis = document.createElementNS(ns, 'text');
       xAxis.setAttribute('x', width / 2); xAxis.setAttribute('y', height - 5); xAxis.setAttribute('text-anchor', 'middle');
       xAxis.setAttribute('font-size', '13'); xAxis.setAttribute('font-weight', '600'); xAxis.setAttribute('fill', '#333');
-      xAxis.textContent = 'False Positive Rate (1 - Specificity)'; svg.appendChild(xAxis);
+      xAxis.textContent = 'Sahte Pozitif Oranı, FPR (1 − Özgüllük)'; svg.appendChild(xAxis);
       
       const yAxis = document.createElementNS(ns, 'text');
       yAxis.setAttribute('x', 10); yAxis.setAttribute('y', height / 2); yAxis.setAttribute('text-anchor', 'middle');
       yAxis.setAttribute('font-size', '13'); yAxis.setAttribute('font-weight', '600'); yAxis.setAttribute('fill', '#333');
-      yAxis.setAttribute('transform', `rotate(-90 10 ${height / 2})`); yAxis.textContent = 'True Positive Rate (Sensitivity)';
+      yAxis.setAttribute('transform', `rotate(-90 10 ${height / 2})`); yAxis.textContent = 'Gerçek Pozitif Oranı, TPR (Duyarlılık)';
       svg.appendChild(yAxis);
       
       const diagonal = document.createElementNS(ns, 'line');
