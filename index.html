@@ -6,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <style>
-    .mermaid {
-      text-align: center;
-      margin: 20px 0;
-    }
     /* GitHub uyarı kutuları (> [!NOTE], > [!WARNING], > [!CAUTION] …) */
     .markdown-section blockquote.uyari { border-left: 5px solid; border-radius: 4px; padding: 10px 16px; margin: 16px 0; color: #24292f; }
     .markdown-section blockquote.uyari p { margin: 6px 0; font-weight: 400; }
@@ -43,9 +39,6 @@
       markdown: {
         renderer: {
           code: function(code, lang) {
-            if (lang === 'mermaid') {
-              return '<div class="mermaid">' + code + '</div>';
-            }
             // ```math blokları (GitHub'ın display formül biçimi) → KaTeX ile çiz
             if (lang === 'math' && window.katex) {
               return '<div class="math-blok">' +
@@ -67,31 +60,6 @@
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1.4.4/dist/docsify-katex.js"></script>
   
-  <!-- Mermaid -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ 
-      startOnLoad: false,
-      theme: 'default',
-      securityLevel: 'loose',
-      flowchart: {
-        useMaxWidth: true,
-        htmlLabels: true
-      }
-    });
-    
-    // Docsify hook to render mermaid after page load
-    if (window.$docsify) {
-      window.$docsify.plugins = [].concat(function(hook) {
-        hook.doneEach(function() {
-          mermaid.run({
-            querySelector: '.mermaid'
-          });
-        });
-      }, window.$docsify.plugins || []);
-    }
-  </script>
-  
   <!-- Kod renklendirme -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-r.min.js"></script>
@@ -101,7 +69,7 @@
   <!-- Arama -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   
-  <!-- Sayfa içi navigasyon -->
+  <!-- Kod kopyalama düğmesi -->
   <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
 </body>
 </html>

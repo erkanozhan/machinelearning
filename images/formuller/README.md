@@ -12,10 +12,10 @@ Bu klasördeki PNG dosyaları, `Ders_Notu.md` içindeki açıklamalı formüller
 
 ## 02.png
 
-*Ye eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki artı … artı teta em iks em.*
+*Ye şapka eşittir teta sıfır artı teta bir iks bir artı teta iki iks iki artı … artı teta de iks de.*
 
 ```math
-\underbrace{y}_{\text{hedef}} = \overbrace{\theta_0}^{\text{sabit terim}} + \underbrace{\theta_1 x_1}_{\substack{\text{1. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \overbrace{\theta_2 x_2}^{\substack{\text{2. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \dots + \underbrace{\theta_m x_m}_{\substack{\text{m. öznitelik}\\[2pt]\text{çarpı katsayısı}}}
+\underbrace{\hat{y}}_{\text{tahmin}} = \overbrace{\theta_0}^{\text{sabit terim}} + \underbrace{\theta_1 x_1}_{\substack{\text{1. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \overbrace{\theta_2 x_2}^{\substack{\text{2. öznitelik}\\[2pt]\text{çarpı katsayısı}}} + \dots + \underbrace{\theta_d x_d}_{\substack{\text{d. öznitelik}\\[2pt]\text{çarpı katsayısı}}}
 ```
 
 ## 03.png

@@ -37,7 +37,7 @@
 <g id="node2" class="node">
 <title>dis_bolunme</title>
 <path fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5" d="M314,-781C314,-781 207,-781 207,-781 201,-781 195,-775 195,-769 195,-769 195,-757 195,-757 195,-751 201,-745 207,-745 207,-745 314,-745 314,-745 320,-745 326,-751 326,-757 326,-757 326,-769 326,-769 326,-775 320,-781 314,-781"/>
-<text text-anchor="start" x="203" y="-765.2" font-family="Times New Roman" font-size="11.00">Veriyi K katmana böl</text>
+<text text-anchor="start" x="203" y="-765.2" font-family="Times New Roman" font-size="11.00">Veriyi K kata böl</text>
 <text text-anchor="start" x="233" y="-755.8" font-family="Times New Roman" font-size="9.00">(örn: K=10)</text>
 </g>
 <!-- veri&#45;&gt;dis_bolunme -->
@@ -51,15 +51,15 @@
 <g id="node3" class="node">
 <title>ayrim</title>
 <path fill="#ffe082" stroke="#ff8f00" stroke-width="1.5" d="M325.5,-669C325.5,-669 195.5,-669 195.5,-669 189.5,-669 183.5,-663 183.5,-657 183.5,-657 183.5,-645 183.5,-645 183.5,-639 189.5,-633 195.5,-633 195.5,-633 325.5,-633 325.5,-633 331.5,-633 337.5,-639 337.5,-645 337.5,-645 337.5,-657 337.5,-657 337.5,-663 331.5,-669 325.5,-669"/>
-<text text-anchor="start" x="221" y="-654.2" font-family="Times New Roman" font-size="11.00">Test: Katman i</text>
-<text text-anchor="start" x="191.5" y="-642.2" font-family="Times New Roman" font-size="11.00">Eğitim: Kalan K&#45;1 katman</text>
+<text text-anchor="start" x="221" y="-654.2" font-family="Times New Roman" font-size="11.00">Test: Kat i</text>
+<text text-anchor="start" x="191.5" y="-642.2" font-family="Times New Roman" font-size="11.00">Eğitim: Kalan K&#45;1 kat</text>
 </g>
 <!-- dis_bolunme&#45;&gt;ayrim -->
 <g id="edge2" class="edge">
 <title>dis_bolunme&#45;&gt;ayrim</title>
 <path fill="none" stroke="black" stroke-width="1.2" d="M260.5,-744.81C260.5,-727.21 260.5,-699.61 260.5,-679.07"/>
 <polygon fill="black" stroke="black" stroke-width="1.2" points="264,-679.07 260.5,-669.07 257,-679.07 264,-679.07"/>
-<text text-anchor="middle" x="302.5" y="-708" font-family="Times New Roman" font-size="10.00"> &#160;Her katman için</text>
+<text text-anchor="middle" x="302.5" y="-708" font-family="Times New Roman" font-size="10.00"> &#160;Her kat için</text>
 </g>
 <!-- grid_search -->
 <g id="node4" class="node">
@@ -79,7 +79,7 @@
 <g id="node7" class="node">
 <title>model_test</title>
 <path fill="#ffcc80" stroke="#ef6c00" stroke-width="1.5" d="M315,-252C315,-252 202,-252 202,-252 196,-252 190,-246 190,-240 190,-240 190,-228 190,-228 190,-222 196,-216 202,-216 202,-216 315,-216 315,-216 321,-216 327,-222 327,-228 327,-228 327,-240 327,-240 327,-246 321,-252 315,-252"/>
-<text text-anchor="start" x="198" y="-237.2" font-family="Times New Roman" font-size="11.00">Test katmanı üzerinde</text>
+<text text-anchor="start" x="198" y="-237.2" font-family="Times New Roman" font-size="11.00">Test katı üzerinde</text>
 <text text-anchor="start" x="217" y="-225.2" font-family="Times New Roman" font-size="11.00">performans ölç</text>
 </g>
 <!-- ayrim&#45;&gt;model_test -->
