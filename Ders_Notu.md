@@ -198,6 +198,17 @@ Bir makine öğrenmesi projesi, tıpkı bilimsel bir araştırma gibi birbirini 
 
 <p align="center"><img src="images/diyagramlar/04_proje_adimlari.svg" alt="Makine öğrenmesi projesinin altı adımı ve geri dönüş döngüleri"></p>
 
+CRISP-DM'in resmî aşama adları bu notta kullanılan adlardan biraz farklıdır. Kaynaklarda karşılaşılabilecek adlar şöyle eşleşir:
+
+| Bu nottaki adım | CRISP-DM aşaması |
+| :--- | :--- |
+| Adım 1 – Problemi anlamak ve tanımlamak | İş anlayışı (*Business Understanding*) |
+| Adım 2 – Veri toplama ve yönetimi | Veri anlayışı (*Data Understanding*) |
+| Adım 3 – Veri temizleme ve hazırlama | Veri hazırlama (*Data Preparation*) |
+| Adım 4 – Modelleme | Modelleme (*Modeling*) |
+| Adım 5 – Değerlendirme ve iyileştirme | Değerlendirme (*Evaluation*) |
+| Adım 6 – Devreye alma ve izleme | Devreye alma (*Deployment*) |
+
 ### Adım 1 – Problemi Anlamak ve Tanımlamak
 
 Her şey, çözmek istediğimiz problemi net olarak tanımlamakla başlar: **Ne tahmin edilecek? Başarı nasıl ölçülecek? Hata yapmanın bedeli ne?**
@@ -589,6 +600,8 @@ WEKA'da: `filters → unsupervised → attribute → ReplaceMissingValues` (say�
 
 **Aykırı değer** (İng. *outlier*: "dışarıda kalan") – Diğerlerinden çok farklı değer. Bir ölçüm hatası da (yaş = 250) olabilir, gerçek ama nadir bir durum da (çok yüksek gelirli bir müşteri). Yaygın bir kural, **IQR kuralıdır**: $Q_1 - 1.5\cdot IQR$ altındaki veya $Q_3 + 1.5\cdot IQR$ üstündeki değerler şüphelidir. Aykırı değeri silmeden önce **neden** oluştuğunu anlamak gerekir. WEKA'da `InterquartileRange` filtresi bu kuralı uygular; ancak filtrenin varsayılan katsayısı 3'tür, bu yüzden 1.5·IQR kuralı için ayarlarda `outlierFactor = 1.5` yapılmalıdır.
 
+**Örnek:** $[60, 70, 80, 100, 300]$ verisinde $Q_1 = 70$, $Q_3 = 100$ ve $IQR = 30$'dur. Alt sınır $70 - 1.5 \cdot 30 = 25$, üst sınır $100 + 1.5 \cdot 30 = 145$ olur. Yalnızca 300 bu aralığın dışında kaldığı için aykırı değer olarak işaretlenir.
+
 ### 5.6 Kategorik Verinin Sayıya Dönüştürülmesi
 
 Lineer regresyon, SVM, sinir ağları gibi matematiksel modeller yalnızca **sayılarla** çalışır. Bu yüzden kategorik öznitelikleri dönüştürmemiz gerekir.
@@ -961,6 +974,17 @@ Lineer regresyon için türevler:
 
 <p align="center"><img src="./images/gradyan_inisi.svg" alt="Küçük, uygun ve çok büyük öğrenme oranlarında gradyan inişinin davranışı" width="860"></p>
 
+İlk adımlarda maliyetin nasıl hızla düştüğü aşağıdaki tabloda görülmektedir:
+
+| Adım | $\theta_0$ | $\theta_1$ | $J$ |
+| :---: | :---: | :---: | :---: |
+| 0 | 0 | 0 | 2159.3 |
+| 1 | 3.25 | 10.43 | 477.6 |
+| 2 | 4.77 | 14.64 | 195.1 |
+| 3 | 5.59 | 16.30 | 146.0 |
+
+Maliyet ilk üç adımda on beş kat azalmıştır. Bu aşamada $\theta_1$ henüz olması gereken değerin (6.8) çok üstündedir; sonraki adımlarda parametreler yavaş yavaş doğru değerlere yerleşir.
+
 Örneğimizde $\theta_0 = \theta_1 = 0$ başlangıcı ve $\alpha = 0.05$ ile 5000 adım sonunda $\theta_0 = 44.600$, $\theta_1 = 6.800$ bulunur, yani kapalı form ile **aynı sonuç**. Öğrenme oranının etkisi (100 adım sonra maliyet):
 
 | $\alpha$ | 0.001 | 0.01 | 0.05 | 0.15 | 0.2 |
@@ -1036,6 +1060,7 @@ Benzer şekilde $\log(x)$, $\sqrt{x}$, $x_1 \cdot x_2$ (etkileşim) gibi dönü�
 3. **Sabit varyans (homoskedastisite):** Hataların yayılımı tüm $x$ değerlerinde benzer olmalı.
 4. **Hataların normalliği:** Özellikle güven aralıkları ve hipotez testleri için gereklidir.
 5. **Çoklu doğrusallık olmamalı:** Öznitelikler birbirine çok bağımlıysa katsayılar kararsızlaşır ve yorumlanamaz hâle gelir.
+   *Benzetme:* Aynı olayı anlatan iki tanık düşünelim; biri evin metrekaresini, diğeri oda sayısını söylemektedir. İkisi de büyük ölçüde aynı bilgiyi verdiği için hâkim (model), etkinin ne kadarını hangi tanığa yükleyeceğine karar veremez; katsayılar oynaklaşır ve beklenmedik işaretler alabilir. [Bölüm 6.8](#b6)'deki negatif `oda_sayisi` katsayısı bunun bir örneğidir.
 6. **Aykırı değerlere duyarlılık:** Hatanın karesi alındığı için tek bir aşırı değer doğruyu kendine doğru çekebilir.
 
 > **WEKA:** Classify → `functions → LinearRegression`. Hedef sayısal olduğunda WEKA otomatik olarak regresyon yapar. `cpu.arff` üzerindeki uygulama ve çıktının yorumu [Bölüm 9.4](#b9)'tedir.
@@ -1164,6 +1189,15 @@ J(\boldsymbol{\theta}) = -\frac{1}{m}\sum_{i=1}^{m}\Big[\,y_i \log(\hat{p}_i) + 
 
 **Sezgi:** Gerçek sınıf 1 iken model $\hat{p} = 0.99$ derse ceza $-\log(0.99) \approx 0.01$ (çok az); $\hat{p} = 0.01$ derse ceza $-\log(0.01) \approx 4.6$ (çok büyük). Yani model **kendinden emin ve yanlış** olduğunda ağır cezalandırılır. Bu fonksiyonun kapalı form çözümü yoktur; **gradyan inişi** (veya türevleri) ile çözülür.
 
+Aynı durumu hata karesiyle karşılaştırmak, lojistik regresyonda neden karesel hata kullanılmadığını gösterir (gerçek sınıf 1):
+
+| Modelin olasılığı $\hat{p}$ | 0.9 | 0.6 | 0.1 | 0.01 |
+| :--- | :---: | :---: | :---: | :---: |
+| Hata karesi $(1 - \hat{p})^2$ | 0.01 | 0.16 | 0.81 | 0.98 |
+| Log-loss $-\log \hat{p}$ | 0.11 | 0.51 | 2.30 | 4.61 |
+
+Hata karesi en fazla 1'e ulaşabilir; model ne kadar emin biçimde yanılırsa yanılsın ceza 1'i geçmez. Log-loss ise "emin ama yanlış" tahmini sınırsız biçimde cezalandırır.
+
 **Çok sınıflı durum:** Sınıf sayısı ikiden fazlaysa ya her sınıf için ayrı bir "bu sınıf / diğerleri" modeli kurulur (**one-vs-rest**) ya da sigmoidin genellemesi olan **softmax** kullanılır.
 
 **WEKA:** `functions → Logistic` · **Python:** `sklearn.linear_model.LogisticRegression`. Iris verisinde 10 katlı çapraz doğrulamayla (bir sonraki bölümde, [Bölüm 8](#b8)'de anlatılıyor) doğruluk ≈ **0.953**. Model her çiçek için olasılık da verir (ör. setosa = 0.985, versicolor = 0.015, virginica = 0.000). **Kod:** [`codes/python/03_siniflandirma_algoritmalari.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/03_siniflandirma_algoritmalari.py)
@@ -1263,6 +1297,8 @@ Bir öğrenci çalışma kitabındaki soruları cevaplarıyla birlikte **ezberle
 <p align="center"><img src="./images/yanlilik_varyans.svg" alt="Model karmaşıklığı arttıkça eğitim hatası sürekli düşerken test hatasının U biçiminde değişmesi" width="620"></p>
 
 Model karmaşıklaştıkça yanlılık azalır ama varyans artar. Amaç, **test hatasını** en küçük yapan dengeyi bulmaktır.
+
+> **Benzetme (dart tahtası):** Aynı modelin farklı eğitim setleriyle tekrar tekrar eğitildiğini ve her seferinde hedefe bir dart atıldığını düşünelim. **Yüksek yanlılık**, okların tahtanın merkezinden sistematik olarak kaymış bir noktada toplanmasıdır. **Yüksek varyans**, okların merkezin çevresine geniş bir alanda dağılmasıdır. İdeal model, okları hem merkeze yakın hem de birbirine yakın atar.
 
 <details>
 <summary><b>Derinleşme (İleri Seviye): Hatanın ayrıştırılması</b></summary>
@@ -1496,6 +1532,8 @@ $$
 **Ne anlatıyor?** Payda, **Gerçek: Pozitif** satırıdır. Precision ile recall'un payı aynıdır; farkları yalnızca paydadadır (precision'da FP, recall'da FN).
 
 **Örnek:** $350/500 = 0.70$. **Kaçırmanın pahalı olduğu** durumlarda kritiktir. *Örnek:* Kanser taraması, dolandırıcılık tespiti.
+
+> **Benzetme (balıkçı ağı):** Bir göle ağ atıldığını düşünelim. **Recall**, göldeki balıkların ne kadarının ağa girdiğidir. **Precision**, ağdan çıkanların ne kadarının gerçekten balık olduğudur (geri kalanı yosun, taş, eski çizme olabilir). Ağı büyütmek daha çok balık yakalar (recall artar) ama ağa daha çok çöp de girer (precision düşer).
 
 #### Özgüllük (Specificity, TNR) ve Sahte Pozitif Oranı (FPR)
 
@@ -1992,6 +2030,22 @@ print(classification_report(y_te, y_pred, labels=[1, 0], digits=3,   # Sınıf b
 
 Şekilde aynı nokta, $k = 3$ için **daire (A)**, $k = 7$ için **kare (B)** sınıfına atanıyor. Yani **$k$ seçimi sonucu doğrudan değiştirir.**
 
+**Elle örnek:** Altı eğitim noktası ve yeni bir nokta $\mathbf{q} = (4, 3)$ verilmiş olsun. Öklid mesafeleri hesaplanıp küçükten büyüğe sıralanır:
+
+| Nokta | Koordinat | Sınıf | $\mathbf{q}$'ya mesafe |
+| :---: | :---: | :---: | :---: |
+| B | (3, 3) | daire | $\sqrt{1 + 0} = 1.00$ |
+| C | (5, 4) | kare | $\sqrt{1 + 1} \approx 1.41$ |
+| D | (4, 5) | kare | $\sqrt{0 + 4} = 2.00$ |
+| F | (2, 4) | daire | $\sqrt{4 + 1} \approx 2.24$ |
+| E | (6, 1) | kare | $\sqrt{4 + 4} \approx 2.83$ |
+| A | (1, 1) | daire | $\sqrt{9 + 4} \approx 3.61$ |
+
+- $k = 1$: En yakın komşu B'dir → **daire**.
+- $k = 3$: B (daire), C (kare), D (kare) → çoğunluk **kare**.
+
+Öznitelikler farklı birimlerde olsaydı (ör. biri santimetre, diğeri gram), mesafeyi büyük sayılı öznitelik belirlerdi; bu yüzden k-NN'den önce ölçekleme yapılır ([Bölüm 5.8](#b5)).
+
 ### 10.2 k Değerinin Seçimi
 
 | Küçük $k$ (ör. 1) | Büyük $k$ (ör. 101) |
@@ -2134,6 +2188,8 @@ Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx
   <img src="images/formuller/35.png" alt="Açıklamalı formül: Gauss olasılık yoğunluğu" width="394">
 
   **Ne anlatıyor?** Burada $\mu$ ve $\sigma$, özniteliğin **o sınıftaki** ortalaması ve standart sapmasıdır. Yoğunluk bir olasılık değildir ve 1'den büyük çıkabilir; ama Naive Bayes'te sınıfları karşılaştırmak için olasılık yerine kullanılabilir.
+
+  **Örnek:** WEKA'nın `weather.numeric.arff` verisinde sıcaklık (`temperature`), "yes" sınıfında ortalama 73 ve standart sapma 6.2; "no" sınıfında ortalama 74.6 ve standart sapma 7.9'dur. Sıcaklığı 66 olan yeni bir gün için yoğunluklar "yes" için ≈ 0.0340, "no" için ≈ 0.0279 çıkar. Naive Bayes, bu değerleri kategorik özniteliklerin olasılıklarıyla aynı şekilde çarpıma katar.
 - Çok sayıda küçük olasılığın çarpımı bilgisayarda sıfıra yuvarlanabilir (**underflow**); bu yüzden uygulamalarda çarpım yerine **logaritmaların toplamı** kullanılır.
 
 **WEKA:** `bayes → NaiveBayes`. `NaiveBayesUpdateable` sürümü veriyi satır satır öğrenebilir ([Bölüm 23](#b23)). **Python:** `GaussianNB` (sayısal), `MultinomialNB` (kelime sayıları), `CategoricalNB` (kategorik). Iris'te 10 katlı CV doğruluğu ≈ **0.953**.
@@ -2259,6 +2315,8 @@ $IG = 0.940 - \left(\frac{5}{14}\cdot 0.971 + \frac{4}{14}\cdot 0 + \frac{5}{14}
 
 En yüksek kazanç **outlook**'ta olduğundan **kök** olarak seçilir. İşlem her alt dal için tekrarlanır ve düğümler saf olunca (veya durma kriteri sağlanınca) durulur.
 
+**İkinci düzey:** `outlook = sunny` dalında 5 gün vardır (2 yes, 3 no; $H = 0.971$). Bu dalda kalan özniteliklerin bilgi kazançları: humidity **0.971**, temperature 0.571, windy 0.020. Humidity bu daldaki belirsizliği tamamen giderir (high → no, normal → yes) ve bu yüzden seçilir. `overcast` dalı zaten saftır (4 gün, hepsi yes); `rainy` dalında aynı hesap tekrarlanır.
+
 <p align="center"><img src="./images/entropi_gini.svg" alt="Pozitif sınıf oranına göre entropi ve Gini safsızlığı eğrileri" width="580"></p>
 
 <details>
@@ -2369,6 +2427,18 @@ Ağacın ilk sorusu **final ≤ 61.5** oluyor. Ardından vize'ye göre bölmeler
 **Gözlem soruları**
 - J48'in 10 katlı CV doğruluğunu, lojistik regresyonunkiyle ([Bölüm 7.4](#b7), %99) karşılaştırın. Hangi model bu veriye daha uygun? Neden?
 - Ağaçta, iki yaprağı da aynı sınıfı veren bölmeler var (ör. `vize ≤ 62.5` ve `> 62.5`'in ikisi de `kaldi`). Bu bölmeler neden yapılmış olabilir? Budama ([Bölüm 12.3](#b12)) bunları ne yapar?
+
+### 12.6 Özet: k-NN, Naive Bayes ve Karar Ağacı
+
+| Özellik | k-NN | Naive Bayes | Karar Ağacı |
+| :--- | :--- | :--- | :--- |
+| Eğitim | Çok hızlı (yalnızca veriyi saklar) | Çok hızlı (sayım ve ortalama) | Hızlı |
+| Tahmin | Yavaş (tüm eğitim verisine mesafe hesaplanır) | Çok hızlı | Çok hızlı |
+| Ölçekleme gerekir mi? | **Evet** | Hayır | Hayır |
+| Yorumlanabilirlik | Orta (komşular gösterilebilir) | Orta (olasılık tabloları okunabilir) | **Yüksek** (kurallar okunur) |
+| Kategorik veri | Sayıya dönüştürülmelidir | Doğrudan işler | Doğrudan işler (WEKA J48); scikit-learn'de sayıya dönüştürülür |
+| Temel hiperparametre | $k$, mesafe ölçüsü | Laplace düzeltmesi | Derinlik, budama (`confidenceFactor`) |
+| Zayıf yanı | Gereksiz özniteliklere ve ölçeğe duyarlıdır | Bağımsızlık varsayımı | Kararsızdır, aşırı öğrenmeye yatkındır |
 
 ---
 
@@ -2522,6 +2592,17 @@ $$
 
 Tek bir nöron yalnızca doğrusal sınırlar çizebilir (ünlü XOR problemini çözemez). Nöronları **katmanlar** hâlinde dizersek (girdi → gizli katman(lar) → çıktı) ağ, doğrusal olmayan çok karmaşık ilişkileri öğrenebilir. **Derin öğrenme**, çok sayıda gizli katmanı olan ağlarla yapılan öğrenmedir.
 
+**XOR problemi:** XOR ("özel veya"), iki girdiden **yalnızca biri** 1 olduğunda 1 sonucunu verir:
+
+| $x_1$ | $x_2$ | XOR |
+| :---: | :---: | :---: |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+Bu dört nokta düzlemde çizildiğinde 1'ler bir köşegende, 0'lar diğer köşegende yer alır; tek bir doğru ile ayrılamazlar. İki gizli nöronlu bir ağ ise problemi çözer: Birinci nöron "girdilerden en az biri 1 mi?" (OR), ikinci nöron "ikisi de 1 mi?" (AND) sorusunu öğrenir. Çıktı nöronu, "OR doğru ama AND yanlış" durumunu 1 olarak işaretler. Gizli katman, veriyi doğrusal olarak ayrılabilecek yeni bir gösterime dönüştürmüş olur.
+
 **Eğitim nasıl olur?**
 1. **İleri yayılım (forward pass):** Girdi ağdan geçer, tahmin üretilir.
 2. **Hata hesabı:** Tahmin gerçek değerle karşılaştırılır (ör. log-loss).
@@ -2529,6 +2610,8 @@ Tek bir nöron yalnızca doğrusal sınırlar çizebilir (ünlü XOR problemini 
 4. **Güncelleme:** Ağırlıklar gradyan inişiyle güncellenir ([Bölüm 6.4](#b6)).
 
 Tüm eğitim verisinin bir kez ağdan geçmesine **epoch** (Yun. *epokhē*: "dönem, devir") denir. Güncellemenin kaç örnekte bir yapıldığı ise **batch (yığın) boyutudur**.
+
+**Örnek:** 1000 örnekli bir veri, batch boyutu 100 ile eğitilirse her epoch'ta $1000 / 100 = 10$ güncelleme yapılır. Her bir güncellemeye **iterasyon** denir. 50 epoch süren bir eğitim, toplam 500 iterasyon demektir.
 
 | Avantajlar | Dezavantajlar |
 | :--- | :--- |
@@ -2692,6 +2775,8 @@ Bir kavanozdaki bilye sayısını tahmin edeceğiz. Tek bir kişinin tahmini ço
 
 Topluluk öğrenmesi (İng. *ensemble learning*; Fr. *ensemble*, Lat. *insimul*: "bir arada"), birden çok modelin tahminlerini birleştirerek tek bir modelden **daha doğru ve daha kararlı** tahminler elde eder. Temel koşul, modellerin **farklı hatalar** yapmasıdır: Hepsi aynı hatayı yapıyorsa birleştirmek işe yaramaz.
 
+**Sayısal örnek:** Her biri %70 doğru olan ve birbirinden **bağımsız** hata yapan üç model düşünelim. Çoğunluk oyu, en az ikisi doğru olduğunda doğru sonucu verir: $0.7^3 + 3 \cdot 0.7^2 \cdot 0.3 = 0.343 + 0.441 = 0.784$. Topluluk %78.4 doğruluğa ulaşır. Üç model de hep aynı örneklerde yanılıyorsa çoğunluk oyu hiçbir şey kazandırmaz ve doğruluk %70'te kalır.
+
 | Yöntem | Modeller nasıl eğitilir? | Temel olarak neyi azaltır? | Örnekler |
 | :--- | :--- | :--- | :--- |
 | **Bagging** | Paralel, birbirinden bağımsız | **Varyans** | Bagging, Random Forest |
@@ -2844,6 +2929,16 @@ Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gerek
 4. **Tekrar:** Hiçbir nokta küme değiştirmeyene (veya merkezler yer değiştirmeyene) kadar 2–3 tekrarlanır.
 
 <p align="center"><img src="./images/kmeans_adimlari.svg" alt="K-Means algoritmasının başlangıç, atama, güncelleme ve yakınsama adımları" width="900"></p>
+
+**Elle örnek (tek boyut):** Veri $\lbrace 1, 2, 3, 8, 9, 10 \rbrace$, $K = 2$, başlangıç merkezleri 1 ve 2 olsun.
+
+| Tekrar | Atama | Yeni merkezler | SSE |
+| :---: | :--- | :---: | :---: |
+| 1 | $\lbrace 1 \rbrace$ ve $\lbrace 2, 3, 8, 9, 10 \rbrace$ | 1 ve 6.4 | 53.2 |
+| 2 | $\lbrace 1, 2, 3 \rbrace$ ve $\lbrace 8, 9, 10 \rbrace$ | 2 ve 9 | 4.0 |
+| 3 | Değişiklik yok → **dur** | 2 ve 9 | 4.0 |
+
+Kötü bir başlangıca rağmen algoritma iki tekrarda doğal gruplara ulaşmış ve SSE 53.2'den 4.0'a düşmüştür.
 
 K-Means'in en küçük yapmaya çalıştığı amaç fonksiyonu **küme içi kareler toplamıdır** (SSE / WCSS / inertia):
 
@@ -3371,6 +3466,8 @@ PCA, birbiriyle **ilişkili (korelasyonlu)** çok sayıdaki değişkeni, aralar�
 
 </details>
 
+> **Sık yapılan yanılgı:** PC1 "en önemli öznitelik" değildir; tüm orijinal özniteliklerin ağırlıklı bir karışımıdır. PCA öznitelik **seçmez**: Yeni bir çiçeğin bileşen skorlarını hesaplamak için yine dört ölçümün hepsine ihtiyaç vardır. Bu nedenle veri toplama maliyetini düşürmek isteniyorsa PCA değil, öznitelik seçimi ([Bölüm 19.3](#b19)) kullanılmalıdır.
+
 > **PCA'dan önce standartlaştırma şarttır.** PCA varyansa bakar. Bir sütun 1–10, diğeri 1000–5000 aralığındaysa PCA büyük sayılı sütunu "daha önemli" sanır.
 >
 > **Dikkat:** PCA **denetimsizdir**: Sınıf etiketine bakmaz. En çok varyansı taşıyan yön, sınıfları ayıran yön olmayabilir. Ayrıca **doğrusal** bir yöntemdir; eğrisel yapılarda (İsviçre rulosu gibi) **t-SNE** veya **UMAP** gibi doğrusal olmayan yöntemler gerekir. Bu yöntemler daha çok görselleştirme için kullanılır.
@@ -3509,6 +3606,8 @@ $$
 - **Elastic Net:** İkisinin karışımı.
 
 > **İpucu:** L2 bütçedeki tüm kalemleri biraz kısar; L1 bazı kalemleri tamamen siler.
+>
+> **Neden tam sıfır?** L2 cezasının katsayıyı sıfıra doğru itme kuvveti katsayının kendisiyle orantılıdır ($2\lambda\theta_j$): Katsayı küçüldükçe itme de zayıflar ve katsayı sıfıra yalnızca yaklaşır. L1'in itme kuvveti ise katsayının büyüklüğünden bağımsızdır ($\lambda$): Katsayı ne kadar küçülürse küçülsün aynı kuvvetle itilir ve tam sıfıra ulaşır. Örneğin $\theta_j = 0.01$ iken L2'nin itmesi $0.02\lambda$, L1'inki ise yine $\lambda$'dır.
 
 L2 ile gradyan inişi güncellemesi (sabitler $\lambda$'nın içine katılarak):
 
@@ -3588,6 +3687,8 @@ print(rand.best_params_, rand.best_score_)               # ≈ C=4.07, gamma=0.0
 ### 20.8 İç İçe Çapraz Doğrulama (Nested Cross-Validation)
 
 **Sık yapılan hata:** Grid Search'ün bulduğu `best_score_` değerini modelin performansı olarak raporlamak. Bu skor, **en iyiyi seçmek için kullanılan** veride ölçülmüştür; seçimin kendisi iyimser bir yanlılık yaratır.
+
+> **Benzetme:** On altı koşucunun tek bir yarışta koşturulduğunu ve birincinin seçildiğini düşünelim. Birincinin o yarıştaki derecesi, gelecekteki performansı için iyimser bir tahmindir; çünkü seçim sırasında yalnızca yetenek değil, o günkü şans da seçilmiştir. Kazananın gerçek düzeyini görmek için yeni bir yarış gerekir. İç içe çapraz doğrulamadaki **dış kat**, bu yeni yarıştır.
 
 **Çözüm:** Hiperparametre seçimi ile performans ölçümünü birbirinden ayırmak.
 - **Dış döngü (outer loop, ör. 10 kat):** Genelleme performansını ölçer. Her turda bir kat **test** için ayrılır.
