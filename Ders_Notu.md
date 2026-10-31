@@ -666,7 +666,7 @@ Bir ev fiyatı modeli düşünelim:
 $$
 x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
 $$
-
+x yerine Val ifadeside kullanılır.
 <p align="center"><img src="images/formuller/05.png" alt="Açıklamalı formül: Min-Max normalizasyonu" width="216"></p>
 
 **Ne anlatıyor?** Değer, en küçükten en büyüğe giden yolun kaçta kaçında? En küçük değer 0'a, en büyük değer 1'e dönüşür.
