@@ -661,23 +661,32 @@ Bir ev fiyatı modeli düşünelim:
 
 #### a) Min-Max Normalizasyonu
 
-**Normalizasyon** (İng. *normalization*; Lat. *norma*: "gönye, kural"), değerleri $[0, 1]$ aralığına taşır.
+**Normalizasyon** (İng. *normalization*; Lat. *norma*: "gönye, kural"), değerleri belirlenen bir $[m', M']$ aralığına taşır. En sık kullanılan hedef aralık $[0, 1]$'dir.
 
 $$
-x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
+\text{Val}' = \frac{\text{Val} - m}{M - m}\,(M' - m') + m'
 $$
-x yerine Val ifadeside kullanılır.
-<p align="center"><img src="images/formuller/05.png" alt="Açıklamalı formül: Min-Max normalizasyonu" width="216"></p>
 
-**Ne anlatıyor?** Değer, en küçükten en büyüğe giden yolun kaçta kaçında? En küçük değer 0'a, en büyük değer 1'e dönüşür.
+<p align="center"><img src="images/formuller/05.png" alt="Açıklamalı formül: Min-Max normalizasyonu" width="393"></p>
+
+**Ne anlatıyor?** Kesir, değerin en küçükten en büyüğe giden yolun kaçta kaçında olduğunu bulur; en küçük değer 0'a, en büyük değer 1'e karşılık gelir. Bu oran hedef aralığın genişliğiyle $(M' - m')$ çarpılarak yeni aralığa uyacak biçimde genişletilir ve alt sınır $m'$ eklenerek o aralığa kaydırılır. Hedef aralık $[0, 1]$ ise ($m' = 0$, $M' = 1$) formül $\text{Val}' = \frac{\text{Val} - m}{M - m}$ biçimine sadeleşir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
-| $x$ | "iks" | Özniteliğin orijinal değeri |
-| $x'$ | "iks üssü" | Ölçeklenmiş (yeni) değer |
-| $x_{\min}$, $x_{\max}$ | "iks min", "iks maks" | Özniteliğin **eğitim verisindeki** en küçük ve en büyük değeri |
+| $\text{Val}$ | "val" | Özniteliğin orijinal değeri (İng. *value*: "değer") |
+| $\text{Val}'$ | "val üssü" | Normalize edilmiş (yeni) değer |
+| $m$, $M$ | "küçük em", "büyük em" | Özniteliğin **eğitim verisindeki** en küçük ve en büyük değeri |
+| $m'$, $M'$ | "küçük em üssü", "büyük em üssü" | Hedef aralığın alt ve üst sınırı (ör. $[0, 1]$ veya $[1, 2]$) |
 
-**Örnek:** $[60, 70, 80, 100]$ → min = 60, max = 100. 70 için: $\frac{70-60}{100-60} = 0.25$. Sonuç: $[0,\ 0.25,\ 0.5,\ 1]$.
+**Örnek 1 ($[0, 1]$ aralığı):** $[60, 70, 80, 100]$ → $m = 60$, $M = 100$. 70 için: $\frac{70-60}{100-60} = 0.25$. Sonuç: $[0,\ 0.25,\ 0.5,\ 1]$.
+
+**Örnek 2 ($[1, 2]$ aralığı):** En küçük değeri 50, en büyük değeri 1500 olan bir veri kümesindeki 70 değeri $[1, 2]$ aralığına normalize edilsin: $m = 50$, $M = 1500$, $m' = 1$, $M' = 2$.
+
+$$
+\text{Val}' = \frac{70 - 50}{1500 - 50}\,(2 - 1) + 1 = \frac{20}{1450} + 1 \approx 0.0138 + 1 = 1.0138
+$$
+
+70, en küçük değere çok yakın olduğu için yeni aralığın da alt sınırına çok yakın bir değere dönüşür. scikit-learn'de hedef aralık `MinMaxScaler(feature_range=(1, 2))` ile verilir.
 
 **Aykırı değerlere çok duyarlıdır.** Veriye hatalı bir 300 eklenirse diğer tüm notlar $[0, 0.17]$ aralığına sıkışır.
 
@@ -742,7 +751,7 @@ $$
 #### WEKA'da Ölçeklendirme
 
 1. [`data/notlar.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/notlar.arff) dosyasını indirin. **Explorer → Preprocess → Open file…** ile açın. Bir özniteliğe tıklayınca sağ panelde Minimum, Maximum, Mean, StdDev değerleri görünür.
-2. **Min-Max:** Filter → **Choose** → `weka → filters → unsupervised → attribute → Normalize` → **Apply**. `vize` seçildiğinde Minimum = 0, Maximum = 1 olur. (`scale` ve `translation` parametreleriyle farklı aralıklar da seçilebilir, ör. $[-1, 1]$.)
+2. **Min-Max:** Filter → **Choose** → `weka → filters → unsupervised → attribute → Normalize` → **Apply**. `vize` seçildiğinde Minimum = 0, Maximum = 1 olur. (`scale` ve `translation` parametreleriyle farklı aralıklar da seçilebilir: `scale` hedef aralığın genişliğidir ($M' - m'$), `translation` alt sınırıdır ($m'$). Örneğin $[1, 2]$ için `scale = 1`, `translation = 1`; $[-1, 1]$ için `scale = 2`, `translation = -1` girilir.)
 3. **Undo** ile geri alın.
 4. **Z-skoru:** Aynı yoldan `Standardize` → **Apply**. Mean ≈ 0, StdDev = 1 olur.
 

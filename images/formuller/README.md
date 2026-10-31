@@ -36,10 +36,10 @@ Bu klasördeki PNG dosyaları, `Ders_Notu.md` içindeki açıklamalı formüller
 
 ## 05.png
 
-*İks üssü eşittir, iks eksi iks min, bölü iks maks eksi iks min.*
+*Val üssü eşittir, val eksi küçük em, bölü büyük em eksi küçük em, çarpı büyük em üssü eksi küçük em üssü, artı küçük em üssü.*
 
 ```math
-\underbrace{x'}_{\text{yeni değer}} = \frac{\overbrace{x - x_{\min}}^{\substack{\text{değerin en küçük}\\[2pt]\text{değerden uzaklığı}}}}{\underbrace{x_{\max} - x_{\min}}_{\substack{\text{özniteliğin}\\[2pt]\text{değişim aralığı}}}}
+\underbrace{\text{Val}'}_{\text{yeni değer}} = \frac{\overbrace{\text{Val} - m}^{\substack{\text{değerin en küçük}\\[2pt]\text{değerden uzaklığı}}}}{\underbrace{M - m}_{\substack{\text{özniteliğin}\\[2pt]\text{değişim aralığı}}}}\,\overbrace{(M' - m')}^{\substack{\text{hedef aralığın}\\[2pt]\text{genişliği}}} + \underbrace{m'}_{\substack{\text{hedef aralığın}\\[2pt]\text{alt sınırı}}}
 ```
 
 ## 06.png
