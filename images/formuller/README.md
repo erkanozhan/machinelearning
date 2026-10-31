@@ -44,26 +44,26 @@ Bu klasördeki PNG dosyaları, `Ders_Notu.md` içindeki açıklamalı formüller
 
 ## 06.png
 
-*Zet eşittir, iks eksi mü, bölü sigma.*
+*Val üssü eşittir, val eksi mü, bölü sigma.*
 
 ```math
-\underbrace{z}_{\text{z-skoru}} = \frac{\overbrace{x - \mu}^{\text{ortalamadan sapma}}}{\underbrace{\sigma}_{\substack{\text{standart sapma}\\[2pt]\text{(ölçü birimi)}}}}
+\underbrace{\text{Val}'}_{\text{z-skoru}} = \frac{\overbrace{\text{Val} - \mu}^{\text{ortalamadan sapma}}}{\underbrace{\sigma}_{\substack{\text{standart sapma}\\[2pt]\text{(ölçü birimi)}}}}
 ```
 
 ## 07.png
 
-*İks üssü eşittir, iks eksi iks'in medyanı, bölü IQR. IQR eşittir ku üç eksi ku bir.*
+*Val üssü eşittir, val eksi val'in medyanı, bölü IQR. IQR eşittir ku üç eksi ku bir.*
 
 ```math
-\underbrace{x'}_{\text{yeni değer}} = \frac{\overbrace{x - \text{medyan}(x)}^{\text{ortancadan uzaklık}}}{\underbrace{IQR}_{\substack{\text{ortadaki \%50'nin}\\[2pt]\text{genişliği}}}}, \qquad IQR = \underbrace{Q_3}_{\substack{\text{\%75}\\[2pt]\text{noktası}}} - \underbrace{Q_1}_{\substack{\text{\%25}\\[2pt]\text{noktası}}}
+\underbrace{\text{Val}'}_{\text{yeni değer}} = \frac{\overbrace{\text{Val} - \text{medyan}(\text{Val})}^{\text{ortancadan uzaklık}}}{\underbrace{IQR}_{\substack{\text{ortadaki \%50'nin}\\[2pt]\text{genişliği}}}}, \qquad IQR = \underbrace{Q_3}_{\substack{\text{\%75}\\[2pt]\text{noktası}}} - \underbrace{Q_1}_{\substack{\text{\%25}\\[2pt]\text{noktası}}}
 ```
 
 ## 08.png
 
-*İks üssü eşittir, iks bölü on üzeri j. Burada j, ölçeklenmiş değerlerin mutlak değerce en büyüğünü 1'in altına indiren en küçük tam sayıdır.*
+*Val üssü eşittir, val bölü on üzeri j. Burada j, ölçeklenmiş değerlerin mutlak değerce en büyüğünü 1'in altına indiren en küçük tam sayıdır.*
 
 ```math
-\underbrace{x'}_{\text{yeni değer}} = \frac{x}{\underbrace{10^{j}}_{\substack{\text{virgülü j basamak}\\[2pt]\text{sola kaydır}}}}, \qquad \overbrace{j}^{\substack{\text{en küçük}\\[2pt]\text{tam sayı}}}:\ \underbrace{\max_i \lvert x'_i \rvert < 1}_{\substack{\text{ölçeklenmiş değerlerin en büyük}\\[2pt]\text{mutlak değeri 1'den küçük olsun}}}
+\underbrace{\text{Val}'}_{\text{yeni değer}} = \frac{\text{Val}}{\underbrace{10^{j}}_{\substack{\text{virgülü j basamak}\\[2pt]\text{sola kaydır}}}}, \qquad \overbrace{j}^{\substack{\text{en küçük}\\[2pt]\text{tam sayı}}}:\ \underbrace{\max_i \lvert \text{Val}'_i \rvert < 1}_{\substack{\text{ölçeklenmiş değerlerin en büyük}\\[2pt]\text{mutlak değeri 1'den küçük olsun}}}
 ```
 
 ## 09.png

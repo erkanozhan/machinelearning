@@ -695,20 +695,21 @@ $$
 Veriyi ortalaması 0, standart sapması 1 olacak şekilde dönüştürür. Her değer "ortalamadan kaç standart sapma uzakta?" sorusunun cevabına dönüşür.
 
 $$
-z = \frac{x - \mu}{\sigma}
+\text{Val}' = \frac{\text{Val} - \mu}{\sigma}
 $$
 
-<p align="center"><img src="images/formuller/06.png" alt="Açıklamalı formül: Z-skoru standardizasyonu" width="213"></p>
+<p align="center"><img src="images/formuller/06.png" alt="Açıklamalı formül: Z-skoru standardizasyonu" width="200"></p>
 
-**Ne anlatıyor?** Sapma, standart sapma cinsinden ölçülür. $z = 2$ "ortalamanın iki standart sapma üstünde", $z = -0.5$ "yarım standart sapma altında" demektir; işaret yönü, büyüklük uzaklığı gösterir.
+**Ne anlatıyor?** Sapma, standart sapma cinsinden ölçülür. Elde edilen değere **z-skoru** denir ve kaynaklarda $z$ ile de gösterilir. $\text{Val}' = 2$ "ortalamanın iki standart sapma üstünde", $\text{Val}' = -0.5$ "yarım standart sapma altında" demektir; işaret yönü, büyüklük uzaklığı gösterir.
 
 | Sembol | Okunuşu | Anlamı |
 | :---: | :--- | :--- |
-| $z$ | "zet" | Standartlaştırılmış değer (z-skoru) |
-| $\mu$ | "mü" | Özniteliğin (eğitim verisindeki) ortalaması |
-| $\sigma$ | "sigma" | Özniteliğin standart sapması |
+| $\text{Val}$ | "val" | Özniteliğin orijinal değeri |
+| $\text{Val}'$ | "val üssü" | Standartlaştırılmış değer (z-skoru, $z$) |
+| $\mu$ | "mü" | Özniteliğin (eğitim verisindeki) ortalaması; kaynaklarda mean(Val) olarak da yazılır |
+| $\sigma$ | "sigma" | Özniteliğin standart sapması; kaynaklarda std olarak da yazılır |
 
-**Örnek:** $[60, 70, 80, 100]$, $\mu = 77.5$, $\sigma \approx 14.79$ (scikit-learn'ün kullandığı değer). 70 için: $z = \frac{70-77.5}{14.79} \approx -0.51$ → "70, ortalamanın yaklaşık yarım standart sapma altında." Tüm sonuç: $[-1.18,\ -0.51,\ 0.17,\ 1.52]$. (WEKA $n-1$ ile hesapladığı için $\sigma \approx 17.08$ ve $z \approx -0.44$ bulur.)
+**Örnek:** $[60, 70, 80, 100]$, $\mu = 77.5$, $\sigma \approx 14.79$ (scikit-learn'ün kullandığı değer). 70 için: $\text{Val}' = \frac{70-77.5}{14.79} \approx -0.51$ → "70, ortalamanın yaklaşık yarım standart sapma altında." Tüm sonuç: $[-1.18,\ -0.51,\ 0.17,\ 1.52]$. (WEKA $n-1$ ile hesapladığı için $\sigma \approx 17.08$ ve $\text{Val}' \approx -0.44$ bulur.)
 
 Standardizasyon (İng. *standardization*) değerleri sabit bir aralığa sıkıştırmaz. Bu yüzden tek bir aykırı değer diğerlerini Min-Max kadar ezmez. Ancak ortalama ve standart sapma da aykırı değerlerden etkilendiği için **tam olarak dayanıklı değildir**. Normal dağılıma yakın veride ve SVM, lojistik regresyon, PCA gibi yöntemlerde genellikle ilk tercihtir.
 
@@ -717,12 +718,12 @@ Standardizasyon (İng. *standardization*) değerleri sabit bir aralığa sıkı�
 Aykırı değerlere karşı gerçekten dayanıklı olan yöntem **medyan** ve **IQR** kullanır:
 
 $$
-x' = \frac{x - \text{medyan}(x)}{IQR}, \qquad IQR = Q_3 - Q_1
+\text{Val}' = \frac{\text{Val} - \text{medyan}(\text{Val})}{IQR}, \qquad IQR = Q_3 - Q_1
 $$
 
-<p align="center"><img src="images/formuller/07.png" alt="Açıklamalı formül: Dayanıklı (robust) ölçekleme" width="448"></p>
+<p align="center"><img src="images/formuller/07.png" alt="Açıklamalı formül: Dayanıklı (robust) ölçekleme" width="484"></p>
 
-**Ne anlatıyor?** Z-skorundaki ortalamanın yerine medyan, standart sapmanın yerine IQR kullanılır; ikisi de uç değerlerden neredeyse etkilenmez. Örnek: $[60, 70, 80, 100]$ için medyan 75, $Q_1 = 67.5$, $Q_3 = 85$ (NumPy ve scikit-learn'ün varsayılan hesabı), $IQR = 17.5$. 70 için $x' = (70 - 75)/17.5 \approx -0.29$ olur.
+**Ne anlatıyor?** Z-skorundaki ortalamanın yerine medyan, standart sapmanın yerine IQR kullanılır; ikisi de uç değerlerden neredeyse etkilenmez. Örnek: $[60, 70, 80, 100]$ için medyan 75, $Q_1 = 67.5$, $Q_3 = 85$ (NumPy ve scikit-learn'ün varsayılan hesabı), $IQR = 17.5$. 70 için $\text{Val}' = (70 - 75)/17.5 \approx -0.29$ olur.
 
 scikit-learn'de: `RobustScaler`.
 
@@ -731,10 +732,12 @@ scikit-learn'de: `RobustScaler`.
 Ondalık virgülü kaydırarak değerleri $(-1, 1)$ aralığına getirir:
 
 $$
-x' = \frac{x}{10^{j}}, \qquad j:\ \max_i \lvert x'_i \rvert < 1 \text{ koşulunu sağlayan en küçük tam sayı}
+\text{Val}' = \frac{\text{Val}}{10^{j}}, \qquad j:\ \max_i \lvert \text{Val}'_i \rvert < 1 \text{ koşulunu sağlayan en küçük tam sayı}
 $$
 
-<p align="center"><img src="images/formuller/08.png" alt="Açıklamalı formül: Onluk ölçekleme" width="508"></p>
+Bazı kaynaklarda üs $j$ yerine $n$ ile gösterilir: $\text{Val}' = \text{Val}/10^{n}$.
+
+<p align="center"><img src="images/formuller/08.png" alt="Açıklamalı formül: Onluk ölçekleme" width="511"></p>
 
 **Örnek:** $[-986, 450, 120, -50]$ → en büyük mutlak değer 986 → $j = 3$ → $[-0.986,\ 0.450,\ 0.120,\ -0.050]$. Basittir ama verinin dağılımını hiç kullanmadığından pratikte az tercih edilir.
 
@@ -746,7 +749,7 @@ $$
 | Z-skoru | $[-0.69,\ -0.58,\ -0.47,\ -0.25,\ 1.98]$ | Ortalama bozuldu |
 | Robust | $[-0.67,\ -0.33,\ 0,\ 0.67,\ 7.33]$ | Normal notlar makul aralıkta kaldı; aykırı değer net biçimde göze çarpıyor |
 
-> **En önemli kural:** $x_{\min}$, $x_{\max}$, $\mu$, $\sigma$ gibi değerler **yalnızca eğitim verisinden** hesaplanır ve test verisine **aynı değerlerle** uygulanır. Tüm veriyle hesaplarsanız test verisinin bilgisi modele sızar ([Bölüm 21](#b21)).
+> **En önemli kural:** $m$, $M$, $\mu$, $\sigma$ gibi değerler **yalnızca eğitim verisinden** hesaplanır ve test verisine **aynı değerlerle** uygulanır. Tüm veriyle hesaplarsanız test verisinin bilgisi modele sızar ([Bölüm 21](#b21)).
 
 #### WEKA'da Ölçeklendirme
 
