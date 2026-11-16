@@ -2200,7 +2200,12 @@ WEKA ile gelen `weather.nominal.arff` verisi ([`data/weather.nominal.arff`](http
 | 13 | overcast | hot | normal | FALSE | yes |
 | 14 | rainy | mild | high | TRUE | no |
 
-Tahmin edilecek **yeni gün:** outlook = sunny, temperature = cool, humidity = high, windy = TRUE.
+> [!IMPORTANT]
+> **Soru:** Aşağıdaki yeni günde tenis oynanır mı? Bu günün sınıfı (play) bilinmemektedir; yukarıdaki 14 günden öğrenilen olasılıklarla Naive Bayes yöntemiyle tahmin edilecektir.
+>
+> | Gün | outlook | temperature | humidity | windy | play |
+> | :---: | :--- | :--- | :--- | :---: | :---: |
+> | **15 (yeni gün)** | sunny | cool | high | TRUE | **?** |
 
 **Adım 1 – Önsel olasılıklar:** 14 günün 9'unda oynanmış, 5'inde oynanmamıştır.
 
@@ -2266,7 +2271,8 @@ $$
 P(\text{no} \mid \mathbf{x}) = \frac{0.0206}{0.0053 + 0.0206} \approx 0.795, \qquad P(\text{yes} \mid \mathbf{x}) = \frac{0.0053}{0.0053 + 0.0206} \approx 0.205
 $$
 
-**Tahmin: oynanmaz (no), %79.5 olasılıkla.**
+> [!TIP]
+> **Cevap:** 15. günde tenis **oynanmaz (play = no)**; modelin bu karara güveni %79.5'tir.
 
 **Kod:** Aynı hesabı hiçbir kütüphane kullanmadan yapan kod: [`codes/python/04_entropi_ve_naive_bayes_elle.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/04_entropi_ve_naive_bayes_elle.py)
 
