@@ -2946,6 +2946,10 @@ Adındaki **K**, kaç küme istediğimizi belirten ve **önceden verilmesi gerek
 
 <p align="center"><img src="./images/kmeans_adimlari.svg" alt="K-Means algoritmasının başlangıç, atama, güncelleme ve yakınsama adımları" width="900"></p>
 
+> **Animasyon 1, algoritmayı adım adım anlamak için:** Her noktanın üç merkeze olan uzaklığının tek tek hesaplandığını, noktanın en yakın merkeze atandığını ve 12 nokta bittiğinde merkezlerin kendi noktalarının ortalamasına kaydığını izleyin → [K-Means Şeffaf Algoritma Simülasyonu](https://erkanozhan.github.io/machinelearning/animation/k-means_interactive_animation.html)
+>
+> **Animasyon 2, deney yapmak için:** K sayısını ve gerçek grup sayısını değiştirin; rastgele başlangıç ile k-means++ başlangıcını karşılaştırın; kötü bir başlangıcın algoritmayı **yerel minimuma** nasıl hapsettiğini ve SSE'nin her adımda nasıl azaldığını görün → [K-Means Deney Ortamı](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
+
 **Elle örnek (tek boyut):** Veri $\lbrace 1, 2, 3, 8, 9, 10 \rbrace$, $K = 2$, başlangıç merkezleri 1 ve 2 olsun.
 
 | Tekrar | Atama | Yeni merkezler | SSE |
@@ -2974,10 +2978,6 @@ SSE = \sum_{k=1}^{K}\;\sum_{\mathbf{x}\in C_k}\lVert \mathbf{x} - \boldsymbol{\m
 | $\lVert\mathbf{x}-\boldsymbol{\mu}_k\rVert^2$ | "normun karesi" | Noktanın merkezine olan Öklid mesafesinin karesi |
 
 Iris üzerinde elle yazılmış K-Means'te SSE'nin adım adım düşüşü: **20.31 → 9.83 → 7.09 → 7.00 → 6.98 → 6.98** (6. adımda yakınsadı).
-
-> **Animasyon 1, algoritmayı adım adım anlamak için:** Her noktanın üç merkeze olan uzaklığının tek tek hesaplandığını, noktanın en yakın merkeze atandığını ve 12 nokta bittiğinde merkezlerin kendi noktalarının ortalamasına kaydığını izleyin → [K-Means Şeffaf Algoritma Simülasyonu](https://erkanozhan.github.io/machinelearning/animation/k-means_interactive_animation.html)
->
-> **Animasyon 2, deney yapmak için:** K sayısını ve gerçek grup sayısını değiştirin; rastgele başlangıç ile k-means++ başlangıcını karşılaştırın; kötü bir başlangıcın algoritmayı **yerel minimuma** nasıl hapsettiğini ve SSE'nin her adımda nasıl azaldığını görün → [K-Means Deney Ortamı](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html)
 
 **Önemli özellikler:**
 - Her adımda SSE **azalır veya aynı kalır**; algoritma her zaman durur. Ancak bulunan çözüm **yerel minimum** olabilir: Kötü başlangıç merkezleri kötü kümelere götürebilir. Çözüm: algoritmayı farklı başlangıçlarla birçok kez çalıştırıp en düşük SSE'li sonucu seçmek (sklearn `n_init=10`) ve merkezleri birbirinden uzak seçen **k-means++** başlangıcını kullanmak (WEKA: `initializationMethod = k-means++`).
