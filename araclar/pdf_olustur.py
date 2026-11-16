@@ -23,6 +23,7 @@ import threading
 
 DEPO = pathlib.Path(__file__).resolve().parent.parent
 BEKLEME_MS = 90000  # sayfanın yüklenip formüllerin çizilmesi için tanınan süre
+SURE_SINIRI_SN = 180  # tarayıcı bu sürede bitirmezse kapatılıp yeniden denenir
 
 
 def tarayici_bul():
@@ -60,20 +61,36 @@ def main():
     port = sunucu.server_address[1]
     threading.Thread(target=sunucu.serve_forever, daemon=True).start()
 
-    with tempfile.TemporaryDirectory() as profil:
-        komut = [
-            tarayici,
-            "--headless=new",
-            "--disable-gpu",
-            "--no-first-run",
-            f"--user-data-dir={profil}",
-            f"--virtual-time-budget={BEKLEME_MS}",
-            "--no-pdf-header-footer",
-            f"--print-to-pdf={cikti}",
-            f"http://127.0.0.1:{port}/yazdir.html",
-        ]
-        print("PDF hazırlanıyor (bir-iki dakika sürebilir)...")
-        subprocess.run(komut, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=600)
+    print("PDF hazırlanıyor (bir-iki dakika sürebilir)...")
+    if cikti.exists():
+        cikti.unlink()
+    for deneme in range(1, 4):
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as profil:
+            komut = [
+                tarayici,
+                "--headless=new",
+                "--disable-gpu",
+                "--no-first-run",
+                f"--user-data-dir={profil}",
+                f"--virtual-time-budget={BEKLEME_MS}",
+                "--no-pdf-header-footer",
+                f"--print-to-pdf={cikti}",
+                f"http://127.0.0.1:{port}/yazdir.html",
+            ]
+            surec = subprocess.Popen(komut, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            try:
+                surec.wait(timeout=SURE_SINIRI_SN)
+            except subprocess.TimeoutExpired:
+                # Görünmez tarayıcı nadiren takılabiliyor: yalnızca bu betiğin başlattığı süreç ağacı kapatılır
+                if sys.platform == "win32":
+                    subprocess.run(["taskkill", "/T", "/F", "/PID", str(surec.pid)],
+                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                else:
+                    surec.kill()
+                surec.wait()
+        if cikti.exists() and cikti.stat().st_size > 100_000:
+            break
+        print(f"Tarayıcı yanıt vermedi, yeniden deneniyor ({deneme + 1}/3)...")
     sunucu.shutdown()
 
     if not cikti.exists() or cikti.stat().st_size < 100_000:
