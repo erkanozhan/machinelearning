@@ -2170,23 +2170,94 @@ Bu varsayım gerçekte nadiren doğrudur (hava sıcaklığı ile nem bağımsız
 
 ### 11.3 Elle Çözülmüş Örnek: Tenis Oynanır mı?
 
-WEKA ile gelen `weather.nominal.arff` verisi ([`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff); 14 gün; 9 "yes", 5 "no"). Yeni gün: **outlook = sunny, temperature = cool, humidity = high, windy = true.**
+WEKA ile gelen `weather.nominal.arff` verisi ([`data/weather.nominal.arff`](https://github.com/erkanozhan/machinelearning/blob/main/data/weather.nominal.arff)) 14 günün hava koşullarını ve o gün tenis oynanıp oynanmadığını içerir. Öznitelikler: **outlook** (hava görünümü: sunny = güneşli, overcast = bulutlu, rainy = yağmurlu), **temperature** (sıcaklık: hot = sıcak, mild = ılık, cool = serin), **humidity** (nem: high = yüksek, normal), **windy** (rüzgâr: TRUE = var, FALSE = yok). Sınıf: **play** (oynanır mı: yes / no).
 
-Eğitim verisinden sayılan olasılıklar:
+**Adım 0 – Veri:**
 
-| | $P(\cdot \mid yes)$ | $P(\cdot \mid no)$ |
+| Gün | outlook | temperature | humidity | windy | play |
+| :---: | :--- | :--- | :--- | :---: | :---: |
+| 1 | sunny | hot | high | FALSE | no |
+| 2 | sunny | hot | high | TRUE | no |
+| 3 | overcast | hot | high | FALSE | yes |
+| 4 | rainy | mild | high | FALSE | yes |
+| 5 | rainy | cool | normal | FALSE | yes |
+| 6 | rainy | cool | normal | TRUE | no |
+| 7 | overcast | cool | normal | TRUE | yes |
+| 8 | sunny | mild | high | FALSE | no |
+| 9 | sunny | cool | normal | FALSE | yes |
+| 10 | rainy | mild | normal | FALSE | yes |
+| 11 | sunny | mild | normal | TRUE | yes |
+| 12 | overcast | mild | high | TRUE | yes |
+| 13 | overcast | hot | normal | FALSE | yes |
+| 14 | rainy | mild | high | TRUE | no |
+
+Tahmin edilecek **yeni gün:** outlook = sunny, temperature = cool, humidity = high, windy = TRUE.
+
+**Adım 1 – Önsel olasılıklar:** 14 günün 9'unda oynanmış, 5'inde oynanmamıştır.
+
+| Sınıf | Sayım | Önsel olasılık $P(C)$ |
+| :---: | :---: | :---: |
+| yes | 9 | 9/14 ≈ 0.643 |
+| no | 5 | 5/14 ≈ 0.357 |
+
+**Adım 2 – Her öznitelik için sayım ve koşullu olasılık tabloları:** Her hücrede önce sayım, sonra o sınıftaki gün sayısına bölünmüş olasılık verilir. Örneğin "sunny, yes = 2" şu anlama gelir: Oynanan 9 günün 2'si güneşlidir; dolayısıyla $P(\text{sunny} \mid \text{yes}) = 2/9$. Her sütunun toplamı 1'dir.
+
+| outlook | yes (sayım) | no (sayım) | $P(\cdot \mid \text{yes})$ | $P(\cdot \mid \text{no})$ |
+| :--- | :---: | :---: | :---: | :---: |
+| sunny | 2 | 3 | 2/9 ≈ 0.222 | 3/5 = 0.600 |
+| overcast | 4 | 0 | 4/9 ≈ 0.444 | 0/5 = 0 |
+| rainy | 3 | 2 | 3/9 ≈ 0.333 | 2/5 = 0.400 |
+| **Toplam** | **9** | **5** | **1** | **1** |
+
+| temperature | yes (sayım) | no (sayım) | $P(\cdot \mid \text{yes})$ | $P(\cdot \mid \text{no})$ |
+| :--- | :---: | :---: | :---: | :---: |
+| hot | 2 | 2 | 2/9 ≈ 0.222 | 2/5 = 0.400 |
+| mild | 4 | 2 | 4/9 ≈ 0.444 | 2/5 = 0.400 |
+| cool | 3 | 1 | 3/9 ≈ 0.333 | 1/5 = 0.200 |
+| **Toplam** | **9** | **5** | **1** | **1** |
+
+| humidity | yes (sayım) | no (sayım) | $P(\cdot \mid \text{yes})$ | $P(\cdot \mid \text{no})$ |
+| :--- | :---: | :---: | :---: | :---: |
+| high | 3 | 4 | 3/9 ≈ 0.333 | 4/5 = 0.800 |
+| normal | 6 | 1 | 6/9 ≈ 0.667 | 1/5 = 0.200 |
+| **Toplam** | **9** | **5** | **1** | **1** |
+
+| windy | yes (sayım) | no (sayım) | $P(\cdot \mid \text{yes})$ | $P(\cdot \mid \text{no})$ |
+| :--- | :---: | :---: | :---: | :---: |
+| TRUE | 3 | 3 | 3/9 ≈ 0.333 | 3/5 = 0.600 |
+| FALSE | 6 | 2 | 6/9 ≈ 0.667 | 2/5 = 0.400 |
+| **Toplam** | **9** | **5** | **1** | **1** |
+
+> **Dikkat:** outlook tablosunda $P(\text{overcast} \mid \text{no}) = 0$'dır; bulutlu bir günde oynanmadığı hiç görülmemiştir. Bulutlu bir yeni gün için "no" sınıfının bütün çarpımı bu yüzden sıfır olur. Bu sorun ve çözümü (Laplace düzeltmesi) Bölüm 11.4'te ele alınmaktadır.
+
+**Adım 3 – Yeni günün değerlerini tablolardan okumak:**
+
+| Yeni günün değeri | $P(\cdot \mid \text{yes})$ | $P(\cdot \mid \text{no})$ |
 | :--- | :---: | :---: |
-| Önsel $P(C)$ | 9/14 | 5/14 |
 | outlook = sunny | 2/9 | 3/5 |
 | temperature = cool | 3/9 | 1/5 |
 | humidity = high | 3/9 | 4/5 |
-| windy = true | 3/9 | 3/5 |
+| windy = TRUE | 3/9 | 3/5 |
+
+**Adım 4 – Her sınıf için önsel ile koşullu olasılıkları çarpmak:**
 
 $$
-\text{yes: } \tfrac{9}{14}\cdot\tfrac{2}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9} \approx 0.0053 \qquad \text{no: } \tfrac{5}{14}\cdot\tfrac{3}{5}\cdot\tfrac{1}{5}\cdot\tfrac{4}{5}\cdot\tfrac{3}{5} \approx 0.0206
+\text{yes: } \tfrac{9}{14}\cdot\tfrac{2}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9} = 0.643 \times 0.222 \times 0.333 \times 0.333 \times 0.333 \approx 0.0053
 $$
 
-Normalize edersek: $P(no \mid \mathbf{x}) = \frac{0.0206}{0.0053+0.0206} \approx 0.795$. **Tahmin: oynanmaz (no), %79.5 olasılıkla.**
+$$
+\text{no: } \tfrac{5}{14}\cdot\tfrac{3}{5}\cdot\tfrac{1}{5}\cdot\tfrac{4}{5}\cdot\tfrac{3}{5} = 0.357 \times 0.600 \times 0.200 \times 0.800 \times 0.600 \approx 0.0206
+$$
+
+Bu iki sayı olasılık değil, **skordur**; Bayes formülündeki ortak payda $P(\mathbf{x})$ henüz hesaba katılmamıştır. Karşılaştırma için yeterlidirler: "no" skoru daha büyüktür.
+
+**Adım 5 – Normalizasyon:** Skorlar toplamlarına bölünerek olasılığa çevrilir.
+
+$$
+P(\text{no} \mid \mathbf{x}) = \frac{0.0206}{0.0053 + 0.0206} \approx 0.795, \qquad P(\text{yes} \mid \mathbf{x}) = \frac{0.0053}{0.0053 + 0.0206} \approx 0.205
+$$
+
+**Tahmin: oynanmaz (no), %79.5 olasılıkla.**
 
 **Kod:** Aynı hesabı hiçbir kütüphane kullanmadan yapan kod: [`codes/python/04_entropi_ve_naive_bayes_elle.py`](https://github.com/erkanozhan/machinelearning/blob/main/codes/python/04_entropi_ve_naive_bayes_elle.py)
 
@@ -4289,7 +4360,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | $\max\lbrace a, b \rbrace$ | a ile be'nin büyüğü | İki değerden büyük olanı | 17.1 |
 | $\varepsilon$ | epsilon | Gürültü (hata) terimi (8.2); DBSCAN komşuluk yarıçapı (17.3) | 8.2 / 17.3 |
 | $\cup$ | birleşim | Küme birleşimi | 18.2 |
-| $\Rightarrow$ | ise | Genel olarak "ise" (7.2); $X \Rightarrow Y$ birliktelik kuralında "$X$ varsa $Y$ de vardır" (18.2) | 7.2 / 18.2 |
+| $\Rightarrow$ | ise | Genel olarak "ise" (7.2); birliktelik kuralında $X \Rightarrow Y$, $X$ varsa $Y$'nin de bulunduğunu anlatır (18.2) | 7.2 / 18.2 |
 | supp, conf, lift | destek, güven, kaldıraç | Birliktelik kuralı ölçütleri | 18.2 |
 | $\lambda$ | lamda | Düzenlileştirme katsayısı / özdeğer (PCA) | 8.4 / 19.2 |
 | $\Sigma$ | büyük sigma | Kovaryans matrisi | 19.2 |
