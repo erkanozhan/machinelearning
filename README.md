@@ -3,7 +3,8 @@
 Tekirdağ Namık Kemal Üniversitesi Makine Öğrenmesi dersinin ders notu, uygulama kodları, veri setleri ve animasyonları.
 
 - **Ders notu:** [Ders_Notu.md](Ders_Notu.md)
-- **Web sürümü:** [erkanozhan.github.io/machinelearning](https://erkanozhan.github.io/machinelearning/). Aynı not; formüller ve arama ile birlikte.
+- **Web sürümü:** [erkanozhan.github.io/machinelearning](https://erkanozhan.github.io/machinelearning/). Aynı not; formüller, arama ve doğrudan çalışan animasyonlarla birlikte. Notu okumak için önerilen adres budur.
+- **Animasyonlar:** Çalışan sürümlerin listesi [`animation/`](animation) klasörünün açıklamasındadır. Depoda bir `.html` dosyasına tıklandığında GitHub sayfayı çalıştırmaz, yalnızca kaynak kodunu gösterir.
 
 ## Klasörler
 
@@ -13,7 +14,7 @@ Tekirdağ Namık Kemal Üniversitesi Makine Öğrenmesi dersinin ders notu, uygu
 | [`codes/python/`](codes/python) | Bölümlere göre numaralandırılmış Python kodları ([açıklama](codes/README.md)) |
 | [`codes/R/`](codes/R) | Hiperparametre arama ve iç içe çapraz doğrulama için R kodları |
 | [`data/`](data) | Derse özel veri setleri, CSV ve ARFF biçiminde ([açıklama](data/README.md)) |
-| [`animation/`](animation), [`roc_animation.html`](roc_animation.html) | Gradyan inişi, K-Means, iç içe çapraz doğrulama ve ROC eğrisi animasyonları (tarayıcıda açılır) |
+| [`animation/`](animation), [`roc_animation.html`](roc_animation.html) | Gradyan inişi, k-NN, K-Means, iç içe çapraz doğrulama ve ROC eğrisi animasyonları (web sitesinde çalışır) |
 | [`application/`](application) | WEKA ile eğitilmiş Iris modelini kullanan Java masaüstü ve web uygulamaları |
 | [`images/`](images) | Ders notundaki şekiller, açıklamalı formüller ve diyagramlar |
 | [`index.html`](index.html) | Web sürümünü oluşturan docsify sayfası |

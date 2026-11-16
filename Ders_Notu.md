@@ -2,6 +2,15 @@
 
 > **Ders Notu** · Bu not hem konuyla **ilk kez karşılaşan** öğrenciler hem de temel bilgisi olup **derinleşmek isteyenler** için hazırlanmıştır.
 
+**Bu not iki yerden okunabilir; içerik ikisinde de aynıdır:**
+
+| | Adres | Ne zaman tercih edilir? |
+| :--- | :--- | :--- |
+| **Web sitesi** | [erkanozhan.github.io/machinelearning](https://erkanozhan.github.io/machinelearning/) | Notu okumak ve çalışmak için: Formüller hızlı yüklenir, sayfa içinde **arama** yapılabilir, animasyonlar doğrudan çalışır. |
+| **GitHub deposu** | [github.com/erkanozhan/machinelearning](https://github.com/erkanozhan/machinelearning) | Kod dosyalarını, veri setlerini ve görselleri indirmek, notun son değişikliklerini takip etmek için. |
+
+> **Dikkat:** GitHub deposunda bir `.html` dosyasına (ör. `animation/` klasöründeki animasyonlar) tıklandığında sayfa çalışmaz, yalnızca kaynak kodu görünür. Animasyonlar notun içindeki bağlantılardan ya da web sitesinden açılmalıdır.
+
 ---
 
 ## Bu Notu Nasıl Okumalısınız?
@@ -14,7 +23,7 @@ Notta bazı kısımlar şu etiketlerle işaretlenmiştir:
 | **İpucu** | Sezgi veya günlük hayattan benzetme. |
 | **Dikkat** | Sık yapılan hata veya dikkat edilmesi gereken nokta. |
 | **Uygulama** | WEKA veya Python ile yapılacak çalışma. |
-| **Animasyon** | Tarayıcıda açılan etkileşimli animasyon. |
+| **Animasyon** | Tarayıcıda açılan etkileşimli animasyon. Bağlantılar, animasyonun web sitesindeki çalışan sürümüne gider. |
 | **Kod** | `codes/` klasöründeki ilgili kod dosyası. |
 
 **Terimler hakkında:** Türkçe kavramların ilk geçtiği yerde parantez içinde İngilizce karşılığı ve varsa kelimenin kökeni verilmiştir. Örnek: **Model** (İng. *model*; Lat. *modulus*: "küçük ölçü"). Kısaltmalar: *İng.* İngilizce, *Lat.* Latince, *Yun.* Yunanca, *Alm.* Almanca, *Fr.* Fransızca. Tüm terimlerin listesi [Ek B](#ekB)'dedir.
