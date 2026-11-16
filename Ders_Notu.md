@@ -2058,6 +2058,8 @@ print(classification_report(y_te, y_pred, labels=[1, 0], digits=3,   # Sınıf b
 
 Öznitelikler farklı birimlerde olsaydı (ör. biri santimetre, diğeri gram), mesafeyi büyük sayılı öznitelik belirlerdi; bu yüzden k-NN'den önce ölçekleme yapılır ([Bölüm 5.8](#b5)).
 
+> **Animasyon:** Veri alanına tıklayarak yeni bir nokta yerleştirin; mesafelerin hesaplanmasını, en yakın $k$ komşunun seçilmesini ve çoğunluk oyunu adım adım izleyin. $k$'yı ve mesafe ölçüsünü (Öklid / Manhattan) değiştirerek kararın nasıl değiştiğine, "Karar bölgelerini göster" seçeneğiyle de küçük $k$'da sınırların pürüzlü, büyük $k$'da yumuşak olduğuna bakın → [k-NN Animasyonu](https://erkanozhan.github.io/machinelearning/animation/knn_animasyonu.html)
+
 ### 10.2 k Değerinin Seçimi
 
 | Küçük $k$ (ör. 1) | Büyük $k$ (ör. 101) |
@@ -4401,6 +4403,7 @@ Bu uygulama dersin neredeyse tüm konularını kapsar. Bunu baştan sona yapabil
 | Animasyon | Konu |
 | :--- | :--- |
 | [Gradyan İnişi](https://erkanozhan.github.io/machinelearning/animation/gradyan_inisi_animasyonu.html) | Öğrenme oranının lineer regresyon eğitimine etkisi |
+| [k-En Yakın Komşu (k-NN)](https://erkanozhan.github.io/machinelearning/animation/knn_animasyonu.html) | Mesafe hesabı, komşu seçimi, çoğunluk oyu, k'nın ve mesafe ölçüsünün etkisi, karar bölgeleri |
 | [K-Means Şeffaf Algoritma Simülasyonu](https://erkanozhan.github.io/machinelearning/animation/k-means_interactive_animation.html) | Her noktanın merkezlere uzaklığı, atama ve merkez güncelleme adımları |
 | [K-Means Deney Ortamı](https://erkanozhan.github.io/machinelearning/animation/kmeans_animasyonu.html) | K seçimi, rastgele vs k-means++ başlangıç, yerel minimum, SSE grafiği |
 | [ROC Eğrisi](https://erkanozhan.github.io/machinelearning/roc_animation.html) | Eşik değiştikçe ROC eğrisinin oluşumu |

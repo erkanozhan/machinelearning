@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>k-En Yakın Komşu (k-NN) Animasyonu</title>
+<style>
+  :root { --primary:#2563eb; --success:#16a34a; --danger:#dc2626; --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Tahoma,Arial,sans-serif; background:var(--bg); color:var(--text); padding:15px; line-height:1.55; }
+  .header { text-align:center; padding:15px; margin-bottom:18px; border-radius:10px; color:#fff; background:linear-gradient(135deg,var(--primary),#7c3aed); }
+  .header h1 { font-size:23px; } .header p { font-size:13px; opacity:.95; }
+  .grid { max-width:1250px; margin:0 auto; display:grid; grid-template-columns:3fr 2fr; gap:18px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; }
+  .card h2 { font-size:16px; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--border); }
+  canvas { width:100%; height:auto; border:1px solid var(--border); border-radius:8px; background:#fff; cursor:crosshair; }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:10px 0; font-size:14px; }
+  button { border:none; border-radius:7px; padding:9px 16px; font-weight:600; cursor:pointer; color:#fff; background:var(--primary); }
+  button.gray { background:var(--muted); } button.green { background:var(--success); }
+  select, input { padding:5px; border-radius:6px; border:1px solid var(--border); }
+  input[type=range] { width:160px; vertical-align:middle; }
+  .phase { font-size:15px; font-weight:600; padding:10px; border-radius:8px; background:#f1f5f9; margin:10px 0; min-height:48px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .stat { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; }
+  .stat b { display:block; font-size:18px; } .stat span { font-size:12px; color:var(--muted); }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; }
+  th, td { border-bottom:1px solid var(--border); padding:4px 6px; text-align:center; }
+  th { background:#f1f5f9; }
+  .kutu { display:inline-block; width:11px; height:11px; border-radius:50%; vertical-align:middle; }
+  .tablo-kap { max-height:230px; overflow-y:auto; }
+  ol, ul { padding-left:20px; font-size:14px; } li { margin:5px 0; }
+  @media (max-width:900px){ .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>k-En Yakın Komşu (k-NN): Adım Adım</h1>
+  <p>Veri alanına tıklayarak yeni bir nokta yerleştirin. Mesafe hesabını, komşuların seçilmesini ve çoğunluk oyunu izleyin.</p>
+</div>
+<div class="grid">
+  <div class="card">
+    <h2>Veri uzayı</h2>
+    <canvas id="alan" width="720" height="480"></canvas>
+    <div class="controls">
+      <label>k = <input id="k" type="range" min="1" max="25" step="1" value="5"> <b id="kDeger">5</b></label>
+      <label>Mesafe: <select id="metrik"><option value="oklid">Öklid</option><option value="manhattan">Manhattan</option></select></label>
+      <label>Sınıf sayısı: <select id="sinifSayisi"><option selected>2</option><option>3</option></select></label>
+      <label><input id="bolge" type="checkbox"> Karar bölgelerini göster</label>
+    </div>
+    <div class="controls">
+      <button id="yeniVeri" class="gray">Yeni veri</button>
+      <button id="adim" class="green">Sonraki adım</button>
+      <button id="hepsi">Sonuca git</button>
+      <button id="sifirla" class="gray">Adımları sıfırla</button>
+    </div>
+    <div class="phase" id="faz"></div>
+  </div>
+  <div class="card">
+    <h2>Durum</h2>
+    <div class="stats">
+      <div class="stat"><b id="sK">5</b><span>k</span></div>
+      <div class="stat"><b id="sOy">-</b><span>Oylar</span></div>
+      <div class="stat"><b id="sTahmin">-</b><span>Tahmin</span></div>
+    </div>
+    <div class="tablo-kap">
+      <table>
+        <thead><tr><th>Sıra</th><th>Komşu</th><th>Sınıf</th><th>Mesafe</th></tr></thead>
+        <tbody id="tablo"><tr><td colspan="4">Mesafeler henüz hesaplanmadı.</td></tr></tbody>
+      </table>
+    </div>
+    <h2 style="margin-top:14px">Algoritma</h2>
+    <ol>
+      <li><b>Mesafe:</b> Yeni nokta (siyah yıldız) ile <b>bütün</b> eğitim noktaları arasındaki mesafe hesaplanır.</li>
+      <li><b>Sıralama:</b> Mesafeler küçükten büyüğe sıralanır ve en yakın <b>k</b> nokta seçilir.</li>
+      <li><b>Oylama:</b> Bu k komşunun sınıfları sayılır.</li>
+      <li><b>Karar:</b> En çok oy alan sınıf atanır. Eşitlikte en yakın komşunun sınıfı seçilir.</li>
+    </ol>
+    <ul>
+      <li>Küçük k (ör. 1) gürültüye çok duyarlıdır; karar bölgeleri parçalı ve pürüzlü olur (<b>aşırı öğrenme</b>).</li>
+      <li>Büyük k sınırları düzleştirir; çok büyük k küçük grupları ezer (<b>eksik öğrenme</b>).</li>
+      <li>Öklid mesafesinde komşuluk bir <b>daire</b>, Manhattan mesafesinde bir <b>eşkenar dörtgen</b> biçimindedir.</li>
+      <li>İki sınıflı problemlerde beraberliği önlemek için k genellikle tek sayı seçilir.</li>
+    </ul>
+  </div>
+</div>
+<script>
+const RENK = ['#2563eb', '#ea580c', '#16a34a'];
+const ACIK = ['rgba(37,99,235,0.13)', 'rgba(234,88,12,0.13)', 'rgba(22,163,74,0.13)'];
+const AD = ['A', 'B', 'C'];
+const W = 720, H = 480, OLCEK = 100;            // Ekrandaki 100 piksel = 1 birim
+const c = document.getElementById('alan').getContext('2d');
+let P = [], q = [W / 2, H / 2], sirali = [], faz = 0;   // faz: 0 bekle, 1 mesafe, 2 sırala, 3 oy, 4 karar
+let bolgeOnbellek = null;
+
+const $ = id => document.getElementById(id);
+const k = () => +$('k').value;
+function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+function mesafe(a, b) {
+  const dx = Math.abs(a[0] - b[0]) / OLCEK, dy = Math.abs(a[1] - b[1]) / OLCEK;
+  return $('metrik').value === 'oklid' ? Math.sqrt(dx * dx + dy * dy) : dx + dy;
+}
+
+function yeniVeri() {
+  const S = +$('sinifSayisi').value; P = [];
+  const merkezler = S === 2 ? [[250, 200], [470, 290]] : [[220, 170], [500, 170], [360, 340]];
+  merkezler.forEach((m, s) => {
+    for (let i = 0; i < 40; i++) {
+      const x = m[0] + gauss() * 70, y = m[1] + gauss() * 60;
+      if (x > 10 && x < W - 10 && y > 10 && y < H - 10) P.push([x, y, s]);
+    }
+  });
+  bolgeOnbellek = null; sifirla();
+}
+
+function siniflandir(nokta, kk) {             // Yalnızca karar bölgeleri için: verilen noktanın tahmini
+  const d = P.map(p => [mesafe(nokta, p), p[2]]).sort((a, b) => a[0] - b[0]).slice(0, kk);
+  const oy = [0, 0, 0]; d.forEach(x => oy[x[1]]++);
+  const en = Math.max(...oy);
+  for (const x of d) if (oy[x[1]] === en) return x[1];   // Eşitlikte en yakın komşunun sınıfı
+}
+
+function sifirla() { faz = 0; sirali = []; guncelle(); }
+
+function adim() {
+  if (faz === 4) return;
+  faz++;
+  if (faz === 1) sirali = P.map((p, i) => ({ i, p, d: mesafe(q, p) }));
+  if (faz === 2) sirali.sort((a, b) => a.d - b.d);
+  guncelle();
+}
+
+function oylar() {
+  const oy = [0, 0, 0]; sirali.slice(0, k()).forEach(s => oy[s.p[2]]++);
+  return oy;
+}
+function karar() {
+  const oy = oylar(), en = Math.max(...oy);
+  for (const s of sirali.slice(0, k())) if (oy[s.p[2]] === en) return s.p[2];
+}
+
+function guncelle() {
+  const S = +$('sinifSayisi').value;
+  $('kDeger').textContent = k(); $('sK').textContent = k();
+  const metAd = $('metrik').value === 'oklid' ? 'Öklid' : 'Manhattan';
+  const mesaj = [
+    'Yeni nokta yerleştirmek için alana tıklayın; ardından "Sonraki adım" ile ilerleyin.',
+    `1. adım: Yıldızdan bütün ${P.length} noktaya ${metAd} mesafesi hesaplandı (gri çizgiler). Sonraki: <b>sıralama</b>.`,
+    `2. adım: Mesafeler sıralandı; en yakın <b>${k()}</b> komşu kalın çerçeveyle işaretlendi. Kesikli sınır, k. komşunun mesafesini gösterir. Sonraki: <b>oylama</b>.`,
+    `3. adım: Komşuların sınıfları sayıldı: ${oylar().slice(0, S).map((v, s) => `${AD[s]} = ${v}`).join(', ')}. Sonraki: <b>karar</b>.`,
+    `4. adım: Çoğunluk oyuyla yeni noktanın sınıfı <b style="color:${RENK[karar()]}">${AD[karar()]}</b> olarak belirlendi. k'yı ya da mesafe ölçüsünü değiştirerek sonucun değişip değişmediğine bakın.`
+  ];
+  $('faz').innerHTML = mesaj[faz];
+  $('sOy').textContent = faz >= 3 ? oylar().slice(0, S).join(' / ') : '-';
+  $('sTahmin').textContent = faz === 4 ? AD[karar()] : '-';
+  $('sTahmin').style.color = faz === 4 ? RENK[karar()] : '';
+
+  const tb = $('tablo');
+  if (faz === 0) tb.innerHTML = '<tr><td colspan="4">Mesafeler henüz hesaplanmadı.</td></tr>';
+  else {
+    const liste = faz === 1 ? sirali.slice(0, 12) : sirali.slice(0, Math.max(k(), 8));
+    tb.innerHTML = liste.map((s, r) => {
+      const sec = faz >= 2 && r < k();
+      return `<tr style="${sec ? 'font-weight:700;background:#eef2ff' : ''}"><td>${faz >= 2 ? r + 1 : '-'}</td><td>#${s.i + 1}</td>` +
+             `<td><span class="kutu" style="background:${RENK[s.p[2]]}"></span> ${AD[s.p[2]]}</td><td>${s.d.toFixed(3)}</td></tr>`;
+    }).join('') + (faz === 1 ? '<tr><td colspan="4">… (henüz sıralanmadı)</td></tr>' : '');
+  }
+  ciz();
+}
+
+function bolgeleriCiz() {
+  const adimPx = 10;
+  const anahtar = `${k()}|${$('metrik').value}|${P.length}`;
+  if (!bolgeOnbellek || bolgeOnbellek.anahtar !== anahtar) {
+    const hucre = [];
+    for (let x = 0; x < W; x += adimPx) for (let y = 0; y < H; y += adimPx)
+      hucre.push([x, y, siniflandir([x + adimPx / 2, y + adimPx / 2], k())]);
+    bolgeOnbellek = { anahtar, hucre };
+  }
+  bolgeOnbellek.hucre.forEach(([x, y, s]) => { c.fillStyle = ACIK[s]; c.fillRect(x, y, adimPx, adimPx); });
+}
+
+function ciz() {
+  c.clearRect(0, 0, W, H);
+  if ($('bolge').checked) bolgeleriCiz();
+
+  if (faz === 1) {                                   // Bütün mesafe çizgileri
+    c.strokeStyle = 'rgba(100,116,139,0.25)'; c.lineWidth = 1;
+    sirali.forEach(s => { c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(s.p[0], s.p[1]); c.stroke(); });
+  }
+  if (faz >= 2) {                                    // k. komşunun mesafesi: daire veya eşkenar dörtgen
+    const r = sirali[k() - 1].d * OLCEK;
+    c.setLineDash([6, 5]); c.strokeStyle = '#475569'; c.lineWidth = 1.5; c.beginPath();
+    if ($('metrik').value === 'oklid') c.arc(q[0], q[1], r, 0, 2 * Math.PI);
+    else { c.moveTo(q[0], q[1] - r); c.lineTo(q[0] + r, q[1]); c.lineTo(q[0], q[1] + r); c.lineTo(q[0] - r, q[1]); c.closePath(); }
+    c.stroke(); c.setLineDash([]);
+    c.lineWidth = 2;
+    sirali.slice(0, k()).forEach(s => { c.strokeStyle = RENK[s.p[2]]; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(s.p[0], s.p[1]); c.stroke(); });
+  }
+
+  const secili = new Set(faz >= 2 ? sirali.slice(0, k()).map(s => s.i) : []);
+  P.forEach((p, i) => {
+    c.fillStyle = RENK[p[2]];
+    c.beginPath(); c.arc(p[0], p[1], secili.has(i) ? 7 : 5, 0, 2 * Math.PI); c.fill();
+    if (secili.has(i)) { c.strokeStyle = '#1e293b'; c.lineWidth = 2.5; c.stroke(); }
+  });
+
+  yildiz(q[0], q[1], faz === 4 ? RENK[karar()] : '#1e293b');
+}
+
+function yildiz(x, y, renk) {
+  c.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const r = i % 2 ? 6 : 14, a = Math.PI / 5 * i - Math.PI / 2;
+    c.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
+  }
+  c.closePath(); c.fillStyle = renk; c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 2; c.stroke();
+}
+
+$('alan').addEventListener('click', e => {
+  const rect = e.target.getBoundingClientRect();
+  q = [(e.clientX - rect.left) * W / rect.width, (e.clientY - rect.top) * H / rect.height];
+  sifirla();
+});
+$('adim').onclick = adim;
+$('hepsi').onclick = () => { while (faz < 4) adim(); };
+$('sifirla').onclick = sifirla;
+$('yeniVeri').onclick = yeniVeri;
+$('sinifSayisi').onchange = yeniVeri;
+$('k').oninput = () => { if (faz >= 2 && faz < 4) faz = 2; guncelle(); };
+$('metrik').onchange = () => { bolgeOnbellek = null; const f = faz; sifirla(); while (faz < f) adim(); };
+$('bolge').onchange = ciz;
+yeniVeri();
+</script>
+</body>
+</html>
